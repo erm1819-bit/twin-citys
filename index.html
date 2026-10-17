@@ -460,7 +460,15 @@ html.has-case { overflow: hidden; }
   .has-intro .wm__line, .has-intro .wm__twin, .has-intro .wm__cities { opacity: 1; }
 }
 
-/* start a project: under the card, the way in to the form */
+/* start a project: a button above the card, and the full invitation under it */
+.startbtn {
+  display: inline-flex; align-items: center; gap: 14px; min-height: 44px; margin-top: 22px; padding: 0 22px;
+  color: var(--ivory); border: 1px solid #34322f; font: 500 var(--t-label) var(--font-display); letter-spacing: .32em; text-transform: uppercase;
+  transition: border-color .2s;
+}
+.startbtn::after { content: ""; display: block; width: 28px; height: 1px; background: currentColor; transition: width .4s var(--ease); }
+.startbtn:hover { text-decoration: none; border-color: var(--stone); }
+.startbtn:hover::after { width: 44px; }
 .start { margin-top: 24px; padding-top: 56px; border-top: 1px solid var(--ink); align-items: start; }
 .start .label { color: var(--stone); padding-top: 10px; }
 .start__body { display: flex; flex-direction: column; align-items: flex-start; gap: 22px; }
@@ -581,7 +589,10 @@ html.has-case { overflow: hidden; }
     <section class="contact band" id="contact">
       <div class="split contact__head">
         <h2 class="label to-spine">Contact</h2>
-        <p>Call, text or email either of us.</p>
+        <div>
+          <p>Call, text or email either of us.</p>
+          <a class="startbtn" href="https://twincitys.net/start">Start a project</a>
+        </div>
       </div>
 
       <div class="cardwrap">
