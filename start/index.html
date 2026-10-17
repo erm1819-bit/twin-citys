@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Start a project with Twin Citys, a Miami creative studio. Tell us about your business in three quick steps.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0b0b0b">
+<title>Twin Citys Project Form</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&display=swap">
+<style>
+/* Layout: one dark stage, a dusk sky drifting behind frosted glass; the form walks three steps along the brand's vertical line. */
+:root {
+  color-scheme: dark;
+  --black: #0b0b0b;
+  --glass: rgba(17, 17, 16, .72);
+  --ivory: #e8e3d9;
+  --stone: #a19b90;
+  --stone-dim: #4a4743;
+  --line: rgba(232, 227, 217, .18);
+  --dusk-pink: #e9a3b4;
+  --dusk-lilac: #9a8ed6;
+  --amber: #f0b36a;
+  --amber-deep: #d98a3a;
+  --coral: #e8846b;
+  --ok: #9fd3a6;
+  --font-display: 'Instrument Serif', 'Georgia', 'Times New Roman', serif;
+  --font-body: 'Montserrat', 'Avenir Next', 'Helvetica Neue', Arial, sans-serif;
+  --t-label: 11px;
+  --t-body: 16px;
+  --t-h: clamp(34px, 5.4vw, 64px);
+  --ease: cubic-bezier(.3, .7, .2, 1);
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { height: 100%; }
+body {
+  min-height: 100%; margin: 0; background: var(--black); color: var(--ivory);
+  font-family: var(--font-body); font-size: var(--t-body); line-height: 1.6; -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 1px solid var(--amber); outline-offset: 5px; }
+::selection { background: var(--amber); color: var(--black); }
+h1, h2, h3, p { margin: 0; }
+
+/* the sky: three soft lights drifting over black, then grain */
+.sky { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; background: var(--black); }
+.sky i {
+  position: absolute; border-radius: 50%; filter: blur(70px); opacity: .68; will-change: transform;
+  animation: drift 26s ease-in-out infinite alternate;
+}
+.sky i:nth-child(1) { width: 60vmax; height: 60vmax; left: -20vmax; top: -24vmax; background: radial-gradient(circle, var(--dusk-lilac), transparent 68%); }
+.sky i:nth-child(2) { width: 54vmax; height: 54vmax; right: -18vmax; top: 6vmax; background: radial-gradient(circle, var(--dusk-pink), transparent 68%); animation-delay: -9s; animation-duration: 32s; }
+.sky i:nth-child(3) { width: 46vmax; height: 46vmax; left: 20vmax; bottom: -28vmax; background: radial-gradient(circle, var(--amber-deep), transparent 68%); opacity: .42; animation-delay: -17s; animation-duration: 38s; }
+.sky::after {
+  content: ""; position: absolute; inset: 0; opacity: .07; mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+/* the skyline, barely there, along the bottom */
+.skyline { position: absolute; left: 0; right: 0; bottom: 0; height: 22vh; min-height: 120px; opacity: .5; }
+.skyline svg { width: 100%; height: 100%; display: block; }
+@keyframes drift {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(8vmax, 6vmax, 0) scale(1.12); }
+}
+
+.page {
+  position: relative; z-index: 1; min-height: 100%;
+  display: flex; flex-direction: column; align-items: center; gap: 36px;
+  padding-block: 28px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.top {
+  width: min(100%, 760px); display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  color: var(--stone); font-size: var(--t-label); letter-spacing: .34em; text-transform: uppercase;
+}
+.top a { display: inline-flex; align-items: center; gap: 14px; min-height: 44px; color: var(--ivory); }
+.tcmark { display: block; height: 24px; width: 28px; fill: currentColor; }
+.top span.place { display: flex; align-items: center; gap: 12px; }
+.top span.place::after { content: ""; display: block; width: 30px; height: 1px; background: var(--stone); }
+
+/* the card: frosted over the sky */
+.card {
+  width: min(100%, 760px); position: relative;
+  background: var(--glass); border: 1px solid var(--line); backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
+  box-shadow: 0 40px 100px rgba(0, 0, 0, .55), inset 0 1px 0 rgba(255, 255, 255, .05);
+  display: grid; grid-template-columns: 56px minmax(0, 1fr);
+}
+/* the brand's vertical line, now the progress line */
+.rail { position: relative; border-right: 1px solid var(--line); }
+.rail::before { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: var(--line); }
+.rail__fill {
+  position: absolute; top: 0; left: 50%; width: 1px; height: var(--p, 0%);
+  background: linear-gradient(to bottom, var(--dusk-pink), var(--amber)); box-shadow: 0 0 14px var(--amber);
+  transition: height .9s var(--ease);
+}
+.rail ol {
+  list-style: none; margin: 0; padding: 0; position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between;
+  padding-block: clamp(32px, 6vw, 56px);
+}
+.rail li {
+  position: relative; display: grid; place-items: center; width: 100%;
+  color: var(--stone-dim); font-size: 11px; letter-spacing: .1em; font-variant-numeric: tabular-nums; transition: color .4s;
+}
+.rail li b { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--black); border: 1px solid var(--stone-dim); font-weight: 500; transition: border-color .4s, color .4s, background .4s; }
+.rail li.is-done b { border-color: var(--amber); color: var(--amber); }
+.rail li.is-on b { border-color: var(--amber); background: var(--amber); color: var(--black); box-shadow: 0 0 18px rgba(240, 179, 106, .45); }
+.rail li.is-on, .rail li.is-done { color: var(--ivory); }
+
+.body { padding: clamp(28px, 6vw, 56px) clamp(22px, 6vw, 56px); min-width: 0; }
+.eyebrow { color: var(--stone); font-size: var(--t-label); letter-spacing: .4em; text-transform: uppercase; font-weight: 500; }
+.lead { display: flex; flex-direction: column; gap: 14px; margin-bottom: clamp(28px, 5vw, 44px); }
+.lead h1 { font-family: var(--font-display); font-weight: 400; font-size: var(--t-h); line-height: 1.02; letter-spacing: -.005em; text-wrap: balance; }
+.lead h1 em { font-style: italic; color: transparent; background: linear-gradient(100deg, var(--dusk-pink), var(--amber) 55%, var(--coral)); -webkit-background-clip: text; background-clip: text; }
+.lead p { color: var(--stone); max-width: 46ch; }
+
+.step { display: none; flex-direction: column; gap: 32px; }
+.step.is-on { display: flex; animation: rise .55s var(--ease) both; }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } }
+.step h2, .step .h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(26px, 3.4vw, 36px); line-height: 1.1; }
+.step h2 em, .step .h2 em { font-style: italic; color: var(--amber); }
+.hint { color: var(--stone); font-size: 14px; }
+.group { display: flex; flex-direction: column; gap: 14px; }
+fieldset { margin: 0; padding: 0; border: 0; min-width: 0; display: flex; flex-direction: column; gap: 14px; }
+legend { padding: 0; margin-bottom: 4px; }
+.row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px 24px; }
+.field { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.field label { color: var(--stone); font-size: var(--t-label); letter-spacing: .28em; text-transform: uppercase; }
+.field input, .field textarea, .field select {
+  width: 100%; min-height: 48px; padding: 12px 0; background: transparent; color: var(--ivory);
+  border: 0; border-bottom: 1px solid var(--stone-dim); border-radius: 0; outline: 0;
+  font: 400 16px var(--font-body); line-height: 1.5; transition: border-color .25s, box-shadow .25s;
+}
+.field select { appearance: none; -webkit-appearance: none; cursor: pointer; padding-right: 28px;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23a19b90' stroke-width='1.5'><path d='M6 9l6 6 6-6'/></svg>") no-repeat right center; }
+.field select option { background: #141413; color: var(--ivory); }
+.field textarea { min-height: 120px; resize: vertical; }
+.field input:focus, .field textarea:focus, .field select:focus { border-bottom-color: var(--amber); box-shadow: 0 1px 0 var(--amber); outline: 0; }
+.field input::placeholder, .field textarea::placeholder { color: #5e5a53; }
+.field.is-bad input { border-bottom-color: var(--coral); }
+
+/* choices as glowing tiles */
+.tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.tile {
+  position: relative; display: flex; align-items: flex-start; gap: 14px; min-height: 60px; padding: 14px 16px; cursor: pointer;
+  border: 1px solid var(--line); background: rgba(255, 255, 255, .025); color: #cfc9be; font-size: 15px; line-height: 1.4;
+  transition: border-color .25s, background .25s, transform .25s var(--ease), box-shadow .25s;
+}
+.tile:hover { border-color: rgba(240, 179, 106, .5); transform: translateY(-1px); }
+.tile input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.tile svg { flex: none; width: 22px; height: 22px; margin-top: 1px; stroke: var(--stone); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; transition: stroke .25s; }
+.tile span { flex: 1; }
+.tile i { flex: none; width: 16px; height: 16px; margin-top: 3px; border: 1px solid var(--stone); transition: background .25s, border-color .25s; }
+.tile input[type="radio"] ~ i { border-radius: 50%; }
+.tile:has(input:checked) { border-color: var(--amber); background: rgba(240, 179, 106, .09); color: var(--ivory); box-shadow: 0 0 0 1px rgba(240, 179, 106, .25), 0 12px 30px rgba(240, 179, 106, .08); }
+.tile:has(input:checked) svg { stroke: var(--amber); }
+.tile:has(input:checked) i { background: var(--amber); border-color: var(--amber); box-shadow: inset 0 0 0 3px #1b1a17; }
+.tile:has(input:focus-visible) { outline: 1px solid var(--amber); outline-offset: 3px; }
+
+.nav { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px; padding-top: 8px; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 12px; min-height: 50px; padding: 0 30px; cursor: pointer;
+  border: 1px solid var(--ivory); border-radius: 0; background: var(--ivory); color: var(--black);
+  font: 500 var(--t-label) var(--font-body); letter-spacing: .32em; text-transform: uppercase; text-indent: .32em;
+  transition: background .25s, color .25s, border-color .25s, transform .25s var(--ease), box-shadow .25s;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn--go { background: linear-gradient(100deg, var(--amber), var(--coral)); border-color: transparent; color: #1a1208; box-shadow: 0 10px 30px rgba(240, 179, 106, .25); }
+.btn--go:hover { box-shadow: 0 14px 36px rgba(240, 179, 106, .4); }
+.btn--ghost { background: transparent; color: var(--stone); border-color: var(--stone-dim); }
+.btn--ghost:hover { color: var(--ivory); border-color: var(--stone); }
+.btn[disabled] { opacity: .5; cursor: wait; transform: none; }
+.status { flex-basis: 100%; color: var(--stone); font-size: 14px; min-height: 1.4em; }
+.status.is-error { color: var(--coral); }
+
+.done { display: none; flex-direction: column; gap: 22px; }
+.done.is-on { display: flex; animation: rise .6s var(--ease) both; }
+.done h2 { font-family: var(--font-display); font-weight: 400; font-size: var(--t-h); line-height: 1.02; }
+.done h2 em { font-style: italic; color: transparent; background: linear-gradient(100deg, var(--dusk-pink), var(--amber)); -webkit-background-clip: text; background-clip: text; }
+.done p { color: var(--stone); max-width: 46ch; }
+.done .who { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; padding-top: 10px; border-top: 1px solid var(--line); }
+.done .who div { display: flex; flex-direction: column; gap: 4px; font-size: 14px; color: var(--stone); }
+.done .who b { color: var(--ivory); font-weight: 500; letter-spacing: .06em; }
+.done .palm { width: 92px; height: 120px; stroke: var(--amber); fill: none; stroke-linecap: round; opacity: .9; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+.foot { width: min(100%, 760px); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; color: var(--stone-dim); font-size: var(--t-label); letter-spacing: .3em; text-transform: uppercase; }
+
+@media (max-width: 640px) {
+  .card { grid-template-columns: minmax(0, 1fr); }
+  .rail { border-right: 0; border-bottom: 1px solid var(--line); height: 64px; }
+  .rail::before { top: 50%; left: 0; right: 0; bottom: auto; width: auto; height: 1px; }
+  .rail__fill { top: 50%; left: 0; height: 1px; width: var(--p, 0%); transition: width .9s var(--ease); }
+  .rail ol { flex-direction: row; padding-block: 0; padding-inline: 24px; align-items: center; }
+  .rail li { width: auto; }
+  .row, .tiles, .done .who { grid-template-columns: minmax(0, 1fr); }
+  .btn { flex: 1 1 auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sky i { animation: none; }
+  .step.is-on, .done.is-on { animation: none; }
+  .rail__fill, .tile, .btn { transition: none; }
+}
+/* the intro: the line draws, the name arrives from both sides, a thin bar fills, then the whole screen lifts */
+.intro {
+  position: fixed; inset: 0; z-index: 20; background: var(--black); color: var(--ivory);
+  display: grid; grid-template-rows: auto 1fr auto; overflow: hidden;
+  padding-top: calc(env(safe-area-inset-top, 0px) + 28px); padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 28px);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  transition: transform 1.1s var(--ease), visibility 0s 1.1s;
+}
+.intro.is-gone { transform: translateY(-101%); visibility: hidden; }
+.intro__top, .intro__bottom { display: flex; justify-content: space-between; align-items: center; gap: 16px; color: var(--stone); font-size: var(--t-label); letter-spacing: .34em; text-transform: uppercase; }
+.intro__top > *, .intro__bottom > * { opacity: 0; animation: fade .8s 1.5s var(--ease) forwards; }
+.intro__wm {
+  align-self: center; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center;
+  column-gap: clamp(12px, 3vw, 44px); font-family: var(--font-body); font-weight: 300; font-size: clamp(30px, 7.4vw, 112px); letter-spacing: .28em; line-height: 1.1;
+}
+.intro__wm span { color: var(--ivory); }
+.intro__wm .twin { text-align: right; animation: from-right 1.1s 1s var(--ease) both; }
+.intro__wm .citys { text-align: left; padding-left: .28em; animation: from-left 1.1s 1s var(--ease) both; }
+.intro__wm .citys em { font-style: normal; color: transparent; background: linear-gradient(100deg, var(--dusk-pink), var(--amber)); -webkit-background-clip: text; background-clip: text; }
+.intro__brand { display: inline-flex; align-items: center; gap: 14px; color: var(--ivory); }
+.intro__mid { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+.intro__mark { width: clamp(44px, 6vw, 84px); height: auto; aspect-ratio: 892 / 756; fill: var(--ivory); filter: drop-shadow(0 0 22px rgba(240, 179, 106, .35)); animation: mark-in .9s .15s var(--ease) both; }
+@keyframes mark-in { from { opacity: 0; transform: translateY(-14px) scale(.92); } }
+.intro__line { display: block; width: 1px; height: clamp(150px, 21vw, 300px); background: linear-gradient(to bottom, var(--dusk-pink), var(--ivory) 40%, var(--amber)); transform-origin: top; animation: line-grow 1s .5s var(--ease) both; box-shadow: 0 0 18px rgba(240, 179, 106, .35); }
+.intro__bar { position: relative; flex: 1; height: 1px; max-width: 320px; background: var(--stone-dim); overflow: hidden; }
+.intro__bar b { position: absolute; inset: 0; width: var(--load, 0%); background: linear-gradient(to right, var(--dusk-pink), var(--amber)); transition: width .4s var(--ease); }
+.intro__pct { min-width: 4ch; text-align: right; color: var(--ivory); font-variant-numeric: tabular-nums; }
+@keyframes line-grow { from { transform: scaleY(0); } }
+@keyframes from-right { from { clip-path: inset(-20% 0 -20% 100%); opacity: 0; } to { clip-path: inset(-20% 0 -20% 0); opacity: 1; } }
+@keyframes from-left { from { clip-path: inset(-20% 100% -20% 0); opacity: 0; } to { clip-path: inset(-20% 0 -20% 0); opacity: 1; } }
+@keyframes fade { to { opacity: 1; } }
+/* the page waits under the intro, then rises as it lifts */
+.has-intro .page { opacity: 0; transform: translateY(24px); }
+.has-intro.is-in .page { opacity: 1; transform: none; transition: opacity .9s .25s var(--ease), transform 1s .25s var(--ease); }
+@media (max-width: 640px) { .intro__wm { grid-template-columns: minmax(0, 1fr); row-gap: 10px; justify-items: center; } .intro__wm .twin, .intro__wm .citys { text-align: center; padding-left: 0; } .intro__line { height: 70px; } .intro__mark { width: 40px; } }
+@media (prefers-reduced-motion: reduce) {
+  .intro { display: none; }
+  .has-intro .page { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="tc" viewBox="0 0 892 756"><polygon points="0,0 70,96 280,97 280,632 407,742 407,1"></polygon><polygon points="892,0 463,1 463,756 802,581 582,580 582,97 813,96"></polygon></symbol></svg>
+
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro__top"><span class="intro__brand"><svg class="tcmark" aria-hidden="true"><use href="#tc"></use></svg>Twin Citys</span><span>Miami, FL</span></div>
+  <div class="intro__wm"><span class="twin">TWIN</span><span class="intro__mid"><svg class="intro__mark" aria-hidden="true"><use href="#tc"></use></svg><i class="intro__line"></i></span><span class="citys">CIT<em>YS</em></span></div>
+  <div class="intro__bottom"><span>Start a project</span><span class="intro__bar"><b id="intro-fill"></b></span><span class="intro__pct" id="intro-pct">0</span></div>
+</div>
+
+<div class="sky" aria-hidden="true">
+  <i></i><i></i><i></i>
+  <div class="skyline">
+    <svg viewBox="0 0 1440 220" preserveAspectRatio="none" fill="#0b0b0b">
+      <path d="M0 220V150h40v-30h22v30h30V96h26v54h18v-80h24v80h30v-40h20v40h38V70h28v80h22V40h12v-14h12v14h12v110h30V110h24v40h36V86h22v64h40V60h30v90h26V30h14v-12h10v12h14v120h40v-36h22v36h30V98h26v52h18v-70h24v70h36v-30h20v30h40V72h28v78h24V48h26v102h34V120h22v30h40V90h26v60h30V56h24v94h38v-28h22v28h30V84h30v66h26V40h12v-16h12v16h14v110h30v-30h24v30h40V100h26v50h18v-62h24v62h34v-38h20v38h40V78h28v72h22V54h26v96h34V124h22v26h40V96h26v54h30V62h24v88h38v-24h22v24h30V88h30v62h26V48h12v-14h12v14h14v102h30v-26h24v26h40V108h26v42h18v-54h24v54h34v-30h20v30h40V84h28v66h22V60h26v90h40v70z" opacity=".9"/>
+    </svg>
+  </div>
+</div>
+
+<div class="page">
+  <header class="top">
+    <a href="https://twincitys.net/" aria-label="Twin Citys home">
+      <svg class="tcmark" aria-hidden="true"><use href="#tc"></use></svg>
+      <span>Twin Citys</span>
+    </a>
+    <span class="place">Miami, FL</span>
+  </header>
+
+  <main class="card">
+    <aside class="rail" aria-label="Progress">
+      <div class="rail__fill" id="rail-fill"></div>
+      <ol id="rail">
+        <li class="is-on"><b>1</b></li>
+        <li><b>2</b></li>
+        <li><b>3</b></li>
+      </ol>
+    </aside>
+
+    <div class="body">
+      <div class="lead" id="lead">
+        <span class="eyebrow">Start a project</span>
+        <h1>Let's build something people <em>remember.</em></h1>
+        <p>Three quick steps, plain words, no tech talk. It goes straight to Eric and Kevin and we reply within a day.</p>
+      </div>
+
+      <form id="start-form" action="https://api.web3forms.com/submit" method="POST" novalidate>
+        <input type="hidden" name="access_key" value="db4a0780-df9e-417d-a861-0682ab0a2daa">
+        <input type="hidden" name="subject" value="New project request from twincitys.net">
+        <input type="hidden" name="from_name" value="Twin Citys project form">
+        <input type="hidden" name="redirect" value="https://twincitys.net/start/#sent">
+        <div class="hp" aria-hidden="true"><input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off"></div>
+
+        <section class="step is-on" data-step="1">
+          <h2>First, <em>who</em> are we talking to?</h2>
+          <div class="row">
+            <div class="field"><label for="f-name">Your name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
+            <div class="field"><label for="f-company">Business name</label><input id="f-company" name="company" type="text" autocomplete="organization" required></div>
+            <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+            <div class="field"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="Optional"></div>
+          </div>
+          <div class="nav">
+            <span></span>
+            <button type="button" class="btn btn--go" data-next>Next</button>
+            <p class="status" id="status-1" role="status" aria-live="polite"></p>
+          </div>
+        </section>
+
+        <section class="step" data-step="2">
+          <fieldset>
+            <legend class="h2">What do you need <em>help</em> with?</legend>
+            <p class="hint">Pick as many as you want.</p>
+            <div class="tiles">
+              <label class="tile"><input type="checkbox" name="services[]" value="A brand new website"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="1"/><path d="M3 9h18M8 21h8"/></svg><span>A brand new website</span><i></i></label>
+              <label class="tile"><input type="checkbox" name="services[]" value="Fix or refresh my current website"><svg viewBox="0 0 24 24"><path d="M14 4l6 6-10 10H4v-6z"/><path d="M12 6l6 6"/></svg><span>Fix or refresh my current website</span><i></i></label>
+              <label class="tile"><input type="checkbox" name="services[]" value="Logo and brand look"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4v16M4 12h16"/></svg><span>Logo and brand look</span><i></i></label>
+              <label class="tile"><input type="checkbox" name="services[]" value="Photos or video"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="13" height="11" rx="1"/><path d="M16 11l5-3v9l-5-3z"/></svg><span>Photos or video</span><i></i></label>
+              <label class="tile"><input type="checkbox" name="services[]" value="Ads on Facebook and Instagram"><svg viewBox="0 0 24 24"><path d="M4 11v2h4l7 5V6l-7 5z"/><path d="M18 9a4 4 0 010 6"/></svg><span>Ads on Facebook and Instagram</span><i></i></label>
+              <label class="tile"><input type="checkbox" name="services[]" value="Google review cards"><svg viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg><span>Google review cards</span><i></i></label>
+              <label class="tile"><input type="checkbox" name="services[]" value="Not sure yet"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 015 0c0 1.8-2.5 2-2.5 4M12 17h.01"/></svg><span>Not sure yet, help me decide</span><i></i></label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend class="h2">If it's a website, <em>what kind?</em></legend>
+            <p class="hint">Skip this if you don't need a website.</p>
+            <div class="tiles">
+              <label class="tile"><input type="radio" name="website_type" value="A simple site that shows who we are"><span>A simple site that shows who we are, what we do and how to reach us</span><i></i></label>
+              <label class="tile"><input type="radio" name="website_type" value="A site where people can book or order"><span>A site where people can book an appointment or place an order</span><i></i></label>
+              <label class="tile"><input type="radio" name="website_type" value="An online store"><span>An online store where people buy products</span><i></i></label>
+              <label class="tile"><input type="radio" name="website_type" value="A menu site for a restaurant"><span>A menu site for a restaurant or café</span><i></i></label>
+              <label class="tile"><input type="radio" name="website_type" value="Not sure"><span>Not sure, you tell me</span><i></i></label>
+            </div>
+          </fieldset>
+          <div class="nav">
+            <button type="button" class="btn btn--ghost" data-back>Back</button>
+            <button type="button" class="btn btn--go" data-next>Next</button>
+            <p class="status" id="status-2" role="status" aria-live="polite"></p>
+          </div>
+        </section>
+
+        <section class="step" data-step="3">
+          <h2>Last thing. <em>Tell us about the business.</em></h2>
+          <div class="group">
+            <div class="field"><label for="f-site">Current website, if you have one</label><input id="f-site" name="current_website" type="text" inputmode="url" autocomplete="url" placeholder="Optional"></div>
+            <div class="row">
+              <div class="field"><label for="f-when">When do you want to start?</label>
+                <select id="f-when" name="timing">
+                  <option value="As soon as possible">As soon as possible</option>
+                  <option value="In the next month">In the next month</option>
+                  <option value="In a few months">In a few months</option>
+                  <option value="Just looking for now">Just looking for now</option>
+                </select>
+              </div>
+              <div class="field"><label for="f-budget">Rough budget</label>
+                <select id="f-budget" name="budget">
+                  <option value="Not sure yet">Not sure yet</option>
+                  <option value="Under $1,000">Under $1,000</option>
+                  <option value="$1,000 to $3,000">$1,000 to $3,000</option>
+                  <option value="$3,000 to $7,500">$3,000 to $7,500</option>
+                  <option value="$7,500 and up">$7,500 and up</option>
+                </select>
+              </div>
+            </div>
+            <div class="field"><label for="f-about">What do you do, and what would make this a win?</label><textarea id="f-about" name="about" placeholder="Who are your customers? What's working, what isn't?"></textarea></div>
+          </div>
+          <div class="nav">
+            <button type="button" class="btn btn--ghost" data-back>Back</button>
+            <button type="submit" class="btn btn--go" id="send-btn">Send it over</button>
+            <p class="status" id="status-3" role="status" aria-live="polite"></p>
+          </div>
+        </section>
+      </form>
+
+      <div class="done" id="done" tabindex="-1">
+        <svg class="palm" viewBox="0 0 110 150" aria-hidden="true"><path stroke-width="3" d="M50 40 C54 80 50 115 54 150"></path><path stroke-width="3.5" d="M50 40 C36 22 16 22 4 34 M50 40 C34 30 16 38 8 54 M50 40 C40 40 26 52 22 68 M50 40 C48 22 40 10 28 4 M50 40 C54 22 66 10 80 8 M50 40 C64 24 84 26 96 38 M50 40 C66 34 84 44 90 60 M50 40 C60 42 72 54 74 70"></path></svg>
+        <h2>Got it. <em>Thank you.</em></h2>
+        <p>Your message is on its way to Eric and Kevin. One of us will reply within a day. If it's urgent, call or text either of us.</p>
+        <div class="who">
+          <div><b>ERIC MARTINEZ</b><span>(305) 767-6128</span><span>eric@twincitys.net</span></div>
+          <div><b>KEVIN BUTCHERS</b><span>(305) 986-6414</span><span>k.butchers@twincitys.net</span></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="foot"><span>Twin Citys</span><span>Design | Develop | Create</span></footer>
+</div>
+
+<script>
+(function () {
+  /* intro: real progress (fonts + first paint) blended with a minimum run time so it never flashes */
+  var intro = document.getElementById('intro'), fill = document.getElementById('intro-fill'), pct = document.getElementById('intro-pct');
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var seen = false; try { seen = sessionStorage.getItem('tc-intro') === '1'; } catch (e) {}
+  if (location.hash === '#intro') seen = false;
+  if (reduced || seen) { intro.remove(); return; }
+  document.documentElement.classList.add('has-intro');
+  var MIN = 2800, start = performance.now(), ready = false, shown = 0;
+  var fontsReady = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+  Promise.all([fontsReady, new Promise(function (r) { if (document.readyState === 'complete') r(); else window.addEventListener('load', r); })]).then(function () { ready = true; });
+  function tick(now) {
+    var t = Math.min(1, (now - start) / MIN);
+    var target = ready ? 100 : Math.min(92, t * 100);
+    shown = Math.max(shown, Math.round(target));
+    fill.style.setProperty('--load', shown + '%'); pct.textContent = shown;
+    if (shown >= 100 && t >= 1) {
+      try { sessionStorage.setItem('tc-intro', '1'); } catch (e) {}
+      setTimeout(function () {
+        intro.classList.add('is-gone'); document.documentElement.classList.add('is-in');
+        setTimeout(function () { intro.remove(); }, 1300);
+      }, 350);
+      return;
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+</script>
+<script>
+(function () {
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
+  var form = $('#start-form'), steps = $$('.step'), rail = $$('#rail li'), fill = $('#rail-fill'), lead = $('#lead'), done = $('#done');
+  var cur = 1, total = steps.length;
+
+  function show(n) {
+    cur = n;
+    steps.forEach(function (s) { s.classList.toggle('is-on', +s.dataset.step === n); });
+    rail.forEach(function (li, i) { li.classList.toggle('is-on', i + 1 === n); li.classList.toggle('is-done', i + 1 < n); });
+    fill.style.setProperty('--p', ((n - 1) / (total - 1) * 100) + '%');
+    var first = $('input, select, textarea', steps[n - 1]);
+    if (first && window.matchMedia('(min-width: 641px)').matches) first.focus({ preventScroll: true });
+    $('.card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function validStep(n) {
+    var s = steps[n - 1], st = $('#status-' + n), ok = true;
+    st.className = 'status'; st.textContent = '';
+    $$('[required]', s).forEach(function (el) {
+      var bad = !el.validity.valid;
+      el.closest('.field').classList.toggle('is-bad', bad);
+      if (bad && ok) { ok = false; el.focus(); }
+    });
+    if (!ok) { st.classList.add('is-error'); st.textContent = n === 1 ? 'We need your name, business and a working email to reply.' : 'Something is missing above.'; }
+    return ok;
+  }
+
+  $$('[data-next]').forEach(function (b) { b.addEventListener('click', function () { if (validStep(cur)) show(cur + 1); }); });
+  $$('[data-back]').forEach(function (b) { b.addEventListener('click', function () { show(cur - 1); }); });
+  form.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA' && cur < total) { e.preventDefault(); if (validStep(cur)) show(cur + 1); }
+  });
+  $$('.field input').forEach(function (el) { el.addEventListener('input', function () { el.closest('.field').classList.remove('is-bad'); }); });
+
+  function finish() {
+    form.hidden = true; lead.hidden = true; done.classList.add('is-on'); done.focus({ preventScroll: true });
+    rail.forEach(function (li) { li.classList.add('is-done'); li.classList.remove('is-on'); });
+    fill.style.setProperty('--p', '100%');
+    $('.card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  form.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    if (!validStep(1)) { show(1); return; }
+    if ($('[name="botcheck"]', form).checked) return;
+    var st = $('#status-3'), send = $('#send-btn');
+    st.className = 'status'; st.textContent = 'Sending…'; send.disabled = true;
+    var data = {};
+    new FormData(form).forEach(function (v, k) {
+      if (k === 'botcheck' || k === 'redirect') return;
+      var key = k.replace('[]', '');
+      data[key] = key in data ? data[key] + ', ' + v : v;
+    });
+    if (!data.services) data.services = 'None picked';
+    if (!data.website_type) data.website_type = 'Skipped (may not be a website project)';
+    /* One Web3Forms key per inbox. Each key delivers to the address it was made for, so the
+       submission is sent once per key and both Eric and Kevin get it with no forwarding. */
+    var KEYS = [
+      'db4a0780-df9e-417d-a861-0682ab0a2daa',   // eric@twincitys.net
+      'KEVIN_WEB3FORMS_ACCESS_KEY'              // k.butchers@twincitys.net — paste Kevin's key here
+    ].filter(function (k) { return /^[0-9a-f-]{36}$/i.test(k); });
+    var post = function (key) {
+      var body = Object.assign({}, data, { access_key: key });
+      return fetch('https://api.web3forms.com/submit', {
+        method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(body)
+      }).then(function (r) { return r.json().then(function (j) { return !!(r.ok && j.success); }); }, function () { return false; });
+    };
+    Promise.all(KEYS.map(post))
+      .then(function (results) { if (!results.some(Boolean)) throw new Error('failed'); })
+      .then(finish)
+      .catch(function () {
+        send.disabled = false; st.classList.add('is-error');
+        st.textContent = 'That didn’t go through. Email us instead at eric@twincitys.net.';
+      });
+  });
+
+  if (location.hash === '#sent') finish();
+})();
+</script>
+</body>
+</html>
