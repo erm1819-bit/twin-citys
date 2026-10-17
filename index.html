@@ -460,15 +460,18 @@ html.has-case { overflow: hidden; }
   .has-intro .wm__line, .has-intro .wm__twin, .has-intro .wm__cities { opacity: 1; }
 }
 
-/* start a project: the way in from the nav and from the card */
-.startbtn {
-  display: inline-flex; align-items: center; gap: 14px; min-height: 44px; margin-top: 22px; padding: 0 22px;
-  color: var(--ivory); border: 1px solid #34322f; font: 500 var(--t-label) var(--font-display); letter-spacing: .32em; text-transform: uppercase;
-  transition: border-color .2s, color .2s;
+/* start a project: under the card, the way in to the form */
+.start { margin-top: 24px; padding-top: 56px; border-top: 1px solid var(--ink); align-items: start; }
+.start .label { color: var(--stone); padding-top: 10px; }
+.start__body { display: flex; flex-direction: column; align-items: flex-start; gap: 22px; }
+.start__body p { max-width: 24ch; font-family: var(--font-display); font-size: var(--t-lg); font-weight: 300; letter-spacing: .04em; line-height: 1.25; text-wrap: balance; }
+.start__link {
+  display: inline-flex; align-items: center; gap: 14px; min-height: 44px;
+  color: var(--ivory); font: 500 var(--t-label) var(--font-display); letter-spacing: .32em; text-transform: uppercase;
 }
-.startbtn::after { content: ""; display: block; width: 28px; height: 1px; background: currentColor; transition: width .4s var(--ease); }
-.startbtn:hover { text-decoration: none; border-color: var(--stone); }
-.startbtn:hover::after { width: 44px; }
+.start__link::after { content: ""; display: block; width: 28px; height: 1px; background: currentColor; transition: width .4s var(--ease); }
+.start__link:hover { text-decoration: none; }
+.start__link:hover::after { width: 48px; }
 .hero__links a.hero__start { color: var(--ivory); }
 </style>
 
@@ -578,10 +581,7 @@ html.has-case { overflow: hidden; }
     <section class="contact band" id="contact">
       <div class="split contact__head">
         <h2 class="label to-spine">Contact</h2>
-        <div>
-          <p>Call, text or email either of us.</p>
-          <a class="startbtn" href="https://twincitys.net/start">Start a project</a>
-        </div>
+        <p>Call, text or email either of us.</p>
       </div>
 
       <div class="cardwrap">
@@ -620,6 +620,14 @@ html.has-case { overflow: hidden; }
       </div>
 
       <button type="button" class="flipbtn" id="flip-card" aria-pressed="true">Flip the card</button>
+
+      <div class="split start" id="start">
+        <h2 class="label to-spine">Start a project</h2>
+        <div class="start__body">
+          <p>Tell us about your business in three quick steps. We read every one.</p>
+          <a class="start__link" href="https://twincitys.net/start">Open the form</a>
+        </div>
+      </div>
 
       <footer class="split foot">
         <span class="to-spine">Twin Citys</span>
