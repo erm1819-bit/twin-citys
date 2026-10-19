@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Twin Citys, a Miami creative studio. Start a project, see the website, or find us on Instagram.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0b0b0b">
+<title>Twin Citys</title>
+<script data-goatcounter="https://twincitys.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap">
+<style>
+/* The back of the card, as a page: the mark, the name, and the three places to go. Built to open fast from a QR scan. */
+:root {
+  color-scheme: dark;
+  --black: #0b0b0b; --ivory: #e8e3d9; --stone: #9a958b; --stone-dim: #45423f; --line: #2a2927;
+  --font: 'Montserrat', 'Avenir Next', 'Helvetica Neue', Arial, sans-serif;
+  --ease: cubic-bezier(.3, .7, .2, 1);
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { height: 100%; }
+body {
+  min-height: 100%; margin: 0; background: var(--black); color: var(--ivory);
+  font-family: var(--font); font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased;
+  display: flex; flex-direction: column; align-items: center;
+  padding: calc(env(safe-area-inset-top, 0px) + 36px) max(20px, env(safe-area-inset-left, 0px)) calc(env(safe-area-inset-bottom, 0px) + 28px) max(20px, env(safe-area-inset-right, 0px));
+}
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 1px solid var(--ivory); outline-offset: 5px; }
+h1, p { margin: 0; }
+.wrap { width: min(100%, 420px); display: flex; flex-direction: column; align-items: center; gap: 36px; flex: 1; }
+.brand { display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; }
+.mark { width: 64px; height: auto; aspect-ratio: 892 / 756; fill: var(--ivory); }
+.wm { font-size: 22px; font-weight: 300; letter-spacing: .34em; text-transform: uppercase; }
+.wm i { display: inline-block; width: 1px; height: 18px; margin: 0 .55em; background: var(--stone); vertical-align: -2px; }
+.sub { color: var(--stone); font-size: 11px; letter-spacing: .34em; text-transform: uppercase; }
+.links { width: 100%; display: flex; flex-direction: column; gap: 12px; }
+.link {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  min-height: 64px; padding: 0 22px; border: 1px solid var(--line);
+  font-size: 12px; font-weight: 500; letter-spacing: .32em; text-transform: uppercase;
+  transition: border-color .2s, background .2s;
+}
+.link::after { content: ""; display: block; width: 28px; height: 1px; background: currentColor; transition: width .4s var(--ease); }
+.link:hover, .link:active { border-color: var(--stone); background: #111110; }
+.link:hover::after { width: 44px; }
+.link--main { background: var(--ivory); color: var(--black); border-color: var(--ivory); }
+.link--main:hover, .link--main:active { background: #f4efe5; border-color: #f4efe5; }
+.link small { font-weight: 400; letter-spacing: .06em; text-transform: none; font-size: 13px; color: var(--stone); margin-left: auto; }
+.link--main small { color: #57524a; }
+.foot { margin-top: auto; padding-top: 24px; color: var(--stone); font-size: 11px; letter-spacing: .32em; text-transform: uppercase; text-align: center; }
+.foot a { display: block; margin-top: 10px; color: var(--ivory); letter-spacing: .08em; text-transform: none; font-size: 14px; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="tc" viewBox="0 0 892 756"><polygon points="0,0 70,96 280,97 280,632 407,742 407,1"></polygon><polygon points="892,0 463,1 463,756 802,581 582,580 582,97 813,96"></polygon></symbol></svg>
+<main class="wrap">
+  <header class="brand">
+    <svg class="mark" aria-hidden="true"><use href="#tc"></use></svg>
+    <h1 class="wm">Twin<i aria-hidden="true"></i>Citys</h1>
+    <p class="sub">Miami creative studio</p>
+  </header>
+  <nav class="links" aria-label="Twin Citys links">
+    <a class="link link--main" href="https://twincitys.net/start">Start a project</a>
+    <a class="link" href="https://twincitys.net/">Website<small>twincitys.net</small></a>
+    <a class="link" href="https://instagram.com/twincitys.co">Instagram<small>@twincitys.co</small></a>
+  </nav>
+  <footer class="foot">
+    Design | Develop | Create
+    <a href="mailto:eric@twincitys.net">eric@twincitys.net</a>
+  </footer>
+</main>
+</body>
+</html>
