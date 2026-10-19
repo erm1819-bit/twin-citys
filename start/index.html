@@ -8,7 +8,6 @@
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#0b0b0b">
 <title>Twin Citys Project Form</title>
-<script data-goatcounter="https://twincitys.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&display=swap">
@@ -36,6 +35,8 @@
   --ease: cubic-bezier(.3, .7, .2, 1);
 }
 *, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+.done:focus { outline: none; }
 html { height: 100%; }
 body {
   min-height: 100%; margin: 0; background: var(--black); color: var(--ivory);
@@ -185,6 +186,8 @@ legend { padding: 0; margin-bottom: 4px; }
 .done .who { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; padding-top: 10px; border-top: 1px solid var(--line); }
 .done .who div { display: flex; flex-direction: column; gap: 4px; font-size: 14px; color: var(--stone); }
 .done .who b { color: var(--ivory); font-weight: 500; letter-spacing: .06em; }
+.done__next { display: flex; flex-wrap: wrap; gap: 14px; padding-top: 8px; }
+.done__next .btn { text-decoration: none; }
 .done .palm { width: 92px; height: 120px; stroke: var(--amber); fill: none; stroke-linecap: round; opacity: .9; }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
@@ -385,6 +388,10 @@ legend { padding: 0; margin-bottom: 4px; }
         <div class="who">
           <div><b>ERIC MARTINEZ</b><span>(305) 767-6128</span><span>eric@twincitys.net</span></div>
           <div><b>KEVIN BUTCHERS</b><span>(305) 986-6414</span><span>k.butchers@twincitys.net</span></div>
+        </div>
+        <div class="done__next">
+          <a class="btn btn--go" href="https://twincitys.net/">See our work</a>
+          <a class="btn btn--ghost" href="https://twincitys.net/start/#intro">Send another</a>
         </div>
       </div>
     </div>
