@@ -262,26 +262,13 @@ html.has-case .bar { opacity: 0; pointer-events: none; }
 .work-k__open::after { content: ""; display: block; width: 28px; height: 1px; background: currentColor; transition: width .4s var(--ease); }
 .work-k__open:hover::after { width: 44px; }
 .work-k__tags { color: var(--stone); font-size: var(--t-label); letter-spacing: .28em; text-transform: uppercase; }
-/* the panels: tall, one project each; the scroll runs each one (its screens, or its film) while the text pins on the left */
-.work-k__panels { position: relative; z-index: 3; display: flex; flex-direction: column; gap: clamp(40px, 12vh, 140px); padding: 12vh 0 18vh clamp(20px, 4vw, 56px); margin-right: calc(-1 * var(--gutter)); min-width: 0; }
+/* the panels: one still each; the one in the middle of the screen is lit, the others sit back in the dark */
+.work-k__panels { position: relative; z-index: 3; display: flex; flex-direction: column; gap: clamp(28px, 6vh, 72px); padding: 10vh 0 14vh clamp(20px, 4vw, 56px); margin-right: calc(-1 * var(--gutter)); min-width: 0; }
 .work-k__count { margin-left: 14px; color: var(--stone-dim); font-variant-numeric: tabular-nums; }
-.panel { margin: 0; --q: 0; --in: 0; }
-.panel__btn {
-  position: relative; display: block; width: 100%; height: min(78vh, 760px); padding: 0; border: 0; background: var(--charcoal); color: inherit; cursor: pointer; overflow: hidden;
-  transform: translateY(calc((1 - var(--in)) * 48px)) scale(calc(.94 + var(--in) * .06)); opacity: calc(.35 + var(--in) * .65); transform-origin: 50% 60%;
-  will-change: transform, opacity;
-}
-.panel__layer, .panel__film { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
-.panel__layer { opacity: 0; transition: opacity .5s var(--ease); }
-.panel__layer.is-on { opacity: 1; }
-.panel__layer--fit { object-fit: contain; background: #121211; padding: 6%; }
-.panel__film { opacity: 0; transition: opacity .5s var(--ease); }
-.panel--film.is-film .panel__film { opacity: 1; }
-.panel__steps { position: absolute; left: 18px; bottom: 18px; display: flex; gap: 6px; }
-.panel__steps i { display: block; width: 22px; height: 2px; background: rgba(232, 227, 217, .35); transition: background-color .3s; }
-.panel__steps i.is-on { background: var(--ivory); }
-.panel__btn::after { content: ""; position: absolute; inset: 0; pointer-events: none; box-shadow: inset 0 0 0 1px rgba(232, 227, 217, .08); }
-.panel__btn:hover { outline: 1px solid rgba(232, 227, 217, .3); outline-offset: -1px; }
+.panel { margin: 0; --in: 0; }
+.panel__btn { position: relative; display: block; width: 100%; padding: 0; border: 0; background: var(--charcoal); color: inherit; cursor: pointer; aspect-ratio: 16 / 9; overflow: hidden; }
+.panel__btn img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(calc(.3 + var(--in) * .7)); transform: scale(calc(.97 + var(--in) * .03)); transition: transform 1.2s var(--ease); }
+.panel__btn:hover img { transform: scale(1.02); }
 .panel figcaption { display: none; }
 
 /* the case: opens over the page; the panel you clicked grows into its first frame */
@@ -409,8 +396,7 @@ html.has-case { overflow: hidden; }
   .work-k__grid { grid-template-columns: minmax(0, 1fr); }
   .work-k__side { padding-right: 0; }
   .work-k__sticky { position: static; min-height: 0; padding-block: 0 36px; gap: 24px; }
-  .work-k__panels { padding: 0 0 8vh; margin-right: 0; gap: 36px; }
-  .panel__btn { height: auto; aspect-ratio: 4 / 5; }
+  .work-k__panels { padding: 0 0 4vh; margin-right: 0; gap: 28px; }
   .work-k__count { display: none; }
   .panel figcaption { display: block; padding-top: 10px; color: var(--stone); font-size: 14px; line-height: 1.6; }
   .drive__stage { min-height: 0; }
@@ -589,17 +575,13 @@ html.has-case { overflow: hidden; }
         <div class="work-k__panels">
           <figure class="panel" data-case-panel="la-vasca" data-client="La Vasca Deli Miami" data-chapter="Restaurant website and dish films" data-desc="A Spanish restaurant on Calle Ocho, open since 1990. The site starts at the door: scroll and the red doors open onto the signature dish, the full menu and the chef." data-tags="2026 · Website · Dish films" data-open="Open the case">
             <button type="button" class="panel__btn" data-case="la-vasca" aria-haspopup="dialog" aria-controls="casev" aria-label="Open the La Vasca case">
-              <img class="panel__layer is-on" src="work/lv-doors.jpg" alt="" width="1280" height="720">
-              <img class="panel__layer" src="work/lv-pulpo.jpg" alt="" width="1280" height="720">
-              <img class="panel__layer panel__layer--fit" src="work/lv-menu.jpg" alt="" width="1280" height="720">
-              <span class="panel__steps" aria-hidden="true"><i></i><i></i><i></i></span>
+              <img src="work/lv-doors.jpg" alt="" width="1280" height="720">
             </button>
             <figcaption>La Vasca Deli Miami. Restaurant website and dish films.</figcaption>
           </figure>
-          <figure class="panel panel--film" data-case-panel="lucerne" data-client="Lucerne Bakery" data-chapter="Dish film: the guava pastry" data-desc="One pastelito de guayaba, floating in a white room. The camera goes into the glaze and the guava and comes back out. Scroll past it and the film runs with you; click to watch it play." data-tags="2026 · Dish film" data-open="Play the film">
+          <figure class="panel" data-case-panel="lucerne" data-client="Lucerne Bakery" data-chapter="Dish film: the guava pastry" data-desc="One pastelito de guayaba, floating in a white room. The camera goes into the glaze and the guava and comes back out. Nine seconds, no words, nothing else in the frame." data-tags="2026 · Dish film" data-open="Play the film">
             <button type="button" class="panel__btn" data-case="lucerne" aria-haspopup="dialog" aria-controls="casev" aria-label="Play the Lucerne Bakery film">
-              <img class="panel__layer is-on" src="work/lucerne-panel.jpg" alt="" width="1280" height="720">
-              <video class="panel__film" id="panel-film-lucerne" muted playsinline preload="none" aria-hidden="true"></video>
+              <img src="work/lucerne-panel.jpg" alt="" width="1280" height="720">
             </button>
             <figcaption>Lucerne Bakery. Dish film: the guava pastry.</figcaption>
           </figure>
@@ -1107,50 +1089,16 @@ html.has-case { overflow: hidden; }
     workText.classList.add('is-swapping');
     workTimer = setTimeout(apply, 300);
   }
-  /* each panel gets its own number from the scroll: 0 as it enters from below, 1 as it leaves above.
-     La Vasca steps through its screens on it; Lucerne's film is seeked by it. */
   var panels = [].slice.call(document.querySelectorAll('.panel[data-case-panel]'));
   var workCount = $('#work-count');
-  var pfilm = $('#panel-film-lucerne'), pfilmReady = false, pfilmDur = 0, pfilmBusy = false, pfilmWant = 0, pfilmFetched = false;
-  function fetchPanelFilm() {
-    if (pfilmFetched || !pfilm || !motion || !canVideo) return;
-    pfilmFetched = true;
-    fetch('work/lucerne-guava.mp4').then(function (r) { if (!r.ok) throw new Error(r.status); return r.blob(); }).then(function (b) {
-      pfilm.addEventListener('loadedmetadata', function () {
-        pfilmDur = pfilm.duration || 9; pfilmReady = true;
-        pfilm.addEventListener('seeked', function () { pfilm.closest('.panel').classList.add('is-film'); }, { once: true });
-        seekPanelFilm(true);
-      }, { once: true });
-      pfilm.src = URL.createObjectURL(b); pfilm.load();
-    }).catch(function () {});
-  }
-  function seekPanelFilm(force) {
-    if (!pfilmReady || (pfilmBusy && !force)) return;
-    var t = Math.max(0.001, pfilmWant * pfilmDur);
-    if (!force && Math.abs(pfilm.currentTime - t) < 1 / 30) return;
-    pfilmBusy = true;
-    var done = function () { pfilmBusy = false; if (Math.abs(pfilmWant * pfilmDur - pfilm.currentTime) > 1 / 30) seekPanelFilm(); };
-    if (pfilm.requestVideoFrameCallback) pfilm.requestVideoFrameCallback(done); else pfilm.addEventListener('seeked', done, { once: true });
-    pfilm.currentTime = t;
-  }
   function paintPanels() {
     var vh = window.innerHeight, best = null, bestD = Infinity;
     for (var i = 0; i < panels.length; i++) {
       var el = panels[i], r = el.getBoundingClientRect();
-      /* q: 0 when the panel's top reaches the bottom edge, 1 when its bottom reaches the top edge */
-      var q = clamp((vh - r.top) / (vh + r.height), 0, 1);
-      var inn = smooth(0, 0.28, q) * (1 - smooth(0.78, 1, q));
-      el.style.setProperty('--q', q.toFixed(4)); el.style.setProperty('--in', inn.toFixed(4));
       var d = Math.abs(r.top + r.height / 2 - vh / 2);
+      /* 1 at the middle of the screen, 0 a bit more than half a screen away */
+      el.style.setProperty('--in', (1 - smooth(vh * 0.12, vh * 0.6, d)).toFixed(3));
       if (d < bestD) { bestD = d; best = el; }
-      var layers = el.querySelectorAll('.panel__layer'), steps = el.querySelectorAll('.panel__steps i');
-      if (el.classList.contains('panel--film')) {
-        if (q > 0 && q < 1) fetchPanelFilm();
-        pfilmWant = clamp((q - 0.18) / 0.64, 0, 1); seekPanelFilm();
-      } else if (layers.length > 1) {
-        var step = Math.min(layers.length - 1, Math.floor(clamp((q - 0.22) / 0.56, 0, 0.999) * layers.length));
-        for (var j = 0; j < layers.length; j++) { layers[j].classList.toggle('is-on', j === step); if (steps[j]) steps[j].classList.toggle('is-on', j === step); }
-      }
     }
     if (best) {
       setWork(best);
