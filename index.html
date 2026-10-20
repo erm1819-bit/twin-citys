@@ -303,7 +303,13 @@ html.has-case .bar { opacity: 0; pointer-events: none; }
 .casev__side .visit { color: var(--ivory); }
 .casev__main { position: relative; min-width: 0; border-left: 1px solid #2a2927; padding: 24px 0 0 clamp(20px, 3vw, 48px); display: flex; flex-direction: column; gap: clamp(40px, 5vw, 72px); }
 .casev__hero { margin: 0; }
-.casev__hero img { position: relative; z-index: 2; display: block; width: 100%; height: auto; background: var(--charcoal); }
+.casev__hero img, .casev__hero video { position: relative; z-index: 2; display: block; width: 100%; height: auto; background: var(--charcoal); }
+.casev__film { display: flex; justify-content: center; background: #f1efea; }
+.casev__film video { width: auto; max-width: 100%; height: min(82vh, 1100px); object-fit: contain; background: #f1efea; }
+.casev__note { color: #a6a198; line-height: 1.7; max-width: 32ch; font-size: 15px; }
+.work-k__text { display: flex; flex-direction: column; gap: clamp(32px, 5vh, 56px); transition: opacity .3s var(--ease), transform .3s var(--ease); }
+.work-k__text.is-swapping { opacity: 0; transform: translateY(8px); }
+.work-k__desc { min-height: 5.1em; }
 .casev__rest { display: flex; flex-direction: column; gap: clamp(40px, 5vw, 72px); opacity: 0; transition: opacity .25s var(--ease); }
 .casev.is-open .casev__rest { opacity: 1; transition: opacity .6s var(--ease) .3s; }
 .casev__sec { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: 20px 48px; align-items: start; }
@@ -551,25 +557,34 @@ html.has-case { overflow: hidden; }
       <div class="work-k__grid">
         <div class="work-k__side">
           <div class="work-k__sticky">
-            <div>
-              <p class="work-k__eyebrow">Our work</p>
-              <h2 class="work-k__client">La Vasca Deli Miami</h2>
-              <p class="work-k__chapter">Restaurant website and dish films</p>
-            </div>
-            <p class="work-k__desc">A Spanish restaurant on Calle Ocho, open since 1990. The site starts at the door: scroll and the red doors open onto the signature dish, the full menu and the chef.</p>
-            <div class="work-k__foot">
-              <button type="button" class="work-k__open" data-case="la-vasca" aria-haspopup="dialog" aria-controls="casev">Open the case</button>
-              <span class="work-k__tags">2026 · Website · Dish films</span>
+            <div class="work-k__text" id="work-text">
+              <div>
+                <p class="work-k__eyebrow">Our work</p>
+                <h2 class="work-k__client" id="work-client">La Vasca Deli Miami</h2>
+                <p class="work-k__chapter" id="work-chapter">Restaurant website and dish films</p>
+              </div>
+              <p class="work-k__desc" id="work-desc">A Spanish restaurant on Calle Ocho, open since 1990. The site starts at the door: scroll and the red doors open onto the signature dish, the full menu and the chef.</p>
+              <div class="work-k__foot">
+                <button type="button" class="work-k__open" id="work-open" data-case="la-vasca" aria-haspopup="dialog" aria-controls="casev">Open the case</button>
+                <span class="work-k__tags" id="work-tags">2026 · Website · Dish films</span>
+              </div>
             </div>
           </div>
         </div>
         <div class="work-k__panels">
-          <figure class="panel" data-case-panel="la-vasca">
+          <figure class="panel" data-case-panel="la-vasca" data-client="La Vasca Deli Miami" data-chapter="Restaurant website and dish films" data-desc="A Spanish restaurant on Calle Ocho, open since 1990. The site starts at the door: scroll and the red doors open onto the signature dish, the full menu and the chef." data-tags="2026 · Website · Dish films" data-open="Open the case">
             <button type="button" class="panel__btn" data-case="la-vasca" aria-haspopup="dialog" aria-controls="casev" aria-label="Open the La Vasca case">
               <img src="work/lv-doors.jpg" alt="" width="1280" height="720">
               <img class="panel__hover" src="work/lv-pulpo.jpg" alt="" width="1280" height="720">
             </button>
             <figcaption>La Vasca Deli Miami. Restaurant website and dish films.</figcaption>
+          </figure>
+          <figure class="panel" data-case-panel="lucerne" data-client="Lucerne Bakery" data-chapter="Dish film: the guava pastry" data-desc="One pastelito de guayaba, floating in a white room. The camera goes into the glaze and the guava and comes back out. Nine seconds, no words, nothing else in the frame." data-tags="2026 · Dish film" data-open="Play the film">
+            <button type="button" class="panel__btn" data-case="lucerne" aria-haspopup="dialog" aria-controls="casev" aria-label="Play the Lucerne Bakery film">
+              <img src="work/lucerne-panel.jpg" alt="" width="1280" height="720">
+              <img class="panel__hover" src="work/lucerne-hover.jpg" alt="" width="1280" height="720">
+            </button>
+            <figcaption>Lucerne Bakery. Dish film: the guava pastry.</figcaption>
           </figure>
         </div>
       </div>
@@ -704,6 +719,27 @@ html.has-case { overflow: hidden; }
           <a class="visit" href="https://claude.ai/artifact/Vf4eF7hsuxPH5qazCfuvgV" target="_blank" rel="noopener">Visit the site</a>
           <button type="button" class="casev__close" data-close-case>Close</button>
         </div>
+      </div>
+    </div>
+  </article>
+  <article class="casev__case casev__case--film" id="casev-lucerne" hidden>
+    <aside class="casev__side">
+      <button type="button" class="casev__close" data-close-case>Close</button>
+      <div>
+        <h2 class="casev__client">Lucerne Bakery</h2>
+        <p class="casev__sub">Dish film: the guava pastry.</p>
+        <p class="casev__tags">2026 · Dish film</p>
+      </div>
+      <p class="casev__note">A pastelito de guayaba from Lucerne, filmed on its own in a white room: the camera goes into the glaze and the guava and comes back out. Nine seconds, no words. The kind of shot a counter case can't give you, made for the bakery's page and ads.</p>
+      <a class="visit" href="https://lucernebakery.com/en-US#top" target="_blank" rel="noopener">Visit Lucerne Bakery</a>
+    </aside>
+    <div class="casev__main">
+      <figure class="casev__hero casev__film">
+        <video id="film-lucerne" src="work/lucerne-guava.mp4" poster="work/lucerne-poster.jpg" width="720" height="1280" muted loop playsinline preload="metadata" aria-label="The Lucerne Bakery guava pastry film"></video>
+      </figure>
+      <div class="casev__rest casev__foot">
+        <a class="visit" href="https://lucernebakery.com/en-US#top" target="_blank" rel="noopener">Visit Lucerne Bakery</a>
+        <button type="button" class="casev__close" data-close-case>Close</button>
       </div>
     </div>
   </article>
@@ -964,7 +1000,9 @@ html.has-case { overflow: hidden; }
     caseBg.hidden = false; caseV.hidden = false; caseV.scrollTop = 0;
     root.classList.add('has-case');
     if ('inert' in page) page.inert = true;
-    var hero = art.querySelector('.casev__hero img');
+    var hero = art.querySelector('.casev__hero img, .casev__hero video');
+    var film = art.querySelector('video');
+    if (film) { film.currentTime = 0; var pp = film.play(); if (pp && pp.catch) pp.catch(function () {}); }
     if (hero && start && motion) {
       hero.style.transition = 'none';
       placeOver(hero, start);
@@ -979,8 +1017,10 @@ html.has-case { overflow: hidden; }
   function closeCase() {
     if (!caseOpen) return;
     caseOpen = false;
-    var art = caseArt, hero = art && art.querySelector('.casev__hero img');
+    var art = caseArt, hero = art && art.querySelector('.casev__hero img, .casev__hero video');
     var id = art ? art.id.replace('casev-', '') : '';
+    var film = art && art.querySelector('video');
+    if (film) film.pause();
     var src = panelImg(id), wait = 350;
     caseBg.classList.remove('is-open'); caseV.classList.remove('is-open');
     if (hero && src && motion && caseV.scrollTop < hero.offsetHeight * 0.6) {
@@ -1027,6 +1067,33 @@ html.has-case { overflow: hidden; }
     }
     var wanted = location.hash.replace('#', '');
     if (wanted && document.getElementById('casev-' + wanted)) openCase(wanted, document.querySelector('[data-case="' + wanted + '"]'));
+  }
+
+  /* ----- work: the text on the left follows the panel on the right ----- */
+  var workText = $('#work-text'), workOpen = $('#work-open'), workCur = 'la-vasca', workTimer = 0;
+  function setWork(panel) {
+    var id = panel.getAttribute('data-case-panel');
+    if (id === workCur) return;
+    workCur = id;
+    var apply = function () {
+      $('#work-client').textContent = panel.getAttribute('data-client');
+      $('#work-chapter').textContent = panel.getAttribute('data-chapter');
+      $('#work-desc').textContent = panel.getAttribute('data-desc');
+      $('#work-tags').textContent = panel.getAttribute('data-tags');
+      workOpen.textContent = panel.getAttribute('data-open');
+      workOpen.setAttribute('data-case', id);
+      workText.classList.remove('is-swapping');
+    };
+    clearTimeout(workTimer);
+    if (!motion) { apply(); return; }
+    workText.classList.add('is-swapping');
+    workTimer = setTimeout(apply, 300);
+  }
+  if ('IntersectionObserver' in window && window.matchMedia('(min-width: 821px)').matches) {
+    var panelsSeen = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) setWork(e.target); });
+    }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+    [].forEach.call(document.querySelectorAll('.panel[data-case-panel]'), function (p) { panelsSeen.observe(p); });
   }
 
   /* ----- the plate: a light that follows the pointer, and drifts when there is none ----- */
