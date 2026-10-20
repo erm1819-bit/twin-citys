@@ -244,6 +244,92 @@ html:not(.js) .panel__btn:focus-visible .panel__in { visibility: visible; -webki
   .panel__in { display: none; }
 }
 
+/* the filmstrip: the contact sheet of the case. Frames are real buttons in a native horizontal scroller (touch and
+   trackpads keep the platform's own inertia and rubber-band); JS adds mouse drag with momentum on top.
+   Width of a frame = strip height x the image's aspect (--w / --h, same numbers as the img attributes), so nothing moves
+   when images load. The scroller bleeds out to both viewport edges on its own: the page never scrolls sideways.
+   The first frame rests on the left edge of the 1200px column (the text above); frames slide off the left edge of the screen.
+   Phones: see PART 2 (the scroller stops at the spine's side instead of bleeding left). */
+.strip {
+  --strip-h: 260px; --strip-gap: 16px;
+  --strip-lead: calc(var(--gutter) + max(0px, (100vw - 2 * var(--gutter) - 1200px) / 2));   /* fallback for scroll-padding-left; JS writes the exact px */
+  --strip-trail: var(--strip-lead);                                                         /* room after the last frame: it rests on the column's right edge */
+  position: relative; z-index: 3; /* over the spine: the strip lies across the line like a strip of film */
+  width: 100%; max-width: 1200px; margin: clamp(24px, 3vw, 48px) auto 0;
+  background: var(--black);
+}
+.strip__head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 28px; }
+.strip__head .label { color: var(--stone); }
+.strip__hint {
+  display: none;   /* shown only when JS runs: without it there is no mouse drag to point at */
+  align-items: center; gap: 16px;
+  color: var(--stone); font-size: var(--t-label); font-weight: 500; letter-spacing: .4em; text-transform: uppercase;
+}
+.strip__hint i { display: block; width: 44px; height: 1px; background: currentColor; transform-origin: left center; }
+@keyframes strip-cue { 0% { transform: scaleX(0); opacity: 1; } 55% { transform: scaleX(1); opacity: 1; } 100% { transform: scaleX(1); opacity: 0; } }
+.motion .strip__hint i { animation: strip-cue 2.6s 1.2s ease-in-out infinite; }
+.motion .strip__hint { transition: opacity .6s var(--ease), visibility 0s .6s; }
+.strip.is-used .strip__hint { opacity: 0; visibility: hidden; }
+.js .strip__hint { display: inline-flex; }
+@media (hover: none), (pointer: coarse) { .js .strip__hint { display: none; } }
+
+.strip__scroll {
+  /* 8px of room around the first frame so its focus ring is not clipped by the scroller's overflow */
+  margin: -8px calc(50% - 50vw) 0 calc(50% - 50vw);
+  padding: 8px 0 0 calc(50vw - 50%);
+  scroll-padding-left: var(--strip-lead);
+  overflow-x: auto; overflow-y: hidden;
+  scrollbar-width: none; -ms-overflow-style: none;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  background: var(--black);
+  -webkit-user-select: none; user-select: none;
+}
+.strip__scroll::-webkit-scrollbar { display: none; }
+/* Snap is for fingers only. With `proximity` left on for a mouse, Chrome re-snapped the hand-driven glide the moment it ended and
+   jumped the film by up to 236px to the nearest frame start (measured, see NOTES.md), which reads as a glitch. So: fine pointers
+   (mouse, trackpad) scroll freely and the mouse glide stops where friction leaves it; coarse pointers get the platform's own
+   inertia plus proximity snap. JS adds .is-mouse on the first mouse press so an iPad with a mouse does not mix the two. */
+@media (pointer: coarse) {
+  .strip__scroll { scroll-snap-type: x proximity; }
+  .strip__scroll.is-mouse { scroll-snap-type: none; }
+}
+.strip__scroll.is-glide { will-change: scroll-position; }
+@media (hover: hover) and (pointer: fine) {
+  .js .strip__scroll { cursor: grab; }
+  .js .strip__scroll.is-drag, .js .strip__scroll.is-drag * { cursor: grabbing; }
+}
+.strip__track { display: flex; align-items: flex-start; gap: var(--strip-gap); width: max-content; padding-right: var(--strip-trail); }
+
+.strip__frame {
+  flex: none; display: block; width: calc(var(--strip-h) * var(--w) / var(--h)); margin: 0; padding: 0;
+  border: 0; border-radius: 0; background: none; color: var(--stone); font: inherit; text-align: left;
+  cursor: inherit; scroll-snap-align: start; -webkit-tap-highlight-color: transparent;
+}
+.strip__pic { position: relative; display: block; width: 100%; height: var(--strip-h); overflow: hidden; background: var(--card-black); }
+.strip__pic img {
+  display: block; width: 100%; height: 100%; max-width: none; object-fit: cover;
+  pointer-events: none; -webkit-user-drag: none; user-select: none;
+}
+.strip__cap {
+  display: block; margin-top: 14px; min-height: 3.2em;   /* two lines reserved: the narrow phone frames wrap, the wide ones do not */
+  color: var(--stone); font-size: var(--t-label); font-weight: 500; letter-spacing: .3em; line-height: 1.6; text-transform: uppercase;
+}
+.strip__frame--tall .strip__no { display: block; }
+.strip__frame--tall .strip__dash { display: none; }
+.strip__frame--tall .strip__name { white-space: nowrap; }   /* the narrow frames never wrap on desktop, so the two reserved lines always hold; it may spill into the 16px gap, never onto a neighbour */
+.strip__frame:focus-visible { outline: none; }
+.strip__frame:focus-visible .strip__pic { outline: 1px solid var(--ivory); outline-offset: 5px; }
+.strip__frame:focus-visible .strip__cap { color: var(--ivory); }
+@media (hover: hover) { .strip__frame:hover .strip__cap { color: var(--ivory); } }
+.motion .strip__cap { transition: color .6s var(--ease); }
+.motion .strip__pic img { transition: transform 1.2s var(--ease); }
+@media (hover: hover) { .motion .strip__frame:hover .strip__pic img { transform: scale(1.02); } }
+
+/* the counter: a hairline under the strip; its filled part is one frame long at rest and the whole line at the end */
+.strip__bar { position: relative; height: 1px; margin-top: 20px; background: rgba(232, 227, 217, .14); overflow: hidden; }
+.strip__bar i { position: absolute; inset: 0; background: rgba(232, 227, 217, .4); transform-origin: 0 50%; transform: scaleX(.143); }
+
 /* the case: opens over the page; the panel you clicked grows into its first frame */
 .casev-bg { position: fixed; inset: 0; z-index: 5; background: var(--black); opacity: 0; transition: opacity .3s var(--ease); }
 .casev-bg.is-open { opacity: 1; transition: opacity .5s var(--ease); }
@@ -424,6 +510,17 @@ html.has-case { overflow: hidden; }
   .work-k__sticky { position: static; min-height: 0; padding-block: 0 36px; gap: 24px; }
   .work-k__panels { padding-left: 0; margin-right: 0; gap: 28px; }
   .panel figcaption { display: block; padding-top: 10px; color: var(--stone); font-size: 14px; line-height: 1.6; }
+  /* 190px tall, but never so tall that the first frame pushes the second off the screen: at 390px wide a 190px frame is 338px
+     wide, so frame 2 would start 6px past the edge and nothing would say the strip goes on. Height is capped so a 28px sliver of
+     the next frame always shows (frame 1 = viewport - 44px spine side - 14px gap - 28px sliver). */
+  .strip { --strip-h: min(190px, calc((100vw - 86px) * 9 / 16)); --strip-gap: 14px; --strip-lead: 8px; --strip-trail: 16px; margin-top: 40px; }
+  /* phones: content hangs right of the spine at 44px and the band has 16px on the right. The scroller bleeds right only,
+     so the spine at 20px stays visible beside the film. 8px of padding keeps the first frame's focus ring unclipped. */
+  .strip__scroll { margin: -8px -16px 0 -8px; padding: 8px 0 0 8px; }
+  /* the phone frames are 88px wide: "On a phone" wraps (number, "On a", "Phone"), so three lines are reserved */
+  .strip__cap { min-height: 4.8em; }
+  .strip__frame--tall .strip__name { white-space: normal; }
+  .strip__bar { margin-top: 12px; }
   .hero__intro { font-size: 18px; }
   .drive__words { display: none; }
   .drive__stage { min-height: 100svh; height: auto; }
@@ -599,6 +696,46 @@ html.has-case { overflow: hidden; }
           </figure>
         </div>
       </div>
+
+      <div class="strip" data-strip-case="la-vasca">
+        <div class="strip__head">
+          <p class="label" id="strip-label">From the case</p>
+          <p class="strip__hint" aria-hidden="true">Drag<i></i></p>
+        </div>
+        <div class="strip__scroll" role="group" aria-labelledby="strip-label">
+          <div class="strip__track">
+            <button type="button" class="strip__frame" aria-haspopup="dialog" aria-controls="casev" style="--w:1280;--h:720">
+              <span class="strip__pic"><img src="work/lv-doors.jpg" alt="" width="1280" height="720" draggable="false"></span>
+              <span class="strip__cap"><span class="strip__no">01</span> <span class="strip__dash" aria-hidden="true">&mdash;</span> <span class="strip__name">The entrance</span></span>
+            </button>
+            <button type="button" class="strip__frame" data-chapter="#cv-dish" aria-haspopup="dialog" aria-controls="casev" style="--w:1280;--h:720">
+              <span class="strip__pic"><img src="work/lv-pulpo.jpg" alt="" width="1280" height="720" draggable="false"></span>
+              <span class="strip__cap"><span class="strip__no">02</span> <span class="strip__dash" aria-hidden="true">&mdash;</span> <span class="strip__name">The signature dish</span></span>
+            </button>
+            <button type="button" class="strip__frame" data-chapter="#cv-menu" aria-haspopup="dialog" aria-controls="casev" style="--w:1280;--h:720">
+              <span class="strip__pic"><img src="work/lv-dishes.jpg" alt="" width="1280" height="720" draggable="false"></span>
+              <span class="strip__cap"><span class="strip__no">03</span> <span class="strip__dash" aria-hidden="true">&mdash;</span> <span class="strip__name">Featured dishes</span></span>
+            </button>
+            <button type="button" class="strip__frame" data-chapter="#cv-menu" aria-haspopup="dialog" aria-controls="casev" style="--w:1280;--h:720">
+              <span class="strip__pic"><img src="work/lv-menu.jpg" alt="" width="1280" height="720" loading="lazy" draggable="false"></span>
+              <span class="strip__cap"><span class="strip__no">04</span> <span class="strip__dash" aria-hidden="true">&mdash;</span> <span class="strip__name">The menu</span></span>
+            </button>
+            <button type="button" class="strip__frame" data-chapter="#cv-chef" aria-haspopup="dialog" aria-controls="casev" style="--w:1280;--h:720">
+              <span class="strip__pic"><img src="work/lv-chef.jpg" alt="" width="1280" height="720" loading="lazy" draggable="false"></span>
+              <span class="strip__cap"><span class="strip__no">05</span> <span class="strip__dash" aria-hidden="true">&mdash;</span> <span class="strip__name">The chef</span></span>
+            </button>
+            <button type="button" class="strip__frame strip__frame--tall" data-chapter="#cv-phone" aria-haspopup="dialog" aria-controls="casev" style="--w:600;--h:1298">
+              <span class="strip__pic"><img src="work/lv-phone-doors.jpg" alt="" width="600" height="1298" loading="lazy" draggable="false"></span>
+              <span class="strip__cap"><span class="strip__no">06</span> <span class="strip__dash" aria-hidden="true">&mdash;</span> <span class="strip__name">On a phone</span></span>
+            </button>
+            <button type="button" class="strip__frame strip__frame--tall" data-chapter="#cv-phone" aria-haspopup="dialog" aria-controls="casev" style="--w:600;--h:1298">
+              <span class="strip__pic"><img src="work/lv-phone-menu.jpg" alt="" width="600" height="1298" loading="lazy" draggable="false"></span>
+              <span class="strip__cap"><span class="strip__no">07</span> <span class="strip__dash" aria-hidden="true">&mdash;</span> <span class="strip__name">On a phone</span></span>
+            </button>
+          </div>
+        </div>
+        <div class="strip__bar" aria-hidden="true"><i></i></div>
+      </div>
     </section>
 
     <section class="grow band" id="growth">
@@ -712,7 +849,7 @@ html.has-case { overflow: hidden; }
           <p>Walking into La Vasca is the whole pitch, so the site starts at the door. Scroll and the red doors open, the camera pushes through, and the first thing you meet inside is the signature dish.</p>
         </section>
         <figure class="casev__fig">
-          <img src="work/lv-pulpo.jpg" alt="Pulpo a la Gallega suspended in pieces above a plate, with the dish name and price beside it" width="1280" height="720">
+          <img src="work/lv-pulpo.jpg" alt="Pulpo a la Gallega suspended in pieces above a plate, with the dish name and price beside it" width="1280" height="720" loading="lazy">
           <figcaption>Pulpo a la Gallega, held above the plate.</figcaption>
         </figure>
         <section class="casev__sec" id="cv-dish">
@@ -721,11 +858,11 @@ html.has-case { overflow: hidden; }
         </section>
         <div class="casev__pair">
           <figure class="casev__fig">
-            <img src="work/lv-dishes.jpg" alt="Featured dishes section showing lamb chops and roast suckling pig" width="1280" height="720">
+            <img src="work/lv-dishes.jpg" alt="Featured dishes section showing lamb chops and roast suckling pig" width="1280" height="720" loading="lazy">
             <figcaption>Featured dishes, each with a film of its own.</figcaption>
           </figure>
           <figure class="casev__fig">
-            <img src="work/lv-menu.jpg" alt="The full menu with section navigation, Spanish names, English translations and prices" width="1280" height="720">
+            <img src="work/lv-menu.jpg" alt="The full menu with section navigation, Spanish names, English translations and prices" width="1280" height="720" loading="lazy">
             <figcaption>The full menu, 79 dishes.</figcaption>
           </figure>
         </div>
@@ -734,7 +871,7 @@ html.has-case { overflow: hidden; }
           <p>All 79 dishes in Spanish and English with prices, in the restaurant's own sections. A section menu follows as you read, and the featured dishes, lamb chops and roast suckling pig, each have a film of their own.</p>
         </section>
         <figure class="casev__fig">
-          <img src="work/lv-chef.jpg" alt="The chef's portrait beside a quote about his years in restaurants in Spain and Miami" width="1280" height="720">
+          <img src="work/lv-chef.jpg" alt="The chef's portrait beside a quote about his years in restaurants in Spain and Miami" width="1280" height="720" loading="lazy">
           <figcaption>The chef, and the call and visit block beneath him.</figcaption>
         </figure>
         <section class="casev__sec" id="cv-chef">
@@ -742,8 +879,8 @@ html.has-case { overflow: hidden; }
           <p>His portrait and his own words, exactly as he gave them. Call, directions and the store stay one tap away on every screen.</p>
         </section>
         <figure class="casev__fig casev__phones">
-          <img src="work/lv-phone-doors.jpg" alt="The entrance on a phone" width="600" height="1298">
-          <img src="work/lv-phone-menu.jpg" alt="The menu on a phone" width="600" height="1298">
+          <img src="work/lv-phone-doors.jpg" alt="The entrance on a phone" width="600" height="1298" loading="lazy">
+          <img src="work/lv-phone-menu.jpg" alt="The menu on a phone" width="600" height="1298" loading="lazy">
         </figure>
         <section class="casev__sec" id="cv-phone">
           <h3>On a phone</h3>
@@ -1100,8 +1237,12 @@ html.has-case { overflow: hidden; }
     if ('inert' in page) page.inert = true;
     var hero = art.querySelector('.casev__hero img');
     if (ch) {
-      /* straight to the chapter: no grow, the case fades in already scrolled there */
-      caseV.scrollTop = Math.max(0, ch.getBoundingClientRect().top - caseV.getBoundingClientRect().top + caseV.scrollTop - 24);
+      /* straight to the chapter: no grow, the case fades in already scrolled to the chapter's picture (the figure above its text) */
+      var pic = ch.previousElementSibling && ch.previousElementSibling.tagName !== 'SECTION' ? ch.previousElementSibling : ch;
+      caseV.scrollTop = Math.max(0, pic.getBoundingClientRect().top - caseV.getBoundingClientRect().top + caseV.scrollTop - 24);
+      [].forEach.call(caseV.querySelectorAll('.casev__nav a'), function (a) {
+        if (a.getAttribute('href') === chapter) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+      });
       start = null;
     }
     if (hero && start && motion) {
@@ -1167,6 +1308,195 @@ html.has-case { overflow: hidden; }
     var wanted = location.hash.replace('#', '');
     if (wanted && document.getElementById('casev-' + wanted)) openCase(wanted, document.querySelector('[data-case="' + wanted + '"]'));
   }
+
+  /* ----- the filmstrip: drag through the case's stills with momentum; each one opens the case at its own chapter -----
+     Touch and trackpads scroll the native container (platform inertia, rubber-band). A mouse gets drag-to-scroll with a
+     momentum of its own. PLACEMENT: after the case block (needs openCase and caseV) and BEFORE the
+     `if (!motion || !('IntersectionObserver' in window)) { ... return; }` early exit, or reduced-motion visitors never get it. */
+  (function () {
+    var stripBox = $('.strip'), stripEl = stripBox && stripBox.querySelector('.strip__scroll');
+    if (!stripEl || !caseV) return;
+    var stripFrames = [].slice.call(stripEl.querySelectorAll('.strip__frame'));
+    var stripFill = stripBox.querySelector('.strip__bar i');
+
+    var STRIP_SLOP = 6;         /* px a press must travel before it is a drag (and its click is swallowed) */
+    var STRIP_SAMPLE = 80;      /* ms of pointer history that sets the release velocity */
+    var STRIP_FRICTION = 0.95;  /* share of the velocity kept per 60fps frame while gliding */
+    var STRIP_STOP = 0.1;       /* px per 60fps frame: below this the glide is over */
+    var STRIP_MAXV = 4;         /* px per ms: a wild flick cannot throw the film the whole length of the sheet */
+    var STRIP_PEEK = 48;        /* px of the next frame the keyboard leaves showing when it scrolls forward */
+    var STRIP_FRAME = 1000 / 60;
+
+    var stripMax = 0, stripLead = 0, stripTick = 0, stripUsed = false;
+    var stripDown = false, stripDragging = false, stripId = -1, stripX0 = 0, stripLeft0 = 0, stripSamples = [], stripSwallow = false;
+    var stripRaf = 0, stripPos = 0, stripV = 0, stripLast = 0;
+
+    /* ----- measuring, and the counter line ----- */
+    function stripMeasure() {
+      stripMax = Math.max(0, stripEl.scrollWidth - stripEl.clientWidth);
+      /* where the first frame rests, in px from the scroller's left edge: makes snapping and the keyboard land exactly on the column */
+      stripLead = Math.max(0, stripBox.getBoundingClientRect().left - stripEl.getBoundingClientRect().left);
+      stripEl.style.scrollPaddingLeft = stripLead + 'px';
+      stripQueue();
+    }
+    function stripPaint() {
+      stripTick = 0;
+      var x = stripEl.scrollLeft, p = stripMax > 0 ? clamp(x / stripMax, 0, 1) : 0, n = stripFrames.length || 1;
+      stripFill.style.transform = 'scaleX(' + ((1 + p * (n - 1)) / n).toFixed(4) + ')';
+      if (!stripUsed && x > 24) stripUse();
+    }
+    function stripQueue() { if (!stripTick) stripTick = requestAnimationFrame(stripPaint); }
+    function stripUse() { stripUsed = true; stripBox.classList.add('is-used'); }   /* the "Drag" hint has done its job */
+
+    /* ----- momentum: release velocity from the last ~80ms, then friction per frame, frame-rate independent ----- */
+    function stripStop() {
+      if (stripRaf) { cancelAnimationFrame(stripRaf); stripRaf = 0; }
+      stripEl.classList.remove('is-glide');
+      if (!stripDragging) stripEl.classList.remove('is-drag');
+    }
+    function stripGlide(v) {
+      stripV = clamp(v, -STRIP_MAXV, STRIP_MAXV); stripPos = stripEl.scrollLeft; stripLast = 0;
+      stripEl.classList.add('is-glide');
+      stripRaf = requestAnimationFrame(stripStep);
+    }
+    function stripStep(now) {
+      if (!stripLast) stripLast = now - STRIP_FRAME;
+      var dt = Math.min(64, now - stripLast); stripLast = now;
+      stripV *= Math.pow(STRIP_FRICTION, dt / STRIP_FRAME);
+      var next = stripPos + stripV * dt, at = clamp(next, 0, stripMax);
+      stripPos = at;                       /* our own float position: scrollLeft rounds, small velocities would stall on it */
+      stripEl.scrollLeft = at;
+      stripPaint();
+      if (at !== next || Math.abs(stripV) * STRIP_FRAME < STRIP_STOP) { stripRaf = 0; stripStop(); return; }   /* an end, or the film has simply stopped */
+      stripRaf = requestAnimationFrame(stripStep);
+    }
+    function stripVelocity(now) {
+      var i = stripSamples.length - 1;
+      if (i < 1 || now - stripSamples[i].t > STRIP_SAMPLE * 0.75) return 0;       /* held still before letting go: no flick */
+      var j = i;
+      while (j > 0 && now - stripSamples[j - 1].t <= STRIP_SAMPLE) j--;
+      var dt = stripSamples[i].t - stripSamples[j].t;
+      return dt > 0 ? -(stripSamples[i].x - stripSamples[j].x) / dt : 0;           /* pointer left = film right */
+    }
+
+    /* ----- the mouse drag: touch and pens keep the platform's own scrolling ----- */
+    function stripOnDown(e) {
+      var caught = !!stripRaf;
+      stripStop();                                    /* any press stops a gliding film */
+      stripSwallow = false;
+      if (e.pointerType !== 'mouse' || e.button !== 0) return;
+      stripSwallow = caught;                          /* a press that catches the film is not a click on the frame under it */
+      stripEl.classList.add('is-mouse');              /* a mouse is in play: CSS lets go of scroll snap (see int2.css) */
+      stripDown = true; stripDragging = false; stripId = e.pointerId;
+      stripX0 = e.clientX; stripLeft0 = stripEl.scrollLeft;
+      stripSamples = [{ t: performance.now(), x: e.clientX }];
+      window.addEventListener('pointermove', stripOnMove);
+      window.addEventListener('pointerup', stripOnUp);
+      window.addEventListener('pointercancel', stripOnUp);
+    }
+    function stripOnMove(e) {
+      if (!stripDown || e.pointerId !== stripId) return;
+      var now = performance.now();
+      if (!stripDragging) {
+        if (Math.abs(e.clientX - stripX0) < STRIP_SLOP) return;
+        /* only now is it a drag. Capture waits until here: a captured press would send its click to the scroller, not the frame */
+        stripDragging = true; stripSwallow = true;
+        try { stripEl.setPointerCapture(e.pointerId); } catch (err) {}
+        stripEl.classList.add('is-drag');
+        stripX0 = e.clientX; stripLeft0 = stripEl.scrollLeft;          /* re-base: the film follows from here, with no 6px jump */
+        stripSamples = [{ t: now, x: e.clientX }];
+        stripMeasure();
+        stripUse();
+        return;
+      }
+      stripEl.scrollLeft = clamp(stripLeft0 - (e.clientX - stripX0), 0, stripMax);
+      stripSamples.push({ t: now, x: e.clientX });
+      while (stripSamples.length > 2 && now - stripSamples[0].t > STRIP_SAMPLE * 2) stripSamples.shift();
+    }
+    function stripOnUp(e) {
+      if (!stripDown || e.pointerId !== stripId) return;
+      stripDown = false;
+      window.removeEventListener('pointermove', stripOnMove);
+      window.removeEventListener('pointerup', stripOnUp);
+      window.removeEventListener('pointercancel', stripOnUp);
+      if (!stripDragging) { if (stripSwallow) setTimeout(function () { stripSwallow = false; }, 0); return; }   /* not a drag: a plain press is a click, unless it only caught the film */
+      var v = e.type === 'pointerup' ? stripVelocity(performance.now()) : 0;
+      stripDragging = false;
+      stripEl.classList.remove('is-drag');                            /* grab cursor back; snapping stays asleep while is-glide is set */
+      try { stripEl.releasePointerCapture(e.pointerId); } catch (err) {}
+      setTimeout(function () { stripSwallow = false; }, 0);            /* the click that follows a drag arrives before this runs */
+      if (motion && Math.abs(v) * STRIP_FRAME > STRIP_STOP) stripGlide(v);
+      else stripStop();                                               /* reduced motion, or no flick: the film just stops */
+    }
+
+    stripEl.addEventListener('pointerdown', stripOnDown);
+    stripEl.addEventListener('wheel', stripStop, { passive: true });  /* a wheel or trackpad takes over from the glide */
+    stripEl.addEventListener('touchstart', stripStop, { passive: true });
+    stripEl.addEventListener('focusin', function (e) {
+      stripStop();
+      /* Tab: the browser only scrolls a focused frame that is completely out of view; one half cut off at the edge stays cut off */
+      var f = e.target, kb = true;
+      try { kb = f.matches(':focus-visible'); } catch (err) {}
+      if (kb && stripFrames.indexOf(f) > -1) stripReveal(f);
+    });
+    stripEl.addEventListener('dragstart', function (e) { e.preventDefault(); });
+    stripEl.addEventListener('lostpointercapture', function (e) {
+      if (stripDragging && e.pointerId === stripId) stripOnUp({ pointerId: stripId, type: 'pointercancel' });
+    });
+    stripEl.addEventListener('scroll', stripQueue, { passive: true });
+    stripEl.addEventListener('click', function (e) { if (stripSwallow) { e.preventDefault(); e.stopPropagation(); } }, true);
+
+    /* ----- the stills marked loading="lazy" (4 to 7) only start when they slide into the scroller, which is mid-drag.
+       Fetch them as the strip nears the screen instead (or on the first touch of it), so the film never shows an empty frame ----- */
+    function stripPrime() {
+      stripFrames.forEach(function (f) { var im = f.querySelector('img'); if (im && im.loading === 'lazy') im.loading = 'eager'; });
+    }
+    if ('IntersectionObserver' in window) {
+      var stripNear = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { stripPrime(); stripNear.disconnect(); } }, { rootMargin: '700px 0px' });
+      stripNear.observe(stripBox);
+    }
+    ['pointerenter', 'touchstart', 'focusin'].forEach(function (t) { stripEl.addEventListener(t, stripPrime, { once: true, passive: true }); });
+
+    /* ----- the frames open the case at their chapter ----- */
+    stripFrames.forEach(function (f) {
+      f.addEventListener('click', function () {
+        openCase(stripBox.getAttribute('data-strip-case'), f, f.querySelector('img'), f.getAttribute('data-chapter'));
+      });
+    });
+
+    /* ----- keyboard: arrows move focus along the film and keep the frame in view ----- */
+    var stripAim = -1, stripAimAt = 0;
+    function stripReveal(f) {
+      var s = stripEl.getBoundingClientRect(), r = f.getBoundingClientRect(), want = stripEl.scrollLeft;
+      if (r.left < s.left + stripLead) want += r.left - (s.left + stripLead);
+      else if (r.right > s.right - STRIP_PEEK) want += r.right - (s.right - STRIP_PEEK);
+      want = clamp(want, 0, stripMax);
+      if (Math.abs(want - stripEl.scrollLeft) < 1) return;
+      var now = performance.now();
+      if (Math.abs(want - stripAim) < 1 && now - stripAimAt < 1000) return;   /* the same smooth scroll is already under way */
+      stripAim = want; stripAimAt = now;
+      stripEl.scrollTo({ left: want, behavior: motion ? 'smooth' : 'auto' });
+    }
+    stripEl.addEventListener('keydown', function (e) {
+      var k = e.key, i = stripFrames.indexOf(document.activeElement), j;
+      if (i < 0) return;
+      if (k === 'ArrowRight') j = i + 1;
+      else if (k === 'ArrowLeft') j = i - 1;
+      else if (k === 'Home') j = 0;
+      else if (k === 'End') j = stripFrames.length - 1;
+      else return;
+      e.preventDefault();
+      stripStop();
+      j = clamp(j, 0, stripFrames.length - 1);
+      stripFrames[j].focus({ preventScroll: true });
+      stripReveal(stripFrames[j]);
+    });
+
+    stripMeasure();
+    if ('ResizeObserver' in window) new ResizeObserver(stripMeasure).observe(stripEl);
+    else window.addEventListener('resize', stripMeasure);
+    window.addEventListener('load', stripMeasure);
+  })();
 
   if (!motion || !('IntersectionObserver' in window)) {
     setFlipped(true);
