@@ -157,8 +157,8 @@ html.has-case .bar { opacity: 0; pointer-events: none; }
 .motion .open__cue span { animation: cue 2.4s 1.8s ease-in-out infinite; }
 
 /* ---------- scene 2 · the drive: the Miami film, scrubbed by the scroll ----------
-   Desktop with a mouse: the track is tall, the stage pins, and the scroll position is the film position.
-   Phones, no JS, or reduced motion: one screen, the film loops (or the poster stands still). */
+   The track is tall, the stage pins, and the scroll position is the film position, on phones too
+   (phones get a portrait cut of the same take). If the film can't be fetched it loops; with reduced motion the poster stands still. */
 .drive { position: relative; background: var(--black); }
 .drive__stage {
   position: relative; overflow: hidden; height: var(--pin-h); min-height: 560px;
@@ -166,7 +166,8 @@ html.has-case .bar { opacity: 0; pointer-events: none; }
   padding-inline: var(--gutter);
   --intro: 1; --w1: 0; --w2: 0; --w3: 0; --x1: 0px; --x2: 0px; --x3: 0px;
 }
-.drive-scrub .drive { height: 340vh; }
+.drive-scrub .drive { height: 340svh; }
+@supports not (height: 100svh) { .drive-scrub .drive { height: 340vh; } }
 .drive-scrub .drive__stage { position: sticky; top: 0; }
 .drive__stage > * { position: relative; z-index: 1; }
 .drive__stage > .drive__film { position: absolute; inset: 0; z-index: 0; }
@@ -391,10 +392,9 @@ html.has-case { overflow: hidden; }
   .work-k__sticky { position: static; min-height: 0; padding-block: 0 36px; gap: 24px; }
   .work-k__panels { padding-left: 0; margin-right: 0; gap: 28px; }
   .panel figcaption { display: block; padding-top: 10px; color: var(--stone); font-size: 14px; line-height: 1.6; }
-  .drive__words { display: none; }
-  .drive__stage { min-height: 100svh; height: auto; }
+  .drive__stage { min-height: 0; }
+  .drive__word { letter-spacing: .26em; }
   .drive__intro { font-size: 18px; }
-  .drive__intro span:last-child { display: none; }
   .drive__readout { display: none; }
   .casev__case { grid-template-columns: minmax(0, 1fr); padding-inline: 16px; }
   .casev__side { position: static; min-height: 0; padding: 16px 0 8px; gap: 20px; }
@@ -592,8 +592,7 @@ html.has-case { overflow: hidden; }
   <footer class="plate" id="contact">
     <div class="plate__top">
       <span class="label">Contact</span>
-      <a href="https://twincitys.net/start">Start a project</a>
-      <a href="https://instagram.com/twincitys.co" target="_blank" rel="noopener">@twincitys.co</a>
+      <a href="#top">Back to top</a>
     </div>
     <div class="engrave" id="plate-engrave" aria-label="twin citys">
       <div class="layer dark" aria-hidden="true">
@@ -612,7 +611,7 @@ html.has-case { overflow: hidden; }
     <nav class="plate__links" aria-label="Contact">
       <a class="plate__link" href="mailto:eric@twincitys.net"><span class="plate__who">Eric Martinez</span><span class="plate__addr">eric@twincitys.net</span></a>
       <a class="plate__link" href="mailto:k.butchers@twincitys.net"><span class="plate__who">Kevin Butchers</span><span class="plate__addr">k.butchers@twincitys.net</span></a>
-      <a class="plate__link" href="mailto:eric@twincitys.net,k.butchers@twincitys.net?subject=New%20project"><span class="plate__who">Email us both</span><span class="plate__addr">One message, both inboxes</span></a>
+      <a class="plate__link" href="https://twincitys.net/start"><span class="plate__who">Start a project</span><span class="plate__addr">Three quick steps, we read every one</span></a>
       <a class="plate__link" href="https://instagram.com/twincitys.co" target="_blank" rel="noopener"><span class="plate__who">Instagram</span><span class="plate__addr">@twincitys.co</span></a>
     </nav>
     <div class="plate__foot">
@@ -748,13 +747,23 @@ html.has-case { overflow: hidden; }
     if (openP < 1) paintOpen(openP);
   }, { passive: true });
 
-  /* ----- the drive: the film is the scroll on desktop, a loop on phones, a still with reduced motion ----- */
-  var SCRUB_SRC = 'media/drive-desktop.mp4', LOOP_SRC = 'media/drive-loop.mp4';
+  /* ----- the drive: the film is the scroll, on phones too; a loop if the fetch fails; a still with reduced motion ----- */
+  var portrait = window.matchMedia('(max-width: 820px)').matches;
+  var SCRUB_SRC = portrait ? 'media/drive-mobile.mp4' : 'media/drive-desktop.mp4', LOOP_SRC = 'media/drive-loop.mp4';
   var track = $('.drive'), stage = $('#drive-stage'), vid = $('#drive-video'), driveTime = $('#drive-time');
   var canVideo = !!(vid && vid.canPlayType && vid.canPlayType('video/mp4'));
-  var scrubMode = motion && canVideo && window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 821px)').matches;
+  var scrubMode = motion && canVideo;
   var filmReady = false, filmDur = 0, seekBusy = false, driveCur = 0, driveTarget = 0, driveRaf = 0;
 
+  function startLoop() {
+    root.classList.remove('drive-scrub'); root.classList.add('drive-loop');
+    scrubMode = false; filmReady = false;
+    vid.src = LOOP_SRC; vid.loop = true; vid.autoplay = true;
+    vid.addEventListener('playing', function () { vid.classList.add('is-ready'); }, { once: true });
+    var tryPlay = function () { var p = vid.play(); if (p && p.catch) p.catch(function () {}); };
+    tryPlay();
+    document.addEventListener('touchstart', tryPlay, { once: true, passive: true });
+  }
   if (scrubMode) {
     root.classList.add('drive-scrub');
     window.__tcFilm = 0;
@@ -773,26 +782,24 @@ html.has-case { overflow: hidden; }
         })();
       });
     }).then(function (b) {
-      vid.src = URL.createObjectURL(b);
-      vid.addEventListener('error', function () { window.__tcFilm = 1; window.__tcFilmReady = true; }, { once: true });
-      vid.addEventListener('loadeddata', function () {
+      var shown = false;
+      var show = function () { if (shown) return; shown = true; vid.classList.add('is-ready'); paintDrive(driveCur); };
+      vid.addEventListener('error', function () { window.__tcFilm = 1; window.__tcFilmReady = true; startLoop(); }, { once: true });
+      /* phones often stop at the metadata: take the duration from there and pull the first frame with a seek */
+      vid.addEventListener('loadedmetadata', function () {
         filmDur = vid.duration || 10; filmReady = true; window.__tcFilm = 1; window.__tcFilmReady = true;
-        vid.classList.add('is-ready'); seekFilm(true); paintDrive(driveCur);
+        vid.addEventListener('seeked', show, { once: true });
+        seekFilm(true);
       }, { once: true });
+      vid.addEventListener('loadeddata', show, { once: true });
+      vid.src = URL.createObjectURL(b);
       vid.load();
-    }).catch(function () { window.__tcFilm = 1; window.__tcFilmReady = true; /* the poster stays */ });
-  } else if (motion && canVideo) {
-    root.classList.add('drive-loop');
-    vid.src = LOOP_SRC; vid.loop = true; vid.autoplay = true;
-    vid.addEventListener('playing', function () { vid.classList.add('is-ready'); }, { once: true });
-    var tryPlay = function () { var p = vid.play(); if (p && p.catch) p.catch(function () {}); };
-    tryPlay();
-    document.addEventListener('touchstart', tryPlay, { once: true, passive: true });
+    }).catch(function () { window.__tcFilm = 1; window.__tcFilmReady = true; startLoop(); });
   }
 
   function seekFilm(force) {
     if (!filmReady || (seekBusy && !force)) return;
-    var t = driveCur * filmDur;
+    var t = Math.max(0.001, driveCur * filmDur);
     if (!force && Math.abs(vid.currentTime - t) < 1 / 48) return;
     seekBusy = true;
     var done = function () { seekBusy = false; if (Math.abs(driveCur * filmDur - vid.currentTime) > 1 / 48) seekFilm(); };
