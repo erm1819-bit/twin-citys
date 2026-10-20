@@ -1076,7 +1076,7 @@ html.has-case { overflow: hidden; }
 
   /* ----- the case: the panel you click grows into the case's first frame ----- */
   var caseBg = $('#casev-bg'), caseV = $('#casev'), page = $('.page');
-  var caseOpener = null, caseArt = null, caseTimer = 0, caseOpen = false;
+  var caseOpener = null, caseArt = null, caseTimer = 0, caseOpen = false, caseFrom = null;
   var FLIP = 'cubic-bezier(.3,.7,.2,1)';
   function panelImg(id) { var p = document.querySelector('[data-case-panel="' + id + '"] img'); return p || null; }
   function placeOver(img, rect) {
@@ -1084,18 +1084,26 @@ html.has-case { overflow: hidden; }
     img.style.transformOrigin = 'top left';
     img.style.transform = 'translate(' + (rect.left - l.left).toFixed(1) + 'px,' + (rect.top - l.top).toFixed(1) + 'px) scale(' + (rect.width / l.width).toFixed(4) + ',' + (rect.height / l.height).toFixed(4) + ')';
   }
-  function openCase(id, from) {
+  /* from: the control that opened it (focus returns there). fromImg: an image to grow the first frame out of
+     (the panel's doors by default). chapter: a hash like '#cv-dish' to open the case at, with no grow. */
+  function openCase(id, from, fromImg, chapter) {
     var art = document.getElementById('casev-' + id);
     if (!art || !caseV || caseOpen) return;
     clearTimeout(caseTimer);
-    caseOpen = true; caseArt = art; caseOpener = from || null;
+    caseOpen = true; caseArt = art; caseOpener = from || null; caseFrom = fromImg || null;
     [].forEach.call(caseV.querySelectorAll('.casev__case'), function (a) { a.hidden = a !== art; });
-    var src = panelImg(id), start = src ? src.getBoundingClientRect() : null;
+    var src = fromImg || panelImg(id), start = src ? src.getBoundingClientRect() : null;
+    var ch = chapter ? art.querySelector(chapter) : null;
     caseV.classList.remove('is-closing');
     caseBg.hidden = false; caseV.hidden = false; caseV.scrollTop = 0;
     root.classList.add('has-case');
     if ('inert' in page) page.inert = true;
     var hero = art.querySelector('.casev__hero img');
+    if (ch) {
+      /* straight to the chapter: no grow, the case fades in already scrolled there */
+      caseV.scrollTop = Math.max(0, ch.getBoundingClientRect().top - caseV.getBoundingClientRect().top + caseV.scrollTop - 24);
+      start = null;
+    }
     if (hero && start && motion) {
       hero.style.transition = 'none';
       placeOver(hero, start);
@@ -1112,7 +1120,7 @@ html.has-case { overflow: hidden; }
     caseOpen = false;
     var art = caseArt, hero = art && art.querySelector('.casev__hero img');
     var id = art ? art.id.replace('casev-', '') : '';
-    var src = panelImg(id), wait = 350;
+    var src = caseFrom || panelImg(id), wait = 350;
     caseBg.classList.remove('is-open'); caseV.classList.remove('is-open');
     if (hero && src && motion && caseV.scrollTop < hero.offsetHeight * 0.6) {
       hero.style.transition = 'transform .65s ' + FLIP;
