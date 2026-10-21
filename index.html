@@ -104,6 +104,8 @@ h1, h2, h3, p, ul { margin: 0; }
 .bar a { pointer-events: auto; }
 .bar__brand { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; font-family: var(--font-display); font-size: 12px; font-weight: 500; letter-spacing: .32em; text-transform: uppercase; }
 .bar__brand .tcmark { height: 24px; width: 28px; }
+.bar__what { font-style: normal; font-weight: 400; opacity: .7; letter-spacing: .2em; }
+@media (max-width: 640px) { .bar__brand span { display: inline !important; } .bar__brand span .bar__what { display: none; } }
 .bar__links { display: flex; align-items: center; gap: 0 28px; font-family: var(--font-display); font-size: var(--t-label); font-weight: 500; letter-spacing: .3em; text-transform: uppercase; }
 .bar__links a { display: inline-flex; align-items: center; min-height: 44px; }
 .bar__cta { min-height: 36px; padding: 0 16px; border: 1px solid currentColor; border-radius: 999px; transition: background-color .2s, color .2s; }
@@ -151,6 +153,9 @@ html.has-case .bar { opacity: 0; pointer-events: none; }
 .open__copy { position: absolute; left: 0; right: 0; bottom: 12%; text-align: center; padding-inline: var(--gutter); }
 .open__copy h2 { font-family: var(--font-display); font-weight: 300; font-size: clamp(18px, 2.6vw, 30px); letter-spacing: .02em; color: var(--black); text-wrap: balance; }
 .open__copy p { margin-top: 8px; color: rgba(11, 11, 11, .72); font-family: var(--font-display); font-size: 13px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; }
+.open__copy h2 { font-size: clamp(22px, 3vw, 36px); font-weight: 400; }
+.open__copy .open__sub { margin: 10px auto 0; max-width: 56ch; font-family: var(--font-body); font-size: clamp(14px, 1.2vw, 17px); font-weight: 400; letter-spacing: 0; text-transform: none; line-height: 1.5; color: rgba(11, 11, 11, .78); }
+.open__copy { bottom: 11%; }
 .open__cue {
   position: absolute; left: 50%; bottom: 4%; transform: translateX(-50%);
   display: flex; flex-direction: column; align-items: center; gap: 8px;
@@ -185,8 +190,8 @@ html.has-case .bar { opacity: 0; pointer-events: none; }
 .drive__words { position: absolute; inset: 0; z-index: 1; pointer-events: none; display: grid; place-items: center; }
 .drive__word {
   grid-area: 1 / 1; opacity: 0; will-change: opacity, transform;
-  font-family: var(--font-display); font-size: clamp(30px, 6.4vw, 96px); font-weight: 300;
-  letter-spacing: .34em; text-transform: uppercase; color: var(--ivory);
+  font-family: var(--font-display); font-size: clamp(22px, 3.6vw, 56px); font-weight: 300; text-align: center; max-width: 16ch; text-wrap: balance;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--ivory);
   text-shadow: 0 2px 24px rgba(0, 0, 0, .6);
 }
 .drive__word:nth-child(1) { opacity: var(--w1); transform: translateX(var(--x1)); }
@@ -200,6 +205,19 @@ html.has-case .bar { opacity: 0; pointer-events: none; }
 .drive__intro span:last-child { color: var(--stone); }
 .drive__readout { text-align: right; color: rgba(232, 227, 217, .62); font-variant-numeric: tabular-nums; }
 .drive__readout b { display: block; margin-top: 4px; font-family: var(--font-mono); font-weight: 400; font-size: 20px; letter-spacing: 0; color: var(--ivory); }
+
+/* the offer: one ivory strip, three lines, read in ten seconds */
+.offer { background: var(--ivory); color: var(--ink); padding: clamp(64px, 9vw, 120px) var(--gutter); }
+.offer__in { max-width: 1100px; margin-inline: auto; }
+.offer .label { color: var(--ink-soft); }
+.offer__lines { list-style: none; margin: 28px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+.offer__lines li { display: flex; flex-direction: column; gap: 14px; padding-top: 18px; border-top: 1px solid #bfb8ab; font-size: 16px; line-height: 1.6; color: #3b3936; }
+.offer__lines b { display: block; font-family: var(--font-display); font-weight: 400; font-size: clamp(19px, 1.7vw, 24px); line-height: 1.3; color: var(--ink); margin-bottom: 6px; }
+.offer__n { font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em; color: var(--ink-soft); }
+.offer__foot { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 40px; margin-top: 44px; }
+.offer__foot .start__link { color: var(--ink); }
+.offer__also { color: var(--ink-soft); font-size: 13px; letter-spacing: .04em; }
+@media (max-width: 820px) { .offer__lines { grid-template-columns: minmax(0, 1fr); gap: 20px; } }
 
 /* ---------- scene 3 · the mark, taken apart: a frame scrub drawn on a canvas, over paper ---------- */
 .explode { height: 320svh; }
@@ -485,7 +503,7 @@ html.has-case { overflow: hidden; }
 </div>
 
 <header class="bar">
-  <a class="bar__brand" href="#top" aria-label="Twin Citys, back to top"><svg class="tcmark" aria-hidden="true"><use href="#tc"></use></svg><span>Twin Citys</span></a>
+  <a class="bar__brand" href="#top" aria-label="Twin Citys, back to top"><svg class="tcmark" aria-hidden="true"><use href="#tc"></use></svg><span>Twin Citys <em class="bar__what">· Web design, Miami</em></span></a>
   <nav class="bar__links" aria-label="Sections">
     <a href="#work">Work</a>
     <a href="#contact">Contact</a>
@@ -511,8 +529,8 @@ html.has-case { overflow: hidden; }
         </div>
       </div>
       <div class="open__copy" id="open-copy">
-        <h2>A Miami creative studio.</h2>
-        <p>Design · Develop · Create</p>
+        <h2>Websites for Miami businesses, designed and built for you.</h2>
+        <p class="open__sub">We handle everything, from the first design to the day it goes live, so you can get back to running the place.</p>
       </div>
       <a class="open__cue" id="open-cue" href="#drive">Scroll<span aria-hidden="true"></span></a>
     </div>
@@ -527,14 +545,27 @@ html.has-case { overflow: hidden; }
         <div class="drive__shade"></div>
       </div>
       <div class="drive__words" aria-hidden="true">
-        <span class="drive__word">Design</span>
-        <span class="drive__word">Develop</span>
-        <span class="drive__word">Create</span>
+        <span class="drive__word">Your website</span>
+        <span class="drive__word">Designed around your business</span>
+        <span class="drive__word">Built, launched and handled</span>
       </div>
       <div class="drive__foot">
         <p class="drive__intro"><span>Miami, from the causeway in.</span><span>Scroll to drive.</span></p>
         <div class="drive__readout mono" aria-hidden="true">Rickenbacker Causeway → Brickell<b id="drive-time">00:00 / 00:00</b></div>
       </div>
+    </div>
+  </section>
+
+  <!-- the offer, in three lines -->
+  <section class="offer" aria-label="What we do">
+    <div class="offer__in">
+      <p class="label">What we do</p>
+      <ol class="offer__lines">
+        <li><span class="offer__n">01</span><span><b>No website, or an old one that undersells you.</b> Most customers meet your business on a phone before they meet you.</span></li>
+        <li><span class="offer__n">02</span><span><b>A site that looks like your food, your room, your work.</b> Designed around what you actually do, not a template.</span></li>
+        <li><span class="offer__n">03</span><span><b>We design it, build it, launch it and keep it running.</b> One point of contact, from the first draft to the day it goes live and after.</span></li>
+      </ol>
+      <div class="offer__foot"><a class="start__link" href="https://twincitys.net/start">Start a project</a><span class="offer__also">Also: brand, dish films, Meta ads, Google review cards</span></div>
     </div>
   </section>
 
