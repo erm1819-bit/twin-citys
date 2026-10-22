@@ -65,6 +65,8 @@ img { max-width: 100%; }
 @supports not (height: 100svh) { :root { --pin-h: 100vh; } }
 
 *, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+button, a { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 body {
   background: var(--black);
   color: var(--ivory);
@@ -823,11 +825,16 @@ html.has-case { overflow: hidden; }
   var track = $('.drive'), stage = $('#drive-stage'), vid = $('#drive-video'), driveTime = $('#drive-time');
   var canVideo = !!(vid && vid.canPlayType && vid.canPlayType('video/mp4'));
   var scrubMode = motion && canVideo;
-  var filmReady = false, filmDur = 0, seekBusy = false, driveCur = 0, driveTarget = 0, driveRaf = 0;
+  var filmReady = false, filmDur = 0, seekBusy = false, seekGuard = 0, driveCur = 0, driveTarget = 0, driveRaf = 0;
+  /* Safari (every iPhone browser is Safari underneath) only paints a seeked frame reliably after the video has
+     played once, and its frame callback can stay silent while paused, so it gets the seeked event and a guard instead */
+  var safari = /AppleWebKit/.test(navigator.userAgent) && !/Chrome|CriOS|Chromium|Edg/.test(navigator.userAgent) || /iPhone|iPad|iPod/.test(navigator.userAgent);
 
   function startLoop() {
     root.classList.remove('drive-scrub'); root.classList.add('drive-loop');
-    scrubMode = false; filmReady = false;
+    if (root.classList.contains('drive-loop')) return;
+    scrubMode = false; filmReady = false; seekBusy = false; clearTimeout(seekGuard);
+    vid.classList.remove('is-ready'); vid.pause();
     vid.src = LOOP_SRC; vid.loop = true; vid.autoplay = true;
     vid.addEventListener('playing', function () { vid.classList.add('is-ready'); }, { once: true });
     var tryPlay = function () { var p = vid.play(); if (p && p.catch) p.catch(function () {}); };
@@ -857,11 +864,17 @@ html.has-case { overflow: hidden; }
       vid.addEventListener('error', function () { window.__tcFilm = 1; window.__tcFilmReady = true; startLoop(); }, { once: true });
       /* phones often stop at the metadata: take the duration from there and pull the first frame with a seek */
       vid.addEventListener('loadedmetadata', function () {
-        filmDur = vid.duration || 10; filmReady = true; window.__tcFilm = 1; window.__tcFilmReady = true;
+        filmDur = vid.duration || 10; window.__tcFilm = 1; window.__tcFilmReady = true;
         vid.addEventListener('seeked', show, { once: true });
-        seekFilm(true);
+        var arm = function () { filmReady = true; seekFilm(true); };
+        /* prime it: a muted play-then-pause makes later seeks paint on iPhones; if play is refused, seek anyway */
+        var pp = vid.play();
+        if (pp && pp.then) pp.then(function () { vid.pause(); arm(); }).catch(arm); else arm();
+        /* if no frame ever shows, fall back to the loop rather than leave the poster frozen */
+        setTimeout(function () { if (!shown) startLoop(); }, 6000);
       }, { once: true });
       vid.addEventListener('loadeddata', show, { once: true });
+      vid.muted = true; vid.defaultMuted = true;
       vid.src = URL.createObjectURL(b);
       vid.load();
     }).catch(function () { window.__tcFilm = 1; window.__tcFilmReady = true; startLoop(); });
@@ -872,9 +885,11 @@ html.has-case { overflow: hidden; }
     var t = Math.max(0.001, driveCur * filmDur);
     if (!force && Math.abs(vid.currentTime - t) < 1 / 48) return;
     seekBusy = true;
-    var done = function () { seekBusy = false; if (Math.abs(driveCur * filmDur - vid.currentTime) > 1 / 48) seekFilm(); };
-    if (vid.requestVideoFrameCallback) vid.requestVideoFrameCallback(done);
+    clearTimeout(seekGuard);
+    var done = function () { clearTimeout(seekGuard); seekBusy = false; if (Math.abs(driveCur * filmDur - vid.currentTime) > 1 / 48) seekFilm(); };
+    if (vid.requestVideoFrameCallback && !safari) vid.requestVideoFrameCallback(done);
     else vid.addEventListener('seeked', done, { once: true });
+    seekGuard = setTimeout(function () { seekBusy = false; seekFilm(); }, 300);   /* never let one lost seek stall the film */
     vid.currentTime = t;
   }
   function stamp(sec) { var m = Math.floor(sec / 60), s = Math.floor(sec % 60); return (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s; }
