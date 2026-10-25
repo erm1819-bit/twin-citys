@@ -3,75 +3,363 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Twin Citys, a Miami creative studio. Start a project, see the website, or find us on Instagram.">
-<meta name="robots" content="noindex">
-<link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#0b0b0b">
+<meta name="robots" content="noindex">
 <title>Twin Citys</title>
-<script data-goatcounter="https://twincitys.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<meta name="description" content="Twin Citys, a creative studio for Miami businesses. Start a project, see our work, or follow along on Instagram.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="poster-tall.jpg" as="image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&display=swap">
 <style>
-/* The back of the card, as a page: the mark, the name, and the three places to go. Built to open fast from a QR scan. */
-:root {
-  color-scheme: dark;
-  --black: #0b0b0b; --ivory: #e8e3d9; --stone: #9a958b; --stone-dim: #45423f; --line: #2a2927;
-  --font: 'Montserrat', 'Avenir Next', 'Helvetica Neue', Arial, sans-serif;
-  --ease: cubic-bezier(.3, .7, .2, 1);
-}
-*, *::before, *::after { box-sizing: border-box; }
-html { height: 100%; }
-body {
-  min-height: 100%; margin: 0; background: var(--black); color: var(--ivory);
-  font-family: var(--font); font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased;
-  display: flex; flex-direction: column; align-items: center;
-  padding: calc(env(safe-area-inset-top, 0px) + 36px) max(20px, env(safe-area-inset-left, 0px)) calc(env(safe-area-inset-bottom, 0px) + 28px) max(20px, env(safe-area-inset-right, 0px));
-}
-a { color: inherit; text-decoration: none; }
-:focus-visible { outline: 1px solid var(--ivory); outline-offset: 5px; }
-h1, p { margin: 0; }
-.wrap { width: min(100%, 420px); display: flex; flex-direction: column; align-items: center; gap: 36px; flex: 1; }
-.brand { display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; }
-.mark { width: 64px; height: auto; aspect-ratio: 892 / 756; fill: var(--ivory); }
-.wm { font-size: 22px; font-weight: 300; letter-spacing: .34em; text-transform: uppercase; }
-.wm i { display: inline-block; width: 1px; height: 18px; margin: 0 .55em; background: var(--stone); vertical-align: -2px; }
-.sub { color: var(--stone); font-size: 11px; letter-spacing: .34em; text-transform: uppercase; }
-.links { width: 100%; display: flex; flex-direction: column; gap: 12px; }
-.link {
-  display: flex; align-items: center; justify-content: space-between; gap: 16px;
-  min-height: 64px; padding: 0 22px; border: 1px solid var(--line);
-  font-size: 12px; font-weight: 500; letter-spacing: .32em; text-transform: uppercase;
-  transition: border-color .2s, background .2s;
-}
-.link::after { content: ""; display: block; width: 28px; height: 1px; background: currentColor; transition: width .4s var(--ease); }
-.link:hover, .link:active { border-color: var(--stone); background: #111110; }
-.link:hover::after { width: 44px; }
-.link--main { background: var(--ivory); color: var(--black); border-color: var(--ivory); }
-.link--main:hover, .link--main:active { background: #f4efe5; border-color: #f4efe5; }
-.link small { font-weight: 400; letter-spacing: .06em; text-transform: none; font-size: 13px; color: var(--stone); margin-left: auto; }
-.link--main small { color: #57524a; }
-.foot { margin-top: auto; padding-top: 24px; color: var(--stone); font-size: 11px; letter-spacing: .32em; text-transform: uppercase; text-align: center; }
-.foot a { display: block; margin-top: 10px; color: var(--ivory); letter-spacing: .08em; text-transform: none; font-size: 14px; }
+  /* Layout: one screen — compact masthead, the three doors grow to fill the middle
+     as bordered tiles (matching the /start form's tile style), dusk horizon foot.
+     Tokens lifted verbatim from twincitys.net/start. */
+  :root {
+    --black: #0b0b0b;
+    --ivory: #e8e3d9;
+    --stone: #a19b90;
+    --stone-dim: #4a4743;
+    --line: rgba(232, 227, 217, 0.18);
+    --amber: #f0b36a;
+    --coral: #e8846b;
+    --dusk-pink: #e9a3b4;
+    --font-display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+    --font-body: 'Montserrat', 'Avenir Next', 'Helvetica Neue', Arial, sans-serif;
+    color-scheme: dark;
+  }
+
+  html, body { height: 100%; }
+
+  body {
+    background: var(--black);
+    color: var(--ivory);
+    font-family: var(--font-body);
+    display: flex;
+    flex-direction: column;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: clamp(1.5rem, 4.5vh, 2.5rem);
+    max-width: 34rem;
+    margin-inline: auto;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---- masthead ---- */
+
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-bottom: 0.9rem;
+  }
+
+  .mark {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.65rem, 2.8vw, 1rem);
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 11.5vw, 3.4rem);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    line-height: 0.95;
+  }
+
+  .mark .rule {
+    flex: none;
+    width: 1px;
+    align-self: stretch;
+    background: var(--ivory);
+    opacity: 0.55;
+  }
+
+  .tagline {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.125rem;
+    color: var(--stone);
+    margin-top: 0.7rem;
+  }
+
+  /* ---- the three doors ---- */
+
+  .doors {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: clamp(0.8rem, 2.4vh, 1.3rem);
+    margin-block: clamp(1.4rem, 4vh, 2.2rem);
+  }
+
+  .door {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    column-gap: 1rem;
+    row-gap: 0.2rem;
+    padding: clamp(1rem, 2.6vh, 1.4rem) 1.15rem;
+    text-decoration: none;
+    color: var(--ivory);
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.025);
+    transition: border-color 140ms ease, background-color 140ms ease;
+  }
+
+  .door .icon {
+    grid-row: 1 / span 2;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--stone);
+  }
+
+  .door .icon svg { width: 26px; height: 26px; }
+  .door .icon img { width: 30px; height: auto; display: block; }
+
+  .door .label {
+    font-size: 1.0625rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+
+  .door .note {
+    grid-column: 2;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    line-height: 1.3;
+    color: var(--stone);
+  }
+
+  .door .arrow {
+    grid-row: 1 / span 2;
+    grid-column: 3;
+    font-size: 1.2rem;
+    line-height: 1;
+    color: var(--stone);
+    transition: transform 160ms ease;
+  }
+
+  .door:hover {
+    border-color: var(--amber);
+    background: rgba(240, 179, 106, 0.09);
+  }
+
+  .door:hover .arrow { transform: translateX(3px); }
+
+  /* primary door — the /start form's go-button gradient */
+  .door--primary {
+    background: linear-gradient(100deg, var(--amber), var(--coral));
+    border-color: transparent;
+    color: #1a1208;
+  }
+
+  .door--primary .label { font-weight: 600; }
+
+  .door--primary .icon,
+  .door--primary .note,
+  .door--primary .arrow { color: rgba(26, 18, 8, 0.72); }
+
+  .door--primary:hover {
+    border-color: transparent;
+    background: linear-gradient(100deg, var(--amber), var(--coral));
+    filter: brightness(1.05);
+  }
+
+  .door:focus-visible {
+    outline: 2px solid var(--amber);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .door, .door .arrow { transition: none; }
+    .door:hover .arrow { transform: none; }
+  }
+
+  /* ---- foot ---- */
+
+  .horizon {
+    height: 1px;
+    border: 0;
+    margin: 0 0 0.9rem;
+    background: linear-gradient(90deg, var(--dusk-pink), var(--amber) 55%, transparent);
+    opacity: 0.8;
+  }
+
+  .foot p {
+    margin: 0;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--stone);
+  }
+
+  /* ---- micro boot: the site's opener, in miniature ---- */
+
+  :root { --ease: cubic-bezier(0.3, 0.7, 0.2, 1); }
+
+  @keyframes boot-rule  { from { transform: scaleY(0); } }
+  @keyframes boot-left  { from { opacity: 0; transform: translateX(-18px); } }
+  @keyframes boot-right { from { opacity: 0; transform: translateX(18px); } }
+  @keyframes boot-fade  { from { opacity: 0; } }
+  @keyframes boot-rise  { from { opacity: 0; transform: translateY(10px); } }
+  @keyframes boot-sweep { from { transform: scaleX(0); } }
+
+  .mark .rule { transform-origin: top; animation: boot-rule 420ms var(--ease) backwards; }
+  .mark span:first-child { animation: boot-left 560ms var(--ease) 100ms backwards; }
+  .mark span:last-child { animation: boot-right 560ms var(--ease) 100ms backwards; }
+  .eyebrow { animation: boot-fade 400ms ease-out 420ms backwards; }
+  .tagline { animation: boot-fade 400ms ease-out 500ms backwards; }
+  .doors .door:nth-child(1) { animation: boot-rise 460ms var(--ease) 280ms backwards; }
+  .doors .door:nth-child(2) { animation: boot-rise 460ms var(--ease) 380ms backwards; }
+  .doors .door:nth-child(3) { animation: boot-rise 460ms var(--ease) 480ms backwards; }
+  .horizon { transform-origin: left; animation: boot-sweep 600ms var(--ease) 580ms backwards; }
+  .foot p { animation: boot-fade 400ms ease-out 720ms backwards; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mark .rule, .mark span, .eyebrow, .tagline, .doors .door, .horizon, .foot p { animation: none; }
+  }
+
+  /* ---- skyline film: bay -> Brickell towers -> back, looped behind everything ---- */
+
+  .film {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    background: var(--black) url("poster-tall.jpg") center / cover no-repeat;
+  }
+
+  .film video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    opacity: 0;
+    transition: opacity 900ms ease;
+  }
+
+  .film.is-playing video { opacity: 1; }
+
+  /* darken top (wordmark) and bottom (footer) hardest; let the towers glow through the middle */
+  .film::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+      rgba(11, 11, 11, 0.74) 0%,
+      rgba(11, 11, 11, 0.22) 34%,
+      rgba(11, 11, 11, 0.34) 62%,
+      rgba(11, 11, 11, 0.86) 100%);
+  }
+
+  header, .doors, .foot { position: relative; z-index: 1; }
+  header { text-shadow: 0 1px 18px rgba(0, 0, 0, 0.5); }
+
+  /* frosted doors so they stay readable over the moving city */
+  .door {
+    background: rgba(11, 11, 11, 0.42);
+    -webkit-backdrop-filter: blur(10px) saturate(1.15);
+    backdrop-filter: blur(10px) saturate(1.15);
+  }
+
+  .door:hover { background: rgba(48, 34, 20, 0.55); }
 </style>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="tc" viewBox="0 0 892 756"><polygon points="0,0 70,96 280,97 280,632 407,742 407,1"></polygon><polygon points="892,0 463,1 463,756 802,581 582,580 582,97 813,96"></polygon></symbol></svg>
-<main class="wrap">
-  <header class="brand">
-    <svg class="mark" aria-hidden="true"><use href="#tc"></use></svg>
-    <h1 class="wm">Twin<i aria-hidden="true"></i>Citys</h1>
-    <p class="sub">Miami creative studio</p>
-  </header>
-  <nav class="links" aria-label="Twin Citys links">
-    <a class="link link--main" href="https://twincitys.net/start">Start a project</a>
-    <a class="link" href="https://twincitys.net/">Website<small>twincitys.net</small></a>
-    <a class="link" href="https://instagram.com/twincitys.co">Instagram<small>@twincitys.co</small></a>
-  </nav>
-  <footer class="foot">
-    Design | Develop | Create
-    <a href="mailto:eric@twincitys.net">eric@twincitys.net</a>
-  </footer>
-</main>
+<div class="film" id="film" aria-hidden="true">
+  <video id="film-video" muted playsinline loop preload="auto"></video>
+</div>
+
+<header>
+  <p class="eyebrow">Miami, FL</p>
+  <h1 class="mark">
+    <span>Twin</span><i class="rule" aria-hidden="true"></i><span>Citys</span>
+  </h1>
+  <p class="tagline">A creative studio for Miami businesses.</p>
+</header>
+
+<nav class="doors" aria-label="Where to next">
+  <a class="door door--primary" id="door-start" href="https://twincitys.net/start?from=card" data-goatcounter-click="card-start-project" data-goatcounter-title="Card: Start a project">
+    <span class="icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 2.8h8.2L19 7.6V21.2H6z"/>
+        <path d="M14.2 2.8v4.8H19"/>
+        <path d="M9 12h7M9 15.5h7"/>
+      </svg>
+    </span>
+    <span class="label">Start a project</span>
+    <span class="arrow" aria-hidden="true">&rarr;</span>
+    <span class="note">Tell us what you need. We respond within 24 hours.</span>
+  </a>
+
+  <a class="door" href="https://twincitys.net" data-goatcounter-click="card-see-work" data-goatcounter-title="Card: See our work">
+    <span class="icon" aria-hidden="true">
+      <img src="data:image/png;base64,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" alt="">
+    </span>
+    <span class="label">See our work</span>
+    <span class="arrow" aria-hidden="true">&rarr;</span>
+    <span class="note">Websites, photography and film.</span>
+  </a>
+
+  <a class="door" href="https://www.instagram.com/twincitys.co/" data-goatcounter-click="card-instagram" data-goatcounter-title="Card: Instagram">
+    <span class="icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="5"/>
+        <circle cx="12" cy="12" r="4.2"/>
+        <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/>
+      </svg>
+    </span>
+    <span class="label">Instagram</span>
+    <span class="arrow" aria-hidden="true">&rarr;</span>
+    <span class="note">Follow the journey. See what&rsquo;s next.</span>
+  </a>
+</nav>
+
+<footer class="foot">
+  <hr class="horizon">
+  <p>Design &nbsp;|&nbsp; Develop &nbsp;|&nbsp; Create</p>
+</footer>
+
+<script>
+  // Carry the scan source through to the form: twincitys.net/card?from=ig -> /start?from=ig.
+  // A bare /card (what the printed QR points at) falls through to "card".
+  (function () {
+    var raw = new URLSearchParams(window.location.search).get('from');
+    var from = /^[a-z0-9_-]{1,24}$/i.test(raw || '') ? raw : 'card';
+    var start = document.getElementById('door-start');
+    if (start) {
+      start.href = 'https://twincitys.net/start?from=' + encodeURIComponent(from);
+    }
+  })();
+</script>
+
+<script>
+  // Background skyline film. The poster paints instantly; the film fades in once it is actually playing.
+  (function () {
+    var film = document.getElementById('film');
+    var video = document.getElementById('film-video');
+    if (!film || !video) return;
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var saveData = navigator.connection && navigator.connection.saveData;
+    if (reduceMotion || saveData) return;
+    video.addEventListener('playing', function () { film.classList.add('is-playing'); }, { once: true });
+    video.src = 'tall.mp4';
+    var started = video.play();
+    if (started && started.catch) started.catch(function () {});
+  })();
+</script>
+
+<!-- GoatCounter analytics — counts on twincitys.net; blocked (harmlessly) in the claude.ai preview -->
+<script data-goatcounter="https://twincitys.goatcounter.com/count"
+        async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
