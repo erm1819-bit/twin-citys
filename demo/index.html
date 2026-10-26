@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Demo builder · Twin Citys</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap">
+<style>
+/* Internal tool: fill the left column, watch the concept page on the right, download it, upload to the repo. */
+:root { color-scheme: dark; --black:#0b0b0b; --ivory:#e8e3d9; --stone:#a19b90; --dim:#4a4743; --line:rgba(232,227,217,.18); --font:'Montserrat','Avenir Next','Helvetica Neue',Arial,sans-serif; }
+*{box-sizing:border-box} body{margin:0;background:var(--black);color:var(--ivory);font:400 15px/1.55 var(--font);-webkit-font-smoothing:antialiased}
+h1,h2,p{margin:0} a{color:inherit}
+.app{display:grid;grid-template-columns:400px minmax(0,1fr);min-height:100vh}
+.side{border-right:1px solid var(--line);padding:28px 24px 40px;overflow:auto;max-height:100vh}
+.side header{display:flex;align-items:center;gap:14px;margin-bottom:22px;font-size:11px;letter-spacing:.34em;text-transform:uppercase}
+.tcmark{width:28px;height:24px;fill:currentColor}
+.side h1{font-weight:300;font-size:26px;line-height:1.1;margin-bottom:6px}
+.side .lead{color:var(--stone);font-size:13px;margin-bottom:24px}
+.f{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.f label{color:var(--stone);font-size:10px;letter-spacing:.28em;text-transform:uppercase}
+.f input,.f textarea,.f select{width:100%;background:transparent;color:var(--ivory);border:0;border-bottom:1px solid var(--dim);padding:8px 0;font:400 15px var(--font);outline:0}
+.f input:focus,.f textarea:focus,.f select:focus{border-bottom-color:var(--ivory)}
+.f textarea{min-height:64px;resize:vertical}
+.f select option{background:#141413}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+.sec{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--ivory);margin:26px 0 12px;padding-top:18px;border-top:1px solid var(--line)}
+.photos{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:8px}
+.photos div{aspect-ratio:1;background:#161615;border:1px solid var(--line);background-size:cover;background-position:center;position:relative;cursor:pointer}
+.photos div b{position:absolute;right:4px;top:2px;font-size:14px;color:var(--ivory);text-shadow:0 0 4px #000}
+.drop{display:block;border:1px dashed var(--dim);padding:14px;text-align:center;color:var(--stone);font-size:13px;cursor:pointer}
+.drop input{display:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 24px;border:1px solid var(--ivory);background:var(--ivory);color:var(--black);font:500 11px var(--font);letter-spacing:.3em;text-transform:uppercase;text-indent:.3em;cursor:pointer;width:100%;margin-top:8px}
+.btn.ghost{background:transparent;color:var(--stone);border-color:var(--dim);margin-top:10px}
+.how{margin-top:18px;color:var(--stone);font-size:12.5px;line-height:1.6}
+.how code{color:var(--ivory);font-family:ui-monospace,Menlo,monospace;font-size:12px}
+.stage{position:relative;background:#050505}
+.stage iframe{width:100%;height:100vh;border:0;display:block}
+.stage .tag{position:absolute;bottom:14px;right:16px;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--stone);background:rgba(11,11,11,.7);padding:6px 10px;border:1px solid var(--line)}
+@media(max-width:900px){.app{grid-template-columns:1fr}.side{max-height:none;border-right:0;border-bottom:1px solid var(--line)}.stage iframe{height:80vh}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="tc" viewBox="0 0 892 756"><polygon points="0,0 70,96 280,97 280,632 407,742 407,1"/><polygon points="892,0 463,1 463,756 802,581 582,580 582,97 813,96"/></symbol></svg>
+
+<div class="app">
+  <aside class="side">
+    <header><svg class="tcmark"><use href="#tc"/></svg>Twin Citys · Demo builder</header>
+    <h1>Build a concept page in a few minutes.</h1>
+    <p class="lead">Fill this in, check the preview, download the page. Nothing here is saved anywhere; the page is built on your computer.</p>
+
+    <div class="f"><label>Business name</label><input id="name" placeholder="Taqueria El Patio"></div>
+    <div class="two">
+      <div class="f"><label>What they are</label><input id="kind" placeholder="Mexican restaurant"></div>
+      <div class="f"><label>Neighborhood</label><input id="area" placeholder="Homestead, FL"></div>
+    </div>
+    <div class="f"><label>Headline (what the customer gets)</label><input id="tagline" placeholder="Tacos the way abuela made them, since 2009"></div>
+    <div class="f"><label>Short about (2 or 3 sentences)</label><textarea id="about" placeholder="Family-run, open late, everything made fresh daily. Known for the al pastor and the Sunday menudo."></textarea></div>
+    <div class="f"><label>Three things they're known for (comma separated)</label><input id="points" placeholder="Al pastor, Fresh salsas, Catering for any size"></div>
+
+    <div class="sec">Photos (up to 4, first one is the hero)</div>
+    <div class="photos" id="photos"><div data-i="0"></div><div data-i="1"></div><div data-i="2"></div><div data-i="3"></div></div>
+    <label class="drop">Tap to add photos, or drop them here. They get resized so the page stays light.<input id="file" type="file" accept="image/*" multiple></label>
+
+    <div class="sec">Contact (as it should show on the page)</div>
+    <div class="two">
+      <div class="f"><label>Phone</label><input id="phone" placeholder="(305) 555-0123"></div>
+      <div class="f"><label>Instagram</label><input id="ig" placeholder="@elpatiomiami"></div>
+    </div>
+    <div class="f"><label>Address</label><input id="address" placeholder="123 N Krome Ave, Homestead, FL 33030"></div>
+    <div class="f"><label>Hours</label><input id="hours" placeholder="Mon–Sat 11am–10pm · Sun 10am–8pm"></div>
+
+    <div class="sec">The offer</div>
+    <div class="two">
+      <div class="f"><label>Discount</label><input id="disc" placeholder="$400 off"></div>
+      <div class="f"><label>Code</label><input id="code" placeholder="HOMESTEAD-1"></div>
+    </div>
+    <div class="two">
+      <div class="f"><label>Good through</label><input id="exp" type="date"></div>
+      <div class="f"><label>Who's their contact</label><select id="who"><option value="eric">Eric</option><option value="kevin">Kevin</option><option value="both">Both</option></select></div>
+    </div>
+
+    <button class="btn" id="dl">Download the page</button>
+    <button class="btn ghost" id="open">Open preview in a new tab</button>
+    <p class="how" id="how">After downloading, go to <code>github.com/erm1819-bit/twin-citys/upload/main</code>, type the folder as <code>demo/<b id="slug">business-name</b>/</code> and drop the file in as <code>index.html</code>. About a minute later it's live at <code>twincitys.net/demo/<b id="slug2">business-name</b></code>. Send that link.</p>
+  </aside>
+
+  <div class="stage">
+    <span class="tag">Live preview</span>
+    <iframe id="preview" title="Concept page preview"></iframe>
+  </div>
+</div>
+
+<script>
+(function () {
+  var $ = function (s) { return document.querySelector(s); };
+  var photos = [null, null, null, null];
+  var ids = ['name','kind','area','tagline','about','points','phone','ig','address','hours','disc','code','exp','who'];
+
+  /* photos: resize on the client so the finished page is a single light file */
+  function addFiles(files) {
+    [].slice.call(files).forEach(function (f) {
+      var slot = photos.indexOf(null); if (slot < 0) return;
+      photos[slot] = 'pending';
+      var img = new Image(), url = URL.createObjectURL(f);
+      img.onload = function () {
+        var max = slot === 0 ? 1800 : 1200, r = Math.min(1, max / Math.max(img.width, img.height));
+        var c = document.createElement('canvas'); c.width = Math.round(img.width * r); c.height = Math.round(img.height * r);
+        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+        photos[slot] = c.toDataURL('image/jpeg', .82); URL.revokeObjectURL(url); render();
+      };
+      img.src = url;
+    });
+  }
+  $('#file').addEventListener('change', function (e) { addFiles(e.target.files); e.target.value = ''; });
+  document.addEventListener('dragover', function (e) { e.preventDefault(); });
+  document.addEventListener('drop', function (e) { e.preventDefault(); if (e.dataTransfer.files.length) addFiles(e.dataTransfer.files); });
+  $('#photos').addEventListener('click', function (e) {
+    var d = e.target.closest('div[data-i]'); if (!d) return;
+    var i = +d.dataset.i;
+    if (photos[i] && photos[i] !== 'pending') { photos[i] = null; render(); } else { $('#file').click(); }
+  });
+
+  function val(id) { return ($('#' + id).value || '').trim(); }
+  function esc(s) { return s.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function slug(s) { return (s || 'business-name').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'business-name'; }
+  function fmtDate(s) { if (!s) return ''; var d = new Date(s + 'T12:00:00'); return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric' }); }
+
+  function build() {
+    var d = {}; ids.forEach(function (k) { d[k] = val(k); });
+    var name = d.name || 'Your Business', kind = d.kind || 'Local business', area = d.area || 'Miami, FL';
+    var tagline = d.tagline || 'The place people keep coming back to.';
+    var about = d.about || 'A few honest sentences about who you are, what you do best, and why people in the neighborhood trust you. We write this with you.';
+    var pts = d.points ? d.points.split(',').map(function (s) { return s.trim(); }).filter(Boolean).slice(0, 3) : ['What you’re known for', 'What makes you different', 'Why they should come in'];
+    var ph = photos.filter(function (p) { return p && p !== 'pending'; });
+    var hero = ph[0] || '', rest = ph.slice(1);
+    var contacts = { eric: [['Eric Martinez', '(305) 767-6128', 'eric@twincitys.net']], kevin: [['Kevin Butchers', '(305) 986-6414', 'k.butchers@twincitys.net']] };
+    contacts.both = contacts.eric.concat(contacts.kevin);
+    var who = contacts[d.who] || contacts.eric;
+    var exp = fmtDate(d.exp);
+
+    return '<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n<meta name="robots" content="noindex, nofollow">\n<title>' + esc(name) + ' · concept by Twin Citys</title>\n<link rel="icon" href="/favicon.svg" type="image/svg+xml">\n<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap">\n<style>\n' +
+    ':root{color-scheme:dark;--black:#0b0b0b;--ivory:#e8e3d9;--stone:#a19b90;--dim:#4a4743;--line:rgba(232,227,217,.18);--font:"Montserrat","Avenir Next","Helvetica Neue",Arial,sans-serif;--ease:cubic-bezier(.3,.7,.2,1)}\n' +
+    '*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--black);color:var(--ivory);font:400 16px/1.6 var(--font);-webkit-font-smoothing:antialiased}h1,h2,h3,p{margin:0}a{color:inherit;text-decoration:none}\n' +
+    '.ribbon{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:10px clamp(16px,4vw,40px);background:rgba(11,11,11,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--stone)}.ribbon b{display:inline-flex;align-items:center;gap:10px;color:var(--ivory);font-weight:500}.ribbon svg{width:22px;height:19px;fill:currentColor}.ribbon a{color:var(--ivory);border-bottom:1px solid var(--dim);padding-bottom:2px}\n' +
+    '.hero{position:relative;min-height:92vh;display:grid;align-items:end;padding:clamp(24px,6vw,72px);overflow:hidden;isolation:isolate}.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;transform:scale(1.04);animation:drift 18s var(--ease) both}.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(to top,rgba(11,11,11,.96) 0%,rgba(11,11,11,.55) 45%,rgba(11,11,11,.2) 100%)}.hero.plain{background:radial-gradient(ellipse at 30% 20%,#2a2927,#0b0b0b 60%)}@keyframes drift{from{transform:scale(1.12)}to{transform:scale(1.04)}}\n' +
+    '.hero .k{font-size:11px;letter-spacing:.4em;text-transform:uppercase;color:var(--stone);margin-bottom:18px}.hero h1{font-weight:300;font-size:clamp(44px,9vw,120px);line-height:.98;letter-spacing:-.01em;max-width:12ch;text-wrap:balance}.hero p{margin-top:22px;max-width:46ch;color:var(--ivory);font-size:clamp(16px,1.6vw,20px);font-weight:300}.hero .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}\n' +
+    '.btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 28px;border:1px solid var(--ivory);background:var(--ivory);color:var(--black);font:500 11px var(--font);letter-spacing:.3em;text-transform:uppercase;text-indent:.3em;transition:transform .25s var(--ease)}.btn:hover{transform:translateY(-1px)}.btn.ghost{background:transparent;color:var(--ivory)}\n' +
+    '.wrap{width:min(100%,1120px);margin:0 auto;padding:0 clamp(16px,4vw,40px)}\n' +
+    '.pts{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.pts div{padding:28px 24px 28px 0;border-right:1px solid var(--line);font-weight:300;font-size:clamp(18px,2vw,24px);line-height:1.25}.pts div:last-child{border-right:0}.pts div:not(:first-child){padding-left:24px}.pts span{display:block;color:var(--stone);font-size:10px;letter-spacing:.34em;text-transform:uppercase;margin-bottom:12px}\n' +
+    '.about{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,72px);padding:clamp(56px,9vw,120px) 0}.about h2{font-weight:300;font-size:clamp(28px,3.6vw,48px);line-height:1.08;letter-spacing:-.01em}.about h2 em{font-style:normal;font-weight:500;color:#fff}.about p{color:var(--stone);font-size:17px;max-width:48ch}\n' +
+    '.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.gal img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;filter:saturate(.95)}.gal .ph{aspect-ratio:4/5;background:#161615;border:1px solid var(--line);display:grid;place-items:center;color:var(--dim);font-size:11px;letter-spacing:.3em;text-transform:uppercase}\n' +
+    '.info{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding:clamp(48px,8vw,96px) 0;border-top:1px solid var(--line);margin-top:clamp(48px,8vw,96px)}.info span{display:block;color:var(--stone);font-size:10px;letter-spacing:.34em;text-transform:uppercase;margin-bottom:10px}.info p{font-size:17px;font-weight:300}\n' +
+    '.offer{margin:0 0 clamp(48px,8vw,96px);border:1px solid var(--ivory);padding:clamp(28px,5vw,56px);display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:32px;align-items:center;background:linear-gradient(135deg,rgba(232,227,217,.06),transparent 60%)}.offer .k{font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:var(--stone);margin-bottom:14px}.offer h2{font-weight:300;font-size:clamp(26px,3.4vw,44px);line-height:1.1}.offer h2 em{font-style:normal;font-weight:500;color:#fff}.offer p{color:var(--stone);margin-top:14px;max-width:46ch}.offer .code{display:grid;gap:14px;text-align:right}.offer .code div{border:1px solid var(--line);padding:14px 18px}.offer .code span{display:block;color:var(--stone);font-size:10px;letter-spacing:.34em;text-transform:uppercase;margin-bottom:4px}.offer .code b{font-weight:500;font-size:clamp(20px,2.4vw,30px);letter-spacing:.06em}.offer .who{display:flex;flex-wrap:wrap;gap:20px 36px;margin-top:22px;font-size:14px;color:var(--stone)}.offer .who b{display:block;color:var(--ivory);font-weight:500;letter-spacing:.06em}\n' +
+    'footer{padding:28px 0 40px;display:flex;justify-content:space-between;gap:16px;color:var(--dim);font-size:10px;letter-spacing:.3em;text-transform:uppercase;border-top:1px solid var(--line)}\n' +
+    '@media(max-width:760px){.pts{grid-template-columns:1fr}.pts div{border-right:0;border-bottom:1px solid var(--line);padding:20px 0}.pts div:not(:first-child){padding-left:0}.pts div:last-child{border-bottom:0}.about,.offer{grid-template-columns:1fr}.offer .code{text-align:left}.gal{grid-template-columns:1fr 1fr}.info{grid-template-columns:1fr;gap:20px}.hero{min-height:84vh}footer{flex-direction:column}}\n' +
+    '@media(prefers-reduced-motion:reduce){.hero img{animation:none}}\n</style>\n</head>\n<body>\n' +
+    '<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="tc" viewBox="0 0 892 756"><polygon points="0,0 70,96 280,97 280,632 407,742 407,1"/><polygon points="892,0 463,1 463,756 802,581 582,580 582,97 813,96"/></symbol></svg>\n' +
+    '<div class="ribbon"><b><svg><use href="#tc"/></svg>A concept for ' + esc(name) + '</b><span>Made by <a href="https://twincitys.net/">Twin Citys</a> · <a href="#offer">see your offer</a></span></div>\n' +
+    '<section class="hero' + (hero ? '' : ' plain') + '">' + (hero ? '<img src="' + hero + '" alt="">' : '') + '<div><p class="k">' + esc(kind) + ' · ' + esc(area) + '</p><h1>' + esc(name) + '</h1><p>' + esc(tagline) + '</p><div class="cta">' + (d.phone ? '<a class="btn" href="tel:' + esc(d.phone.replace(/[^\\d+]/g, '')) + '">Call us</a>' : '<a class="btn" href="#about">Come see us</a>') + (d.address ? '<a class="btn ghost" href="https://maps.google.com/?q=' + encodeURIComponent(d.address) + '" target="_blank" rel="noopener">Directions</a>' : '') + '</div></div></section>\n' +
+    '<main class="wrap">\n<div class="pts">' + pts.map(function (p, i) { return '<div><span>0' + (i + 1) + '</span>' + esc(p) + '</div>'; }).join('') + '</div>\n' +
+    '<section class="about" id="about"><h2>About <em>' + esc(name) + '</em></h2><p>' + esc(about) + '</p></section>\n' +
+    '<div class="gal">' + (rest.length ? rest.map(function (p) { return '<img src="' + p + '" alt="">'; }).join('') : '<div class="ph">Photo</div><div class="ph">Photo</div><div class="ph">Photo</div>') + '</div>\n' +
+    '<div class="info"><div><span>Find us</span><p>' + esc(d.address || 'Your address here') + '</p></div><div><span>Hours</span><p>' + esc(d.hours || 'Your hours here') + '</p></div><div><span>Say hi</span><p>' + esc(d.phone || 'Your phone') + (d.ig ? '<br>' + esc(d.ig) : '') + '</p></div></div>\n' +
+    '<section class="offer" id="offer"><div><p class="k">Like what you see?</p><h2>This is a concept. <em>The full site is yours' + (d.disc ? ' for ' + esc(d.disc) + '.' : '.') + '</em></h2><p>We built this in a day from what you already have. The finished site adds the rest: every page, your menu or services, a booking or ordering flow if you want one, and it’s built to look this good on a phone. ' + (exp ? 'Your rate is good through ' + esc(exp) + '.' : '') + '</p><div class="who">' + who.map(function (w) { return '<div><b>' + esc(w[0]) + '</b>' + esc(w[1]) + '<br>' + esc(w[2]) + '</div>'; }).join('') + '</div></div><div class="code">' + (d.disc ? '<div><span>Your rate</span><b>' + esc(d.disc) + '</b></div>' : '') + (d.code ? '<div><span>Code</span><b>' + esc(d.code) + '</b></div>' : '') + (exp ? '<div><span>Good through</span><b>' + esc(exp) + '</b></div>' : '') + '<a class="btn" href="https://twincitys.net/start">Let’s build it</a></div></section>\n' +
+    '</main>\n<footer class="wrap"><span>Concept by Twin Citys · Miami, FL</span><span>Design | Develop | Create</span></footer>\n</body>\n</html>\n';
+  }
+
+  var t;
+  function render() {
+    $('#photos').querySelectorAll('div').forEach(function (d, i) {
+      var p = photos[i]; d.style.backgroundImage = (p && p !== 'pending') ? 'url(' + p + ')' : ''; d.innerHTML = (p && p !== 'pending') ? '<b>×</b>' : '';
+    });
+    var s = slug(val('name')); $('#slug').textContent = s; $('#slug2').textContent = s;
+    clearTimeout(t); t = setTimeout(function () { $('#preview').srcdoc = build(); }, 150);
+  }
+  ids.forEach(function (k) { $('#' + k).addEventListener('input', render); });
+
+  $('#dl').addEventListener('click', function () {
+    var blob = new Blob([build()], { type: 'text/html' }), a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'index.html'; a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
+  });
+  $('#open').addEventListener('click', function () {
+    var blob = new Blob([build()], { type: 'text/html' }); window.open(URL.createObjectURL(blob), '_blank');
+  });
+  render();
+})();
+</script>
+</body>
+</html>
