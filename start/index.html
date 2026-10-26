@@ -123,7 +123,7 @@ legend { padding: 0; margin-bottom: 4px; }
 .field select { appearance: none; -webkit-appearance: none; cursor: pointer; padding-right: 28px;
   background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23a19b90' stroke-width='1.5'><path d='M6 9l6 6 6-6'/></svg>") no-repeat right center; }
 .field select option { background: #141413; color: var(--ivory); }
-.field textarea { min-height: 120px; resize: vertical; }
+.field textarea { min-height: 48px; height: 48px; resize: none; overflow: hidden; }
 .field input:focus, .field textarea:focus, .field select:focus { border-bottom-color: var(--ivory); box-shadow: 0 1px 0 var(--ivory); outline: 0; }
 .field input::placeholder, .field textarea::placeholder { color: #5e5a53; }
 .field.is-bad input { border-bottom-color: #c96b5e; }
@@ -290,9 +290,9 @@ legend { padding: 0; margin-bottom: 4px; }
               <label class="tile"><input type="checkbox" name="services[]" value="Not sure yet"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 015 0c0 1.8-2.5 2-2.5 4M12 17h.01"/></svg><span>Not sure yet, help me decide</span><i></i></label>
             </div>
           </fieldset>
-          <div class="field"><label for="f-about">Anything else we should know?</label><textarea id="f-about" name="about" placeholder="e.g. your current website, when you want to start, etc."></textarea></div>
+          <div class="field"><label for="f-about">Anything else we should know?</label><textarea id="f-about" name="about" rows="1" placeholder="e.g. your current website, when you want to start, etc."></textarea></div>
           <div class="nav">
-            <span class="hint">We'll ask the detailed questions on a quick call.</span>
+            <span class="hint">Last box is optional. We'll cover the details on a quick call.</span>
             <button type="submit" class="btn btn--go" id="send-btn">Send it over</button>
             <p class="status" id="status" role="status" aria-live="polite"></p>
           </div>
@@ -366,6 +366,9 @@ legend { padding: 0; margin-bottom: 4px; }
     return ok;
   }
   $$('.field input').forEach(function (el) { el.addEventListener('input', function () { el.closest('.field').classList.remove('is-bad'); }); });
+  /* the notes box starts as one line, like the other fields, and grows as they type */
+  var about = $('#f-about');
+  about.addEventListener('input', function () { about.style.height = '48px'; about.style.height = Math.max(48, about.scrollHeight) + 'px'; });
 
   function finish() {
     form.hidden = true; lead.hidden = true; done.classList.add('is-on'); done.focus({ preventScroll: true });
