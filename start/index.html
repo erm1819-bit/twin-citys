@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Start a project with Twin Citys, a Miami creative studio. Tell us about your business in three quick steps.">
+<meta name="description" content="Start a project with Twin Citys, a Miami creative studio. One short form, plain words, no tech talk.">
 <meta name="robots" content="noindex">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#0b0b0b">
@@ -89,38 +89,19 @@ h1, h2, h3, p { margin: 0; }
   width: min(100%, 760px); position: relative;
   background: var(--glass); border: 1px solid var(--line); backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
   box-shadow: 0 40px 100px rgba(0, 0, 0, .55), inset 0 1px 0 rgba(255, 255, 255, .05);
-  display: grid; grid-template-columns: 56px minmax(0, 1fr);
+  display: grid; grid-template-columns: minmax(0, 1fr);
 }
-/* the brand's vertical line, now the progress line */
-.rail { position: relative; border-right: 1px solid var(--line); }
-.rail::before { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: var(--line); }
-.rail__fill {
-  position: absolute; top: 0; left: 50%; width: 1px; height: var(--p, 0%);
-  background: linear-gradient(to bottom, var(--dusk-pink), var(--amber)); box-shadow: 0 0 14px var(--amber);
-  transition: height .9s var(--ease);
-}
-.rail ol {
-  list-style: none; margin: 0; padding: 0; position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between;
-  padding-block: clamp(32px, 6vw, 56px);
-}
-.rail li {
-  position: relative; display: grid; place-items: center; width: 100%;
-  color: var(--stone-dim); font-size: 11px; letter-spacing: .1em; font-variant-numeric: tabular-nums; transition: color .4s;
-}
-.rail li b { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--black); border: 1px solid var(--stone-dim); font-weight: 500; transition: border-color .4s, color .4s, background .4s; }
-.rail li.is-done b { border-color: var(--amber); color: var(--amber); }
-.rail li.is-on b { border-color: var(--amber); background: var(--amber); color: var(--black); box-shadow: 0 0 18px rgba(240, 179, 106, .45); }
-.rail li.is-on, .rail li.is-done { color: var(--ivory); }
 
-.body { padding: clamp(28px, 6vw, 56px) clamp(22px, 6vw, 56px); min-width: 0; }
+.card::before { content: ""; position: absolute; top: 0; left: clamp(22px, 6vw, 56px); width: 1px; height: 100%; background: linear-gradient(to bottom, var(--dusk-pink), var(--amber) 50%, transparent); opacity: .35; pointer-events: none; }
+.body { padding: clamp(28px, 6vw, 56px) clamp(22px, 6vw, 56px) clamp(28px, 6vw, 56px) calc(clamp(22px, 6vw, 56px) + 28px); min-width: 0; }
+@media (max-width: 640px) { .card::before { display: none; } .body { padding-left: 22px; } }
 .eyebrow { color: var(--stone); font-size: var(--t-label); letter-spacing: .4em; text-transform: uppercase; font-weight: 500; }
 .lead { display: flex; flex-direction: column; gap: 14px; margin-bottom: clamp(28px, 5vw, 44px); }
 .lead h1 { font-family: var(--font-display); font-weight: 400; font-size: var(--t-h); line-height: 1.02; letter-spacing: -.005em; text-wrap: balance; }
 .lead h1 em { font-style: italic; color: transparent; background: linear-gradient(100deg, var(--dusk-pink), var(--amber) 55%, var(--coral)); -webkit-background-clip: text; background-clip: text; }
 .lead p { color: var(--stone); max-width: 46ch; }
 
-.step { display: none; flex-direction: column; gap: 32px; }
-.step.is-on { display: flex; animation: rise .55s var(--ease) both; }
+.step { display: flex; flex-direction: column; gap: 32px; }
 @keyframes rise { from { opacity: 0; transform: translateY(14px); } }
 .step h2, .step .h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(26px, 3.4vw, 36px); line-height: 1.1; }
 .step h2 em, .step .h2 em { font-style: italic; color: var(--amber); }
@@ -195,18 +176,13 @@ legend { padding: 0; margin-bottom: 4px; }
 
 @media (max-width: 640px) {
   .card { grid-template-columns: minmax(0, 1fr); }
-  .rail { border-right: 0; border-bottom: 1px solid var(--line); height: 64px; }
-  .rail::before { top: 50%; left: 0; right: 0; bottom: auto; width: auto; height: 1px; }
-  .rail__fill { top: 50%; left: 0; height: 1px; width: var(--p, 0%); transition: width .9s var(--ease); }
-  .rail ol { flex-direction: row; padding-block: 0; padding-inline: 24px; align-items: center; }
-  .rail li { width: auto; }
   .row, .tiles, .done .who { grid-template-columns: minmax(0, 1fr); }
   .btn { flex: 1 1 auto; }
 }
 @media (prefers-reduced-motion: reduce) {
   .sky i { animation: none; }
-  .step.is-on, .done.is-on { animation: none; }
-  .rail__fill, .tile, .btn { transition: none; }
+  .done.is-on { animation: none; }
+  .tile, .btn { transition: none; }
 }
 /* the intro: the line draws, the name arrives from both sides, a thin bar fills, then the whole screen lifts */
 .intro {
@@ -278,20 +254,11 @@ legend { padding: 0; margin-bottom: 4px; }
   </header>
 
   <main class="card">
-    <aside class="rail" aria-label="Progress">
-      <div class="rail__fill" id="rail-fill"></div>
-      <ol id="rail">
-        <li class="is-on"><b>1</b></li>
-        <li><b>2</b></li>
-        <li><b>3</b></li>
-      </ol>
-    </aside>
-
     <div class="body">
       <div class="lead" id="lead">
         <span class="eyebrow">Start a project</span>
         <h1>Let's build something people <em>remember.</em></h1>
-        <p>Three quick steps, plain words, no tech talk. It goes straight to Eric and Kevin and we reply within a day.</p>
+        <p>Four quick things and a Send button. It goes straight to Eric and Kevin and we reply within a day.</p>
       </div>
 
       <form id="start-form" action="https://api.web3forms.com/submit" method="POST" novalidate>
@@ -301,25 +268,15 @@ legend { padding: 0; margin-bottom: 4px; }
         <input type="hidden" name="redirect" value="https://twincitys.net/start/#sent">
         <div class="hp" aria-hidden="true"><input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off"></div>
 
-        <section class="step is-on" data-step="1">
-          <h2>First, <em>who</em> are we talking to?</h2>
+        <section class="step">
           <div class="row">
             <div class="field"><label for="f-name">Your name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
             <div class="field"><label for="f-company">Business name</label><input id="f-company" name="company" type="text" autocomplete="organization" required></div>
-            <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
-            <div class="field"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="Optional"></div>
           </div>
-          <div class="nav">
-            <span></span>
-            <button type="button" class="btn btn--go" data-next>Next</button>
-            <p class="status" id="status-1" role="status" aria-live="polite"></p>
-          </div>
-        </section>
-
-        <section class="step" data-step="2">
+          <div class="field"><label for="f-contact">Email or phone, whichever you check more</label><input id="f-contact" name="contact" type="text" autocomplete="email" inputmode="email" required></div>
           <fieldset>
             <legend class="h2">What do you need <em>help</em> with?</legend>
-            <p class="hint">Pick as many as you want.</p>
+            <p class="hint">Tap as many as you want.</p>
             <div class="tiles">
               <label class="tile"><input type="checkbox" name="services[]" value="A brand new website"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="1"/><path d="M3 9h18M8 21h8"/></svg><span>A brand new website</span><i></i></label>
               <label class="tile"><input type="checkbox" name="services[]" value="Fix or refresh my current website"><svg viewBox="0 0 24 24"><path d="M14 4l6 6-10 10H4v-6z"/><path d="M12 6l6 6"/></svg><span>Fix or refresh my current website</span><i></i></label>
@@ -330,53 +287,11 @@ legend { padding: 0; margin-bottom: 4px; }
               <label class="tile"><input type="checkbox" name="services[]" value="Not sure yet"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 015 0c0 1.8-2.5 2-2.5 4M12 17h.01"/></svg><span>Not sure yet, help me decide</span><i></i></label>
             </div>
           </fieldset>
-          <fieldset>
-            <legend class="h2">If it's a website, <em>what kind?</em></legend>
-            <p class="hint">Skip this if you don't need a website.</p>
-            <div class="tiles">
-              <label class="tile"><input type="radio" name="website_type" value="A simple site that shows who we are"><span>A simple site that shows who we are, what we do and how to reach us</span><i></i></label>
-              <label class="tile"><input type="radio" name="website_type" value="A site where people can book or order"><span>A site where people can book an appointment or place an order</span><i></i></label>
-              <label class="tile"><input type="radio" name="website_type" value="An online store"><span>An online store where people buy products</span><i></i></label>
-              <label class="tile"><input type="radio" name="website_type" value="A menu site for a restaurant"><span>A menu site for a restaurant or café</span><i></i></label>
-              <label class="tile"><input type="radio" name="website_type" value="Not sure"><span>Not sure, you tell me</span><i></i></label>
-            </div>
-          </fieldset>
+          <div class="field"><label for="f-about">Anything else we should know?</label><textarea id="f-about" name="about" placeholder="Optional. Your current website, when you want to start, what a win looks like."></textarea></div>
           <div class="nav">
-            <button type="button" class="btn btn--ghost" data-back>Back</button>
-            <button type="button" class="btn btn--go" data-next>Next</button>
-            <p class="status" id="status-2" role="status" aria-live="polite"></p>
-          </div>
-        </section>
-
-        <section class="step" data-step="3">
-          <h2>Last thing. <em>Tell us about the business.</em></h2>
-          <div class="group">
-            <div class="field"><label for="f-site">Current website, if you have one</label><input id="f-site" name="current_website" type="text" inputmode="url" autocomplete="url" placeholder="Optional"></div>
-            <div class="row">
-              <div class="field"><label for="f-when">When do you want to start?</label>
-                <select id="f-when" name="timing">
-                  <option value="As soon as possible">As soon as possible</option>
-                  <option value="In the next month">In the next month</option>
-                  <option value="In a few months">In a few months</option>
-                  <option value="Just looking for now">Just looking for now</option>
-                </select>
-              </div>
-              <div class="field"><label for="f-budget">Rough budget</label>
-                <select id="f-budget" name="budget">
-                  <option value="Not sure yet">Not sure yet</option>
-                  <option value="Under $1,000">Under $1,000</option>
-                  <option value="$1,000 to $3,000">$1,000 to $3,000</option>
-                  <option value="$3,000 to $7,500">$3,000 to $7,500</option>
-                  <option value="$7,500 and up">$7,500 and up</option>
-                </select>
-              </div>
-            </div>
-            <div class="field"><label for="f-about">What do you do, and what would make this a win?</label><textarea id="f-about" name="about" placeholder="Who are your customers? What's working, what isn't?"></textarea></div>
-          </div>
-          <div class="nav">
-            <button type="button" class="btn btn--ghost" data-back>Back</button>
+            <span class="hint">We'll ask the detailed questions on a quick call.</span>
             <button type="submit" class="btn btn--go" id="send-btn">Send it over</button>
-            <p class="status" id="status-3" role="status" aria-live="polite"></p>
+            <p class="status" id="status" role="status" aria-live="polite"></p>
           </div>
         </section>
       </form>
@@ -409,7 +324,7 @@ legend { padding: 0; margin-bottom: 4px; }
   if (location.hash === '#intro') seen = false;
   if (reduced || seen) { intro.remove(); return; }
   document.documentElement.classList.add('has-intro');
-  var MIN = 2800, start = performance.now(), ready = false, shown = 0;
+  var MIN = 1800, start = performance.now(), ready = false, shown = 0;
   var fontsReady = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
   Promise.all([fontsReady, new Promise(function (r) { if (document.readyState === 'complete') r(); else window.addEventListener('load', r); })]).then(function () { ready = true; });
   function tick(now) {
@@ -434,50 +349,31 @@ legend { padding: 0; margin-bottom: 4px; }
 (function () {
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
-  var form = $('#start-form'), steps = $$('.step'), rail = $$('#rail li'), fill = $('#rail-fill'), lead = $('#lead'), done = $('#done');
-  var cur = 1, total = steps.length;
+  var form = $('#start-form'), lead = $('#lead'), done = $('#done');
 
-  function show(n) {
-    cur = n;
-    steps.forEach(function (s) { s.classList.toggle('is-on', +s.dataset.step === n); });
-    rail.forEach(function (li, i) { li.classList.toggle('is-on', i + 1 === n); li.classList.toggle('is-done', i + 1 < n); });
-    fill.style.setProperty('--p', ((n - 1) / (total - 1) * 100) + '%');
-    var first = $('input, select, textarea', steps[n - 1]);
-    if (first && window.matchMedia('(min-width: 641px)').matches) first.focus({ preventScroll: true });
-    $('.card').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  function validStep(n) {
-    var s = steps[n - 1], st = $('#status-' + n), ok = true;
+  function valid() {
+    var st = $('#status'), ok = true;
     st.className = 'status'; st.textContent = '';
-    $$('[required]', s).forEach(function (el) {
-      var bad = !el.validity.valid;
+    $$('[required]', form).forEach(function (el) {
+      var bad = !el.value.trim();
       el.closest('.field').classList.toggle('is-bad', bad);
       if (bad && ok) { ok = false; el.focus(); }
     });
-    if (!ok) { st.classList.add('is-error'); st.textContent = n === 1 ? 'We need your name, business and a working email to reply.' : 'Something is missing above.'; }
+    if (!ok) { st.classList.add('is-error'); st.textContent = 'We need your name, business and a way to reach you.'; }
     return ok;
   }
-
-  $$('[data-next]').forEach(function (b) { b.addEventListener('click', function () { if (validStep(cur)) show(cur + 1); }); });
-  $$('[data-back]').forEach(function (b) { b.addEventListener('click', function () { show(cur - 1); }); });
-  form.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA' && cur < total) { e.preventDefault(); if (validStep(cur)) show(cur + 1); }
-  });
   $$('.field input').forEach(function (el) { el.addEventListener('input', function () { el.closest('.field').classList.remove('is-bad'); }); });
 
   function finish() {
     form.hidden = true; lead.hidden = true; done.classList.add('is-on'); done.focus({ preventScroll: true });
-    rail.forEach(function (li) { li.classList.add('is-done'); li.classList.remove('is-on'); });
-    fill.style.setProperty('--p', '100%');
     $('.card').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   form.addEventListener('submit', function (ev) {
     ev.preventDefault();
-    if (!validStep(1)) { show(1); return; }
+    if (!valid()) return;
     if ($('[name="botcheck"]', form).checked) return;
-    var st = $('#status-3'), send = $('#send-btn');
+    var st = $('#status'), send = $('#send-btn');
     st.className = 'status'; st.textContent = 'Sending…'; send.disabled = true;
     var data = {};
     new FormData(form).forEach(function (v, k) {
@@ -486,7 +382,9 @@ legend { padding: 0; margin-bottom: 4px; }
       data[key] = key in data ? data[key] + ', ' + v : v;
     });
     if (!data.services) data.services = 'None picked';
-    if (!data.website_type) data.website_type = 'Skipped (may not be a website project)';
+    if (!data.about) data.about = '(left blank)';
+    /* Web3Forms wants an email field for reply-to; only set it when the contact looks like one. */
+    if (/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(data.contact)) data.email = data.contact;
     /* One Web3Forms key per inbox. Each key delivers to the address it was made for, so the
        submission is sent once per key and both Eric and Kevin get it with no forwarding. */
     var KEYS = [
