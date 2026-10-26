@@ -73,6 +73,10 @@ h1,h2,p{margin:0} a{color:inherit}
     <div class="f"><label>Address</label><input id="address" placeholder="123 N Krome Ave, Homestead, FL 33030"></div>
     <div class="f"><label>Hours</label><input id="hours" placeholder="Mon–Sat 11am–10pm · Sun 10am–8pm"></div>
 
+    <div class="sec">The full site</div>
+    <div class="f"><label>Main thing a customer should do</label><select id="action"><option value="call">Call</option><option value="book">Book an appointment</option><option value="order">Order online</option><option value="visit">Come in / get directions</option><option value="quote">Request a quote</option></select></div>
+    <div class="f"><label>Sections the full site unlocks (comma separated)</label><input id="locked" placeholder="Menu, Order online, Reviews, Photo gallery, Catering"></div>
+
     <div class="sec">The offer</div>
     <div class="two">
       <div class="f"><label>Discount</label><input id="disc" placeholder="$400 off"></div>
@@ -86,6 +90,11 @@ h1,h2,p{margin:0} a{color:inherit}
     <button class="btn" id="dl">Download the page</button>
     <button class="btn ghost" id="open">Open preview in a new tab</button>
     <p class="how" id="how">After downloading, go to <code>github.com/erm1819-bit/twin-citys/upload/main</code>, type the folder as <code>demo/<b id="slug">business-name</b>/</code> and drop the file in as <code>index.html</code>. About a minute later it's live at <code>twincitys.net/demo/<b id="slug2">business-name</b></code>. Send that link.</p>
+
+    <div class="sec">When they say yes: the build prompt</div>
+    <p class="how">Everything above, folded into the studio's master blueprint. Paste it into Claude to start the full site at the same standard every time.</p>
+    <textarea id="prompt" readonly spellcheck="false" style="width:100%;min-height:160px;margin-top:10px;background:#111110;color:var(--stone);border:1px solid var(--line);padding:12px;font:12px/1.5 ui-monospace,Menlo,monospace;resize:vertical"></textarea>
+    <button class="btn ghost" id="copy">Copy build prompt</button>
   </aside>
 
   <div class="stage">
@@ -98,7 +107,7 @@ h1,h2,p{margin:0} a{color:inherit}
 (function () {
   var $ = function (s) { return document.querySelector(s); };
   var photos = [null, null, null, null];
-  var ids = ['name','kind','area','tagline','about','points','phone','ig','address','hours','disc','code','exp','who'];
+  var ids = ['name','kind','area','tagline','about','points','phone','ig','address','hours','disc','code','exp','who','action','locked'];
 
   /* photos: resize on the client so the finished page is a single light file */
   function addFiles(files) {
@@ -141,6 +150,7 @@ h1,h2,p{margin:0} a{color:inherit}
     contacts.both = contacts.eric.concat(contacts.kevin);
     var who = contacts[d.who] || contacts.eric;
     var exp = fmtDate(d.exp);
+    var locked = d.locked ? d.locked.split(',').map(function (s) { return s.trim(); }).filter(Boolean).slice(0, 8) : [];
 
     return '<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n<meta name="robots" content="noindex, nofollow">\n<title>' + esc(name) + ' · concept by Twin Citys</title>\n<link rel="icon" href="/favicon.svg" type="image/svg+xml">\n<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap">\n<style>\n' +
     ':root{color-scheme:dark;--black:#0b0b0b;--ivory:#e8e3d9;--stone:#a19b90;--dim:#4a4743;--line:rgba(232,227,217,.18);--font:"Montserrat","Avenir Next","Helvetica Neue",Arial,sans-serif;--ease:cubic-bezier(.3,.7,.2,1)}\n' +
@@ -155,6 +165,7 @@ h1,h2,p{margin:0} a{color:inherit}
     '.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.gal img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;filter:saturate(.95)}.gal .ph{aspect-ratio:4/5;background:#161615;border:1px solid var(--line);display:grid;place-items:center;color:var(--dim);font-size:11px;letter-spacing:.3em;text-transform:uppercase}\n' +
     '.info{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding:clamp(48px,8vw,96px) 0;border-top:1px solid var(--line);margin-top:clamp(48px,8vw,96px)}.info span{display:block;color:var(--stone);font-size:10px;letter-spacing:.34em;text-transform:uppercase;margin-bottom:10px}.info p{font-size:17px;font-weight:300}\n' +
     '.offer{margin:0 0 clamp(48px,8vw,96px);border:1px solid var(--ivory);padding:clamp(28px,5vw,56px);display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:32px;align-items:center;background:linear-gradient(135deg,rgba(232,227,217,.06),transparent 60%)}.offer .k{font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:var(--stone);margin-bottom:14px}.offer h2{font-weight:300;font-size:clamp(26px,3.4vw,44px);line-height:1.1}.offer h2 em{font-style:normal;font-weight:500;color:#fff}.offer p{color:var(--stone);margin-top:14px;max-width:46ch}.offer .code{display:grid;gap:14px;text-align:right}.offer .code div{border:1px solid var(--line);padding:14px 18px}.offer .code span{display:block;color:var(--stone);font-size:10px;letter-spacing:.34em;text-transform:uppercase;margin-bottom:4px}.offer .code b{font-weight:500;font-size:clamp(20px,2.4vw,30px);letter-spacing:.06em}.offer .who{display:flex;flex-wrap:wrap;gap:20px 36px;margin-top:22px;font-size:14px;color:var(--stone)}.offer .who b{display:block;color:var(--ivory);font-weight:500;letter-spacing:.06em}\n' +
+    '.locked{margin:0 0 28px}.locked .k{font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:var(--stone);margin-bottom:14px}.locked .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}.locked .row div{position:relative;border:1px dashed var(--dim);padding:22px 16px 18px;color:var(--dim);font-weight:300;font-size:17px;line-height:1.2;background:repeating-linear-gradient(135deg,transparent 0 10px,rgba(232,227,217,.025) 10px 11px)}.locked .row div::before{content:"";position:absolute;top:12px;right:12px;width:10px;height:13px;border:1.5px solid var(--dim);border-radius:3px 3px 1px 1px;box-shadow:inset 0 -6px 0 var(--dim)}.locked .row div span{display:block;margin-top:8px;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--dim)}\n' +
     'footer{padding:28px 0 40px;display:flex;justify-content:space-between;gap:16px;color:var(--dim);font-size:10px;letter-spacing:.3em;text-transform:uppercase;border-top:1px solid var(--line)}\n' +
     '@media(max-width:760px){.pts{grid-template-columns:1fr}.pts div{border-right:0;border-bottom:1px solid var(--line);padding:20px 0}.pts div:not(:first-child){padding-left:0}.pts div:last-child{border-bottom:0}.about,.offer{grid-template-columns:1fr}.offer .code{text-align:left}.gal{grid-template-columns:1fr 1fr}.info{grid-template-columns:1fr;gap:20px}.hero{min-height:84vh}footer{flex-direction:column}}\n' +
     '@media(prefers-reduced-motion:reduce){.hero img{animation:none}}\n</style>\n</head>\n<body>\n' +
@@ -165,8 +176,19 @@ h1,h2,p{margin:0} a{color:inherit}
     '<section class="about" id="about"><h2>About <em>' + esc(name) + '</em></h2><p>' + esc(about) + '</p></section>\n' +
     '<div class="gal">' + (rest.length ? rest.map(function (p) { return '<img src="' + p + '" alt="">'; }).join('') : '<div class="ph">Photo</div><div class="ph">Photo</div><div class="ph">Photo</div>') + '</div>\n' +
     '<div class="info"><div><span>Find us</span><p>' + esc(d.address || 'Your address here') + '</p></div><div><span>Hours</span><p>' + esc(d.hours || 'Your hours here') + '</p></div><div><span>Say hi</span><p>' + esc(d.phone || 'Your phone') + (d.ig ? '<br>' + esc(d.ig) : '') + '</p></div></div>\n' +
+    (locked.length ? '<section class="locked"><p class="k">Part of the full site</p><div class="row">' + locked.map(function (l) { return '<div>' + esc(l) + '<span>Unlocks with the full site</span></div>'; }).join('') + '</div></section>\n' : '') +
     '<section class="offer" id="offer"><div><p class="k">Like what you see?</p><h2>This is a concept. <em>The full site is yours' + (d.disc ? ' for ' + esc(d.disc) + '.' : '.') + '</em></h2><p>We built this in a day from what you already have. The finished site adds the rest: every page, your menu or services, a booking or ordering flow if you want one, and it’s built to look this good on a phone. ' + (exp ? 'Your rate is good through ' + esc(exp) + '.' : '') + '</p><div class="who">' + who.map(function (w) { return '<div><b>' + esc(w[0]) + '</b>' + esc(w[1]) + '<br>' + esc(w[2]) + '</div>'; }).join('') + '</div></div><div class="code">' + (d.disc ? '<div><span>Your rate</span><b>' + esc(d.disc) + '</b></div>' : '') + (d.code ? '<div><span>Code</span><b>' + esc(d.code) + '</b></div>' : '') + (exp ? '<div><span>Good through</span><b>' + esc(exp) + '</b></div>' : '') + '<a class="btn" href="https://twincitys.net/start">Let’s build it</a></div></section>\n' +
     '</main>\n<footer class="wrap"><span>Concept by Twin Citys · Miami, FL</span><span>Design | Develop | Create</span></footer>\n</body>\n</html>\n';
+  }
+
+  /* the studio's master blueprint, with the bracketed parts filled from this form */
+  var ACTIONS = { call: 'A clear, always-visible way to call the business (tap-to-call on mobile).', book: 'A booking flow for appointments that works in two taps on a phone.', order: 'An online ordering path (or a clean link into the ordering platform) reachable from every screen.', visit: 'Directions, hours and a map one tap away on every screen.', quote: 'A short request-a-quote form that reaches the owner by email within a minute.' };
+  function buildPrompt(s) {
+    var d = {}; ids.forEach(function (k) { d[k] = val(k); });
+    var locked = d.locked ? d.locked.split(',').map(function (x) { return x.trim(); }).filter(Boolean) : [];
+    var exp = fmtDate(d.exp);
+    var ex = locked.length ? locked.map(function (l) { return '- ' + l; }).join('\n') : '- (list the sections the full site must include)';
+    return '<MASTER_BLUEPRINT_START>\n\n<role>\n\nYou are the senior creative director, UX designer, conversion strategist,\nvisual designer, front-end engineer, motion director, accessibility reviewer,\nperformance engineer, local SEO specialist, and documentation owner\nfor a premium business website.\n\nYour job is to understand the real business, create a business-specific\nvisual world, build a clear path, and produce a polished website that\nfeels unique to that business.\n\nDo not create a generic template.\n\nBe decisive, practical, fact-grounded, and execution-ready.\n\n</role>\n\n<mission>\n\nCreate a premium website that makes the business look credible,\nmemorable, valuable, and easy to choose.\n\nThe final experience must include:\n\n1. A clear commercial promise.\n2. ' + (ACTIONS[d.action] || ACTIONS.call) + '\n3. Business-specific experience requirements:\n' + ex + '\n\n</mission>\n\n<first_response>\n\nBegin with the required first response.\n\nDo not invent missing facts.\n\nPreserve approved work.\n\nAdapt the visual identity, content structure, hero direction,\ninteractions, and conversion path to the actual business.\n\n</first_response>\n\n<current_task>\n\nUse the supplied business information, approved assets,\nowner instructions, and project files as the source material.\n\nBegin with the required first response.\n\nDo not invent missing facts.\n\nPreserve approved work.\n\nAdapt the visual identity, content structure, hero direction,\ninteractions, and conversion path to the actual business.\n\n</current_task>\n\n<business_information>\n\nBusiness: ' + (d.name || '(name)') + '\nWhat they are: ' + (d.kind || '(type)') + '\nWhere: ' + (d.area || '(neighborhood)') + '\nHeadline used on the approved concept: ' + (d.tagline || '(headline)') + '\nAbout: ' + (d.about || '(about)') + '\nKnown for: ' + (d.points || '(three things)') + '\nPhone: ' + (d.phone || '(phone)') + '\nInstagram: ' + (d.ig || '(none given)') + '\nAddress: ' + (d.address || '(address)') + '\nHours: ' + (d.hours || '(hours)') + '\nMain customer action: ' + (d.action || 'call') + '\n\n</business_information>\n\n<approved_work>\n\nThe one-screen concept page at https://twincitys.net/demo/' + s + ' is approved by the owner.\nPreserve its hero direction, its headline, and the Twin Citys visual system:\nblack #0b0b0b, ivory #e8e3d9, stone #a19b90, Montserrat (300/400/500), thin hairlines, generous space, no gradients or accent colors.\nPhotos: use the photos embedded in the approved concept page; ask the owner for more rather than using stock.\nThe sections marked "part of the full site" on the concept are the scope of this build.\n\n</approved_work>\n\n<commercial_terms>\n\nQuoted rate: ' + (d.disc ? d.disc + ' applied' : 'per quote') + (d.code ? ' (code ' + d.code + ')' : '') + (exp ? ', good through ' + exp : '') + '.\nStudio contact: ' + (d.who === 'kevin' ? 'Kevin Butchers, k.butchers@twincitys.net' : d.who === 'both' ? 'Eric Martinez and Kevin Butchers' : 'Eric Martinez, eric@twincitys.net') + '.\n\n</commercial_terms>\n\n<MASTER_BLUEPRINT_END>';
   }
 
   var t;
@@ -175,10 +197,16 @@ h1,h2,p{margin:0} a{color:inherit}
       var p = photos[i]; d.style.backgroundImage = (p && p !== 'pending') ? 'url(' + p + ')' : ''; d.innerHTML = (p && p !== 'pending') ? '<b>×</b>' : '';
     });
     var s = slug(val('name')); $('#slug').textContent = s; $('#slug2').textContent = s;
+    $('#prompt').value = buildPrompt(s);
     clearTimeout(t); t = setTimeout(function () { $('#preview').srcdoc = build(); }, 150);
   }
   ids.forEach(function (k) { $('#' + k).addEventListener('input', render); });
 
+  $('#copy').addEventListener('click', function () {
+    var ta = $('#prompt'); ta.select();
+    var done = function () { $('#copy').textContent = 'Copied'; setTimeout(function () { $('#copy').textContent = 'Copy build prompt'; }, 1500); };
+    if (navigator.clipboard) navigator.clipboard.writeText(ta.value).then(done, function () { document.execCommand('copy'); done(); }); else { document.execCommand('copy'); done(); }
+  });
   $('#dl').addEventListener('click', function () {
     var blob = new Blob([build()], { type: 'text/html' }), a = document.createElement('a');
     a.href = URL.createObjectURL(blob); a.download = 'index.html'; a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
