@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Twin Citys</title>
-<meta name="description" content="Twin Citys is a Miami creative studio for graphic design, web design and creative development. Design, develop, create.">
+<title>Twin Citys · Web design in Miami</title>
+<meta name="description" content="Twin Citys is a web design studio in Miami. We design, build and launch websites for restaurants, bakeries and local businesses, so you can run the business while we handle the site.">
 <link rel="canonical" href="https://twincitys.net/">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Twin Citys">
-<meta property="og:description" content="A Miami creative studio. Design, develop, create.">
+<meta property="og:title" content="Twin Citys · Web design in Miami">
+<meta property="og:description" content="Websites for Miami restaurants, bakeries and shops, designed and built for you.">
 <meta property="og:url" content="https://twincitys.net/">
 <meta property="og:image" content="https://twincitys.net/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
@@ -17,8 +17,8 @@
 <link rel="icon" href="/favicon-96.png" type="image/png" sizes="96x96">
 <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <script data-goatcounter="https://twincitys.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap">
@@ -104,13 +104,13 @@ h1, h2, h3, p, ul { margin: 0; }
   transition: opacity .3s var(--ease);
 }
 .bar a { pointer-events: auto; }
-.bar__brand { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; font-family: var(--font-display); font-size: 12px; font-weight: 500; letter-spacing: .32em; text-transform: uppercase; }
+.bar__brand { white-space: nowrap; display: inline-flex; align-items: center; gap: 12px; min-height: 44px; font-family: var(--font-display); font-size: 12px; font-weight: 500; letter-spacing: .32em; text-transform: uppercase; }
 .bar__brand .tcmark { height: 24px; width: 28px; }
 .bar__what { font-style: normal; font-weight: 400; opacity: .7; letter-spacing: .2em; }
 @media (max-width: 640px) { .bar__brand span { display: inline !important; } .bar__brand span .bar__what { display: none; } }
 .bar__links { display: flex; align-items: center; gap: 0 28px; font-family: var(--font-display); font-size: var(--t-label); font-weight: 500; letter-spacing: .3em; text-transform: uppercase; }
 .bar__links a { display: inline-flex; align-items: center; min-height: 44px; }
-.bar__cta { min-height: 36px; padding: 0 16px; border: 1px solid currentColor; border-radius: 999px; transition: background-color .2s, color .2s; }
+.bar__cta { white-space: nowrap; min-height: 36px; padding: 0 16px; border: 1px solid currentColor; border-radius: 999px; transition: background-color .2s, color .2s; }
 .bar__cta:hover { background: #fff; color: #000; text-decoration: none; }
 html.has-case .bar { opacity: 0; pointer-events: none; }
 
@@ -153,6 +153,17 @@ html.has-case .bar { opacity: 0; pointer-events: none; }
 .open__mark .glow2 { fill: #fff; filter: blur(6px); opacity: .32; mix-blend-mode: plus-lighter; }
 .open__mark .rim { position: absolute; inset: -10%; background: radial-gradient(circle at 50% 50%, rgba(233, 163, 180, .34), rgba(233, 163, 180, 0) 60%); mix-blend-mode: plus-lighter; filter: blur(14px); }
 .open__copy { position: absolute; left: 0; right: 0; bottom: 12%; text-align: center; padding-inline: var(--gutter); }
+.open__mark { top: 14%; width: min(18vw, 120px); transform: translate(-50%, 0); }
+.open__hero { position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-46%); text-align: center; padding-inline: var(--gutter); display: flex; flex-direction: column; align-items: center; gap: 18px; }
+.open__who { color: var(--stone); }
+.open__h { max-width: 18ch; margin: 0; font-family: var(--font-display); font-weight: 400; font-size: clamp(30px, 4.6vw, 66px); line-height: 1.08; letter-spacing: -.005em; color: var(--ivory); text-wrap: balance; }
+.open__hero .open__sub { margin: 0; max-width: 44ch; color: #c9c3b8; font-size: clamp(16px, 1.4vw, 20px); line-height: 1.5; }
+.open__cta { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 14px 28px; margin-top: 10px; }
+.open__btn { display: inline-flex; align-items: center; min-height: 52px; padding: 0 28px; background: var(--ivory); color: var(--black); font: 500 14px var(--font-display); letter-spacing: .14em; text-transform: uppercase; border-radius: 999px; }
+.open__btn:hover { background: #fff; text-decoration: none; }
+.open__alt { color: var(--ivory); font: 500 var(--t-label) var(--font-display); letter-spacing: .3em; text-transform: uppercase; display: inline-flex; align-items: center; min-height: 44px; }
+
+@media (max-width: 640px) { .open__mark { top: 12%; width: 72px; transform: translate(-50%, 0) !important; } .open__hero { top: 48%; gap: 14px; } .open__h { font-size: clamp(28px, 8vw, 40px); } .open__btn { width: 100%; justify-content: center; } }
 .open__copy h2 { font-family: var(--font-display); font-weight: 300; font-size: clamp(18px, 2.6vw, 30px); letter-spacing: .02em; color: var(--black); text-wrap: balance; }
 .open__copy p { margin-top: 8px; color: rgba(11, 11, 11, .72); font-family: var(--font-display); font-size: 13px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; }
 .open__copy h2 { font-size: clamp(22px, 3vw, 36px); font-weight: 400; }
@@ -520,19 +531,21 @@ html.has-case { overflow: hidden; }
     <div class="pin" id="open-pin">
       <div class="open__horizon" aria-hidden="true"></div>
       <div class="open__inner">
-        <h1 class="open__wm" id="open-wm" aria-label="Twin Citys">
-          <span class="lit" aria-hidden="true">T</span><span class="lit" aria-hidden="true">W</span><span class="lit" aria-hidden="true">I</span><span class="lit" aria-hidden="true">N</span><span class="gap" aria-hidden="true"></span><span class="lit" aria-hidden="true">C</span><span class="lit" aria-hidden="true">I</span><span class="lit" aria-hidden="true">T</span><span class="lit" aria-hidden="true">Y</span><span class="lit" aria-hidden="true">S</span>
-        </h1>
         <div class="open__mark" id="open-mark" aria-hidden="true">
           <div class="rim"></div>
           <svg viewBox="0 0 892 756"><g class="glow"><use href="#tc"></use></g></svg>
           <svg viewBox="0 0 892 756"><g class="glow2"><use href="#tc"></use></g></svg>
           <svg viewBox="0 0 892 756"><g class="face"><use href="#tc"></use></g></svg>
         </div>
-      </div>
-      <div class="open__copy" id="open-copy">
-        <h2>Websites for Miami businesses, designed and built for you.</h2>
-        <p class="open__sub">We handle everything, from the first design to the day it goes live, so you can get back to running the place.</p>
+        <div class="open__hero" id="open-copy">
+          <p class="open__who label">Twin Citys · Web design, Miami</p>
+          <h1 class="open__h" id="open-h">Look this good online, without lifting a finger.</h1>
+          <p class="open__sub" id="open-s">Websites for Miami restaurants, bakeries and shops, designed and built for you.</p>
+          <div class="open__cta">
+            <a class="open__btn" href="https://twincitys.net/start">See your new homepage, free</a>
+            <a class="open__alt" href="#work">See our work</a>
+          </div>
+        </div>
       </div>
       <a class="open__cue" id="open-cue" href="#drive">Scroll<span aria-hidden="true"></span></a>
     </div>
@@ -801,6 +814,7 @@ html.has-case { overflow: hidden; }
 
   /* ----- scene 1: the letters spread, the mark lifts ----- */
   var open = $('#top'), openPin = $('#open-pin'), openWm = $('#open-wm'), openMark = $('#open-mark'), openCopy = $('#open-copy'), openCue = $('#open-cue');
+  var noop = { style: {} }; openWm = openWm || noop; openCue = openCue || noop;
   var mx = 0, my = 0, openP = 0;
   function paintOpen(p) {
     openP = p;
@@ -808,9 +822,9 @@ html.has-case { overflow: hidden; }
     openWm.style.width = (from + spread * (94 - from)).toFixed(2) + '%';
     openWm.style.opacity = (1 - clamp((p - .7) / .3, 0, 1)).toFixed(3);
     var lift = ease(clamp((p - .1) / .7, 0, 1)), s = 1 - lift * .45;
-    openMark.style.transform = 'translate(calc(-50% + ' + (mx * 10).toFixed(1) + 'px), calc(-30% - ' + (lift * 26).toFixed(2) + 'vh + ' + (my * 8).toFixed(1) + 'px)) scale(' + s.toFixed(3) + ')';
-    openCopy.style.opacity = (1 - clamp((p - .35) / .3, 0, 1)).toFixed(3);
-    openCopy.style.transform = 'translateY(' + (p * 30).toFixed(1) + 'px)';
+    openMark.style.transform = 'translate(calc(-50% + ' + (mx * 6).toFixed(1) + 'px), calc(0% - ' + (lift * 10).toFixed(2) + 'vh)) scale(' + (1 - lift * .3).toFixed(3) + ')';
+    openCopy.style.opacity = (1 - clamp((p - .3) / .35, 0, 1)).toFixed(3);
+    openCopy.style.transform = 'translateY(calc(-46% - ' + (p * 60).toFixed(1) + 'px))';
     openCue.style.opacity = (1 - clamp(p / .15, 0, 1)).toFixed(3);
   }
   if (motion) open.addEventListener('pointermove', function (e) {
