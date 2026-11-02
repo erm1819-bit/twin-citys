@@ -392,10 +392,11 @@ legend { padding: 0; margin-bottom: 4px; }
     /* Web3Forms wants an email field for reply-to; only set it when the contact looks like one. */
     if (/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(data.contact)) data.email = data.contact;
     /* One Web3Forms key per inbox. Each key delivers to the address it was made for, so the
-       submission is sent once per key and both Eric and Kevin get it with no forwarding. */
+       submission is sent once per key and Eric, Kevin and Daniel all get it with no forwarding. */
     var KEYS = [
       'db4a0780-df9e-417d-a861-0682ab0a2daa',   // eric@twincitys.net
-      '8bbabf7c-a645-45c7-8859-6c3a7c650dcc'    // k.butchers@twincitys.net
+      '8bbabf7c-a645-45c7-8859-6c3a7c650dcc',   // k.butchers@twincitys.net
+      '19b52acc-d37a-4d95-92c5-167b1b9bfc05'    // daniel@twincitys.net
     ].filter(function (k) { return /^[0-9a-f-]{36}$/i.test(k); });
     var post = function (key) {
       var body = Object.assign({}, data, { access_key: key });
