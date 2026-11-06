@@ -13,9 +13,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&display=swap">
 <style>
-  /* Layout: one screen — compact masthead, the three doors grow to fill the middle
-     as bordered tiles (matching the /start form's tile style), dusk horizon foot.
-     Tokens lifted verbatim from twincitys.net/start. */
   :root {
     --black: #0b0b0b;
     --ivory: #e8e3d9;
@@ -46,7 +43,6 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* ---- masthead ---- */
 
   .eyebrow {
     font-size: 11px;
@@ -85,7 +81,6 @@
     margin-top: 0.7rem;
   }
 
-  /* ---- the three doors ---- */
 
   .doors {
     flex: 1;
@@ -153,7 +148,6 @@
 
   .door:hover .arrow { transform: translateX(3px); }
 
-  /* primary door — the /start form's go-button gradient */
   .door--primary {
     background: linear-gradient(100deg, var(--amber), var(--coral));
     border-color: transparent;
@@ -182,7 +176,6 @@
     .door:hover .arrow { transform: none; }
   }
 
-  /* ---- foot ---- */
 
   .horizon {
     height: 1px;
@@ -201,7 +194,6 @@
     color: var(--stone);
   }
 
-  /* ---- micro boot: the site's opener, in miniature ---- */
 
   :root { --ease: cubic-bezier(0.3, 0.7, 0.2, 1); }
 
@@ -227,7 +219,6 @@
     .mark .rule, .mark span, .eyebrow, .tagline, .doors .door, .horizon, .foot p { animation: none; }
   }
 
-  /* ---- skyline film: bay -> Brickell towers -> back, looped behind everything ---- */
 
   .film {
     position: fixed;
@@ -249,7 +240,6 @@
 
   .film.is-playing video { opacity: 1; }
 
-  /* darken top (wordmark) and bottom (footer) hardest; let the towers glow through the middle */
   .film::after {
     content: "";
     position: absolute;
@@ -264,7 +254,6 @@
   header, .doors, .foot { position: relative; z-index: 1; }
   header { text-shadow: 0 1px 18px rgba(0, 0, 0, 0.5); }
 
-  /* frosted doors so they stay readable over the moving city */
   .door {
     background: rgba(11, 11, 11, 0.42);
     -webkit-backdrop-filter: blur(10px) saturate(1.15);
@@ -330,8 +319,6 @@
 </footer>
 
 <script>
-  // Carry the scan source through to the form: twincitys.net/card?from=ig -> /start?from=ig.
-  // A bare /card (what the printed QR points at) falls through to "card".
   (function () {
     var raw = new URLSearchParams(window.location.search).get('from');
     var from = /^[a-z0-9_-]{1,24}$/i.test(raw || '') ? raw : 'card';
@@ -343,7 +330,6 @@
 </script>
 
 <script>
-  // Background skyline film. The poster paints instantly; the film fades in once it is actually playing.
   (function () {
     var film = document.getElementById('film');
     var video = document.getElementById('film-video');
@@ -358,7 +344,6 @@
   })();
 </script>
 
-<!-- GoatCounter analytics — counts on twincitys.net; blocked (harmlessly) in the claude.ai preview -->
 <script data-goatcounter="https://twincitys.goatcounter.com/count"
         async src="https://gc.zgo.at/count.js"></script>
 </body>

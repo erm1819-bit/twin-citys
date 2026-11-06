@@ -10,7 +10,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap">
 <style>
-/* Internal tool: fill the left column, watch the concept page on the right, download it, upload to the repo. */
 :root { color-scheme: dark; --black:#0b0b0b; --ivory:#e8e3d9; --stone:#a19b90; --dim:#4a4743; --line:rgba(232,227,217,.18); --font:'Montserrat','Avenir Next','Helvetica Neue',Arial,sans-serif; }
 *{box-sizing:border-box} body{margin:0;background:var(--black);color:var(--ivory);font:400 15px/1.55 var(--font);-webkit-font-smoothing:antialiased}
 h1,h2,p{margin:0} a{color:inherit}
@@ -92,7 +91,7 @@ h1,h2,p{margin:0} a{color:inherit}
     <p class="how" id="how">After downloading, go to <code>github.com/erm1819-bit/twin-citys/upload/main</code>, type the folder as <code>demo/<b id="slug">business-name</b>/</code> and drop the file in as <code>index.html</code>. About a minute later it's live at <code>twincitys.net/demo/<b id="slug2">business-name</b></code>. Send that link.</p>
 
     <div class="sec">When they say yes: the build prompt</div>
-    <p class="how">Everything above, folded into the studio's master blueprint. Paste it into Claude to start the full site at the same standard every time.</p>
+    <p class="how">Everything above, folded into the studio's master blueprint. Use it to start the full site at the same standard every time.</p>
     <textarea id="prompt" readonly spellcheck="false" style="width:100%;min-height:160px;margin-top:10px;background:#111110;color:var(--stone);border:1px solid var(--line);padding:12px;font:12px/1.5 ui-monospace,Menlo,monospace;resize:vertical"></textarea>
     <button class="btn ghost" id="copy">Copy build prompt</button>
   </aside>
@@ -109,7 +108,6 @@ h1,h2,p{margin:0} a{color:inherit}
   var photos = [null, null, null, null];
   var ids = ['name','kind','area','tagline','about','points','phone','ig','address','hours','disc','code','exp','who','action','locked'];
 
-  /* photos: resize on the client so the finished page is a single light file */
   function addFiles(files) {
     [].slice.call(files).forEach(function (f) {
       var slot = photos.indexOf(null); if (slot < 0) return;
@@ -181,7 +179,6 @@ h1,h2,p{margin:0} a{color:inherit}
     '</main>\n<footer class="wrap"><span>Concept by Twin Citys · Miami, FL</span><span>Design | Develop | Create</span></footer>\n</body>\n</html>\n';
   }
 
-  /* the studio's master blueprint, with the bracketed parts filled from this form */
   var ACTIONS = { call: 'A clear, always-visible way to call the business (tap-to-call on mobile).', book: 'A booking flow for appointments that works in two taps on a phone.', order: 'An online ordering path (or a clean link into the ordering platform) reachable from every screen.', visit: 'Directions, hours and a map one tap away on every screen.', quote: 'A short request-a-quote form that reaches the owner by email within a minute.' };
   function buildPrompt(s) {
     var d = {}; ids.forEach(function (k) { d[k] = val(k); });

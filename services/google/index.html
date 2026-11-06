@@ -12,8 +12,6 @@
 <meta property="og:image" content="https://twincitys.net/og.jpg">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <style>
-/* One landing page per service, same skeleton every time: the promise, one button, the founder video,
-   what it is, how it helps, what you get, then the other services underneath. Black front, ivory back. */
 :root {
   color-scheme: dark;
   --black: #0b0b0b; --charcoal: #161615; --ivory: #e8e3d9; --ivory-deep: #d6cfc2; --stone: #9a958b; --stone-dim: #45423f;
@@ -35,7 +33,6 @@ button, a { touch-action: manipulation; -webkit-tap-highlight-color: transparent
 .ribbon { background: var(--ivory); color: var(--ink); font-size: 13px; text-align: center; padding: 8px var(--gutter); }
 .ribbon b { font-weight: 600; }
 
-/* bar + tabs */
 .top { position: sticky; top: 0; z-index: 10; background: rgba(11,11,11,.94); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
 .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; }
 .brand { display: inline-flex; align-items: center; gap: 12px; font-size: 12px; font-weight: 500; letter-spacing: .32em; text-transform: uppercase; white-space: nowrap; }
@@ -51,17 +48,13 @@ button, a { touch-action: manipulation; -webkit-tap-highlight-color: transparent
 .tab:hover { color: var(--ivory); }
 .tab[aria-current="page"] { background: var(--ivory); color: var(--black); }
 
-/* the page */
 .hero { position: relative; overflow: hidden; isolation: isolate; padding-block: clamp(48px, 8vw, 104px) clamp(48px, 7vw, 88px); }
 .hero .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: 40px 64px; align-items: center; }
-/* the TC mark, outlined, behind the headline */
 .hero__mark { position: absolute; z-index: 0; left: 34%; top: 51%; translate: -50% -50%; height: 84%; width: auto; aspect-ratio: 892 / 756; fill: rgba(232,227,217,.045); stroke: rgba(232,227,217,.3); stroke-width: 2.2; pointer-events: none; }
 @media (max-width: 860px) {
   .hero .wrap { grid-template-columns: minmax(0, 1fr); }
   .hero__mark { left: 50%; top: 21%; height: auto; width: 92vw; }
 }
-/* the founder video: a still at rest, the "fill out the form below" frame on hover, plays in place on click;
-   the free-offer button sits directly under it */
 .vcol { justify-self: end; width: 100%; max-width: 360px; display: grid; gap: 18px; }
 @media (max-width: 860px) { .vcol { justify-self: center; max-width: 320px; } }
 .vsl { position: relative; display: block; width: 100%; aspect-ratio: 480 / 854; padding: 0; border: 1px solid var(--line); border-radius: 18px; overflow: hidden; background: #111; cursor: pointer; font: inherit; color: inherit; }
@@ -89,7 +82,6 @@ button, a { touch-action: manipulation; -webkit-tap-highlight-color: transparent
 .link::after { content: ""; width: 28px; height: 1px; background: currentColor; transition: width .4s var(--ease); }
 .link:hover::after { width: 44px; }
 
-/* the founder video: phone-shot, vertical, a placeholder with the talking points until it's recorded */
 .video { position: relative; aspect-ratio: 9 / 16; max-height: 640px; width: 100%; max-width: 360px; justify-self: end; border-radius: 18px; overflow: hidden; background: linear-gradient(170deg, #22211f, #0f0f0e); border: 1px solid var(--line); display: flex; flex-direction: column; justify-content: space-between; padding: 22px; }
 .video__who { display: flex; align-items: center; gap: 12px; }
 .video__who i { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--ivory); color: var(--black); font-style: normal; font-weight: 600; font-size: 14px; }
@@ -101,7 +93,6 @@ button, a { touch-action: manipulation; -webkit-tap-highlight-color: transparent
 .video__script b { display: block; margin-bottom: 6px; font-size: 11px; font-weight: 500; letter-spacing: .24em; text-transform: uppercase; color: var(--stone); }
 .video__script ol { margin: 0; padding-left: 1.1em; display: grid; gap: 3px; }
 
-/* ivory sheet: what it is / how it helps / what you get */
 .sheet { background: var(--ivory); color: var(--ink); padding-block: clamp(56px, 8vw, 104px); }
 .sheet .row { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.6fr); gap: 20px 64px; padding-block: 36px; border-top: 1px solid #c7c0b3; }
 .sheet .row:first-child { border-top: 0; padding-top: 0; }
@@ -118,7 +109,6 @@ button, a { touch-action: manipulation; -webkit-tap-highlight-color: transparent
 .proof a { display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px; border: 1px solid var(--ink); border-radius: 999px; font-size: 14px; font-weight: 500; }
 .proof a:hover { background: var(--ink); color: var(--ivory); }
 
-/* the close + the other services underneath */
 .close { padding-block: clamp(56px, 8vw, 96px); text-align: center; }
 .close h2 { font-size: clamp(28px, 3.6vw, 46px); font-weight: 400; line-height: 1.15; text-wrap: balance; max-width: 22ch; margin-inline: auto; }
 .close p { margin-top: 14px; color: #c9c3b8; }
@@ -150,7 +140,6 @@ footer a { color: var(--ivory); }
 }
 @media (prefers-reduced-motion: reduce) { .page { animation: none; } }
 
-/* ---- see it work: a short demo that plays when it scrolls into view; the steps on the left light with it ---- */
 .demo { padding-block: clamp(48px, 7vw, 96px); border-top: 1px solid var(--line); }
 .demo .wrap { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 40px 64px; align-items: center; }
 .demo h2 { margin-top: 14px; font-size: clamp(26px, 3vw, 40px); font-weight: 400; line-height: 1.15; }
@@ -175,7 +164,6 @@ footer a { color: var(--ivory); }
 .phone .toast span { font-size: 11px; }
 .s2 .phone .toast { transform: none; }
 
-/* websites: the La Vasca site on a phone, doors then menu */
 .d-web .phone__screen.site { background: #0b0b0b; }
 .d-web .site iframe { position: absolute; left: 0; top: 0; width: 390px; height: 722px; border: 0; transform: scale(.5538); transform-origin: 0 0; }
 .site__hint { position: absolute; left: 0; right: 0; bottom: 8px; text-align: center; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--stone); }
@@ -188,7 +176,6 @@ footer a { color: var(--ivory); }
 .d-web.s2 .callbtn { opacity: 1; animation: pulse 1.2s ease-in-out infinite; }
 @keyframes pulse { 50% { transform: scale(1.04); } }
 
-/* ads: a feed scrolls, the ad lands, a tap, the lead */
 .d-ads .feed { position: absolute; left: 0; right: 0; top: 0; padding: 10px; display: grid; gap: 10px; transition: transform 1.8s var(--ease); }
 .d-ads .post { height: 130px; border-radius: 10px; background: #e2ddd3; }
 .d-ads .post.short { height: 70px; }
@@ -201,12 +188,10 @@ footer a { color: var(--ivory); }
 .d-ads.s1 .ad, .d-ads.s2 .ad { box-shadow: 0 0 0 2px #15171a; }
 .d-ads.s1 .ad u { animation: pulse .8s ease-in-out 2; }
 
-/* photo & video: the film plays, the formats light up */
 .d-content .film { width: min(100% - 40px, 300px); aspect-ratio: 9 / 16; max-height: 360px; border-radius: 14px; overflow: hidden; background: #e8e6e1; }
 .d-content video { width: 100%; height: 100%; object-fit: cover; display: block; }
 .d-content .fmts { position: absolute; left: 0; right: 0; bottom: 16px; display: flex; justify-content: center; gap: 8px; }
 
-/* crm: leads arrive, a reply goes out, the tag flips */
 .d-crm .row { display: grid; grid-template-columns: 1fr 1fr auto; align-items: center; gap: 10px; padding: 11px 0; border-bottom: 1px solid #1f1e1c; opacity: 0; transform: translateY(6px); transition: all .45s var(--ease); }
 .d-crm .row span { color: var(--stone); font-size: 12px; }
 .d-crm .row.in { opacity: 1; transform: none; }
@@ -214,7 +199,6 @@ footer a { color: var(--ivory); }
 .d-crm .bubble i { display: block; font-style: normal; font-size: 10px; color: #57524a; margin-top: 4px; }
 .d-crm.s1 .bubble { opacity: 1; transform: none; }
 
-/* google: someone searches, a real profile (Marino Plumbing, Daniel's company) comes up, the numbers light up */
 .d-google .gp { background: #fff; color: #202124; font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif; }
 .gp__search { position: absolute; top: 34px; left: 12px; right: 12px; display: flex; align-items: center; gap: 8px; height: 34px; padding: 0 12px; border-radius: 17px; background: #f1f3f4; font-size: 12px; }
 .gp__search::before { content: ""; flex: none; width: 10px; height: 10px; border: 1.5px solid #5f6368; border-radius: 50%; }
@@ -228,7 +212,6 @@ footer a { color: var(--ivory); }
 .d-google.s2 .gp__hi { opacity: 1; transform: none; }
 .d-google .phone .toast { bottom: 12px; }
 
-/* social: a real page (Marino Plumbing, Daniel's company) — the grid fills, a post is scheduled, replies go out */
 .d-social .phone__screen.ig { background: #0c1014; color: #f5f5f5; font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; }
 .ig__top { display: flex; align-items: center; justify-content: center; gap: 4px; padding: 12px 10px 8px; font-size: 11px; }
 .ig__top span { font-size: 9px; opacity: .8; }
@@ -250,7 +233,6 @@ footer a { color: var(--ivory); }
 .d-social .badge { position: absolute; left: 50%; top: 214px; transform: translateX(-50%); padding: 6px 10px; border-radius: 10px; background: #fff; color: #0c1014; font-size: 10px; font-weight: 600; white-space: nowrap; opacity: 0; transition: opacity .4s; z-index: 2; box-shadow: 0 8px 20px rgba(0,0,0,.4); }
 .d-social.s1 .badge { opacity: 1; }
 
-/* the free offer */
 .offer { background: var(--charcoal); border-block: 1px solid var(--line); padding-block: clamp(48px, 7vw, 88px); }
 .offer .wrap { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px 56px; align-items: center; }
 .offer .free { display: inline-flex; padding: 5px 12px; border-radius: 999px; background: var(--ivory); color: var(--black); font-size: 11px; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; }
@@ -258,7 +240,6 @@ footer a { color: var(--ivory); }
 .offer p { margin-top: 12px; max-width: 54ch; color: #c9c3b8; font-size: 17px; }
 .offer small { display: block; margin-top: 10px; color: var(--stone); font-size: 13px; }
 
-/* proof: example numbers until a real client's go in */
 .result { display: grid; gap: 18px; }
 .ex { display: inline-flex; align-self: start; width: max-content; padding: 4px 10px; border-radius: 999px; border: 1px dashed var(--ink-soft); color: var(--ink-soft); font-size: 11px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; }
 .nums { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border-top: 2px solid var(--ink); }
@@ -310,7 +291,6 @@ footer a { color: var(--ivory); }
 
 <script>
 (function () {
-  /* every service is the same page shape filled with different words; each one has its own address (#ads, #crm…) */
   var S = [
     { id: 'websites', tab: 'Websites', who: 'Eric',
       eyebrow: 'Websites',
@@ -404,7 +384,6 @@ footer a { color: var(--ivory); }
   ];
 
 
-  /* what each page adds on top of the shared copy: a free way in, the demo, example proof */
   var X = {
     websites: { offer: ['See your new homepage, free', 'Your new homepage, built free in a day.', 'Send us your business and we build your homepage from your own photos. If you like it, we build the rest. If not, no charge.'],
       steps: ['It opens with what you do', 'Your best work comes next', 'Then the details that win them over'], demo: 'web',
@@ -425,7 +404,6 @@ footer a { color: var(--ivory); }
       steps: ['A month of posts, planned and shot', 'Posted on schedule, without you', 'Comments and messages answered'], demo: 'social',
       nums: [['16', 'posts a month'], ['+60%', 'profile visits'], ['100%', 'of messages answered']] }
   };
-  /* founder videos (phone-shot, captioned), one per page */
   var V = {
     websites: ['Eric', '0:54'], ads: ['Daniel', '0:50'], content: ['Eric', '0:54'],
     crm: ['Daniel', '0:47'], google: ['Kevin', '0:57'], social: ['Kevin', '0:56']
@@ -476,7 +454,6 @@ footer a { color: var(--ivory); }
       '<div class="badge">Scheduled · Tue 11:00 AM</div><div class="toast"><b>12 comments answered</b><span>And 4 messages · this morning</span></div></div></div>';
     return '';
   }
-  /* one loop per page: step 0 → 1 → 2, about 2.6 s each, only while the demo is on screen */
   var demoTimer = 0, demoObs = null;
   function runDemo() {
     clearTimeout(demoTimer); if (demoObs) demoObs.disconnect();

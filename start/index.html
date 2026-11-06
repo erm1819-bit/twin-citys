@@ -9,7 +9,6 @@
 <meta name="theme-color" content="#0b0b0b">
 <title>Twin Citys Project Form</title>
 <style>
-/* Layout: one dark stage, soft grey light drifting behind frosted glass, black and ivory like the main site. */
 :root {
   color-scheme: dark;
   --black: #0b0b0b;
@@ -20,7 +19,6 @@
   --line: rgba(232, 227, 217, .18);
   --ivory-deep: #d6cfc2;
   --charcoal: #1b1b1a;
-  /* the site's own palette: black, ivory, stone. The old dusk/amber names are kept as aliases so every accent lands on ivory. */
   --dusk-pink: var(--ivory);
   --dusk-lilac: #2a2a28;
   --amber: var(--ivory);
@@ -48,7 +46,6 @@ a { color: inherit; text-decoration: none; }
 ::selection { background: var(--ivory); color: var(--black); }
 h1, h2, h3, p { margin: 0; }
 
-/* the sky: three soft lights drifting over black, then grain */
 .sky { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; background: var(--black); }
 .sky i {
   position: absolute; border-radius: 50%; filter: blur(80px); opacity: .5; will-change: transform;
@@ -61,7 +58,6 @@ h1, h2, h3, p { margin: 0; }
   content: ""; position: absolute; inset: 0; opacity: .07; mix-blend-mode: soft-light;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
 }
-/* the skyline, barely there, along the bottom */
 .skyline { position: absolute; left: 0; right: 0; bottom: 0; height: 22vh; min-height: 120px; opacity: .5; }
 .skyline svg { width: 100%; height: 100%; display: block; }
 @keyframes drift {
@@ -84,7 +80,6 @@ h1, h2, h3, p { margin: 0; }
 .top span.place { display: flex; align-items: center; gap: 12px; }
 .top span.place::after { content: ""; display: block; width: 30px; height: 1px; background: var(--stone); }
 
-/* the card: frosted over the sky */
 .card {
   width: min(100%, 760px); position: relative;
   background: var(--glass); border: 1px solid var(--line); backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
@@ -125,7 +120,6 @@ legend { padding: 0; margin-bottom: 4px; }
 .field input::placeholder, .field textarea::placeholder { color: #5e5a53; }
 .field.is-bad input { border-bottom-color: #c96b5e; }
 
-/* choices as glowing tiles */
 .tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .tile {
   position: relative; display: flex; align-items: flex-start; gap: 14px; min-height: 60px; padding: 14px 16px; cursor: pointer;
@@ -186,7 +180,6 @@ legend { padding: 0; margin-bottom: 4px; }
   .done.is-on { animation: none; }
   .tile, .btn { transition: none; }
 }
-/* the intro: the line draws, the name arrives from both sides, a thin bar fills, then the whole screen lifts */
 .intro {
   position: fixed; inset: 0; z-index: 20; background: var(--black); color: var(--ivory);
   display: grid; grid-template-rows: auto 1fr auto; overflow: hidden;
@@ -217,7 +210,6 @@ legend { padding: 0; margin-bottom: 4px; }
 @keyframes from-right { from { clip-path: inset(-20% 0 -20% 100%); opacity: 0; } to { clip-path: inset(-20% 0 -20% 0); opacity: 1; } }
 @keyframes from-left { from { clip-path: inset(-20% 100% -20% 0); opacity: 0; } to { clip-path: inset(-20% 0 -20% 0); opacity: 1; } }
 @keyframes fade { to { opacity: 1; } }
-/* the page waits under the intro, then rises as it lifts */
 .has-intro .page { opacity: 0; transform: translateY(24px); }
 .has-intro.is-in .page { opacity: 1; transform: none; transition: opacity .9s .25s var(--ease), transform 1s .25s var(--ease); }
 @media (max-width: 640px) { .intro__wm { grid-template-columns: minmax(0, 1fr); row-gap: 10px; justify-items: center; } .intro__wm .twin, .intro__wm .citys { text-align: center; padding-left: 0; } .intro__line { height: 70px; } .intro__mark { width: 40px; } }
@@ -319,7 +311,6 @@ legend { padding: 0; margin-bottom: 4px; }
 
 <script>
 (function () {
-  /* intro: real progress (fonts + first paint) blended with a minimum run time so it never flashes */
   var intro = document.getElementById('intro'), fill = document.getElementById('intro-fill'), pct = document.getElementById('intro-pct');
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var seen = false; try { seen = sessionStorage.getItem('tc-intro') === '1'; } catch (e) {}
@@ -365,7 +356,6 @@ legend { padding: 0; margin-bottom: 4px; }
     return ok;
   }
   $$('.field input').forEach(function (el) { el.addEventListener('input', function () { el.closest('.field').classList.remove('is-bad'); }); });
-  /* the notes box starts as one line, like the other fields, and grows as they type */
   var about = $('#f-about');
   about.addEventListener('input', function () { about.style.height = '48px'; about.style.height = Math.max(48, about.scrollHeight) + 'px'; });
 
@@ -388,10 +378,7 @@ legend { padding: 0; margin-bottom: 4px; }
     });
     if (!data.services) data.services = 'None picked';
     if (!data.about) data.about = '(left blank)';
-    /* Web3Forms wants an email field for reply-to; only set it when the contact looks like one. */
     if (/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(data.contact)) data.email = data.contact;
-    /* One Web3Forms key per inbox. Each key delivers to the address it was made for, so the
-       submission is sent once per key and Eric, Kevin and Daniel all get it with no forwarding. */
     var KEYS = [
       'db4a0780-df9e-417d-a861-0682ab0a2daa',   // eric@twincitys.net
       '8bbabf7c-a645-45c7-8859-6c3a7c650dcc',   // k.butchers@twincitys.net
