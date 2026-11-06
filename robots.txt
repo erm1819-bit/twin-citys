@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /demo/
+Disallow: /card/
+
+Sitemap: https://twincitys.net/sitemap.xml
