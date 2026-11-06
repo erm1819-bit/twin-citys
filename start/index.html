@@ -154,13 +154,23 @@ legend { padding: 0; margin-bottom: 4px; }
 .nav__privacy { color: var(--stone); font-size: var(--t-label); letter-spacing: .3em; text-transform: uppercase; text-decoration: none; }
 .nav__privacy:hover { color: var(--ivory); }
 .status.is-error { color: #e0907f; }
+.optin { position: relative; display: flex; gap: 12px; align-items: flex-start; cursor: pointer; color: var(--ivory); font-size: 15px; line-height: 1.45; max-width: 60ch; }
+.optin input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.optin i { flex: none; width: 16px; height: 16px; margin-top: 3px; border: 1px solid var(--stone); transition: background .25s, border-color .25s, box-shadow .25s; }
+.optin input:checked ~ i { background: var(--ivory); border-color: var(--ivory); box-shadow: inset 0 0 0 3px var(--black); }
+.optin input:focus-visible ~ i { outline: 1px solid var(--ivory); outline-offset: 3px; }
+.optin:hover i { border-color: var(--ivory); }
+.optin span { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.optin small { color: var(--stone); font-size: 13px; }
+.optin-note { color: var(--stone); font-size: 13px; margin: -6px 0 0 28px; }
+@media (prefers-reduced-motion: reduce) { .optin i { transition: none; } }
 
 .done { display: none; flex-direction: column; gap: 22px; }
 .done.is-on { display: flex; animation: rise .6s var(--ease) both; }
 .done h2 { font-family: var(--font-display); font-weight: 300; font-size: clamp(30px, 4.6vw, 54px); line-height: 1.08; }
 .done h2 em { font-style: normal; font-weight: 500; color: #ffffff; }
 .done p { color: var(--stone); max-width: 46ch; }
-.done .who { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; padding-top: 10px; border-top: 1px solid var(--line); }
+.done .who { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; padding-top: 10px; border-top: 1px solid var(--line); }
 .done .who div { display: flex; flex-direction: column; gap: 4px; font-size: 14px; color: var(--stone); }
 .done .who b { color: var(--ivory); font-weight: 500; letter-spacing: .06em; }
 .done__next { display: flex; flex-wrap: wrap; gap: 14px; padding-top: 8px; }
@@ -252,7 +262,7 @@ legend { padding: 0; margin-bottom: 4px; }
       <div class="lead" id="lead">
         <span class="eyebrow">Start a project</span>
         <h1>Let's build something people <em>remember.</em></h1>
-        <p>Four quick things and a Send button. It goes straight to Eric and Kevin and we reply within a day.</p>
+        <p>Four quick things and a Send button. It goes straight to our team and we reply within a day.</p>
       </div>
 
       <form id="start-form" action="https://api.web3forms.com/submit" method="POST" novalidate>
@@ -282,6 +292,8 @@ legend { padding: 0; margin-bottom: 4px; }
             </div>
           </fieldset>
           <div class="field"><label for="f-about">Anything else we should know?</label><textarea id="f-about" name="about" rows="1" placeholder="e.g. your current website, when you want to start, etc."></textarea></div>
+          <label class="optin" for="f-monthly"><input id="f-monthly" name="monthly_email" type="checkbox" value="Yes"><i aria-hidden="true"></i><span><b>Send me the Twin Citys monthly email</b><small>One email a month with new work and ideas for local businesses. Unsubscribe anytime.</small></span></label>
+          <p class="optin-note" id="optin-note" hidden>Put an email address above to get the monthly email.</p>
           <div class="nav">
             <a class="nav__privacy" href="/privacy/">Privacy</a>
             <button type="submit" class="btn btn--go" id="send-btn">Send it over</button>
@@ -293,10 +305,11 @@ legend { padding: 0; margin-bottom: 4px; }
       <div class="done" id="done" tabindex="-1">
         <svg class="palm" viewBox="0 0 110 150" aria-hidden="true"><path stroke-width="3" d="M50 40 C54 80 50 115 54 150"></path><path stroke-width="3.5" d="M50 40 C36 22 16 22 4 34 M50 40 C34 30 16 38 8 54 M50 40 C40 40 26 52 22 68 M50 40 C48 22 40 10 28 4 M50 40 C54 22 66 10 80 8 M50 40 C64 24 84 26 96 38 M50 40 C66 34 84 44 90 60 M50 40 C60 42 72 54 74 70"></path></svg>
         <h2>Got it. <em>Thank you.</em></h2>
-        <p>Your message is on its way to Eric and Kevin. One of us will reply within a day. If it's urgent, call or text either of us.</p>
+        <p>Your message is on its way to our team. One of us will reply within a day. If it's urgent, call or text any of us.</p>
         <div class="who">
           <div><b>ERIC MARTINEZ</b><span>(305) 767-6128</span><span>eric@twincitys.net</span></div>
           <div><b>KEVIN BUTCHERS</b><span>(305) 986-6414</span><span>k.butchers@twincitys.net</span></div>
+          <div><b>DANIEL NAVARRO</b><span>(786) 478-2150</span><span>daniel@twincitys.net</span></div>
         </div>
         <div class="done__next">
           <a class="btn btn--go" href="https://twincitys.net/">See our work</a>
@@ -378,7 +391,14 @@ legend { padding: 0; margin-bottom: 4px; }
     });
     if (!data.services) data.services = 'None picked';
     if (!data.about) data.about = '(left blank)';
+    data.monthly_email = data.monthly_email ? 'Yes' : 'No';
     if (/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(data.contact)) data.email = data.contact;
+    if (data.monthly_email === 'Yes' && data.email) {
+      var kit = new FormData();
+      kit.append('email_address', data.email);
+      kit.append('fields[first_name]', (data.name || '').trim().split(/\s+/)[0]);
+      fetch('https://app.kit.com/forms/10155335/subscriptions', { method: 'POST', headers: { 'Accept': 'application/json' }, body: kit }).catch(function () {});
+    }
     var KEYS = [
       'db4a0780-df9e-417d-a861-0682ab0a2daa',   // eric@twincitys.net
       '8bbabf7c-a645-45c7-8859-6c3a7c650dcc',   // k.butchers@twincitys.net
@@ -398,6 +418,10 @@ legend { padding: 0; margin-bottom: 4px; }
         st.textContent = 'That didn’t go through. Email us instead at eric@twincitys.net.';
       });
   });
+
+  var optBox = $('#f-monthly'), optNote = $('#optin-note'), contact = $('#f-contact');
+  function optCheck() { optNote.hidden = !(optBox.checked && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(contact.value.trim())); }
+  optBox.addEventListener('change', optCheck); contact.addEventListener('input', optCheck);
 
   if (location.hash === '#sent') finish();
 })();
