@@ -84,6 +84,11 @@ a { color: inherit; }
 .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; font-size: var(--t-label); letter-spacing: .34em; text-transform: uppercase; }
 .brand svg { width: 28px; height: 24px; fill: var(--ivory); }
 .top small { color: var(--stone); font-size: var(--t-label); letter-spacing: .3em; text-transform: uppercase; }
+.top__links { display: flex; align-items: center; gap: 18px; font-size: var(--t-label); font-weight: 500; letter-spacing: .3em; text-transform: uppercase; }
+.top__links a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; text-decoration: none; }
+.top__ig { min-width: 44px; margin-right: -10px; opacity: .85; transition: opacity .2s; }
+.top__ig:hover { opacity: 1; }
+.top__ig svg { width: 21px; height: 21px; fill: currentColor; }
 
 .label { position: relative; color: var(--stone); font-size: var(--t-label); letter-spacing: .34em; text-transform: uppercase; margin: 0; }
 .node::before { content: ""; position: absolute; left: calc(-1 * var(--spine) - 4px); top: 50%; width: 9px; height: 9px; margin-top: -5px; background: var(--black); border: 1px solid var(--ivory); transform: rotate(45deg); }
@@ -163,7 +168,10 @@ h1 { position: relative; margin: 18px 0 0; font-size: clamp(44px, 10vw, 92px); f
         <svg viewBox="0 0 892 756" aria-hidden="true"><polygon points="0,0 70,96 280,97 280,632 407,742 407,1"/><polygon points="892,0 463,1 463,756 802,581 582,580 582,97 813,96"/></svg>
         <span>Twin Citys</span>
       </a>
-      <small>Miami</small>
+      <nav class="top__links" aria-label="Contact">
+        <a href="/#contact">Contact</a>
+        <a class="top__ig" href="https://instagram.com/twincitys.co" target="_blank" rel="noopener" aria-label="Twin Citys on Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M8 2.5h8A5.5 5.5 0 0 1 21.5 8v8a5.5 5.5 0 0 1-5.5 5.5H8A5.5 5.5 0 0 1 2.5 16V8A5.5 5.5 0 0 1 8 2.5zM12 7.3a4.7 4.7 0 1 0 0 9.4 4.7 4.7 0 0 0 0-9.4zm0 2a2.7 2.7 0 1 1 0 5.4 2.7 2.7 0 0 1 0-5.4zM17.2 5.6a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4z"/></svg></a>
+      </nav>
     </header>
 
     <section class="hero">
