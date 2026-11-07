@@ -471,7 +471,7 @@ footer a { color: var(--ivory); }
     crm: { offer: ['Get a free lead check', 'A free check of how you answer leads.', 'We message your business the way a customer would, then show you how long it took to hear back, and what got missed.'],
       steps: ['A lead comes in from anywhere', 'A reply goes out in seconds', 'Followed up until they book'], demo: 'crm',
       nums: [['9 sec', 'average first reply'], ['100%', 'of leads followed up'], ['−30%', 'no-shows after reminders']] },
-    google: { offer: ['Get a free Google check', 'A free check of your Google profile.', 'We look at your Google Business Profile the way a customer does and send you the three things keeping you off the map.'],
+    google: { link: '/check/', offer: ['Get a free Google check', 'A free check of your Google profile.', 'Look your business up the way a customer does and tick off the seven things they should see on Google. It’s yours to keep.'],
       steps: ['Someone nearby searches', 'Your listing shows complete, with reviews', 'You move up to where the calls are'], demo: 'google',
       nums: [['#1', 'on the map for the main search'], ['3,400', 'profile views a month'], ['+27', 'new Google reviews']] },
     social: { offer: ['Get a free page review', 'A free review of your page.', 'We go through your Instagram and Facebook and send you a short list of what to fix first. Yours to keep, whether you hire us or not.'],
@@ -569,7 +569,7 @@ footer a { color: var(--ivory); }
     document.title = 'Twin Citys · ' + s.eyebrow;
     var start = 'https://twincitys.net/start?service=' + s.id;
     var others = S.filter(function (x) { return x.id !== s.id; });
-    var x = X[s.id], v = V[s.id], offerUrl = start + '&offer=free';
+    var x = X[s.id], v = V[s.id], offerUrl = x.link || (start + '&offer=free');
     main.innerHTML =
       '<div class="page">' +
       '<section class="hero"><svg class="hero__mark" viewBox="0 0 892 756" aria-hidden="true"><use href="#tc"></use></svg><div class="wrap">' +
@@ -590,7 +590,7 @@ footer a { color: var(--ivory); }
         '<ol class="steps">' + x.steps.map(function (t, i) { return '<li><i>0' + (i + 1) + '</i><b>' + esc(t) + '</b></li>'; }).join('') + '</ol></div>' +
         '<div class="stage d-' + x.demo + '" data-k="' + x.demo + '"' + (x.demo === 'web' ? '' : ' aria-hidden="true"') + '>' + demoHTML(x.demo) + '</div>' +
       '</div></section>' +
-      '<section class="offer"><div class="wrap"><div><span class="free">Free</span><h2>' + esc(x.offer[1]) + '</h2><p>' + esc(x.offer[2]) + '</p><small>No cost, no obligation. Takes two minutes to ask.</small></div>' +
+      '<section class="offer"><div class="wrap"><div><span class="free">Free</span><h2>' + esc(x.offer[1]) + '</h2><p>' + esc(x.offer[2]) + '</p><small>' + (x.link ? 'No cost. Takes about two minutes.' : 'No cost, no obligation. Takes two minutes to ask.') + '</small></div>' +
         '<a class="btn" href="' + offerUrl + '">' + esc(x.offer[0]) + '</a></div></section>' +
       '<section class="sheet"><div class="wrap">' +
         '<div class="row"><div><p class="label">What it is</p><h2>' + esc(s.eyebrow) + '</h2></div><p>' + esc(s.what) + '</p></div>' +
