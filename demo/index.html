@@ -13,32 +13,58 @@
 :root { color-scheme: dark; --black:#0b0b0b; --ivory:#e8e3d9; --stone:#a19b90; --dim:#4a4743; --line:rgba(232,227,217,.18); --font:'Montserrat','Avenir Next','Helvetica Neue',Arial,sans-serif; }
 *{box-sizing:border-box} body{margin:0;background:var(--black);color:var(--ivory);font:400 15px/1.55 var(--font);-webkit-font-smoothing:antialiased}
 h1,h2,p{margin:0} a{color:inherit}
-.app{display:grid;grid-template-columns:400px minmax(0,1fr);min-height:100vh}
-.side{border-right:1px solid var(--line);padding:28px 24px 40px;overflow:auto;max-height:100vh}
+.app{display:grid;grid-template-columns:420px minmax(0,1fr);min-height:100vh}
+.side{border-right:1px solid var(--line);padding:28px 24px 48px;overflow:auto;max-height:100vh}
 .side header{display:flex;align-items:center;gap:14px;margin-bottom:22px;font-size:11px;letter-spacing:.34em;text-transform:uppercase}
 .tcmark{width:28px;height:24px;fill:currentColor}
 .side h1{font-weight:300;font-size:26px;line-height:1.1;margin-bottom:6px}
-.side .lead{color:var(--stone);font-size:13px;margin-bottom:24px}
+.side .lead{color:var(--stone);font-size:13px;margin-bottom:22px}
+.step{display:flex;align-items:baseline;gap:12px;font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--ivory);margin:28px 0 14px;padding-top:18px;border-top:1px solid var(--line)}
+.step i{font-style:normal;color:var(--stone)}
 .f{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
 .f label{color:var(--stone);font-size:10px;letter-spacing:.28em;text-transform:uppercase}
 .f input,.f textarea,.f select{width:100%;background:transparent;color:var(--ivory);border:0;border-bottom:1px solid var(--dim);padding:8px 0;font:400 15px var(--font);outline:0}
 .f input:focus,.f textarea:focus,.f select:focus{border-bottom-color:var(--ivory)}
 .f textarea{min-height:64px;resize:vertical}
 .f select option{background:#141413}
+.f small{color:var(--dim);font-size:11.5px}
+.paste{width:100%;min-height:84px;background:#111110;color:var(--ivory);border:1px solid var(--line);padding:10px 12px;font:13px/1.5 var(--font);resize:vertical;outline:0}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
-.sec{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--ivory);margin:26px 0 12px;padding-top:18px;border-top:1px solid var(--line)}
-.photos{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:8px}
-.photos div{aspect-ratio:1;background:#161615;border:1px solid var(--line);background-size:cover;background-position:center;position:relative;cursor:pointer}
-.photos div b{position:absolute;right:4px;top:2px;font-size:14px;color:var(--ivory);text-shadow:0 0 4px #000}
-.drop{display:block;border:1px dashed var(--dim);padding:14px;text-align:center;color:var(--stone);font-size:13px;cursor:pointer}
+.photos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:8px}
+.slot{aspect-ratio:1;background:#161615 center/cover;border:1px solid var(--line);position:relative;cursor:pointer;display:flex;align-items:flex-end;padding:6px}
+.slot span{font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--stone);background:rgba(11,11,11,.7);padding:2px 5px}
+.slot b{position:absolute;right:5px;top:2px;font-size:15px;color:var(--ivory);text-shadow:0 0 4px #000}
+.slot.logo{background-size:contain;background-repeat:no-repeat;background-color:#1d1c1a}
+.drop{display:block;border:1px dashed var(--dim);padding:12px;text-align:center;color:var(--stone);font-size:12.5px;cursor:pointer}
 .drop input{display:none}
+.swatches{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:4px 0 16px}
+.sw{width:34px;height:34px;border-radius:50%;border:2px solid transparent;cursor:pointer;padding:0;outline:1px solid var(--line)}
+.sw.on{border-color:var(--ivory)}
+.sw-pick{position:relative;width:34px;height:34px;border-radius:50%;border:1px dashed var(--dim);display:grid;place-items:center;color:var(--stone);font-size:16px;cursor:pointer;overflow:hidden}
+.sw-pick input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.seg{display:flex;border:1px solid var(--dim);margin-bottom:16px}
+.seg button{flex:1;background:transparent;color:var(--stone);border:0;padding:10px 0;font:500 10px var(--font);letter-spacing:.26em;text-transform:uppercase;cursor:pointer}
+.seg button+button{border-left:1px solid var(--dim)}
+.seg button.on{background:var(--ivory);color:var(--black)}
 .btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 24px;border:1px solid var(--ivory);background:var(--ivory);color:var(--black);font:500 11px var(--font);letter-spacing:.3em;text-transform:uppercase;text-indent:.3em;cursor:pointer;width:100%;margin-top:8px}
 .btn.ghost{background:transparent;color:var(--stone);border-color:var(--dim);margin-top:10px}
-.how{margin-top:18px;color:var(--stone);font-size:12.5px;line-height:1.6}
+.btn:disabled{opacity:.5;cursor:default}
+.mini{background:transparent;border:1px solid var(--dim);color:var(--stone);font:500 10px var(--font);letter-spacing:.24em;text-transform:uppercase;padding:9px 12px;cursor:pointer;margin-top:8px}
+.how{margin-top:14px;color:var(--stone);font-size:12.5px;line-height:1.6}
 .how code{color:var(--ivory);font-family:ui-monospace,Menlo,monospace;font-size:12px}
+.status{margin-top:12px;font-size:13px;color:var(--stone);min-height:1.5em}
+.status.ok{color:#cfe8c7}.status.err{color:#f0b4a4}
+.live{display:none;margin-top:12px;border:1px solid var(--line);padding:12px}
+.live a{color:var(--ivory);word-break:break-all}
+details{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+summary{cursor:pointer;color:var(--stone);font-size:12.5px}
 .stage{position:relative;background:#050505}
-.stage iframe{width:100%;height:100vh;border:0;display:block}
-.stage .tag{position:absolute;bottom:14px;right:16px;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--stone);background:rgba(11,11,11,.7);padding:6px 10px;border:1px solid var(--line)}
+.stage iframe{width:100%;height:100vh;border:0;display:block;transition:width .3s}
+.stage.phone{display:grid;place-items:center}
+.stage.phone iframe{width:390px;height:min(844px,92vh);border:1px solid var(--line);border-radius:28px}
+.stage .bar{position:absolute;bottom:14px;right:16px;display:flex;gap:8px;z-index:2}
+.stage .bar button{font:500 10px var(--font);letter-spacing:.26em;text-transform:uppercase;color:var(--stone);background:rgba(11,11,11,.8);padding:8px 11px;border:1px solid var(--line);cursor:pointer}
+.stage .bar button.on{color:var(--black);background:var(--ivory)}
 @media(max-width:900px){.app{grid-template-columns:1fr}.side{max-height:none;border-right:0;border-bottom:1px solid var(--line)}.stage iframe{height:80vh}}
 </style>
 </head>
@@ -48,169 +74,266 @@ h1,h2,p{margin:0} a{color:inherit}
 <div class="app">
   <aside class="side">
     <header><svg class="tcmark"><use href="#tc"/></svg>Twin Citys · Demo builder</header>
-    <h1>Build a concept page in a few minutes.</h1>
-    <p class="lead">Fill this in, check the preview, download the page. Nothing here is saved anywhere; the page is built on your computer.</p>
+    <h1>A concept page in a few minutes.</h1>
+    <p class="lead">Pick the type of business, paste their Google listing, add photos, publish. Your work saves on this device as you go.</p>
 
-    <div class="f"><label>Business name</label><input id="name" placeholder="Taqueria El Patio"></div>
-    <div class="two">
-      <div class="f"><label>What they are</label><input id="kind" placeholder="Mexican restaurant"></div>
-      <div class="f"><label>Neighborhood</label><input id="area" placeholder="Homestead, FL"></div>
+    <div class="f"><label>Type of business</label>
+      <select id="niche"><option value="restaurant">Restaurant / café / bakery</option><option disabled>Trades (coming)</option><option disabled>Salon / spa / barber (coming)</option><option disabled>Gym / fitness (coming)</option></select>
     </div>
-    <div class="f"><label>Headline (what the customer gets)</label><input id="tagline" placeholder="Tacos the way abuela made them, since 2009"></div>
-    <div class="f"><label>Short about (2 or 3 sentences)</label><textarea id="about" placeholder="Family-run, open late, everything made fresh daily. Known for the al pastor and the Sunday menudo."></textarea></div>
-    <div class="f"><label>Three things they're known for (comma separated)</label><input id="points" placeholder="Al pastor, Fresh salsas, Catering for any size"></div>
 
-    <div class="sec">Photos (up to 4, first one is the hero)</div>
-    <div class="photos" id="photos"><div data-i="0"></div><div data-i="1"></div><div data-i="2"></div><div data-i="3"></div></div>
-    <label class="drop">Tap to add photos, or drop them here. They get resized so the page stays light.<input id="file" type="file" accept="image/*" multiple></label>
+    <div class="step">1 <i>The basics</i></div>
+    <div class="f"><label>Paste their Google listing</label>
+      <textarea class="paste" id="paste" placeholder="Open their business on Google Maps, select everything from the name down to the hours, copy, and paste it here."></textarea>
+      <small id="pasteNote">Phone, address, hours and Instagram fill in on their own.</small>
+    </div>
+    <div class="f"><label>Business name</label><input id="name" placeholder="El Patio Cuban Kitchen"></div>
+    <div class="two">
+      <div class="f"><label>What they are</label><input id="kind" placeholder="Cuban restaurant"></div>
+      <div class="f"><label>Neighborhood</label><input id="area" placeholder="Little Havana"></div>
+    </div>
+    <div class="f"><label>Headline</label><input id="tagline" placeholder="The plate the whole neighborhood talks about."></div>
+    <div class="f"><label>Short about (2 or 3 sentences)</label><textarea id="about" placeholder="Family-run since 2009. Everything made fresh every morning."></textarea></div>
+    <div class="f"><label>Three dishes they're known for</label><textarea id="dishes" placeholder="Ropa vieja — slow-braised, with maduros — $16&#10;Cuban sandwich — pressed to order — $12&#10;Flan — grandma's recipe — $6"></textarea><small>One per line: name — short note — price. The note and price can be left off.</small></div>
 
-    <div class="sec">Contact (as it should show on the page)</div>
+    <div class="step">2 <i>Photos and look</i></div>
+    <div class="photos" id="photos"></div>
+    <label class="drop">Tap to add photos, or drop them here. They fill the slots in order.<input id="file" type="file" accept="image/*" multiple></label>
+
+    <div class="f" style="margin-top:18px"><label>Their color</label></div>
+    <div class="swatches" id="swatches"></div>
+    <div class="seg" id="mode"><button data-v="dark" class="on">Dark</button><button data-v="light">Light</button></div>
+    <div class="f"><label>Type style</label><select id="font"></select></div>
+
+    <div class="step">3 <i>Contact</i></div>
     <div class="two">
       <div class="f"><label>Phone</label><input id="phone" placeholder="(305) 555-0123"></div>
       <div class="f"><label>Instagram</label><input id="ig" placeholder="@elpatiomiami"></div>
     </div>
-    <div class="f"><label>Address</label><input id="address" placeholder="123 N Krome Ave, Homestead, FL 33030"></div>
-    <div class="f"><label>Hours</label><input id="hours" placeholder="Mon–Sat 11am–10pm · Sun 10am–8pm"></div>
+    <div class="f"><label>Address</label><input id="address" placeholder="1234 SW 8th St, Miami, FL 33135"></div>
+    <div class="f"><label>Hours (one line each)</label><textarea id="hours" placeholder="Mon–Thu  11 AM–10 PM&#10;Fri–Sat  11 AM–11 PM&#10;Sun  Closed"></textarea></div>
+    <div class="two">
+      <div class="f"><label>Main button</label><select id="action"></select></div>
+      <div class="f"><label>Ordering / booking link</label><input id="orderUrl" placeholder="Toast, Uber Eats, OpenTable"></div>
+    </div>
 
-    <div class="sec">The full site</div>
-    <div class="f"><label>Main thing a customer should do</label><select id="action"><option value="call">Call</option><option value="book">Book an appointment</option><option value="order">Order online</option><option value="visit">Come in / get directions</option><option value="quote">Request a quote</option></select></div>
-    <div class="f"><label>Sections the full site unlocks (comma separated)</label><input id="locked" placeholder="Menu, Order online, Reviews, Photo gallery, Catering"></div>
-
-    <div class="sec">The offer</div>
+    <div class="step">4 <i>The offer</i></div>
+    <div class="f"><label>Sections the full site unlocks</label><input id="locked"><small>Filled in for this type of business. Edit if needed, separated by commas.</small></div>
     <div class="two">
       <div class="f"><label>Discount</label><input id="disc" placeholder="$400 off"></div>
-      <div class="f"><label>Code</label><input id="code" placeholder="HOMESTEAD-1"></div>
+      <div class="f"><label>Code</label><input id="code" placeholder="PATIO-1"></div>
     </div>
     <div class="two">
       <div class="f"><label>Good through</label><input id="exp" type="date"></div>
-      <div class="f"><label>Who's their contact</label><select id="who"><option value="eric">Eric</option><option value="kevin">Kevin</option><option value="both">Both</option></select></div>
+      <div class="f"><label>Their contact</label><select id="who"><option value="eric">Eric</option><option value="kevin">Kevin</option><option value="daniel">Daniel</option><option value="all">All three</option></select></div>
     </div>
 
-    <button class="btn" id="dl">Download the page</button>
-    <button class="btn ghost" id="open">Open preview in a new tab</button>
-    <p class="how" id="how">After downloading, go to <code>github.com/erm1819-bit/twin-citys/upload/main</code>, type the folder as <code>demo/<b id="slug">business-name</b>/</code> and drop the file in as <code>index.html</code>. About a minute later it's live at <code>twincitys.net/demo/<b id="slug2">business-name</b></code>. Send that link.</p>
+    <div class="step">5 <i>Publish</i></div>
+    <div class="f"><label>Link</label><input id="slug" placeholder="el-patio"><small>twincitys.net/demo/<b id="slugShow">business-name</b></small></div>
+    <button class="btn" id="publish">Publish to twincitys.net</button>
+    <div class="status" id="status"></div>
+    <div class="live" id="live"><a id="liveLink" target="_blank" rel="noopener"></a><br><button class="mini" id="copyLink">Copy link</button></div>
+    <button class="btn ghost" id="dl">Download instead</button>
+    <button class="mini" id="reset">Start a new demo</button>
+    <details id="keyBox"><summary>Publishing key for this device</summary>
+      <p class="how">Publishing needs a GitHub key, saved once on this device only. Make it at <code>github.com/settings/personal-access-tokens/new</code>: only the <code>erm1819-bit/twin-citys</code> repository, permission <code>Contents: Read and write</code>. Paste it here.</p>
+      <div class="f" style="margin-top:12px"><input id="token" type="password" placeholder="github_pat_…" autocomplete="off"></div>
+      <button class="mini" id="saveToken">Save key</button> <button class="mini" id="clearToken">Remove key</button>
+    </details>
 
-    <div class="sec">When they say yes: the build prompt</div>
+    <div class="step">When they say yes <i>The build prompt</i></div>
     <p class="how">Everything above, folded into the studio's master blueprint. Use it to start the full site at the same standard every time.</p>
-    <textarea id="prompt" readonly spellcheck="false" style="width:100%;min-height:160px;margin-top:10px;background:#111110;color:var(--stone);border:1px solid var(--line);padding:12px;font:12px/1.5 ui-monospace,Menlo,monospace;resize:vertical"></textarea>
+    <textarea id="prompt" readonly spellcheck="false" style="width:100%;min-height:150px;margin-top:10px;background:#111110;color:var(--stone);border:1px solid var(--line);padding:12px;font:12px/1.5 ui-monospace,Menlo,monospace;resize:vertical"></textarea>
     <button class="btn ghost" id="copy">Copy build prompt</button>
   </aside>
 
-  <div class="stage">
-    <span class="tag">Live preview</span>
+  <div class="stage" id="stage">
+    <div class="bar"><button data-v="desk" class="on">Desktop</button><button data-v="phone">Phone</button><button id="open">New tab</button></div>
     <iframe id="preview" title="Concept page preview"></iframe>
   </div>
 </div>
 
+<script src="templates.js"></script>
 <script>
 (function () {
   var $ = function (s) { return document.querySelector(s); };
-  var photos = [null, null, null, null];
-  var ids = ['name','kind','area','tagline','about','points','phone','ig','address','hours','disc','code','exp','who','action','locked'];
+  var T = window.TCDemo, REPO = 'erm1819-bit/twin-citys', KEY = 'tc-demo-draft', TOK = 'tc-demo-key';
+  var fields = ['name','kind','area','tagline','about','dishes','phone','ig','address','hours','action','orderUrl','locked','disc','code','exp','who','font','slug'];
+  var state = { niche: 'restaurant', photos: [null, null, null, null, null], logo: null, accent: '', mode: 'dark', palette: [] };
+  function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) { return null; } }
 
+  Object.keys(T.FONTS).forEach(function (k) { $('#font').insertAdjacentHTML('beforeend', '<option value="' + k + '">' + T.FONTS[k].label + '</option>'); });
+  Object.keys(T.ACTIONS).forEach(function (k) { $('#action').insertAdjacentHTML('beforeend', '<option value="' + k + '">' + T.ACTIONS[k].label + '</option>'); });
+
+  function nicheDefaults() { var N = T.NICHES[state.niche]; $('#action').value = N.action; $('#locked').value = N.locked.join(', '); }
+
+  function slots() {
+    var N = T.NICHES[state.niche], h = '';
+    N.slots.forEach(function (l, i) { h += '<div class="slot" data-i="' + i + '"><span>' + l + '</span></div>'; });
+    h += '<div class="slot logo" data-i="logo"><span>Logo</span></div>';
+    $('#photos').innerHTML = h;
+  }
+  function shrink(file, max, type, cb) {
+    var img = new Image(), url = URL.createObjectURL(file);
+    img.onload = function () {
+      var r = Math.min(1, max / Math.max(img.width, img.height)), c = document.createElement('canvas');
+      c.width = Math.round(img.width * r); c.height = Math.round(img.height * r);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(url); cb(c.toDataURL(type, .82), c);
+    };
+    img.src = url;
+  }
+  var nextIsLogo = false;
   function addFiles(files) {
     [].slice.call(files).forEach(function (f) {
-      var slot = photos.indexOf(null); if (slot < 0) return;
-      photos[slot] = 'pending';
-      var img = new Image(), url = URL.createObjectURL(f);
-      img.onload = function () {
-        var max = slot === 0 ? 1800 : 1200, r = Math.min(1, max / Math.max(img.width, img.height));
-        var c = document.createElement('canvas'); c.width = Math.round(img.width * r); c.height = Math.round(img.height * r);
-        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
-        photos[slot] = c.toDataURL('image/jpeg', .82); URL.revokeObjectURL(url); render();
-      };
-      img.src = url;
+      if (nextIsLogo) { nextIsLogo = false; shrink(f, 600, 'image/png', function (u, c) { state.logo = u; samplePalette(c, true); render(); }); return; }
+      var i = state.photos.indexOf(null); if (i < 0) return;
+      state.photos[i] = 'pending';
+      shrink(f, i === 0 ? 1800 : 1100, 'image/jpeg', function (u, c) { state.photos[i] = u; samplePalette(c, false); render(); });
     });
   }
   $('#file').addEventListener('change', function (e) { addFiles(e.target.files); e.target.value = ''; });
   document.addEventListener('dragover', function (e) { e.preventDefault(); });
   document.addEventListener('drop', function (e) { e.preventDefault(); if (e.dataTransfer.files.length) addFiles(e.dataTransfer.files); });
   $('#photos').addEventListener('click', function (e) {
-    var d = e.target.closest('div[data-i]'); if (!d) return;
+    var d = e.target.closest('.slot'); if (!d) return;
+    if (d.dataset.i === 'logo') { if (state.logo) { state.logo = null; render(); } else { nextIsLogo = true; $('#file').click(); } return; }
     var i = +d.dataset.i;
-    if (photos[i] && photos[i] !== 'pending') { photos[i] = null; render(); } else { $('#file').click(); }
+    if (state.photos[i] && state.photos[i] !== 'pending') { state.photos[i] = null; render(); } else { $('#file').click(); }
   });
 
-  function val(id) { return ($('#' + id).value || '').trim(); }
-  function esc(s) { return s.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
-  function slug(s) { return (s || 'business-name').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'business-name'; }
+  function samplePalette(canvas, fromLogo) {
+    var s = document.createElement('canvas'); s.width = s.height = 48;
+    var x = s.getContext('2d'); x.drawImage(canvas, 0, 0, 48, 48);
+    var px = x.getImageData(0, 0, 48, 48).data, bins = {};
+    for (var i = 0; i < px.length; i += 4) {
+      if (px[i + 3] < 200) continue;
+      var r = px[i], g = px[i + 1], b = px[i + 2], mx = Math.max(r, g, b), mn = Math.min(r, g, b);
+      if (mx - mn < 40 || mx < 50 || mn > 225) continue;
+      var k = (r >> 5) + ',' + (g >> 5) + ',' + (b >> 5);
+      (bins[k] = bins[k] || { n: 0, r: 0, g: 0, b: 0 }); bins[k].n++; bins[k].r += r; bins[k].g += g; bins[k].b += b;
+    }
+    var found = Object.keys(bins).map(function (k) { var v = bins[k]; return { n: v.n * (fromLogo ? 4 : 1), hex: '#' + [v.r, v.g, v.b].map(function (c) { c = Math.round(c / v.n); return (c < 16 ? '0' : '') + c.toString(16); }).join('') }; })
+      .sort(function (a, b) { return b.n - a.n; }).slice(0, 4);
+    found.forEach(function (f) {
+      var near = state.palette.some(function (p) { return T.contrast(p.hex, f.hex) < 1.25; });
+      if (!near) state.palette.push(f);
+    });
+    state.palette.sort(function (a, b) { return b.n - a.n; }); state.palette = state.palette.slice(0, 7);
+    if ((!state.accent || fromLogo) && found[0]) state.accent = found[0].hex;
+  }
+  function swatches() {
+    var h = state.palette.map(function (p) { return '<button class="sw' + (p.hex === state.accent ? ' on' : '') + '" data-c="' + p.hex + '" style="background:' + p.hex + '" title="' + p.hex + '"></button>'; }).join('');
+    if (!state.palette.length) h = '<small style="color:var(--dim);font-size:11.5px;margin-right:8px">Add photos or a logo and their colors show up here.</small>';
+    h += '<label class="sw-pick" title="Pick any color">+<input type="color" id="pick" value="' + (state.accent || '#b5562f') + '"></label>';
+    $('#swatches').innerHTML = h;
+  }
+  $('#swatches').addEventListener('click', function (e) { var b = e.target.closest('.sw'); if (b) { state.accent = b.dataset.c; render(); } });
+  $('#swatches').addEventListener('input', function (e) { if (e.target.id === 'pick') { state.accent = e.target.value; render(true); } });
+  $('#mode').addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; state.mode = b.dataset.v; render(); });
+
+  $('#paste').addEventListener('input', function () {
+    var got = T.parseListing(this.value), found = [], names = { phone: 'phone', address: 'address', hours: 'hours', ig: 'Instagram' };
+    ['phone', 'address', 'hours', 'ig'].forEach(function (k) { if (got[k]) { found.push(names[k]); if (!$('#' + k).value) $('#' + k).value = got[k]; } });
+    if (!$('#name').value) { var first = this.value.split('\n').map(function (l) { return l.trim(); }).filter(Boolean)[0]; if (first && first.length < 60 && !/\d{3}/.test(first)) $('#name').value = first; }
+    $('#pasteNote').textContent = found.length ? 'Found ' + found.join(', ') + '. Check them below; fields you already typed in are left alone.' : 'Couldn’t find a phone, address or hours in that. You can type them below.';
+    render();
+  });
+
   function fmtDate(s) { if (!s) return ''; var d = new Date(s + 'T12:00:00'); return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric' }); }
+  function v(id) { return ($('#' + id).value || '').trim(); }
+  function data() {
+    var ph = state.photos.map(function (p) { return p === 'pending' ? null : p; });
+    return {
+      niche: state.niche, name: v('name'), kind: v('kind'), area: v('area'), tagline: v('tagline'), about: v('about'), dishes: v('dishes'),
+      phone: v('phone'), ig: v('ig'), address: v('address'), hours: $('#hours').value, action: v('action'), orderUrl: v('orderUrl'),
+      locked: v('locked').split(',').map(function (s) { return s.trim(); }).filter(Boolean),
+      theme: { accent: state.accent, mode: state.mode, font: v('font') || 'classic' },
+      photos: { hero: ph[0], dishes: [ph[1], ph[2], ph[3]], about: ph[4], logo: state.logo },
+      offer: { disc: v('disc'), code: v('code'), exp: fmtDate(v('exp')), who: v('who') }
+    };
+  }
+  function slugNow() { return T.slug(v('slug') || v('name')); }
 
-  function build() {
-    var d = {}; ids.forEach(function (k) { d[k] = val(k); });
-    var name = d.name || 'Your Business', kind = d.kind || 'Local business', area = d.area || 'Miami, FL';
-    var tagline = d.tagline || 'The place people keep coming back to.';
-    var about = d.about || 'A few honest sentences about who you are, what you do best, and why people in the neighborhood trust you. We write this with you.';
-    var pts = d.points ? d.points.split(',').map(function (s) { return s.trim(); }).filter(Boolean).slice(0, 3) : ['What you’re known for', 'What makes you different', 'Why they should come in'];
-    var ph = photos.filter(function (p) { return p && p !== 'pending'; });
-    var hero = ph[0] || '', rest = ph.slice(1);
-    var contacts = { eric: [['Eric Martinez', '(305) 767-6128', 'eric@twincitys.net']], kevin: [['Kevin Butchers', '(305) 986-6414', 'k.butchers@twincitys.net']] };
-    contacts.both = contacts.eric.concat(contacts.kevin);
-    var who = contacts[d.who] || contacts.eric;
-    var exp = fmtDate(d.exp);
-    var locked = d.locked ? d.locked.split(',').map(function (s) { return s.trim(); }).filter(Boolean).slice(0, 8) : [];
-
-    return '<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n<meta name="robots" content="noindex, nofollow">\n<title>' + esc(name) + ' · concept by Twin Citys</title>\n<link rel="icon" href="/favicon.svg" type="image/svg+xml">\n<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap">\n<style>\n' +
-    ':root{color-scheme:dark;--black:#0b0b0b;--ivory:#e8e3d9;--stone:#a19b90;--dim:#4a4743;--line:rgba(232,227,217,.18);--font:"Montserrat","Avenir Next","Helvetica Neue",Arial,sans-serif;--ease:cubic-bezier(.3,.7,.2,1)}\n' +
-    '*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--black);color:var(--ivory);font:400 16px/1.6 var(--font);-webkit-font-smoothing:antialiased}h1,h2,h3,p{margin:0}a{color:inherit;text-decoration:none}\n' +
-    '.ribbon{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:10px clamp(16px,4vw,40px);background:rgba(11,11,11,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--stone)}.ribbon b{display:inline-flex;align-items:center;gap:10px;color:var(--ivory);font-weight:500}.ribbon svg{width:22px;height:19px;fill:currentColor}.ribbon a{color:var(--ivory);border-bottom:1px solid var(--dim);padding-bottom:2px}\n' +
-    '.hero{position:relative;min-height:92vh;display:grid;align-items:end;padding:clamp(24px,6vw,72px);overflow:hidden;isolation:isolate}.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;transform:scale(1.04);animation:drift 18s var(--ease) both}.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(to top,rgba(11,11,11,.96) 0%,rgba(11,11,11,.55) 45%,rgba(11,11,11,.2) 100%)}.hero.plain{background:radial-gradient(ellipse at 30% 20%,#2a2927,#0b0b0b 60%)}@keyframes drift{from{transform:scale(1.12)}to{transform:scale(1.04)}}\n' +
-    '.hero .k{font-size:11px;letter-spacing:.4em;text-transform:uppercase;color:var(--stone);margin-bottom:18px}.hero h1{font-weight:300;font-size:clamp(44px,9vw,120px);line-height:.98;letter-spacing:-.01em;max-width:12ch;text-wrap:balance}.hero p{margin-top:22px;max-width:46ch;color:var(--ivory);font-size:clamp(16px,1.6vw,20px);font-weight:300}.hero .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}\n' +
-    '.btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 28px;border:1px solid var(--ivory);background:var(--ivory);color:var(--black);font:500 11px var(--font);letter-spacing:.3em;text-transform:uppercase;text-indent:.3em;transition:transform .25s var(--ease)}.btn:hover{transform:translateY(-1px)}.btn.ghost{background:transparent;color:var(--ivory)}\n' +
-    '.wrap{width:min(100%,1120px);margin:0 auto;padding:0 clamp(16px,4vw,40px)}\n' +
-    '.pts{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.pts div{padding:28px 24px 28px 0;border-right:1px solid var(--line);font-weight:300;font-size:clamp(18px,2vw,24px);line-height:1.25}.pts div:last-child{border-right:0}.pts div:not(:first-child){padding-left:24px}.pts span{display:block;color:var(--stone);font-size:10px;letter-spacing:.34em;text-transform:uppercase;margin-bottom:12px}\n' +
-    '.about{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,72px);padding:clamp(56px,9vw,120px) 0}.about h2{font-weight:300;font-size:clamp(28px,3.6vw,48px);line-height:1.08;letter-spacing:-.01em}.about h2 em{font-style:normal;font-weight:500;color:#fff}.about p{color:var(--stone);font-size:17px;max-width:48ch}\n' +
-    '.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.gal img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;filter:saturate(.95)}.gal .ph{aspect-ratio:4/5;background:#161615;border:1px solid var(--line);display:grid;place-items:center;color:var(--dim);font-size:11px;letter-spacing:.3em;text-transform:uppercase}\n' +
-    '.info{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding:clamp(48px,8vw,96px) 0;border-top:1px solid var(--line);margin-top:clamp(48px,8vw,96px)}.info span{display:block;color:var(--stone);font-size:10px;letter-spacing:.34em;text-transform:uppercase;margin-bottom:10px}.info p{font-size:17px;font-weight:300}\n' +
-    '.offer{margin:0 0 clamp(48px,8vw,96px);border:1px solid var(--ivory);padding:clamp(28px,5vw,56px);display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:32px;align-items:center;background:linear-gradient(135deg,rgba(232,227,217,.06),transparent 60%)}.offer .k{font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:var(--stone);margin-bottom:14px}.offer h2{font-weight:300;font-size:clamp(26px,3.4vw,44px);line-height:1.1}.offer h2 em{font-style:normal;font-weight:500;color:#fff}.offer p{color:var(--stone);margin-top:14px;max-width:46ch}.offer .code{display:grid;gap:14px;text-align:right}.offer .code div{border:1px solid var(--line);padding:14px 18px}.offer .code span{display:block;color:var(--stone);font-size:10px;letter-spacing:.34em;text-transform:uppercase;margin-bottom:4px}.offer .code b{font-weight:500;font-size:clamp(20px,2.4vw,30px);letter-spacing:.06em}.offer .who{display:flex;flex-wrap:wrap;gap:20px 36px;margin-top:22px;font-size:14px;color:var(--stone)}.offer .who b{display:block;color:var(--ivory);font-weight:500;letter-spacing:.06em}\n' +
-    '.locked{margin:0 0 28px}.locked .k{font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:var(--stone);margin-bottom:14px}.locked .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}.locked .row div{position:relative;border:1px dashed var(--dim);padding:22px 16px 18px;color:var(--dim);font-weight:300;font-size:17px;line-height:1.2;background:repeating-linear-gradient(135deg,transparent 0 10px,rgba(232,227,217,.025) 10px 11px)}.locked .row div::before{content:"";position:absolute;top:12px;right:12px;width:10px;height:13px;border:1.5px solid var(--dim);border-radius:3px 3px 1px 1px;box-shadow:inset 0 -6px 0 var(--dim)}.locked .row div span{display:block;margin-top:8px;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--dim)}\n' +
-    'footer{padding:28px 0 40px;display:flex;justify-content:space-between;gap:16px;color:var(--dim);font-size:10px;letter-spacing:.3em;text-transform:uppercase;border-top:1px solid var(--line)}\n' +
-    '@media(max-width:760px){.pts{grid-template-columns:1fr}.pts div{border-right:0;border-bottom:1px solid var(--line);padding:20px 0}.pts div:not(:first-child){padding-left:0}.pts div:last-child{border-bottom:0}.about,.offer{grid-template-columns:1fr}.offer .code{text-align:left}.gal{grid-template-columns:1fr 1fr}.info{grid-template-columns:1fr;gap:20px}.hero{min-height:84vh}footer{flex-direction:column}}\n' +
-    '@media(prefers-reduced-motion:reduce){.hero img{animation:none}}\n</style>\n</head>\n<body>\n' +
-    '<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="tc" viewBox="0 0 892 756"><polygon points="0,0 70,96 280,97 280,632 407,742 407,1"/><polygon points="892,0 463,1 463,756 802,581 582,580 582,97 813,96"/></symbol></svg>\n' +
-    '<div class="ribbon"><b><svg><use href="#tc"/></svg>A concept for ' + esc(name) + '</b><span>Made by <a href="https://twincitys.net/">Twin Citys</a> · <a href="#offer">see your offer</a></span></div>\n' +
-    '<section class="hero' + (hero ? '' : ' plain') + '">' + (hero ? '<img src="' + hero + '" alt="">' : '') + '<div><p class="k">' + esc(kind) + ' · ' + esc(area) + '</p><h1>' + esc(name) + '</h1><p>' + esc(tagline) + '</p><div class="cta">' + (d.phone ? '<a class="btn" href="tel:' + esc(d.phone.replace(/[^\\d+]/g, '')) + '">Call us</a>' : '<a class="btn" href="#about">Come see us</a>') + (d.address ? '<a class="btn ghost" href="https://maps.google.com/?q=' + encodeURIComponent(d.address) + '" target="_blank" rel="noopener">Directions</a>' : '') + '</div></div></section>\n' +
-    '<main class="wrap">\n<div class="pts">' + pts.map(function (p, i) { return '<div><span>0' + (i + 1) + '</span>' + esc(p) + '</div>'; }).join('') + '</div>\n' +
-    '<section class="about" id="about"><h2>About <em>' + esc(name) + '</em></h2><p>' + esc(about) + '</p></section>\n' +
-    '<div class="gal">' + (rest.length ? rest.map(function (p) { return '<img src="' + p + '" alt="">'; }).join('') : '<div class="ph">Photo</div><div class="ph">Photo</div><div class="ph">Photo</div>') + '</div>\n' +
-    '<div class="info"><div><span>Find us</span><p>' + esc(d.address || 'Your address here') + '</p></div><div><span>Hours</span><p>' + esc(d.hours || 'Your hours here') + '</p></div><div><span>Say hi</span><p>' + esc(d.phone || 'Your phone') + (d.ig ? '<br>' + esc(d.ig) : '') + '</p></div></div>\n' +
-    (locked.length ? '<section class="locked"><p class="k">Part of the full site</p><div class="row">' + locked.map(function (l) { return '<div>' + esc(l) + '<span>Unlocks with the full site</span></div>'; }).join('') + '</div></section>\n' : '') +
-    '<section class="offer" id="offer"><div><p class="k">Like what you see?</p><h2>This is a concept. <em>The full site is yours' + (d.disc ? ' for ' + esc(d.disc) + '.' : '.') + '</em></h2><p>We built this in a day from what you already have. The finished site adds the rest: every page, your menu or services, a booking or ordering flow if you want one, and it’s built to look this good on a phone. ' + (exp ? 'Your rate is good through ' + esc(exp) + '.' : '') + '</p><div class="who">' + who.map(function (w) { return '<div><b>' + esc(w[0]) + '</b>' + esc(w[1]) + '<br>' + esc(w[2]) + '</div>'; }).join('') + '</div></div><div class="code">' + (d.disc ? '<div><span>Your rate</span><b>' + esc(d.disc) + '</b></div>' : '') + (d.code ? '<div><span>Code</span><b>' + esc(d.code) + '</b></div>' : '') + (exp ? '<div><span>Good through</span><b>' + esc(exp) + '</b></div>' : '') + '<a class="btn" href="https://twincitys.net/start">Let’s build it</a></div></section>\n' +
-    '</main>\n<footer class="wrap"><span>Concept by Twin Citys · Miami, FL</span><span>Design | Develop | Create</span></footer>\n</body>\n</html>\n';
+  var NEEDS = { order: 'An online ordering path (or a clean link into the ordering platform) reachable from every screen.', call: 'A clear, always-visible way to call the business (tap-to-call on mobile).', book: 'A reservation flow that works in two taps on a phone.', visit: 'Directions, hours and a map one tap away on every screen.' };
+  function buildPrompt() {
+    var d = data(), s = slugNow(), F = T.FONTS[d.theme.font] || T.FONTS.classic, O = d.offer;
+    var ex = d.locked.length ? d.locked.map(function (l) { return '- ' + l; }).join('\n') : '- (list the sections the full site must include)';
+    var who = { eric: 'Eric Martinez, eric@twincitys.net', kevin: 'Kevin Butchers, k.butchers@twincitys.net', daniel: 'Daniel Navarro, daniel@twincitys.net', all: 'Eric Martinez, Kevin Butchers and Daniel Navarro' }[O.who] || 'Eric Martinez, eric@twincitys.net';
+    return '<MASTER_BLUEPRINT_START>\n\n<role>\n\nYou are the senior creative director, UX designer, conversion strategist,\nvisual designer, front-end engineer, motion director, accessibility reviewer,\nperformance engineer, local SEO specialist, and documentation owner\nfor a premium business website.\n\nYour job is to understand the real business, create a business-specific\nvisual world, build a clear path, and produce a polished website that\nfeels unique to that business.\n\nDo not create a generic template.\n\nBe decisive, practical, fact-grounded, and execution-ready.\n\n</role>\n\n<mission>\n\nCreate a premium website that makes the business look credible,\nmemorable, valuable, and easy to choose.\n\nThe final experience must include:\n\n1. A clear commercial promise.\n2. ' + (NEEDS[d.action] || NEEDS.order) + '\n3. Business-specific experience requirements:\n' + ex + '\n\n</mission>\n\n<first_response>\n\nYour first response is a short plan, not code.\nIn plain words: the pages and sections you will build, the hero direction, what the main button does on every screen, how the site will feel different from a template, and a list of anything you still need from the owner (menu, prices, team photos, booking or ordering links).\nKeep it under a page. Wait for a go-ahead before building anything.\n\nDo not invent missing facts.\n\nPreserve approved work.\n\nAdapt the visual identity, content structure, hero direction,\ninteractions, and conversion path to the actual business.\n\n</first_response>\n\n<current_task>\n\nUse the supplied business information, approved assets,\nowner instructions, and project files as the source material.\n\nBegin with the plan described in first_response.\n\nDo not invent missing facts.\n\nPreserve approved work.\n\nAdapt the visual identity, content structure, hero direction,\ninteractions, and conversion path to the actual business.\n\n</current_task>\n\n<business_information>\n\nBusiness: ' + (d.name || '(name)') + '\nType: ' + T.NICHES[d.niche].label + ', ' + (d.kind || '(type)') + '\nWhere: ' + (d.area || '(neighborhood)') + '\nHeadline used on the approved concept: ' + (d.tagline || '(headline)') + '\nAbout: ' + (d.about || '(about)') + '\nSignature dishes:\n' + (d.dishes || '(none given)') + '\nPhone: ' + (d.phone || '(phone)') + '\nInstagram: ' + (d.ig || '(none given)') + '\nAddress: ' + (d.address || '(address)') + '\nHours:\n' + (d.hours || '(hours)') + '\nMain customer action: ' + (T.ACTIONS[d.action] || T.ACTIONS.order).label + (d.orderUrl ? ' (' + d.orderUrl + ')' : '') + '\n\n</business_information>\n\n<approved_work>\n\nThe concept page at https://twincitys.net/demo/' + s + ' is approved by the owner.\nPreserve its hero direction, its headline, and its visual system:\naccent ' + (d.theme.accent || '#b5562f') + ' (taken from the business\'s own photos or logo), ' + (d.theme.mode === 'light' ? 'light' : 'dark') + ' background tinted from that accent, type style "' + F.label + '" (' + F.head.split(',')[0].replace(/'/g, '') + ' headings, ' + F.body.split(',')[0].replace(/'/g, '') + ' body), rounded buttons, generous space.\nPhotos: use the photos embedded in the approved concept page; ask the owner for more rather than using stock.\nThe sections marked "part of the full site" on the concept are the scope of this build.\n\n</approved_work>\n\n<commercial_terms>\n\nQuoted rate: ' + (O.disc ? O.disc + ' applied' : 'per quote') + (O.code ? ' (code ' + O.code + ')' : '') + (O.exp ? ', good through ' + O.exp : '') + '.\nStudio contact: ' + who + '.\n\n</commercial_terms>\n\n<MASTER_BLUEPRINT_END>';
   }
 
-  var ACTIONS = { call: 'A clear, always-visible way to call the business (tap-to-call on mobile).', book: 'A booking flow for appointments that works in two taps on a phone.', order: 'An online ordering path (or a clean link into the ordering platform) reachable from every screen.', visit: 'Directions, hours and a map one tap away on every screen.', quote: 'A short request-a-quote form that reaches the owner by email within a minute.' };
-  function buildPrompt(s) {
-    var d = {}; ids.forEach(function (k) { d[k] = val(k); });
-    var locked = d.locked ? d.locked.split(',').map(function (x) { return x.trim(); }).filter(Boolean) : [];
-    var exp = fmtDate(d.exp);
-    var ex = locked.length ? locked.map(function (l) { return '- ' + l; }).join('\n') : '- (list the sections the full site must include)';
-    return '<MASTER_BLUEPRINT_START>\n\n<role>\n\nYou are the senior creative director, UX designer, conversion strategist,\nvisual designer, front-end engineer, motion director, accessibility reviewer,\nperformance engineer, local SEO specialist, and documentation owner\nfor a premium business website.\n\nYour job is to understand the real business, create a business-specific\nvisual world, build a clear path, and produce a polished website that\nfeels unique to that business.\n\nDo not create a generic template.\n\nBe decisive, practical, fact-grounded, and execution-ready.\n\n</role>\n\n<mission>\n\nCreate a premium website that makes the business look credible,\nmemorable, valuable, and easy to choose.\n\nThe final experience must include:\n\n1. A clear commercial promise.\n2. ' + (ACTIONS[d.action] || ACTIONS.call) + '\n3. Business-specific experience requirements:\n' + ex + '\n\n</mission>\n\n<first_response>\n\nYour first response is a short plan, not code.\nIn plain words: the pages and sections you will build, the hero direction, what the main button does on every screen, how the site will feel different from a template, and a list of anything you still need from the owner (menu, prices, team photos, booking or ordering links).\nKeep it under a page. Wait for a go-ahead before building anything.\n\nDo not invent missing facts.\n\nPreserve approved work.\n\nAdapt the visual identity, content structure, hero direction,\ninteractions, and conversion path to the actual business.\n\n</first_response>\n\n<current_task>\n\nUse the supplied business information, approved assets,\nowner instructions, and project files as the source material.\n\nBegin with the plan described in first_response.\n\nDo not invent missing facts.\n\nPreserve approved work.\n\nAdapt the visual identity, content structure, hero direction,\ninteractions, and conversion path to the actual business.\n\n</current_task>\n\n<business_information>\n\nBusiness: ' + (d.name || '(name)') + '\nWhat they are: ' + (d.kind || '(type)') + '\nWhere: ' + (d.area || '(neighborhood)') + '\nHeadline used on the approved concept: ' + (d.tagline || '(headline)') + '\nAbout: ' + (d.about || '(about)') + '\nKnown for: ' + (d.points || '(three things)') + '\nPhone: ' + (d.phone || '(phone)') + '\nInstagram: ' + (d.ig || '(none given)') + '\nAddress: ' + (d.address || '(address)') + '\nHours: ' + (d.hours || '(hours)') + '\nMain customer action: ' + (d.action || 'call') + '\n\n</business_information>\n\n<approved_work>\n\nThe one-screen concept page at https://twincitys.net/demo/' + s + ' is approved by the owner.\nPreserve its hero direction, its headline, and the Twin Citys visual system:\nblack #0b0b0b, ivory #e8e3d9, stone #a19b90, Montserrat (300/400/500), thin hairlines, generous space, no gradients or accent colors.\nPhotos: use the photos embedded in the approved concept page; ask the owner for more rather than using stock.\nThe sections marked "part of the full site" on the concept are the scope of this build.\n\n</approved_work>\n\n<commercial_terms>\n\nQuoted rate: ' + (d.disc ? d.disc + ' applied' : 'per quote') + (d.code ? ' (code ' + d.code + ')' : '') + (exp ? ', good through ' + exp : '') + '.\nStudio contact: ' + (d.who === 'kevin' ? 'Kevin Butchers, k.butchers@twincitys.net' : d.who === 'both' ? 'Eric Martinez and Kevin Butchers' : 'Eric Martinez, eric@twincitys.net') + '.\n\n</commercial_terms>\n\n<MASTER_BLUEPRINT_END>';
+  function save() {
+    var o = { state: state, f: {} }; fields.forEach(function (k) { o.f[k] = $('#' + k).value; });
+    try { localStorage.setItem(KEY, JSON.stringify(o)); } catch (e) { try { o.state = Object.assign({}, state, { photos: [null, null, null, null, null], logo: null }); localStorage.setItem(KEY, JSON.stringify(o)); } catch (e2) {} }
+  }
+  function load() {
+    var raw = store(KEY); if (!raw) return false;
+    try { var o = JSON.parse(raw); Object.assign(state, o.state); fields.forEach(function (k) { if (o.f[k] != null) $('#' + k).value = o.f[k]; }); return true; } catch (e) { return false; }
   }
 
   var t;
-  function render() {
-    $('#photos').querySelectorAll('div').forEach(function (d, i) {
-      var p = photos[i]; d.style.backgroundImage = (p && p !== 'pending') ? 'url(' + p + ')' : ''; d.innerHTML = (p && p !== 'pending') ? '<b>×</b>' : '';
+  function render(skipSwatches) {
+    $('#photos').querySelectorAll('.slot').forEach(function (d) {
+      var p = d.dataset.i === 'logo' ? state.logo : state.photos[+d.dataset.i], has = p && p !== 'pending';
+      d.style.backgroundImage = has ? 'url(' + p + ')' : '';
+      var x = d.querySelector('b'); if (has && !x) d.insertAdjacentHTML('beforeend', '<b>×</b>'); if (!has && x) x.remove();
     });
-    var s = slug(val('name')); $('#slug').textContent = s; $('#slug2').textContent = s;
-    $('#prompt').value = buildPrompt(s);
-    clearTimeout(t); t = setTimeout(function () { $('#preview').srcdoc = build(); }, 150);
+    if (!skipSwatches) swatches();
+    $('#mode').querySelectorAll('button').forEach(function (b) { b.classList.toggle('on', b.dataset.v === state.mode); });
+    $('#slugShow').textContent = slugNow();
+    $('#prompt').value = buildPrompt();
+    clearTimeout(t); t = setTimeout(function () { $('#preview').srcdoc = T.build(data()); save(); }, 160);
   }
-  ids.forEach(function (k) { $('#' + k).addEventListener('input', render); });
+  fields.forEach(function (k) { $('#' + k).addEventListener('input', function () { render(); }); });
 
+  $('#stage').querySelector('.bar').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-v]'); if (!b) return;
+    this.querySelectorAll('button[data-v]').forEach(function (x) { x.classList.toggle('on', x === b); });
+    $('#stage').classList.toggle('phone', b.dataset.v === 'phone');
+  });
+  $('#open').addEventListener('click', function () { window.open(URL.createObjectURL(new Blob([T.build(data())], { type: 'text/html' })), '_blank'); });
+  $('#dl').addEventListener('click', function () {
+    var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([T.build(data())], { type: 'text/html' })); a.download = 'index.html'; a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
+    status('Downloaded. Upload it at github.com/' + REPO + '/upload/main into the folder demo/' + slugNow() + '/', '');
+  });
   $('#copy').addEventListener('click', function () {
     var ta = $('#prompt'); ta.select();
     var done = function () { $('#copy').textContent = 'Copied'; setTimeout(function () { $('#copy').textContent = 'Copy build prompt'; }, 1500); };
     if (navigator.clipboard) navigator.clipboard.writeText(ta.value).then(done, function () { document.execCommand('copy'); done(); }); else { document.execCommand('copy'); done(); }
   });
-  $('#dl').addEventListener('click', function () {
-    var blob = new Blob([build()], { type: 'text/html' }), a = document.createElement('a');
-    a.href = URL.createObjectURL(blob); a.download = 'index.html'; a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
+  $('#reset').addEventListener('click', function () {
+    if (!confirm('Clear this demo and start a new one?')) return;
+    store(KEY, null); fields.forEach(function (k) { $('#' + k).value = ''; }); $('#paste').value = ''; $('#who').value = 'eric'; $('#font').value = 'classic';
+    Object.assign(state, { photos: [null, null, null, null, null], logo: null, accent: '', mode: 'dark', palette: [] });
+    nicheDefaults(); $('#live').style.display = 'none'; status('', ''); render();
   });
-  $('#open').addEventListener('click', function () {
-    var blob = new Blob([build()], { type: 'text/html' }); window.open(URL.createObjectURL(blob), '_blank');
+
+  function status(msg, cls) { var s = $('#status'); s.textContent = msg; s.className = 'status' + (cls ? ' ' + cls : ''); }
+  function b64(str) { var bytes = new TextEncoder().encode(str), bin = ''; for (var i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000)); return btoa(bin); }
+  $('#saveToken').addEventListener('click', function () { var k = $('#token').value.trim(); if (!k) return; store(TOK, k); $('#token').value = ''; $('#keyBox').open = false; status('Key saved on this device.', 'ok'); });
+  $('#clearToken').addEventListener('click', function () { store(TOK, null); status('Key removed from this device.', ''); });
+  $('#publish').addEventListener('click', function () {
+    var key = store(TOK), s = slugNow(), d = data();
+    if (!d.name) { status('Add the business name first.', 'err'); $('#name').focus(); return; }
+    if (!key) { $('#keyBox').open = true; status('This device needs a publishing key first (below).', 'err'); return; }
+    var url = 'https://api.github.com/repos/' + REPO + '/contents/demo/' + s + '/index.html', h = { Authorization: 'Bearer ' + key, Accept: 'application/vnd.github+json' };
+    $('#publish').disabled = true; status('Publishing…', '');
+    fetch(url + '?ref=main', { headers: h }).then(function (r) { return r.status === 200 ? r.json() : null; }).then(function (cur) {
+      if (cur && !confirm('twincitys.net/demo/' + s + ' already exists. Replace it with this version?')) throw new Error('stopped');
+      var body = { message: (cur ? 'Update demo: ' : 'Demo: ') + d.name, content: b64(T.build(d)), branch: 'main' };
+      if (cur) body.sha = cur.sha;
+      return fetch(url, { method: 'PUT', headers: Object.assign({ 'Content-Type': 'application/json' }, h), body: JSON.stringify(body) });
+    }).then(function (r) {
+      if (!r.ok) return r.json().then(function (j) { throw new Error(r.status === 401 ? 'The key was refused. Make a new one and save it again.' : r.status === 403 || r.status === 404 ? 'The key can’t write to the site. Check it has Contents: Read and write on twin-citys.' : (j.message || 'GitHub said no.')); });
+      var live = 'https://twincitys.net/demo/' + s; $('#liveLink').href = live; $('#liveLink').textContent = live; $('#live').style.display = 'block';
+      status('Published. The link works in about a minute.', 'ok');
+    }).catch(function (e) { if (e.message !== 'stopped') status(e.message, 'err'); else status('', ''); })
+      .then(function () { $('#publish').disabled = false; });
   });
+  $('#copyLink').addEventListener('click', function () { var l = $('#liveLink').textContent; if (navigator.clipboard) navigator.clipboard.writeText(l); this.textContent = 'Copied'; var b = this; setTimeout(function () { b.textContent = 'Copy link'; }, 1500); });
+
+  slots();
+  if (!load()) { nicheDefaults(); $('#font').value = 'classic'; }
   render();
 })();
 </script>
