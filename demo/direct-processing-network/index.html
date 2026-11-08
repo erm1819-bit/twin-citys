@@ -7,11 +7,12 @@
 <title>Direct Processing Network · Payment processing and Clover POS in Miami</title>
 <meta name="description" content="Direct Processing Network: payment processing, Level II & III, multi-location management and Clover POS, installed and supported from Miami.">
 <meta name="theme-color" content="#011632">
+<link rel="icon" href="favicon.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"LocalBusiness","name":"Direct Processing Network","url":"https://directprocessingnetwork.com/","telephone":"+1-855-955-6111","email":"info@directprocessingnetwork.com","address":{"@type":"PostalAddress","streetAddress":"12915 SW 132nd St, Suite 4B","addressLocality":"Miami","addressRegion":"FL","postalCode":"33186","addressCountry":"US"},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"09:00","closes":"18:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Saturday","opens":"09:00","closes":"14:00"}],"sameAs":["https://www.instagram.com/dprocessingnetwork/","https://www.linkedin.com/company/direct-processing-network","https://www.youtube.com/@POSsystems101","https://www.facebook.com/directprocessingnetwork"]}
+{"@context":"https://schema.org","@type":"LocalBusiness","name":"Direct Processing Network","url":"https://directprocessingnetwork.com/","logo":"https://twincitys.net/demo/direct-processing-network/dpn-logo.png","telephone":"+1-855-955-6111","email":"info@directprocessingnetwork.com","address":{"@type":"PostalAddress","streetAddress":"12915 SW 132nd St, Suite 4B","addressLocality":"Miami","addressRegion":"FL","postalCode":"33186","addressCountry":"US"},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"09:00","closes":"18:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Saturday","opens":"09:00","closes":"14:00"}],"sameAs":["https://www.instagram.com/dprocessingnetwork/","https://www.linkedin.com/company/direct-processing-network","https://www.youtube.com/@POSsystems101","https://www.facebook.com/directprocessingnetwork"]}
 </script>
 <style>
 :root {
@@ -52,13 +53,14 @@ img { max-width: 100%; display: block }
 /* header */
 .top { position: sticky; top: 0; z-index: 20; background: rgba(255,255,255,.94); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line) }
 .top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 72px }
-.wm { font: 700 14px var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--deep); white-space: nowrap }
+.wm { display: flex; align-items: center; gap: 12px; font: 700 13px var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--deep); white-space: nowrap }
+.wm img { height: 36px; width: auto }
 .wm span { color: var(--orange) }
-.nav { display: flex; gap: 30px; font-size: 15px; color: var(--mute) }
+.nav { display: flex; gap: 24px; font-size: 15px; color: var(--mute); white-space: nowrap }
 .nav a:hover { color: var(--deep) }
 .top .acts { display: flex; align-items: center; gap: 20px; font-size: 15px }
 .top .tel { color: var(--deep); font-weight: 600; white-space: nowrap }
-.top .btn { min-height: 44px; padding: 0 18px; font-size: 14px }
+.top .btn { min-height: 44px; padding: 0 18px; font-size: 14px; white-space: nowrap }
 
 /* hero */
 .hero { padding-block: clamp(48px, 8vw, 104px) clamp(40px, 6vw, 72px) }
@@ -148,6 +150,7 @@ img { max-width: 100%; display: block }
 .close .cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px }
 .visit { display: grid; gap: 18px; font-size: 16px }
 .visit div { padding-bottom: 18px; border-bottom: 1px solid var(--line) }
+.visit .lockup { width: min(100%, 300px); height: auto; margin-bottom: 8px }
 .visit small { display: block; font: 600 12px var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--mute); margin-bottom: 4px }
 .visit a { color: var(--deep); font-weight: 600 }
 
@@ -159,8 +162,8 @@ footer .tc { color: #7f8da3 }
 
 .bar { display: none }
 
+@media (max-width: 1180px) { .nav { display: none } }
 @media (max-width: 960px) {
-  .nav { display: none }
   .hero .wrap, .clover .head, .rev .wrap, .close .wrap { grid-template-columns: minmax(0, 1fr) }
   .clover .lede { justify-self: start }
   .proof { border-left: 0; padding-left: 0; border-top: 1px solid var(--line); padding-top: 30px; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px }
@@ -192,7 +195,7 @@ footer .tc { color: #7f8da3 }
 
 <header class="top">
   <div class="wrap">
-    <a class="wm" href="#top" aria-label="Direct Processing Network, home">Direct Processing <span>Network</span></a>
+    <a class="wm" href="#top" aria-label="Direct Processing Network, home"><img src="dpn-mark.png" alt="" width="54" height="40">Direct Processing <span>Network</span></a>
     <nav class="nav" aria-label="Main">
       <a href="#clover">Clover POS</a>
       <a href="#services">Processing</a>
@@ -327,6 +330,7 @@ footer .tc { color: #7f8da3 }
         </div>
       </div>
       <div class="visit">
+        <img class="lockup" src="dpn-logo.png" alt="Direct Processing Network, Business &amp; Payment Solutions" width="900" height="400" loading="lazy">
         <div><small>Office</small><a href="https://maps.google.com/?q=12915+SW+132nd+St+Suite+4B+Miami+FL+33186" target="_blank" rel="noopener">12915 SW 132nd St, Suite 4B<br>Miami, FL 33186</a></div>
         <div><small>Hours</small>Mon–Fri 9 AM–6 PM · Sat 9 AM–2 PM<br>Support line open 24/7</div>
         <div><small>Email</small><a href="mailto:info@directprocessingnetwork.com">info@directprocessingnetwork.com</a></div>
