@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ad break-even calculator: what you can afford to pay for a lead · Twin Citys</title>
+<meta name="description" content="Free ad break-even calculator for small businesses. Drag three sliders and see the most you can pay per lead before your ads lose money, then check the ads you're running now.">
+<link rel="canonical" href="https://twincitys.net/break-even/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="What can you afford to pay for a lead? · Twin Citys">
+<meta property="og:description" content="A free ten-second tool for Miami businesses: the most you can pay per lead before your ads lose money.">
+<meta property="og:url" content="https://twincitys.net/break-even/">
+<meta property="og:image" content="https://twincitys.net/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0b0b0b">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon-96.png" type="image/png" sizes="96x96">
+<link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://twincitys.net/#studio",
+      "name": "Twin Citys",
+      "url": "https://twincitys.net/",
+      "image": "https://twincitys.net/og.jpg",
+      "logo": "https://twincitys.net/favicon-192.png",
+      "description": "Web design studio in Miami. We build and launch websites for restaurants, bakeries and local shops.",
+      "email": "eric@twincitys.net",
+      "address": { "@type": "PostalAddress", "addressLocality": "Miami", "addressRegion": "FL", "addressCountry": "US" },
+      "sameAs": [ "https://www.instagram.com/twincitys.co/", "https://maps.google.com/?cid=1861668075067573854" ]
+    },
+    {
+      "@type": "WebApplication",
+      "@id": "https://twincitys.net/break-even/",
+      "url": "https://twincitys.net/break-even/",
+      "name": "Ad break-even calculator",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": "The most a small business can pay per lead and per customer before its ads lose money.",
+      "publisher": { "@id": "https://twincitys.net/#studio" },
+      "inLanguage": "en-US"
+    }
+  ]
+}
+</script>
+<script data-goatcounter="https://twincitys.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<style>
+:root {
+  color-scheme: dark;
+  --black: #0b0b0b; --ink: #141311; --ivory: #e8e3d9; --stone: #a19b90; --stone-dim: #4a4743;
+  --line: rgba(232, 227, 217, .16); --ghost: rgba(232, 227, 217, .07);
+  --font: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --ease: cubic-bezier(.3, .7, .2, 1);
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+html { background: var(--black); }
+body { margin: 0; background: var(--black); color: var(--ivory); font-family: var(--font); font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased; overflow: hidden; }
+a { color: inherit; }
+button { font: inherit; color: inherit; }
+
+.app { position: relative; height: 100dvh; display: grid; grid-template-rows: auto minmax(0, 1fr); padding: 0 max(20px, env(safe-area-inset-right)) max(14px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left)); isolation: isolate; }
+.mark { position: absolute; z-index: 0; right: -6vw; bottom: -8vh; height: 92vh; width: auto; aspect-ratio: 892 / 756; fill: none; stroke: var(--ghost); stroke-width: 2.5; pointer-events: none; }
+
+.top { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 0 10px; font-size: 11px; letter-spacing: .32em; text-transform: uppercase; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand svg { width: 26px; height: 22px; fill: var(--ivory); }
+.top small { color: var(--stone); font-size: inherit; letter-spacing: inherit; }
+.top .tool { display: none; }
+.top nav { display: flex; align-items: center; gap: 22px; }
+.top nav a { text-decoration: none; opacity: .85; }
+.top nav a:hover { opacity: 1; }
+
+.grid { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(300px, 420px) minmax(0, 1fr); gap: clamp(24px, 4vw, 72px); align-items: stretch; min-height: 0; }
+
+/* left: the dials */
+.panel { display: flex; flex-direction: column; min-height: 0; overflow-y: auto; scrollbar-width: none; padding-right: 2px; }
+.panel::-webkit-scrollbar { display: none; }
+.panel__in { margin: auto 0; padding: 8px 0 12px; }
+.panel h1 { margin: 0 0 6px; font-size: clamp(26px, 2.6vw, 36px); font-weight: 500; line-height: 1.08; letter-spacing: -.02em; text-wrap: balance; }
+.panel .lede { margin: 0 0 18px; color: var(--stone); font-size: 14px; max-width: 40ch; }
+
+.dial { padding: 10px 0; border-top: 1px solid var(--line); }
+.dial:last-of-type { border-bottom: 1px solid var(--line); }
+.dial__row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.dial__row label { font-size: 14px; font-weight: 500; }
+.dial__val { display: inline-flex; align-items: baseline; gap: 1px; font-size: 20px; font-weight: 500; font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+.dial__val input { width: 4.2ch; font: inherit; color: inherit; background: transparent; border: 0; border-bottom: 1px solid transparent; padding: 0; text-align: right; -moz-appearance: textfield; }
+.dial__val input:hover, .dial__val input:focus { border-bottom-color: var(--stone-dim); outline: 0; }
+.dial__val input::-webkit-inner-spin-button, .dial__val input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.dial__val .u { color: var(--stone); font-size: 14px; }
+.dial__why { margin: 3px 0 6px; color: var(--stone); font-size: 12.5px; line-height: 1.4; }
+.dial input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 28px; margin: 0; background: transparent; cursor: pointer; --p: 50%; }
+.dial input[type=range]:focus-visible { outline: 1px solid var(--ivory); outline-offset: 4px; }
+.dial input[type=range]::-webkit-slider-runnable-track { height: 2px; background: linear-gradient(90deg, var(--ivory) var(--p), var(--stone-dim) var(--p)); }
+.dial input[type=range]::-moz-range-track { height: 2px; background: var(--stone-dim); }
+.dial input[type=range]::-moz-range-progress { height: 2px; background: var(--ivory); }
+.dial input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; margin-top: -8px; border-radius: 50%; background: var(--black); border: 2px solid var(--ivory); transition: transform .2s var(--ease); }
+.dial input[type=range]::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: var(--black); border: 2px solid var(--ivory); }
+.dial input[type=range]:active::-webkit-slider-thumb { transform: scale(1.25); background: var(--ivory); }
+
+.more { margin-top: 14px; }
+.more > button { display: inline-flex; align-items: center; gap: 10px; padding: 0; background: none; border: 0; cursor: pointer; font-size: 12px; letter-spacing: .24em; text-transform: uppercase; color: var(--stone); min-height: 32px; }
+.more > button::before { content: "+"; display: grid; place-items: center; width: 20px; height: 20px; border: 1px solid var(--stone-dim); font-size: 14px; letter-spacing: 0; color: var(--ivory); transition: transform .3s var(--ease); }
+.more.open > button::before { content: "–"; }
+.more > button:hover { color: var(--ivory); }
+.more__body { margin-top: 6px; }
+.more__body .dial:first-child { border-top: 0; }
+.more__body .dial:last-of-type { border-bottom: 0; }
+
+/* right: the answer */
+.answer { position: relative; display: flex; flex-direction: column; justify-content: center; min-height: 0; padding: clamp(16px, 3vh, 32px) 0; }
+.tank { position: absolute; inset: 0; z-index: -1; overflow: hidden; border-left: 1px solid var(--line); }
+.tank::before { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: var(--fill, 20%); background: linear-gradient(to top, rgba(232, 227, 217, .10), rgba(232, 227, 217, .02)); transition: height .6s var(--ease); }
+.tank::after { content: ""; position: absolute; left: 0; right: 0; bottom: var(--fill, 20%); height: 1px; background: var(--line); transition: bottom .6s var(--ease); }
+.answer > * { padding-left: clamp(20px, 3vw, 44px); }
+.eyebrow { margin: 0; color: var(--stone); font-size: 11px; letter-spacing: .32em; text-transform: uppercase; }
+.big { display: flex; align-items: baseline; gap: 14px; margin: 6px 0 0; flex-wrap: wrap; }
+.big .n { font-size: clamp(88px, 15vw, 196px); font-weight: 600; line-height: .9; letter-spacing: -.045em; font-variant-numeric: tabular-nums; transition: color .4s; }
+.big .n.loss { color: transparent; -webkit-text-stroke: 1.5px var(--ivory); }
+.big .per { color: var(--stone); font-size: clamp(14px, 1.4vw, 18px); max-width: 22ch; line-height: 1.3; }
+.meter { margin-top: clamp(16px, 2.5vh, 28px); max-width: 560px; }
+.meter__bar { position: relative; height: 10px; background: rgba(232, 227, 217, .08); border: 1px solid var(--line); }
+.meter__safe { position: absolute; left: 0; top: 0; bottom: 0; width: 50%; background: repeating-linear-gradient(135deg, rgba(232, 227, 217, .22) 0 2px, transparent 2px 7px); }
+.meter__you { position: absolute; top: -8px; bottom: -8px; left: var(--x, 0%); width: 2px; background: var(--ivory); transition: left .5s var(--ease); }
+.meter__you::after { content: "you"; position: absolute; left: 50%; top: 100%; translate: -50% 4px; font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: var(--ivory); }
+.meter__ticks { display: flex; justify-content: space-between; margin-top: 6px; color: var(--stone); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; }
+.meter__ticks b { color: var(--ivory); font-weight: 500; }
+.meter[hidden] { display: none; }
+.say { margin: clamp(16px, 2.5vh, 28px) 0 0; max-width: 46ch; font-size: clamp(15px, 1.25vw, 18px); line-height: 1.45; }
+.say + .say { margin-top: 8px; color: var(--stone); font-size: 14px; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px 28px; margin: 16px 0 0; padding: 0 0 0 clamp(20px, 3vw, 44px); list-style: none; color: var(--stone); font-size: 13px; }
+.facts b { color: var(--ivory); font-weight: 500; font-variant-numeric: tabular-nums; }
+.facts[hidden] { display: none; }
+.cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; margin-top: clamp(18px, 3vh, 30px); }
+.btn { display: inline-flex; align-items: center; gap: 12px; min-height: 50px; padding: 0 26px; background: var(--ivory); color: var(--black); border: 1px solid var(--ivory); font-size: 15px; font-weight: 500; text-decoration: none; transition: background .3s; }
+.btn:hover { background: #fff; }
+.btn span { transition: transform .3s var(--ease); }
+.btn:hover span { transform: translateX(4px); }
+.cta a.more-link { color: var(--stone); font-size: 13px; text-decoration: none; border-bottom: 1px solid var(--stone-dim); padding-bottom: 1px; }
+.cta a.more-link:hover { color: var(--ivory); border-color: var(--ivory); }
+.fine { margin: 12px 0 0; color: var(--stone-dim); font-size: 11.5px; max-width: 60ch; }
+
+@media (max-width: 880px) {
+  body { overflow: auto; }
+  .app { height: auto; min-height: 100dvh; grid-template-rows: auto auto; }
+  .top small { display: none; }
+  .grid { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .answer { order: -1; position: sticky; top: 0; z-index: 2; background: var(--black); padding: 14px 0 16px; margin: 0 -20px; padding-inline: 20px; border-bottom: 1px solid var(--line); }
+  .answer > * { padding-left: 0; }
+  .tank { display: none; }
+  .big .n { font-size: clamp(64px, 20vw, 110px); }
+  .say { font-size: 15px; }
+  .say + .say, .facts, .cta, .fine { display: none; }
+  .panel { padding: 18px 0 10px; }
+  .panel h1 { font-size: 24px; }
+  .bottom { display: block; }
+  .bottom .cta { margin-top: 20px; }
+  .bottom .btn { width: 100%; justify-content: center; }
+  .mark { right: -30vw; height: 60vh; bottom: auto; top: 46vh; }
+}
+@media (min-width: 881px) { .bottom { display: none; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="app">
+  <svg class="mark" viewBox="-10 -10 912 776" aria-hidden="true"><polygon points="0,0 70,96 280,97 280,632 407,742 407,1"/><polygon points="892,0 463,1 463,756 802,581 582,580 582,97 813,96"/></svg>
+
+  <header class="top">
+    <a class="brand" href="/">
+      <svg viewBox="0 0 892 756" aria-hidden="true"><polygon points="0,0 70,96 280,97 280,632 407,742 407,1"/><polygon points="892,0 463,1 463,756 802,581 582,580 582,97 813,96"/></svg>
+      <span>Twin Citys</span>
+    </a>
+    <small>Free tool · Ad break-even</small>
+    <nav aria-label="Site"><a href="/services/ads/">Ads</a><a href="/#contact">Contact</a></nav>
+  </header>
+
+  <main class="grid">
+    <section class="panel" aria-labelledby="h"><div class="panel__in">
+      <h1 id="h">What can you afford to pay for a lead?</h1>
+      <p class="lede">Three dials about your business. The number on the right is your limit, and it moves as you drag.</p>
+
+      <div class="dial">
+        <div class="dial__row"><label for="ticket">A customer spends</label><span class="dial__val"><span class="u">$</span><input id="ticket" type="number" inputmode="numeric" min="1" value="120" aria-label="Average sale in dollars"></span></div>
+        <p class="dial__why">A typical sale, not your biggest one. For a restaurant that's one table's check; for a plumber, one average job.</p>
+        <input id="r-ticket" type="range" min="10" max="1000" step="5" value="120" aria-label="Average sale slider">
+      </div>
+      <div class="dial">
+        <div class="dial__row"><label for="margin">Profit on each sale</label><span class="dial__val"><input id="margin" type="number" inputmode="numeric" min="1" max="100" value="50" aria-label="Percent of each sale that is profit"><span class="u">%</span></span></div>
+        <p class="dial__why">What's left after food, materials and labor for that sale. Food runs 55–70%. Services run higher.</p>
+        <input id="r-margin" type="range" min="5" max="95" step="1" value="50" aria-label="Profit margin slider">
+      </div>
+      <div class="dial">
+        <div class="dial__row"><label for="close">Leads who end up buying</label><span class="dial__val"><input id="close" type="number" inputmode="numeric" min="1" max="100" value="30" aria-label="Percent of leads who become customers"><span class="u">%</span></span></div>
+        <p class="dial__why">Of ten people who call, message or fill out a form, how many become customers? Three is normal when leads are answered fast.</p>
+        <input id="r-close" type="range" min="5" max="90" step="1" value="30" aria-label="Close rate slider">
+      </div>
+
+      <div class="more" id="more">
+        <button type="button" id="moreBtn" aria-expanded="false" aria-controls="moreBody">Already running ads? Check them</button>
+        <div class="more__body" id="moreBody" hidden>
+          <div class="dial">
+            <div class="dial__row"><label for="spend">Ad spend a month</label><span class="dial__val"><span class="u">$</span><input id="spend" type="number" inputmode="numeric" min="0" value="1500" aria-label="Monthly ad spend in dollars"></span></div>
+            <input id="r-spend" type="range" min="100" max="10000" step="50" value="1500" aria-label="Ad spend slider">
+          </div>
+          <div class="dial">
+            <div class="dial__row"><label for="leads">Leads from ads a month</label><span class="dial__val"><input id="leads" type="number" inputmode="numeric" min="0" value="40" aria-label="Leads a month from ads"></span></div>
+            <p class="dial__why">Calls, messages and forms that came from the ads, not from Google or walk-ins.</p>
+            <input id="r-leads" type="range" min="1" max="300" step="1" value="40" aria-label="Leads slider">
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom">
+        <div class="cta">
+          <a class="btn" href="/start/?service=ads&amp;offer=free">Get a free ad check <span aria-hidden="true">→</span></a>
+          <a class="more-link" href="/missed-calls/">What missed calls cost you →</a>
+        </div>
+        <p class="fine" style="display:block">An estimate from your numbers, not a promise. Ad costs move with the season and what you sell.</p>
+      </div>
+    </div></section>
+
+    <section class="answer" aria-live="polite">
+      <div class="tank" id="tank" aria-hidden="true"></div>
+      <p class="eyebrow" id="eyebrow">Your limit per lead</p>
+      <div class="big"><span class="n" id="big">$18</span><span class="per" id="per">the most one call or message can cost you</span></div>
+
+      <div class="meter" id="meter" hidden>
+        <div class="meter__bar"><div class="meter__safe"></div><div class="meter__you" id="you"></div></div>
+        <div class="meter__ticks"><span>$0</span><span>Comfortable zone</span><span>Limit <b id="limitTick">$18</b></span></div>
+      </div>
+
+      <p class="say" id="say">Pay less than this for each lead and every ad you run makes money. Pay more and you're buying customers at a loss.</p>
+      <p class="say" id="say2">Each paying customer is worth <b id="percust">$60</b> in profit to you, so aim to pay about half your limit per lead. That leaves room for the slow weeks.</p>
+      <ul class="facts" id="facts" hidden>
+        <li>Per lead now <b id="cpl">$0</b></li>
+        <li>Per customer now <b id="cpc">$0</b></li>
+        <li>Customers from ads <b id="custs">0</b>/mo</li>
+        <li id="netRow">Ads net you <b id="net">$0</b>/mo</li>
+      </ul>
+      <div class="cta">
+        <a class="btn" href="/start/?service=ads&amp;offer=free">Get a free ad check <span aria-hidden="true">→</span></a>
+        <a class="more-link" href="/missed-calls/">This assumes every lead gets answered. What missed calls cost you →</a>
+      </div>
+      <p class="fine">An estimate from your numbers, not a promise. Ad costs move with the season and what you sell.</p>
+    </section>
+  </main>
+</div>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var pairs = ['ticket', 'margin', 'close', 'spend', 'leads'];
+  var num = {}, rng = {};
+  pairs.forEach(function (k) { num[k] = $(k); rng[k] = $('r-' + k); });
+  var more = $('more'), moreBtn = $('moreBtn'), moreBody = $('moreBody'), open = false;
+
+  function money(x) { var s = '$' + Math.round(Math.abs(x)).toLocaleString('en-US'); return x < 0 ? '−' + s : s; }
+  function v(el) { var x = parseFloat(el.value); return isFinite(x) && x > 0 ? x : 0; }
+  function paint(r) { var p = (r.value - r.min) / (r.max - r.min) * 100; r.style.setProperty('--p', p + '%'); }
+
+  var shown = {}; var raf;
+  function tween(el, to, fmt) {
+    var from = shown[el.id] == null ? to : shown[el.id]; shown[el.id] = to;
+    if (Math.abs(to - from) < 0.5) { el.textContent = fmt(to); return; }
+    var t0 = performance.now();
+    (function step(t) {
+      var k = Math.min(1, (t - t0) / 380); k = 1 - Math.pow(1 - k, 3);
+      el.textContent = fmt(from + (to - from) * k);
+      if (k < 1) requestAnimationFrame(step);
+    })(t0);
+  }
+
+  function run() {
+    pairs.forEach(function (k) { paint(rng[k]); });
+    var ticket = v(num.ticket), margin = Math.min(v(num.margin), 100) / 100, close = Math.min(v(num.close), 100) / 100;
+    var perCust = ticket * margin, perLead = perCust * close;
+    $('limitTick').textContent = money(perLead);
+    $('tank').style.setProperty('--fill', Math.max(6, Math.min(92, perLead / 150 * 100)) + '%');
+
+    if (!open) {
+      $('eyebrow').textContent = 'Your limit per lead';
+      tween($('big'), perLead, money); $('big').classList.remove('loss');
+      $('per').textContent = 'the most one call or message can cost you';
+      $('meter').hidden = true; $('facts').hidden = true;
+      $('say').innerHTML = 'Pay less than this for each lead and every ad you run makes money. Pay more and you’re buying customers at a loss.';
+      $('say2').hidden = false;
+      $('say2').innerHTML = 'Each paying customer is worth <b>' + money(perCust) + '</b> in profit to you, so aim to pay about half your limit per lead. That leaves room for the slow weeks.';
+      return;
+    }
+    var spend = v(num.spend), leads = v(num.leads);
+    var custs = leads * close, cpl = leads ? spend / leads : 0, cpc = custs ? spend / custs : 0, net = custs * perCust - spend;
+    $('eyebrow').textContent = net >= 0 ? 'Your ads make you' : 'Your ads cost you';
+    tween($('big'), Math.abs(net), money); $('big').classList.toggle('loss', net < 0);
+    $('per').textContent = net >= 0 ? 'in profit every month, after the ad spend' : 'every month, more than they bring in';
+    $('meter').hidden = false;
+    $('you').style.setProperty('--x', Math.min(100, perLead ? cpl / perLead * 100 : 100) + '%');
+    $('facts').hidden = false;
+    tween($('cpl'), cpl, money); tween($('cpc'), cpc, money);
+    $('custs').textContent = custs < 10 ? custs.toFixed(1).replace('.0', '') : Math.round(custs);
+    tween($('net'), net, money);
+    $('say2').hidden = true;
+    if (net < 0) {
+      $('say').innerHTML = 'You’re paying <b>' + money(cpl) + '</b> a lead against a <b>' + money(perLead) + '</b> limit. Usually that means the wrong people are seeing the ad, or the offer isn’t clear enough to act on. Both are fixable.';
+    } else if (cpl > perLead * 0.5) {
+      $('say').innerHTML = 'Profitable, but thin: <b>' + money(cpl) + '</b> a lead against a <b>' + money(perLead) + '</b> limit. One slow month or a price bump and this turns negative. Tighter targeting usually brings the lead cost down.';
+    } else {
+      $('say').innerHTML = 'Your ads pay for themselves: <b>' + money(cpl) + '</b> a lead against a <b>' + money(perLead) + '</b> limit. The question now is how much more you can spend and keep that number.';
+    }
+  }
+
+  pairs.forEach(function (k) {
+    rng[k].addEventListener('input', function () { num[k].value = rng[k].value; run(); });
+    num[k].addEventListener('input', function () { var x = v(num[k]); if (x) { rng[k].value = Math.min(rng[k].max, Math.max(rng[k].min, x)); } run(); });
+  });
+  moreBtn.addEventListener('click', function () {
+    open = !open; moreBody.hidden = !open; moreBtn.setAttribute('aria-expanded', String(open));
+    more.classList.toggle('open', open);
+    run();
+  });
+  run();
+})();
+</script>
+</body>
+</html>
