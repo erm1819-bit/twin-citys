@@ -77,8 +77,10 @@ h1, h2, h3, p { margin: 0; }
 }
 .top a { display: inline-flex; align-items: center; gap: 14px; min-height: 44px; color: var(--ivory); }
 .tcmark { display: block; height: 24px; width: 28px; fill: currentColor; }
-.top span.place { display: flex; align-items: center; gap: 12px; }
-.top span.place::after { content: ""; display: block; width: 30px; height: 1px; background: var(--stone); }
+.top a.place { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; text-decoration: none; transition: color .2s; }
+.top a.place span { transition: transform .3s; }
+.top a.place:hover { color: var(--ivory); }
+.top a.place:hover span { transform: translateX(-4px); }
 
 .card {
   width: min(100%, 760px); position: relative;
@@ -254,7 +256,7 @@ legend { padding: 0; margin-bottom: 4px; }
       <svg class="tcmark" aria-hidden="true"><use href="#tc"></use></svg>
       <span>Twin Citys</span>
     </a>
-    <span class="place">Miami, FL</span>
+    <a class="place" href="https://twincitys.net/"><span aria-hidden="true">←</span> Back to home</a>
   </header>
 
   <main class="card">
