@@ -14,6 +14,8 @@
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="preload" href="playfair-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="inter.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="hero-off.webp" as="image">
+<link rel="preload" href="hero-bulbs.webp" as="image">
 <link rel="preload" href="hero.webp" as="image">
 <script type="application/ld+json">
 {
@@ -98,7 +100,7 @@ h2.serif { font-size: clamp(30px, 4.6vw, 46px); line-height: 1.1; text-wrap: bal
 
 @media (prefers-reduced-motion: no-preference) {
   .js .bulb::after { animation: ignite .5s var(--ez) both, breathe 2.8s ease-in-out infinite alternate; animation-delay: var(--d, 0s), calc(var(--d, 0s) + .5s) }
-  .js .hero-photo { animation: photoIn 1.4s var(--ez) both }
+  .js .hero-media { animation: photoIn 1.4s var(--ez) both }
   .js .hero-card { animation: rise .9s var(--ez) .15s both }
   .js .hero-card > * { animation: rise .8s var(--ez) both }
   .js .hero-card > :nth-child(2) { animation-delay: .25s }
@@ -128,7 +130,11 @@ h2.serif { font-size: clamp(30px, 4.6vw, 46px); line-height: 1.1; text-wrap: bal
 .top .btn { display: none; min-height: 44px; padding: 0 20px; font-size: 12px }
 
 .hero { --ph: clamp(240px, 37.67vw, 720px); overflow: hidden }
-.hero-photo { width: 100%; max-width: none; height: var(--ph); object-fit: cover; object-position: center top; background: #0E1420 }
+.hero-media { --p: 1; position: relative; height: var(--ph); background: #0B0F18; overflow: hidden }
+.hero-media .layer { position: absolute; inset: 0; width: 100%; max-width: none; height: 100%; object-fit: cover; object-position: center top }
+.hero-media .bulbs { mix-blend-mode: screen; opacity: clamp(0, calc(var(--p) / .4), 1) }
+.hero-media .on { opacity: clamp(var(--floor, 0), calc((var(--p) - .35) / .6), 1) }
+@media (max-width: 640px) { .hero-media { --floor: .22 } }
 .hero-card { position: relative; z-index: 1; width: min(880px, calc(100% - 32px)); margin: calc(var(--ph) * -.38) auto 0; background: var(--ivory); border-top: 4px solid var(--gold); box-shadow: 0 22px 50px rgba(30,20,0,.26); padding: clamp(26px, 4.4vw, 44px) clamp(20px, 5vw, 56px) clamp(28px, 4.4vw, 44px); text-align: center }
 .hero-card .eyebrow { font-size: 11.5px; letter-spacing: .16em; margin-top: 18px }
 .hero-card h1 { font-size: clamp(33px, 5.6vw, 56px); line-height: 1.07; margin: 14px 0 14px; text-wrap: balance }
@@ -282,7 +288,11 @@ footer { background: var(--ink); color: var(--ivory); padding: clamp(40px, 6vw, 
 
 <main id="main">
   <div class="hero" id="top">
-    <img class="hero-photo" src="hero.webp" width="2400" height="904" alt="Two-story Miami home at night with warm white lights along every roofline, installed by Maison Exterior Co." fetchpriority="high">
+    <div class="hero-media" id="heroMedia">
+      <img class="layer off" src="hero-off.webp" width="2400" height="904" alt="" aria-hidden="true" fetchpriority="high">
+      <img class="layer bulbs" src="hero-bulbs.webp" width="2400" height="904" alt="" aria-hidden="true">
+      <img class="layer on" src="hero.webp" width="2400" height="904" alt="Two-story Miami home at night with warm white lights along every roofline, installed by Maison Exterior Co.">
+    </div>
     <div class="hero-card">
       <div class="string" aria-hidden="true"></div>
       <p class="eyebrow">Miami-Dade &middot; Homes &amp; businesses</p>
@@ -607,6 +617,24 @@ footer { background: var(--ink); color: var(--ivory); padding: clamp(40px, 6vw, 
       }
     }
     s.insertAdjacentHTML('afterbegin', '<svg class="wire" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none"><path d="' + d + '"/></svg>');
+  }
+
+  var hm = document.getElementById('heroMedia');
+  if (hm && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var auto = 0, sp = 0, ticking = false, phone = matchMedia('(max-width: 640px)').matches;
+    var paint = function () { ticking = false; hm.style.setProperty('--p', Math.max(auto, sp).toFixed(3)); };
+    var read = function () {
+      var r = hm.offsetHeight * (phone ? .6 : .42);
+      sp = Math.min(1, Math.max(0, scrollY / r));
+      if (!ticking) { ticking = true; requestAnimationFrame(paint); }
+    };
+    hm.style.setProperty('--p', '0');
+    read();
+    addEventListener('scroll', read, { passive: true });
+    setTimeout(function () {
+      var t0 = performance.now(), to = .45;
+      (function step(t) { var k = Math.min(1, (t - t0) / 1400); auto = to * (1 - Math.pow(1 - k, 3)); paint(); if (k < 1) requestAnimationFrame(step); })(t0);
+    }, phone ? 900 : 1600);
   }
 
   var els = document.querySelectorAll('[data-reveal]');
