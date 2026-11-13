@@ -14,9 +14,7 @@
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="preload" href="playfair-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="inter.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="hero-off.webp" as="image">
-<link rel="preload" href="hero-bulbs.webp" as="image">
-<link rel="preload" href="hero.webp" as="image">
+<link rel="preload" href="install-entry.webp" as="image">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -71,8 +69,9 @@ h2.serif { font-size: clamp(30px, 4.6vw, 46px); line-height: 1.1; text-wrap: bal
 .btn.gold { background: var(--gold); border-color: var(--gold); color: var(--ink) }
 .btn.line { background: transparent; color: var(--ink) }
 .btn { transition: transform .2s var(--ez), background-color .2s, color .2s, box-shadow .2s }
-.btn:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(60,45,10,.18) }
-.btn:active { transform: none; box-shadow: none }
+.btn { box-shadow: 3px 3px 0 var(--ink) }
+.btn:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--ink) }
+.btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink) }
 .btn.line:hover { background: var(--ink); color: var(--ivory) }
 .btn .arr { display: inline-block; margin-left: 10px; transition: transform .2s var(--ez) }
 .btn:hover .arr { transform: translateX(3px) }
@@ -82,7 +81,7 @@ h2.serif { font-size: clamp(30px, 4.6vw, 46px); line-height: 1.1; text-wrap: bal
 .notice .wide { display: none }
 @media (min-width: 560px) { .notice .wide { display: inline } }
 
-.string { position: absolute; left: 16px; right: 16px; top: 0; height: 30px; pointer-events: none }
+.string { position: absolute; left: -10px; right: -10px; top: 0; height: 34px; pointer-events: none }
 .string svg.wire { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible }
 .string svg.wire path { fill: none; stroke: #2B241A; stroke-width: 1.4; vector-effect: non-scaling-stroke }
 .bulb { position: absolute; top: 0; width: 11px; height: 17px; margin-left: -5.5px; transform: translateY(var(--y, 0px)) rotate(var(--r, 0deg)); transform-origin: 50% 0 }
@@ -100,21 +99,33 @@ h2.serif { font-size: clamp(30px, 4.6vw, 46px); line-height: 1.1; text-wrap: bal
 
 @media (prefers-reduced-motion: no-preference) {
   .js .bulb::after { animation: ignite .5s var(--ez) both, breathe 2.8s ease-in-out infinite alternate; animation-delay: var(--d, 0s), calc(var(--d, 0s) + .5s) }
-  .js .hero-media { animation: photoIn 1.4s var(--ez) both }
-  .js .hero-card { animation: rise .9s var(--ez) .15s both }
-  .js .hero-card > * { animation: rise .8s var(--ez) both }
-  .js .hero-card > :nth-child(2) { animation-delay: .25s }
-  .js .hero-card > :nth-child(3) { animation-delay: .35s }
-  .js .hero-card > :nth-child(4) { animation-delay: .45s }
-  .js .hero-card > :nth-child(5) { animation-delay: .55s }
-  .js [data-reveal] { opacity: 0; transform: translateY(22px); transition: opacity .8s var(--ez), transform .8s var(--ez); transition-delay: var(--rd, 0s) }
+  .js .hero-copy > * { animation: rise .8s var(--ez) both }
+  .js .hero-copy > :nth-child(2) { animation-delay: .1s }
+  .js .hero-copy > :nth-child(3) { animation-delay: .2s }
+  .js .hero-copy > :nth-child(4) { animation-delay: .3s }
+  .js .hero-copy > :nth-child(5) { animation-delay: .4s }
+  .js .shot.a { animation: dropA .9s var(--ez) .25s both }
+  .js .shot.b { animation: dropB .9s var(--ez) .4s both }
+  .js .badge { animation: pop .6s var(--ez) .9s both }
+  .js .vs .usual[data-reveal] { transform: translateX(-36px) rotate(-1.5deg) }
+  .js .vs .ours[data-reveal] { transform: translateX(36px) rotate(1.5deg) }
+  .js .vs [data-reveal].in { transform: rotate(var(--rot, 0deg)) }
+  .flow .trail { stroke-dasharray: 90 1400; animation: flow 11s linear infinite }
+  .flow .trail:nth-child(2n) { animation-duration: 15s; animation-delay: -4s }
+  .flow .trail:nth-child(3n) { animation-duration: 19s; animation-delay: -9s }
+  .js .flow { opacity: 0; transition: opacity 1.6s ease }
+  .js .flow.in { opacity: 1 }
+  .js [data-reveal] { opacity: 0; transform: translateY(30px) rotate(-.6deg); transition: opacity .8s var(--ez), transform .8s var(--ez); transition-delay: var(--rd, 0s) }
   .js [data-reveal].in { opacity: 1; transform: none }
   .strip ul { animation: drift 38s linear infinite }
   .strip:hover ul { animation-play-state: paused }
 }
 @keyframes ignite { 0% { filter: brightness(.55) saturate(.4) drop-shadow(0 0 0 transparent) } 45% { filter: brightness(1.25) drop-shadow(0 0 9px rgba(244,190,80,1)) } 100% { filter: drop-shadow(0 0 4px rgba(244,190,80,.75)) } }
 @keyframes breathe { from { filter: drop-shadow(0 0 3px rgba(244,190,80,.6)) } to { filter: drop-shadow(0 0 8px rgba(244,190,80,.95)) brightness(1.06) } }
-@keyframes photoIn { from { opacity: 0; transform: scale(1.04) } to { opacity: 1; transform: none } }
+@keyframes dropA { from { opacity: 0; transform: translateY(-30px) rotate(-6deg) } to { opacity: 1; transform: rotate(-2.5deg) } }
+@keyframes dropB { from { opacity: 0; transform: translateY(-30px) rotate(7deg) } to { opacity: 1; transform: rotate(2.5deg) } }
+@keyframes pop { from { opacity: 0; transform: scale(.8) } to { opacity: 1; transform: none } }
+@keyframes flow { to { stroke-dashoffset: -1490 } }
 @keyframes rise { from { opacity: 0; transform: translateY(18px) } to { opacity: 1; transform: none } }
 @keyframes drift { to { transform: translateX(-50%) } }
 
@@ -129,17 +140,24 @@ h2.serif { font-size: clamp(30px, 4.6vw, 46px); line-height: 1.1; text-wrap: bal
 .top .tel { display: none; margin-left: auto; font-weight: 600; font-size: 15px; text-decoration: none; white-space: nowrap }
 .top .btn { display: none; min-height: 44px; padding: 0 20px; font-size: 12px }
 
-.hero { --ph: clamp(240px, 37.67vw, 720px); overflow: hidden }
-.hero-media { --p: 1; position: relative; height: var(--ph); background: #0B0F18; overflow: hidden }
-.hero-media .layer { position: absolute; inset: 0; width: 100%; max-width: none; height: 100%; object-fit: cover; object-position: center top }
-.hero-media .bulbs { mix-blend-mode: screen; opacity: clamp(0, calc(var(--p) / .4), 1) }
-.hero-media .on { opacity: clamp(var(--floor, 0), calc((var(--p) - .35) / .6), 1) }
-@media (max-width: 640px) { .hero-media { --floor: .22 } }
-.hero-card { position: relative; z-index: 1; width: min(880px, calc(100% - 32px)); margin: calc(var(--ph) * -.38) auto 0; background: var(--ivory); border-top: 4px solid var(--gold); box-shadow: 0 22px 50px rgba(30,20,0,.26); padding: clamp(26px, 4.4vw, 44px) clamp(20px, 5vw, 56px) clamp(28px, 4.4vw, 44px); text-align: center }
-.hero-card .eyebrow { font-size: 11.5px; letter-spacing: .16em; margin-top: 18px }
-.hero-card h1 { font-size: clamp(33px, 5.6vw, 56px); line-height: 1.07; margin: 14px 0 14px; text-wrap: balance }
-.hero-card p.sub { color: var(--soft); font-size: clamp(16.5px, 1.6vw, 18.5px) }
-.hero-card .acts { display: grid; gap: 10px; margin-top: 24px }
+.hero { position: relative; padding: clamp(46px, 6vw, 72px) 0 0; overflow: hidden }
+.swag { position: absolute; left: 0; right: 0; top: 0; height: 34px }
+.hero-grid { display: grid; gap: 40px; align-items: center }
+.hero-copy h1 { font-size: clamp(38px, 6vw, 66px); line-height: 1.04; margin: 16px 0 18px; text-wrap: balance; letter-spacing: -.012em }
+.hero-copy h1 em { font-style: italic; color: var(--gold-deep) }
+.hero-copy .sub { color: var(--soft); font-size: clamp(16.5px, 1.6vw, 19px); max-width: 52ch }
+.hero-copy .acts { display: grid; gap: 12px; margin-top: 28px }
+.ticks { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 20px; font-size: 14.5px; color: var(--soft) }
+.ticks li { display: flex; align-items: center; gap: 8px }
+.ticks li::before { content: ""; width: 7px; height: 7px; background: var(--gold); transform: rotate(45deg) }
+.shots { position: relative; aspect-ratio: 1 / .84 }
+.shot { position: absolute; margin: 0; background: #fff; padding: 8px; border: 1.5px solid var(--ink); box-shadow: 6px 6px 0 var(--ink) }
+.shot img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover }
+.shot.a { width: 64%; left: 0; top: 0; transform: rotate(-2.5deg) }
+.shot.b { width: 56%; right: 0; top: 18%; transform: rotate(2.5deg) }
+.badge { position: absolute; left: 6%; bottom: 0; margin: 0; display: flex; align-items: center; gap: 12px; padding: 10px 16px; background: var(--ivory); border: 1.5px solid var(--ink); box-shadow: 4px 4px 0 var(--ink); z-index: 2 }
+.badge b { font-family: var(--serif); font-weight: 400; font-size: 28px; color: var(--gold-deep); line-height: 1 }
+.badge span { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; line-height: 1.35 }
 
 .quick { display: grid; gap: 10px; margin-top: clamp(28px, 4vw, 44px) }
 .quick a { display: block; padding: 18px 20px; background: var(--paper); border: 1px solid var(--line); text-decoration: none }
@@ -158,6 +176,42 @@ section { padding: clamp(56px, 8vw, 104px) 0 0 }
 .light p { color: var(--soft) }
 .light a { justify-self: start; font-weight: 600; text-underline-offset: 5px; margin-top: 4px }
 
+.dark { position: relative; background: #14110C; color: var(--ivory); margin-top: clamp(56px, 8vw, 104px); padding: clamp(56px, 8vw, 104px) 0; overflow: hidden }
+.dark .eyebrow { color: var(--gold) }
+.dark .lead { color: #CFC6B4 }
+.dark section, .dark .wrap { position: relative }
+.flow { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none }
+.flow path { fill: none; stroke: url(#gl); stroke-width: 1.2; vector-effect: non-scaling-stroke }
+.flow .base { opacity: .22 }
+.flow .trail { stroke-width: 2.2; filter: drop-shadow(0 0 6px rgba(232,190,100,.9)) }
+.wide-shot { position: relative; margin: 0 0 clamp(26px, 4vw, 40px); border: 1px solid #3A3226; overflow: hidden; aspect-ratio: 2400 / 610 }
+.wide-shot img { width: 100%; height: auto; display: block }
+.dark .light .body { background: #1C1812; border-color: #3A3226 }
+.dark .light p { color: #CFC6B4 }
+.dark .light a { color: var(--gold) }
+.vs { display: grid; gap: 22px; align-items: center }
+.vs .usual { --rot: -1deg; padding: 24px; border: 1.5px dashed #A79B83; background: rgba(255,255,255,.35); transform: rotate(var(--rot)) }
+.vs .ours { --rot: 1deg; padding: 28px; background: var(--paper); border: 1.5px solid var(--ink); box-shadow: 7px 7px 0 var(--ink); transform: rotate(var(--rot)) }
+.vs h3 { font-family: var(--serif); font-weight: 400; font-size: 24px; line-height: 1.2; margin: 8px 0 14px }
+.vs .tag { display: inline-block; font-size: 11.5px; letter-spacing: .18em; text-transform: uppercase; font-weight: 700 }
+.vs .ours .tag { background: var(--ink); color: var(--gold); padding: 5px 10px }
+.vs .usual .tag { color: var(--mute) }
+.vs ul { display: grid; gap: 12px }
+.vs li { display: grid; grid-template-columns: 20px 1fr; gap: 10px; font-size: 15.5px; line-height: 1.45 }
+.vs li::before { content: "\2715"; font-size: 12px; color: var(--mute); padding-top: 2px }
+.vs .ours li::before { content: "\2713"; color: var(--ink); font-weight: 700; font-size: 14px }
+.vs .usual li { color: var(--mute) }
+.vs .instead { justify-self: center; font-family: var(--serif); font-style: italic; font-size: 20px; color: var(--gold-deep); background: var(--ivory); border: 1.5px solid var(--ink); border-radius: 40px; padding: 4px 18px; box-shadow: 3px 3px 0 var(--ink) }
+.faq { display: grid; border-top: 1px solid var(--ink); max-width: 860px }
+.faq details { border-bottom: 1px solid var(--line) }
+.faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: 16px; padding: 20px 0; font-family: var(--serif); font-size: clamp(20px, 2.2vw, 24px); line-height: 1.25 }
+.faq summary::-webkit-details-marker { display: none }
+.faq summary::after { content: "+"; font-family: var(--sans); font-size: 26px; line-height: 1; color: var(--gold-deep); transition: transform .3s var(--ez) }
+.faq details[open] summary::after { transform: rotate(45deg) }
+.faq details p { color: var(--soft); padding: 0 0 22px; max-width: 64ch }
+.pill { position: fixed; right: 22px; bottom: 22px; z-index: 25; display: none; align-items: center; gap: 10px; padding: 13px 20px; background: var(--gold); color: var(--ink); border: 1.5px solid var(--ink); box-shadow: 3px 3px 0 var(--ink); border-radius: 40px; font-weight: 700; font-size: 14.5px; text-decoration: none; transition: transform .2s var(--ez), box-shadow .2s }
+.pill:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--ink) }
+.pill i { width: 9px; height: 9px; border-radius: 50%; background: #1F7A3F; box-shadow: 0 0 0 3px rgba(31,122,63,.2) }
 .care { display: grid; border-top: 1px solid var(--ink) }
 .care li { display: grid; gap: 2px; padding: 18px 0; border-bottom: 1px solid var(--line) }
 .care b { font-family: var(--serif); font-weight: 400; font-size: 23px; line-height: 1.2 }
@@ -232,8 +286,6 @@ footer { background: var(--ink); color: var(--ivory); padding: clamp(40px, 6vw, 
 
 @media (min-width: 560px) {
   .top .tel { display: block }
-  .hero-card .acts { display: flex; justify-content: center; flex-wrap: wrap }
-  .hero-card .eyebrow { font-size: 12.5px; letter-spacing: .24em }
   .quick { grid-template-columns: 1fr 1fr }
   .care { grid-template-columns: 1fr 1fr; column-gap: 48px }
   .areas li { font-size: 16px }
@@ -247,6 +299,10 @@ footer { background: var(--ink); color: var(--ivory); padding: clamp(40px, 6vw, 
   .top .tel { margin-left: 8px }
   .top .btn { display: inline-flex }
   .lights { gap: 22px }
+  .hero-grid { grid-template-columns: 1.05fr 1fr; gap: 56px }
+  .hero-copy .acts { display: flex; flex-wrap: wrap }
+  .vs { grid-template-columns: 1fr auto 1.15fr; gap: 26px }
+  .pill { display: inline-flex }
   .light { display: grid; grid-template-rows: auto 1fr; background: var(--paper); border: 1px solid var(--line) }
   .light img { order: 0; aspect-ratio: 4 / 3 }
   .light .body { grid-column: auto; background: none; border: 0 }
@@ -279,6 +335,7 @@ footer { background: var(--ink); color: var(--ivory); padding: clamp(40px, 6vw, 
     <nav aria-label="Main">
       <a href="#lighting">Lighting</a>
       <a href="#care">Exterior care</a>
+      <a href="#faq">FAQ</a>
       <a href="#areas">Service areas</a>
     </nav>
     <a class="tel" href="tel:+17867526442">(786) 752-6442</a>
@@ -288,19 +345,22 @@ footer { background: var(--ink); color: var(--ivory); padding: clamp(40px, 6vw, 
 
 <main id="main">
   <div class="hero" id="top">
-    <div class="hero-media" id="heroMedia">
-      <img class="layer off" src="hero-off.webp" width="2400" height="904" alt="" aria-hidden="true" fetchpriority="high">
-      <img class="layer bulbs" src="hero-bulbs.webp" width="2400" height="904" alt="" aria-hidden="true">
-      <img class="layer on" src="hero.webp" width="2400" height="904" alt="Two-story Miami home at night with warm white lights along every roofline, installed by Maison Exterior Co.">
-    </div>
-    <div class="hero-card">
-      <div class="string" aria-hidden="true"></div>
-      <p class="eyebrow">Miami-Dade &middot; Homes &amp; businesses</p>
-      <h1 class="serif">Permanent lights. Holiday lights. One family-owned crew.</h1>
-      <p class="sub">Tell us about your home and get a free quote within 24 hours.</p>
-      <div class="acts">
-        <a class="btn gold" href="#quote">Get my free quote<span class="arr" aria-hidden="true">&rarr;</span></a>
-        <a class="btn line" href="tel:+17867526442">Call (786) 752-6442</a>
+    <div class="swag" aria-hidden="true"><div class="string"></div></div>
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Permanent &amp; holiday lighting &middot; Miami-Dade</p>
+        <h1 class="serif">Your home, lit for the holidays <em>and every night after.</em></h1>
+        <p class="sub">Family-owned lighting and exterior care for homes and businesses. Tell us about your home and get a free quote within 24 hours.</p>
+        <div class="acts">
+          <a class="btn gold" href="#quote">Get my free quote<span class="arr" aria-hidden="true">&rarr;</span></a>
+          <a class="btn line" href="tel:+17867526442">Call (786) 752-6442</a>
+        </div>
+        <ul class="ticks"><li>Free quote</li><li>We look at your roofline first</li><li>Homes &amp; businesses</li></ul>
+      </div>
+      <div class="shots">
+        <figure class="shot a"><img src="install-entry.webp" width="1100" height="1085" alt="Arched entry and roofline of a Miami home outlined in warm white lights by Maison Exterior Co." fetchpriority="high"></figure>
+        <figure class="shot b"><img src="install-garage.webp" width="1100" height="1085" alt="Garage and eaves trimmed in warm white lights, with a palm tree beside the driveway."></figure>
+        <p class="badge"><b>24 hr</b><span>Free quote<br>turnaround</span></p>
       </div>
     </div>
     <div class="strip" aria-label="Why Maison"><ul><li>Family-owned</li><li>Homes &amp; businesses</li><li>Free quote within 24 hours</li><li>Permanent &amp; holiday lighting</li><li>Full exterior care</li><li>13 Miami-Dade neighborhoods</li><li aria-hidden="true">Family-owned</li><li aria-hidden="true">Homes &amp; businesses</li><li aria-hidden="true">Free quote within 24 hours</li><li aria-hidden="true">Permanent &amp; holiday lighting</li><li aria-hidden="true">Full exterior care</li><li aria-hidden="true">13 Miami-Dade neighborhoods</li></ul></div>
@@ -314,13 +374,19 @@ footer { background: var(--ink); color: var(--ivory); padding: clamp(40px, 6vw, 
     </div>
   </div>
 
-  <section id="lighting">
+  <div class="dark" id="lighting">
+    <svg class="flow" data-reveal-flow viewBox="0 0 1440 900" preserveAspectRatio="none" aria-hidden="true">
+      <defs><linearGradient id="gl" x1="0" x2="1"><stop offset="0" stop-color="#C6A558" stop-opacity="0"/><stop offset=".5" stop-color="#F3D58A"/><stop offset="1" stop-color="#C6A558" stop-opacity="0"/></linearGradient></defs>
+      <g class="base"><path d="M-40 640 C 300 420, 620 760, 980 470 S 1380 300, 1500 360"/><path d="M-40 700 C 340 500, 640 820, 1000 540 S 1400 380, 1500 430"/><path d="M-40 580 C 260 360, 600 700, 960 410 S 1360 240, 1500 300"/></g>
+      <g><path class="trail" d="M-40 640 C 300 420, 620 760, 980 470 S 1380 300, 1500 360"/><path class="trail" d="M-40 700 C 340 500, 640 820, 1000 540 S 1400 380, 1500 430"/><path class="trail" d="M-40 580 C 260 360, 600 700, 960 410 S 1360 240, 1500 300"/></g>
+    </svg>
     <div class="wrap">
       <div class="head" data-reveal>
         <p class="eyebrow">Lighting</p>
         <h2 class="serif">Two ways to light the house.</h2>
         <p class="lead">Keep them up all year, or just for the season. Either way, you stay off the ladder.</p>
       </div>
+      <figure class="wide-shot" data-reveal><img src="hero.webp" width="2400" height="904" loading="lazy" alt="Two-story Miami home at night with warm white lights along every roofline, installed by Maison Exterior Co."></figure>
       <div class="lights">
         <article class="light" data-reveal>
           <img src="install-entry.webp" width="1100" height="1085" loading="lazy" alt="Front entry and roofline of a home outlined in warm white lights at night.">
@@ -338,6 +404,38 @@ footer { background: var(--ink); color: var(--ivory); padding: clamp(40px, 6vw, 
             <a href="#quote" data-pick="Holiday light installation">Get a quote for holiday lights</a>
           </div>
         </article>
+      </div>
+    </div>
+  </div>
+
+  <section id="why">
+    <div class="wrap">
+      <div class="head" data-reveal>
+        <p class="eyebrow">Why Maison</p>
+        <h2 class="serif">One call for the whole outside of your home.</h2>
+      </div>
+      <div class="vs">
+        <div class="usual" data-reveal>
+          <span class="tag">How it usually goes</span>
+          <h3>Three companies, three schedules.</h3>
+          <ul>
+            <li>One crew for the lights, another for washing, another for windows.</li>
+            <li>A price over the phone before anyone has looked at your house.</li>
+            <li>Days of waiting to hear back.</li>
+            <li>Back on the ladder every December.</li>
+          </ul>
+        </div>
+        <p class="instead" aria-hidden="true">instead</p>
+        <div class="ours" data-reveal>
+          <span class="tag">How it goes with Maison</span>
+          <h3>One family-owned crew that answers.</h3>
+          <ul>
+            <li><span><b>Lighting and exterior care</b> from the same people, for homes and businesses.</span></li>
+            <li><span><b>We look at your roofline</b> from your address before we quote.</span></li>
+            <li><span><b>Your free quote within 24 hours</b>, by phone or email.</span></li>
+            <li><span><b>You pick the timing:</b> as soon as possible, before Thanksgiving or before Christmas.</span></li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
@@ -395,6 +493,22 @@ footer { background: var(--ink); color: var(--ivory); padding: clamp(40px, 6vw, 
       <ul class="areas" data-reveal>
         <li>Palmetto Bay</li><li>Cutler Bay</li><li>Pinecrest</li><li>Homestead</li><li>Kendall</li><li>Doral</li><li>Coral Gables</li><li>South Miami</li><li>Miami Lakes</li><li>Hialeah</li><li>Hialeah Gardens</li><li>Miami Gardens</li><li>Westchester</li>
       </ul>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="head" data-reveal>
+        <p class="eyebrow">Questions</p>
+        <h2 class="serif">A few quick answers.</h2>
+      </div>
+      <div class="faq" data-reveal>
+        <details><summary>What's the difference between permanent and holiday lighting?</summary><p>Permanent LED lights are fitted along your roofline and stay up all year. You control them from an app on your phone. Holiday lighting goes up for the season only.</p></details>
+        <details><summary>How fast will I get a quote?</summary><p>Within 24 hours. Send us your address and we look at your roofline before we quote, so the price fits your home.</p></details>
+        <details><summary>Do you work on businesses too?</summary><p>Yes. We work on homes and commercial properties across Miami-Dade, and we can set up ongoing maintenance for both.</p></details>
+        <details><summary>Do you only do lights?</summary><p>No. We also do pressure washing, home softwash, paver cleaning and sealing, window cleaning and gutter cleaning, plus landscaping and pool cleaning.</p></details>
+        <details><summary>Which areas do you serve?</summary><p>Palmetto Bay, Cutler Bay, Pinecrest, Homestead, Kendall, Doral, Coral Gables, South Miami, Miami Lakes, Hialeah, Hialeah Gardens, Miami Gardens and Westchester.</p></details>
+      </div>
     </div>
   </section>
 
@@ -533,6 +647,8 @@ footer { background: var(--ink); color: var(--ivory); padding: clamp(40px, 6vw, 
   </div>
 </footer>
 
+<a class="pill" href="sms:+17867526442"><i aria-hidden="true"></i>Text us</a>
+
 <div class="dock">
   <a class="btn gold" href="#quote">Free quote</a>
   <a class="btn line" href="tel:+17867526442">Call</a>
@@ -602,7 +718,7 @@ footer { background: var(--ink); color: var(--ivory); padding: clamp(40px, 6vw, 
 (function () {
   var s = document.querySelector('.string');
   if (s) {
-    var W = 1000, H = 30, spans = matchMedia('(min-width: 640px)').matches ? 6 : 4, per = 4, d = '', n = 0;
+    var W = 1000, H = 30, spans = matchMedia('(min-width: 900px)').matches ? 9 : matchMedia('(min-width: 640px)').matches ? 6 : 4, per = 4, d = '', n = 0;
     for (var k = 0; k < spans; k++) {
       var x0 = k * W / spans, x1 = (k + 1) * W / spans;
       d += (k ? ' ' : 'M0 1 ') + 'Q' + ((x0 + x1) / 2) + ' ' + (H * .9) + ' ' + x1 + ' 1';
@@ -619,29 +735,12 @@ footer { background: var(--ink); color: var(--ivory); padding: clamp(40px, 6vw, 
     s.insertAdjacentHTML('afterbegin', '<svg class="wire" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none"><path d="' + d + '"/></svg>');
   }
 
-  var hm = document.getElementById('heroMedia');
-  if (hm && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    var auto = 0, sp = 0, ticking = false, phone = matchMedia('(max-width: 640px)').matches;
-    var paint = function () { ticking = false; hm.style.setProperty('--p', Math.max(auto, sp).toFixed(3)); };
-    var read = function () {
-      var r = hm.offsetHeight * (phone ? .6 : .42);
-      sp = Math.min(1, Math.max(0, scrollY / r));
-      if (!ticking) { ticking = true; requestAnimationFrame(paint); }
-    };
-    hm.style.setProperty('--p', '0');
-    read();
-    addEventListener('scroll', read, { passive: true });
-    setTimeout(function () {
-      var t0 = performance.now(), to = .45;
-      (function step(t) { var k = Math.min(1, (t - t0) / 1400); auto = to * (1 - Math.pow(1 - k, 3)); paint(); if (k < 1) requestAnimationFrame(step); })(t0);
-    }, phone ? 900 : 1600);
-  }
-
-  var els = document.querySelectorAll('[data-reveal]');
+  var els = document.querySelectorAll('[data-reveal], [data-reveal-flow]');
   if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) {
     els.forEach(function (e) { e.classList.add('in'); });
     return;
   }
+  document.querySelectorAll('.vs [data-reveal]').forEach(function (e, i) { e.style.setProperty('--rd', (i * .18) + 's'); });
   document.querySelectorAll('.lights [data-reveal]').forEach(function (e, i) { e.style.setProperty('--rd', (i * .12) + 's'); });
   var io = new IntersectionObserver(function (es) {
     es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
