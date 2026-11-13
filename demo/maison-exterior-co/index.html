@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<script>document.documentElement.classList.add("js")</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Maison Exterior Co. | Permanent LED &amp; Holiday Lighting in Miami-Dade</title>
@@ -44,6 +45,7 @@
   --serif: "Playfair Display", "Iowan Old Style", Georgia, serif;
   --sans: "Inter", -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   --pad: clamp(16px, 4vw, 48px);
+  --ez: cubic-bezier(.2,.7,.2,1);
 }
 *, *::before, *::after { box-sizing: border-box }
 html { scroll-behavior: smooth; scroll-padding-top: 84px; -webkit-text-size-adjust: 100% }
@@ -66,8 +68,53 @@ h2.serif { font-size: clamp(30px, 4.6vw, 46px); line-height: 1.1; text-wrap: bal
 .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 54px; padding: 0 28px; border: 1.5px solid var(--ink); background: var(--ink); color: var(--ivory); font: 600 13.5px var(--sans); letter-spacing: .18em; text-transform: uppercase; text-decoration: none; cursor: pointer; text-align: center }
 .btn.gold { background: var(--gold); border-color: var(--gold); color: var(--ink) }
 .btn.line { background: transparent; color: var(--ink) }
-.btn:hover { filter: brightness(1.08) }
-.btn.line:hover { background: var(--ink); color: var(--ivory); filter: none }
+.btn { transition: transform .2s var(--ez), background-color .2s, color .2s, box-shadow .2s }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(60,45,10,.18) }
+.btn:active { transform: none; box-shadow: none }
+.btn.line:hover { background: var(--ink); color: var(--ivory) }
+.btn .arr { display: inline-block; margin-left: 10px; transition: transform .2s var(--ez) }
+.btn:hover .arr { transform: translateX(3px) }
+
+.notice { background: var(--ink); color: var(--ivory); text-align: center; font-size: 13.5px; padding: 9px 16px; line-height: 1.4 }
+.notice b { color: var(--gold); font-weight: 600 }
+.notice .wide { display: none }
+@media (min-width: 560px) { .notice .wide { display: inline } }
+
+.string { position: absolute; left: 16px; right: 16px; top: 0; height: 30px; pointer-events: none }
+.string svg.wire { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible }
+.string svg.wire path { fill: none; stroke: #2B241A; stroke-width: 1.4; vector-effect: non-scaling-stroke }
+.bulb { position: absolute; top: 0; width: 11px; height: 17px; margin-left: -5.5px; transform: translateY(var(--y, 0px)) rotate(var(--r, 0deg)); transform-origin: 50% 0 }
+.bulb::before { content: ""; position: absolute; left: 3px; top: 0; width: 5px; height: 5px; background: var(--ivory); border: 1.3px solid #2B241A; border-radius: 1.5px; z-index: 1 }
+.bulb::after { content: ""; position: absolute; left: 0; top: 4px; width: 11px; height: 13px; box-sizing: border-box; border: 1.3px solid #2B241A; border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%; background: radial-gradient(circle at 35% 35%, #FFF6D8 0 18%, #F4C95D 55%, #D9A63C 100%); filter: drop-shadow(0 0 4px rgba(244,190,80,.75)) }
+
+.strip { margin-top: clamp(22px, 3vw, 34px); border-block: 1px solid var(--line); overflow: hidden }
+.strip ul { display: flex; gap: 0; width: max-content; padding: 13px 0 }
+.strip li { display: flex; align-items: center; gap: 18px; padding-right: 18px; font-size: 12.5px; letter-spacing: .18em; text-transform: uppercase; font-weight: 600; color: var(--soft); white-space: nowrap }
+.strip li::after { content: ""; width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg) }
+
+.light img, .about img { transition: transform .6s var(--ez) }
+.light { overflow: hidden }
+@media (hover: hover) { .light:hover img { transform: scale(1.035) } }
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .bulb::after { animation: ignite .5s var(--ez) both, breathe 2.8s ease-in-out infinite alternate; animation-delay: var(--d, 0s), calc(var(--d, 0s) + .5s) }
+  .js .hero-photo { animation: photoIn 1.4s var(--ez) both }
+  .js .hero-card { animation: rise .9s var(--ez) .15s both }
+  .js .hero-card > * { animation: rise .8s var(--ez) both }
+  .js .hero-card > :nth-child(2) { animation-delay: .25s }
+  .js .hero-card > :nth-child(3) { animation-delay: .35s }
+  .js .hero-card > :nth-child(4) { animation-delay: .45s }
+  .js .hero-card > :nth-child(5) { animation-delay: .55s }
+  .js [data-reveal] { opacity: 0; transform: translateY(22px); transition: opacity .8s var(--ez), transform .8s var(--ez); transition-delay: var(--rd, 0s) }
+  .js [data-reveal].in { opacity: 1; transform: none }
+  .strip ul { animation: drift 38s linear infinite }
+  .strip:hover ul { animation-play-state: paused }
+}
+@keyframes ignite { 0% { filter: brightness(.55) saturate(.4) drop-shadow(0 0 0 transparent) } 45% { filter: brightness(1.25) drop-shadow(0 0 9px rgba(244,190,80,1)) } 100% { filter: drop-shadow(0 0 4px rgba(244,190,80,.75)) } }
+@keyframes breathe { from { filter: drop-shadow(0 0 3px rgba(244,190,80,.6)) } to { filter: drop-shadow(0 0 8px rgba(244,190,80,.95)) brightness(1.06) } }
+@keyframes photoIn { from { opacity: 0; transform: scale(1.04) } to { opacity: 1; transform: none } }
+@keyframes rise { from { opacity: 0; transform: translateY(18px) } to { opacity: 1; transform: none } }
+@keyframes drift { to { transform: translateX(-50%) } }
 
 .top { position: sticky; top: 0; z-index: 20; background: rgba(247,242,232,.94); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line) }
 .top .wrap { display: flex; align-items: center; gap: 12px; min-height: 68px }
@@ -80,10 +127,10 @@ h2.serif { font-size: clamp(30px, 4.6vw, 46px); line-height: 1.1; text-wrap: bal
 .top .tel { display: none; margin-left: auto; font-weight: 600; font-size: 15px; text-decoration: none; white-space: nowrap }
 .top .btn { display: none; min-height: 44px; padding: 0 20px; font-size: 12px }
 
-.hero { --ph: clamp(240px, 37.67vw, 720px) }
+.hero { --ph: clamp(240px, 37.67vw, 720px); overflow: hidden }
 .hero-photo { width: 100%; max-width: none; height: var(--ph); object-fit: cover; object-position: center top; background: #0E1420 }
-.hero-card { position: relative; width: min(880px, calc(100% - 32px)); margin: calc(var(--ph) * -.38) auto 0; background: var(--ivory); border-top: 4px solid var(--gold); box-shadow: 0 22px 50px rgba(30,20,0,.26); padding: clamp(26px, 4.4vw, 44px) clamp(20px, 5vw, 56px) clamp(28px, 4.4vw, 44px); text-align: center }
-.hero-card .eyebrow { font-size: 11.5px; letter-spacing: .16em }
+.hero-card { position: relative; z-index: 1; width: min(880px, calc(100% - 32px)); margin: calc(var(--ph) * -.38) auto 0; background: var(--ivory); border-top: 4px solid var(--gold); box-shadow: 0 22px 50px rgba(30,20,0,.26); padding: clamp(26px, 4.4vw, 44px) clamp(20px, 5vw, 56px) clamp(28px, 4.4vw, 44px); text-align: center }
+.hero-card .eyebrow { font-size: 11.5px; letter-spacing: .16em; margin-top: 18px }
 .hero-card h1 { font-size: clamp(33px, 5.6vw, 56px); line-height: 1.07; margin: 14px 0 14px; text-wrap: balance }
 .hero-card p.sub { color: var(--soft); font-size: clamp(16.5px, 1.6vw, 18.5px) }
 .hero-card .acts { display: grid; gap: 10px; margin-top: 24px }
@@ -174,7 +221,7 @@ footer { background: var(--ink); color: var(--ivory); padding: clamp(40px, 6vw, 
 .foot a { text-underline-offset: 4px }
 .legal { margin-top: 36px; padding-top: 20px; border-top: 1px solid #36312A; display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; font-size: 13.5px; color: #A39B8A }
 
-.dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; display: grid; grid-template-columns: 1.5fr 1fr; gap: 8px; padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px)); background: rgba(247,242,232,.96); border-top: 1px solid var(--line); backdrop-filter: blur(8px) }
+.dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 8px; padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px)); background: rgba(247,242,232,.96); border-top: 1px solid var(--line); backdrop-filter: blur(8px) }
 .dock .btn { min-height: 50px; padding: 0 10px; font-size: 12.5px; letter-spacing: .14em }
 
 @media (min-width: 560px) {
@@ -215,6 +262,7 @@ footer { background: var(--ink); color: var(--ivory); padding: clamp(40px, 6vw, 
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
+<p class="notice"><b>Now booking holiday light installs.</b><span class="wide"> Free quote within 24 hours.</span></p>
 
 <header class="top">
   <div class="wrap">
@@ -236,16 +284,18 @@ footer { background: var(--ink); color: var(--ivory); padding: clamp(40px, 6vw, 
   <div class="hero" id="top">
     <img class="hero-photo" src="hero.webp" width="2400" height="904" alt="Two-story Miami home at night with warm white lights along every roofline, installed by Maison Exterior Co." fetchpriority="high">
     <div class="hero-card">
+      <div class="string" aria-hidden="true"></div>
       <p class="eyebrow">Miami-Dade &middot; Homes &amp; businesses</p>
       <h1 class="serif">Permanent lights. Holiday lights. One family-owned crew.</h1>
       <p class="sub">Tell us about your home and get a free quote within 24 hours.</p>
       <div class="acts">
-        <a class="btn gold" href="#quote">Get my free quote</a>
+        <a class="btn gold" href="#quote">Get my free quote<span class="arr" aria-hidden="true">&rarr;</span></a>
         <a class="btn line" href="tel:+17867526442">Call (786) 752-6442</a>
       </div>
     </div>
+    <div class="strip" aria-label="Why Maison"><ul><li>Family-owned</li><li>Homes &amp; businesses</li><li>Free quote within 24 hours</li><li>Permanent &amp; holiday lighting</li><li>Full exterior care</li><li>13 Miami-Dade neighborhoods</li><li aria-hidden="true">Family-owned</li><li aria-hidden="true">Homes &amp; businesses</li><li aria-hidden="true">Free quote within 24 hours</li><li aria-hidden="true">Permanent &amp; holiday lighting</li><li aria-hidden="true">Full exterior care</li><li aria-hidden="true">13 Miami-Dade neighborhoods</li></ul></div>
     <div class="wrap">
-      <div class="quick">
+      <div class="quick" data-reveal>
         <a href="#lighting"><b>Permanent LED lighting</b><span>Year-round, controlled from your phone</span></a>
         <a href="#lighting"><b>Holiday light installs</b><span>Up before Thanksgiving or Christmas</span></a>
         <a href="#care"><b>Pressure washing</b><span>Driveways, roofs, pavers and softwash</span></a>
@@ -256,13 +306,13 @@ footer { background: var(--ink); color: var(--ivory); padding: clamp(40px, 6vw, 
 
   <section id="lighting">
     <div class="wrap">
-      <div class="head">
+      <div class="head" data-reveal>
         <p class="eyebrow">Lighting</p>
         <h2 class="serif">Two ways to light the house.</h2>
         <p class="lead">Keep them up all year, or just for the season. Either way, you stay off the ladder.</p>
       </div>
       <div class="lights">
-        <article class="light">
+        <article class="light" data-reveal>
           <img src="install-entry.webp" width="1100" height="1085" loading="lazy" alt="Front entry and roofline of a home outlined in warm white lights at night.">
           <div class="body">
             <h3>Permanent LED lighting</h3>
@@ -270,7 +320,7 @@ footer { background: var(--ink); color: var(--ivory); padding: clamp(40px, 6vw, 
             <a href="#quote" data-pick="Permanent LED lighting">Get a quote for permanent lights</a>
           </div>
         </article>
-        <article class="light">
+        <article class="light" data-reveal>
           <img src="install-garage.webp" width="1100" height="1085" loading="lazy" alt="Garage and eaves of a home trimmed with warm white lights, with a palm tree beside the driveway.">
           <div class="body">
             <h3>Christmas &amp; holiday light installation</h3>
@@ -284,11 +334,11 @@ footer { background: var(--ink); color: var(--ivory); padding: clamp(40px, 6vw, 
 
   <section id="care">
     <div class="wrap">
-      <div class="head">
+      <div class="head" data-reveal>
         <p class="eyebrow">Exterior care</p>
         <h2 class="serif">Everything else outside, handled by the same people.</h2>
       </div>
-      <ul class="care">
+      <ul class="care" data-reveal>
         <li><b>Pressure washing</b><span>Driveways, roofs and the house itself.</span></li>
         <li><b>Home softwash</b><span>A gentler wash for surfaces that shouldn't take high pressure.</span></li>
         <li><b>Paver cleaning &amp; sealing</b><span>Cleaned first, then sealed.</span></li>
@@ -303,11 +353,11 @@ footer { background: var(--ink); color: var(--ivory); padding: clamp(40px, 6vw, 
 
   <div class="band">
     <div class="wrap">
-      <div class="head">
+      <div class="head" data-reveal>
         <p class="eyebrow">How a quote works</p>
         <h2 class="serif">Three steps, and the first takes a minute.</h2>
       </div>
-      <ol class="steps">
+      <ol class="steps" data-reveal>
         <li><b>Tell us about your home</b><span>Answer a few questions and give us your address, so we can look at your roofline before we quote.</span></li>
         <li><b>Get your quote within 24 hours</b><span>We send your free quote by phone or email.</span></li>
         <li><b>Choose your timing</b><span>As soon as possible, before Thanksgiving or before Christmas. You tell us.</span></li>
@@ -317,8 +367,8 @@ footer { background: var(--ink); color: var(--ivory); padding: clamp(40px, 6vw, 
 
   <section id="about">
     <div class="wrap about">
-      <img src="install-side.webp" width="1100" height="1085" loading="lazy" alt="Side of a home at night with warm white lights along the roofline above an arched window.">
-      <div class="txt">
+      <img data-reveal src="install-side.webp" width="1100" height="1085" loading="lazy" alt="Side of a home at night with warm white lights along the roofline above an arched window.">
+      <div class="txt" data-reveal>
         <p class="eyebrow">Family-owned</p>
         <p class="big">We pride ourselves on efficiency, communication and quality, and on improving curb appeal one home at a time.</p>
         <p class="lead">We love connecting with our community. We take pride in what we do, so you never have to question whether your home will be taken care of.</p>
@@ -328,11 +378,11 @@ footer { background: var(--ink); color: var(--ivory); padding: clamp(40px, 6vw, 
 
   <section id="areas">
     <div class="wrap">
-      <div class="head">
+      <div class="head" data-reveal>
         <p class="eyebrow">Service areas</p>
         <h2 class="serif">Homes and businesses across Miami-Dade.</h2>
       </div>
-      <ul class="areas">
+      <ul class="areas" data-reveal>
         <li>Palmetto Bay</li><li>Cutler Bay</li><li>Pinecrest</li><li>Homestead</li><li>Kendall</li><li>Doral</li><li>Coral Gables</li><li>South Miami</li><li>Miami Lakes</li><li>Hialeah</li><li>Hialeah Gardens</li><li>Miami Gardens</li><li>Westchester</li>
       </ul>
     </div>
@@ -347,11 +397,11 @@ footer { background: var(--ink); color: var(--ivory); padding: clamp(40px, 6vw, 
         <ul>
           <li>No cost for the quote</li>
           <li>We look at your roofline before we price it</li>
-          <li>Prefer to talk? Call <a href="tel:+17867526442">(786) 752-6442</a></li>
+          <li>Prefer to talk? Call or text <a href="tel:+17867526442">(786) 752-6442</a></li>
         </ul>
       </div>
 
-      <div class="card">
+      <div class="card" data-reveal>
         <form id="qf" novalidate>
           <div class="card-top"><b>Get your free quote</b><span id="count">Step 1 of 3</span></div>
           <div class="bar" aria-hidden="true"><i id="bar"></i></div>
@@ -474,8 +524,9 @@ footer { background: var(--ink); color: var(--ivory); padding: clamp(40px, 6vw, 
 </footer>
 
 <div class="dock">
-  <a class="btn gold" href="#quote">Get my free quote</a>
+  <a class="btn gold" href="#quote">Free quote</a>
   <a class="btn line" href="tel:+17867526442">Call</a>
+  <a class="btn line" href="sms:+17867526442">Text</a>
 </div>
 
 <script>
@@ -536,6 +587,38 @@ footer { background: var(--ink); color: var(--ivory); padding: clamp(40px, 6vw, 
   }
 
   show(0, false);
+})();
+
+(function () {
+  var s = document.querySelector('.string');
+  if (s) {
+    var W = 1000, H = 30, spans = matchMedia('(min-width: 640px)').matches ? 6 : 4, per = 4, d = '', n = 0;
+    for (var k = 0; k < spans; k++) {
+      var x0 = k * W / spans, x1 = (k + 1) * W / spans;
+      d += (k ? ' ' : 'M0 1 ') + 'Q' + ((x0 + x1) / 2) + ' ' + (H * .9) + ' ' + x1 + ' 1';
+      for (var j = 0; j < per; j++) {
+        var t = (j + .5) / per, y = 1 + 2 * t * (1 - t) * (H * .9 - 1);
+        var b = document.createElement('i');
+        b.className = 'bulb';
+        b.style.left = ((x0 + (x1 - x0) * t) / W * 100) + '%';
+        b.style.setProperty('--y', (y - 1) + 'px'); b.style.setProperty('--r', ((t - .5) * -24) + 'deg');
+        b.style.setProperty('--d', (.35 + n * .06) + 's');
+        s.appendChild(b); n++;
+      }
+    }
+    s.insertAdjacentHTML('afterbegin', '<svg class="wire" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none"><path d="' + d + '"/></svg>');
+  }
+
+  var els = document.querySelectorAll('[data-reveal]');
+  if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    els.forEach(function (e) { e.classList.add('in'); });
+    return;
+  }
+  document.querySelectorAll('.lights [data-reveal]').forEach(function (e, i) { e.style.setProperty('--rd', (i * .12) + 's'); });
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: .12, rootMargin: '0px 0px -40px 0px' });
+  els.forEach(function (e) { io.observe(e); });
 })();
 </script>
 </body>
