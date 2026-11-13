@@ -220,7 +220,7 @@ section { padding: clamp(56px, 8vw, 104px) 0 0 }
 
 .band { background: var(--sand); margin-top: clamp(56px, 8vw, 104px); padding: clamp(48px, 7vw, 88px) 0 }
 .steps { display: grid; gap: 26px; counter-reset: s }
-.steps li { counter-increment: s; display: grid; gap: 8px; padding-top: 18px; border-top: 1px solid var(--ink) }
+.steps li { counter-increment: s; display: grid; align-content: start; gap: 8px; padding-top: 18px; border-top: 1px solid var(--ink) }
 .steps li::before { content: "0" counter(s); font-size: 12.5px; letter-spacing: .24em; font-weight: 600; color: var(--gold-deep) }
 .steps b { font-family: var(--serif); font-weight: 400; font-size: 24px; line-height: 1.2 }
 .steps span { color: var(--soft); font-size: 16px }
@@ -237,8 +237,9 @@ section { padding: clamp(56px, 8vw, 104px) 0 0 }
 .quote-grid { display: grid; gap: 28px; align-items: start }
 .quote-side { display: grid; gap: 16px }
 .quote-side ul { display: grid; gap: 10px; margin-top: 6px }
-.quote-side li { display: flex; gap: 10px; align-items: baseline; color: var(--soft) }
-.quote-side li::before { content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--gold); transform: translateY(-1px) }
+.quote-side li { position: relative; padding-left: 18px; color: var(--soft) }
+.quote-side li a { white-space: nowrap }
+.quote-side li::before { content: ""; position: absolute; left: 0; top: .62em; width: 8px; height: 8px; border-radius: 50%; background: var(--gold) }
 .card { background: #fff; border: 1px solid var(--line); box-shadow: 0 18px 40px rgba(60,45,10,.13); padding: clamp(20px, 3.4vw, 32px) }
 .card-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px }
 .card-top b { font-family: var(--serif); font-weight: 400; font-size: 26px }
