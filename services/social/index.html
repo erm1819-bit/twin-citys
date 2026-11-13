@@ -165,6 +165,14 @@ button, a { touch-action: manipulation; -webkit-tap-highlight-color: transparent
 .sheet h2 { font-size: clamp(22px, 2.2vw, 30px); font-weight: 400; line-height: 1.2; }
 .sheet .label { color: var(--ink-soft); margin-bottom: 10px; }
 .sheet p { color: #3b3936; font-size: 17px; line-height: 1.7; max-width: 60ch; }
+.faq details { border-top: 1px solid #c7c0b3; padding: 16px 0; }
+.faq details:first-child { border-top: 0; padding-top: 0; }
+.faq summary { cursor: pointer; list-style: none; font-size: 18px; font-weight: 500; color: var(--ink); display: flex; justify-content: space-between; gap: 16px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; color: var(--ink-soft); }
+.faq details[open] summary::after { content: "\2212"; }
+.faq details p { margin: 10px 0 0; }
+
 .helps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
 .helps div { padding-top: 14px; border-top: 2px solid var(--ink); }
 .helps b { display: block; font-weight: 500; font-size: 18px; line-height: 1.3; color: var(--ink); }
@@ -345,6 +353,34 @@ footer a { color: var(--ivory); }
       "name": "Miami"
     },
     {
+      "@type": "City",
+      "name": "Brickell"
+    },
+    {
+      "@type": "City",
+      "name": "Coral Gables"
+    },
+    {
+      "@type": "City",
+      "name": "Doral"
+    },
+    {
+      "@type": "City",
+      "name": "Hialeah"
+    },
+    {
+      "@type": "City",
+      "name": "Kendall"
+    },
+    {
+      "@type": "City",
+      "name": "Miami Beach"
+    },
+    {
+      "@type": "City",
+      "name": "Homestead"
+    },
+    {
       "@type": "AdministrativeArea",
       "name": "Miami-Dade County"
     }
@@ -353,6 +389,46 @@ footer a { color: var(--ivory); }
     "@type": "ServiceChannel",
     "serviceUrl": "https://twincitys.net/start/?service=social"
   }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Which platforms do you manage?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Instagram and Facebook for most businesses, and TikTok when it fits. We focus on where your customers actually are."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How often do you post?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Usually 8 to 20 posts a month depending on your plan, on a steady schedule."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I have to approve posts?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You approve the monthly plan. After that we shoot, write and post, so you don't have to think about it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you reply to comments and messages?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. We answer comments and messages so customers hear back quickly."
+      }
+    }
+  ]
 }
 </script>
 </head>
@@ -601,6 +677,7 @@ footer a { color: var(--ivory); }
   var tabs = document.getElementById('tabs'), main = document.getElementById('main');
   tabs.innerHTML = S.map(function (s) { return '<a class="tab" href="../' + s.id + '/">' + s.tab + '</a>'; }).join('');
 
+  var FAQ = {"websites": [["How long does it take to build a website?", "Most small business sites are designed, built and live in two to four weeks. Bigger sites with booking, menus or online ordering can take a little longer, and we tell you the timeline up front."], ["How much does a website cost in Miami?", "It depends on how many pages you need and what the site has to do, like booking, menus or online ordering. We give you a clear number after a short call, before any work starts."], ["Do you use templates?", "No. Every site is designed around your business from scratch. We show you a few directions first, and build the one you pick."], ["Do you host and update the site after launch?", "Yes. Hosting, updates and small changes are handled for you each month, so you never have to touch the site yourself."]], "ads": [["Do I pay for the ads myself?", "Yes. Ad spend goes straight from your card to Google or Meta, in your own ad account. We only bill for our work making and running the ads."], ["Google Ads or Facebook ads, which is better for a local business?", "Google catches people already searching for what you do. Facebook and Instagram reach people nearby before they search. Most local businesses do best with one of each, and we'll tell you which to start with."], ["How fast will I see results?", "Calls and messages usually start in the first couple of weeks. The first month is for testing what works, and results get better from there."], ["How do I know the ads are working?", "Every call, form and message is tracked back to the ad that brought it in, and you get a plain-language report each month."]], "content": [["Do you come to my business to shoot?", "Yes. We shoot on site anywhere in Miami-Dade, at your restaurant, shop, office or job site."], ["What do I get from a shoot?", "Edited photos and short videos sized for your website, your Google profile, Instagram and your ads, ready to post."], ["I don't know what to post. Can you plan it?", "Yes. We plan what to shoot before we come, so you get content that fits your business and actually gets used."]], "crm": [["What is a CRM, in plain words?", "One place that collects every call, form and message from customers, so you can see who reached out and who still needs a reply."], ["Will it follow up with leads for me?", "Yes. New leads get an automatic reply in seconds, and a follow-up text or email later if they haven't booked."], ["Do I need to be good with tech?", "No. We set it all up and show you how to use it in a few minutes. It works from your phone."], ["Does it work with my website and ads?", "Yes. Website forms, ad leads and Instagram and Facebook messages all land in the same place."]], "google": [["How do I show up higher on Google Maps?", "A complete, active Google Business Profile, steady reviews, and a website with pages for what you do and where you work. We handle all three."], ["How long does local SEO take?", "Profile fixes can help within weeks. Ranking for competitive searches usually builds over a few months."], ["Can you help me get more Google reviews?", "Yes. We set up review cards for your counter and a simple way to ask happy customers, and we reply to every review for you."], ["Do I need a website for local SEO?", "It helps a lot. Google trusts businesses with a real website that matches their profile, and it gives you pages that can rank in more neighborhoods."]], "social": [["Which platforms do you manage?", "Instagram and Facebook for most businesses, and TikTok when it fits. We focus on where your customers actually are."], ["How often do you post?", "Usually 8 to 20 posts a month depending on your plan, on a steady schedule."], ["Do I have to approve posts?", "You approve the monthly plan. After that we shoot, write and post, so you don't have to think about it."], ["Do you reply to comments and messages?", "Yes. We answer comments and messages so customers hear back quickly."]]};
   function esc(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
   function render(id) {
     var s = S.filter(function (x) { return x.id === id; })[0] || S[0];
@@ -635,6 +712,7 @@ footer a { color: var(--ivory); }
         '<div class="row"><div><p class="label">What it is</p><h2>' + esc(s.eyebrow) + '</h2></div><p>' + esc(s.what) + '</p></div>' +
         '<div class="row"><div><p class="label">How it helps you</p><h2>Why it’s worth it.</h2></div><div class="helps">' + s.helps.map(function (h) { return '<div><b>' + esc(h[0]) + '</b><span>' + esc(h[1]) + '</span></div>'; }).join('') + '</div></div>' +
         '<div class="row"><div><p class="label">What you get</p><h2>Included.</h2></div><ul class="gets">' + s.gets.map(function (g) { return '<li>' + esc(g) + '</li>'; }).join('') + '</ul></div>' +
+        (FAQ[s.id] ? '<div class="row"><div><p class="label">Questions</p><h2>Good to know.</h2></div><div class="faq">' + FAQ[s.id].map(function (q) { return '<details><summary>' + esc(q[0]) + '</summary><p>' + esc(q[1]) + '</p></details>'; }).join('') + '</div></div>' : '') +
       '</div></section>' +
       '<section class="close"><div class="wrap"><h2>' + esc(s.close) + '</h2><p>Ready for the whole thing? No prices before we talk. Tell us about your business in three quick steps.</p>' +
         '<div class="ctas"><a class="btn" href="' + start + '">Start a project</a><a class="link" href="https://maps.google.com/?cid=1861668075067573854" target="_blank" rel="noopener">See our reviews on Google</a></div></div></section>' +
