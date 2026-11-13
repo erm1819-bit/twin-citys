@@ -485,7 +485,7 @@ footer a { color: var(--ivory); }
       ],
       gets: ['Design and build, from scratch', 'Made for phones first', 'Call, book or order buttons', 'Contact or booking form to your phone', 'Hosting and updates handled', 'Google-ready from day one'],
       proof: [['La Vasca Deli Miami', '/#work'], ['Lucerne Bakery', '/#work']],
-      script: ['What a bad website costs a business', 'How we build one around yours', "What's on every site we make", 'How to start: the form, three steps'],
+      script: ['What a bad website costs a business', 'How we build one around yours', "What's on every site we make", 'How to start: one short form'],
       close: 'See your new homepage before you pay anything.' },
 
     { id: 'ads', tab: 'Ads', who: 'Daniel',
@@ -706,7 +706,7 @@ footer a { color: var(--ivory); }
         '<div class="row"><div><p class="label">What you get</p><h2>Included.</h2></div><ul class="gets">' + s.gets.map(function (g) { return '<li>' + esc(g) + '</li>'; }).join('') + '</ul></div>' +
         (FAQ[s.id] ? '<div class="row"><div><p class="label">Questions</p><h2>Good to know.</h2></div><div class="faq">' + FAQ[s.id].map(function (q) { return '<details><summary>' + esc(q[0]) + '</summary><p>' + esc(q[1]) + '</p></details>'; }).join('') + '</div></div>' : '') +
       '</div></section>' +
-      '<section class="close"><div class="wrap"><h2>' + esc(s.close) + '</h2><p>Ready for the whole thing? No prices before we talk. Tell us about your business in three quick steps.</p>' +
+      '<section class="close"><div class="wrap"><h2>' + esc(s.close) + '</h2><p>Ready for the whole thing? No prices before we talk. Tell us about your business in one short form.</p>' +
         '<div class="ctas"><a class="btn" href="' + start + '">Start a project</a><a class="link" href="https://maps.google.com/?cid=1861668075067573854" target="_blank" rel="noopener">See our reviews on Google</a></div></div></section>' +
       '<section class="more"><div class="wrap"><p class="label">Also from Twin Citys</p><div class="more__grid">' +
         others.map(function (o) { return '<a href="../' + o.id + '/"><b>' + esc(o.tab) + '</b><span>' + esc(o.h1) + '</span></a>'; }).join('') +
