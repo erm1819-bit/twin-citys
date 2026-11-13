@@ -80,9 +80,10 @@ h2.serif { font-size: clamp(30px, 4.6vw, 46px); line-height: 1.1; text-wrap: bal
 .top .tel { display: none; margin-left: auto; font-weight: 600; font-size: 15px; text-decoration: none; white-space: nowrap }
 .top .btn { display: none; min-height: 44px; padding: 0 20px; font-size: 12px }
 
-.hero { --ph: clamp(300px, 37.67vw, 720px) }
+.hero { --ph: clamp(240px, 37.67vw, 720px) }
 .hero-photo { width: 100%; max-width: none; height: var(--ph); object-fit: cover; object-position: center top; background: #0E1420 }
 .hero-card { position: relative; width: min(880px, calc(100% - 32px)); margin: calc(var(--ph) * -.38) auto 0; background: var(--ivory); border-top: 4px solid var(--gold); box-shadow: 0 22px 50px rgba(30,20,0,.26); padding: clamp(26px, 4.4vw, 44px) clamp(20px, 5vw, 56px) clamp(28px, 4.4vw, 44px); text-align: center }
+.hero-card .eyebrow { font-size: 11.5px; letter-spacing: .16em }
 .hero-card h1 { font-size: clamp(33px, 5.6vw, 56px); line-height: 1.07; margin: 14px 0 14px; text-wrap: balance }
 .hero-card p.sub { color: var(--soft); font-size: clamp(16.5px, 1.6vw, 18.5px) }
 .hero-card .acts { display: grid; gap: 10px; margin-top: 24px }
@@ -96,10 +97,10 @@ h2.serif { font-size: clamp(30px, 4.6vw, 46px); line-height: 1.1; text-wrap: bal
 section { padding: clamp(56px, 8vw, 104px) 0 0 }
 .head { display: grid; gap: 14px; margin-bottom: clamp(26px, 4vw, 44px) }
 
-.lights { display: grid; gap: 22px }
-.light { background: var(--paper); border: 1px solid var(--line); display: grid; grid-template-rows: auto 1fr }
-.light img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover }
-.light .body { padding: clamp(20px, 3vw, 32px); display: grid; gap: 12px; align-content: start }
+.lights { display: grid; grid-template-columns: 1fr 1fr; gap: 10px }
+.light { display: contents }
+.light img { order: -1; width: 100%; aspect-ratio: 4 / 5; object-fit: cover }
+.light .body { grid-column: 1 / -1; background: var(--paper); border: 1px solid var(--line); padding: clamp(20px, 3vw, 32px); display: grid; gap: 12px; align-content: start }
 .light h3 { font-family: var(--serif); font-weight: 400; font-size: clamp(25px, 3vw, 31px); line-height: 1.15 }
 .light p { color: var(--soft) }
 .light a { justify-self: start; font-weight: 600; text-underline-offset: 5px; margin-top: 4px }
@@ -118,7 +119,7 @@ section { padding: clamp(56px, 8vw, 104px) 0 0 }
 .steps span { color: var(--soft); font-size: 16px }
 
 .about { display: grid; gap: 28px; align-items: center }
-.about img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border: 8px solid #fff; box-shadow: 0 14px 34px rgba(60,45,10,.18) }
+.about img { width: min(260px, 70%); aspect-ratio: 1 / 1; object-fit: cover; border: 8px solid #fff; box-shadow: 0 14px 34px rgba(60,45,10,.18) }
 .about .txt { display: grid; gap: 16px }
 .about p.big { font-family: var(--serif); font-size: clamp(22px, 2.6vw, 28px); line-height: 1.35 }
 
@@ -179,6 +180,7 @@ footer { background: var(--ink); color: var(--ivory); padding: clamp(40px, 6vw, 
 @media (min-width: 560px) {
   .top .tel { display: block }
   .hero-card .acts { display: flex; justify-content: center; flex-wrap: wrap }
+  .hero-card .eyebrow { font-size: 12.5px; letter-spacing: .24em }
   .quick { grid-template-columns: 1fr 1fr }
   .care { grid-template-columns: 1fr 1fr; column-gap: 48px }
   .areas li { font-size: 16px }
@@ -191,7 +193,11 @@ footer { background: var(--ink); color: var(--ivory); padding: clamp(40px, 6vw, 
   .top nav { display: flex }
   .top .tel { margin-left: 8px }
   .top .btn { display: inline-flex }
-  .lights { grid-template-columns: 1fr 1fr }
+  .lights { gap: 22px }
+  .light { display: grid; grid-template-rows: auto 1fr; background: var(--paper); border: 1px solid var(--line) }
+  .light img { order: 0; aspect-ratio: 4 / 3 }
+  .light .body { grid-column: auto; background: none; border: 0 }
+  .about img { width: 100% }
   .steps { grid-template-columns: repeat(3, 1fr); gap: 36px }
   .about { grid-template-columns: 5fr 6fr; gap: 64px }
   .quote-grid { grid-template-columns: 5fr 6fr; gap: 64px }
@@ -228,7 +234,7 @@ footer { background: var(--ink); color: var(--ivory); padding: clamp(40px, 6vw, 
 
 <main id="main">
   <div class="hero" id="top">
-    <img class="hero-photo" src="hero.webp" width="2336" height="880" alt="Two-story Miami home at night with warm white lights along every roofline, installed by Maison Exterior Co." fetchpriority="high">
+    <img class="hero-photo" src="hero.webp" width="2400" height="904" alt="Two-story Miami home at night with warm white lights along every roofline, installed by Maison Exterior Co." fetchpriority="high">
     <div class="hero-card">
       <p class="eyebrow">Miami-Dade &middot; Homes &amp; businesses</p>
       <h1 class="serif">Permanent lights. Holiday lights. One family-owned crew.</h1>
@@ -257,7 +263,7 @@ footer { background: var(--ink); color: var(--ivory); padding: clamp(40px, 6vw, 
       </div>
       <div class="lights">
         <article class="light">
-          <img src="install-entry.webp" width="880" height="868" loading="lazy" alt="Front entry and roofline of a home outlined in warm white lights at night.">
+          <img src="install-entry.webp" width="1100" height="1085" loading="lazy" alt="Front entry and roofline of a home outlined in warm white lights at night.">
           <div class="body">
             <h3>Permanent LED lighting</h3>
             <p>Lights fitted along your roofline that stay up all year and run from an app on your phone. Turn them on for the holidays, for a party, or for an ordinary evening.</p>
@@ -265,7 +271,7 @@ footer { background: var(--ink); color: var(--ivory); padding: clamp(40px, 6vw, 
           </div>
         </article>
         <article class="light">
-          <img src="install-garage.webp" width="880" height="868" loading="lazy" alt="Garage and eaves of a home trimmed with warm white lights, with a palm tree beside the driveway.">
+          <img src="install-garage.webp" width="1100" height="1085" loading="lazy" alt="Garage and eaves of a home trimmed with warm white lights, with a palm tree beside the driveway.">
           <div class="body">
             <h3>Christmas &amp; holiday light installation</h3>
             <p>Want lights for the season only? We put them up for you. Tell us whether you need them on before Thanksgiving or before Christmas.</p>
@@ -311,7 +317,7 @@ footer { background: var(--ink); color: var(--ivory); padding: clamp(40px, 6vw, 
 
   <section id="about">
     <div class="wrap about">
-      <img src="install-side.webp" width="880" height="868" loading="lazy" alt="Side of a home at night with warm white lights along the roofline above an arched window.">
+      <img src="install-side.webp" width="1100" height="1085" loading="lazy" alt="Side of a home at night with warm white lights along the roofline above an arched window.">
       <div class="txt">
         <p class="eyebrow">Family-owned</p>
         <p class="big">We pride ourselves on efficiency, communication and quality, and on improving curb appeal one home at a time.</p>
