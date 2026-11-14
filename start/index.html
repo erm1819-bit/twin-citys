@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Start a project with Twin Citys, a Miami creative studio. One short form, plain words, no tech talk.">
 <meta name="robots" content="noindex">
+<link rel="alternate" hreflang="en" href="https://twincitys.net/start/">
+<link rel="alternate" hreflang="es" href="https://twincitys.net/es/empezar/">
+<link rel="alternate" hreflang="x-default" href="https://twincitys.net/start/">
+<script>try{var p=localStorage.getItem('tc-lang');if(p&&p!==document.documentElement.lang.slice(0,2)){var a=document.querySelector('link[rel="alternate"][hreflang="'+p+'"]');if(a){var u=new URL(a.href);if(u.pathname!==location.pathname)location.replace(u.pathname+location.search+location.hash);}}}catch(e){}</script>
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#0b0b0b">
 <title>Twin Citys Project Form</title>
@@ -229,6 +233,15 @@ legend { padding: 0; margin-bottom: 4px; }
   .intro { display: none; }
   .has-intro .page { opacity: 1; transform: none; }
 }
+.lang { position: relative; display: inline-grid; grid-template-columns: 1fr 1fr; align-items: center; height: 30px; padding: 2px; border: 1px solid currentColor; border-radius: 999px; font-size: 10px; font-weight: 600; letter-spacing: .14em; line-height: 1; text-decoration: none; text-transform: uppercase; -webkit-tap-highlight-color: transparent; }
+.lang::before { content: ""; position: absolute; top: 2px; bottom: 2px; left: 2px; width: calc(50% - 2px); border-radius: 999px; background: currentColor; transition: transform .32s cubic-bezier(.2,.8,.2,1); }
+.lang[data-on="es"]::before { transform: translateX(100%); }
+.lang span { position: relative; z-index: 1; padding: 0 9px; line-height: 24px; text-align: center; opacity: .75; transition: color .32s, opacity .32s; }
+.lang span.on { color: var(--black); opacity: 1; }
+.lang:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.top__r { display: inline-flex; align-items: center; gap: 18px; }
+.top a.lang { display: inline-grid; min-height: 0; gap: 0; }
+@media (max-width: 480px) { .top { letter-spacing: .2em; } .top__r { gap: 14px; } .top > a > span { display: none; } .top a.place { white-space: nowrap; } }
 </style>
 </head>
 <body>
@@ -256,7 +269,10 @@ legend { padding: 0; margin-bottom: 4px; }
       <svg class="tcmark" aria-hidden="true"><use href="#tc"></use></svg>
       <span>Twin Citys</span>
     </a>
-    <a class="place" href="https://twincitys.net/"><span aria-hidden="true">←</span> Back to home</a>
+    <span class="top__r">
+      <a class="lang" href="/es/empezar/" data-on="en" hreflang="es" lang="es" aria-label="Ver en español"><span data-l="en" class="on">EN</span><span data-l="es">ES</span></a>
+      <a class="place" href="https://twincitys.net/"><span aria-hidden="true">←</span> Back to home</a>
+    </span>
   </header>
 
   <main class="card">
@@ -427,6 +443,19 @@ legend { padding: 0; margin-bottom: 4px; }
 
   if (location.hash === '#sent') finish();
 })();
+</script>
+<script>
+document.querySelectorAll('.lang').forEach(function (t) {
+  t.addEventListener('click', function (e) {
+    if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+    e.preventDefault();
+    var to = t.dataset.on === 'en' ? 'es' : 'en';
+    try { localStorage.setItem('tc-lang', to); } catch (x) {}
+    t.dataset.on = to;
+    t.querySelectorAll('span').forEach(function (s) { s.classList.toggle('on', s.dataset.l === to); });
+    setTimeout(function () { location.href = t.getAttribute('href') + location.search + location.hash; }, 300);
+  });
+});
 </script>
 </body>
 </html>

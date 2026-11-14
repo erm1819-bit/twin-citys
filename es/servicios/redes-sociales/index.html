@@ -1,0 +1,779 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Manejo de redes sociales en Miami · Twin Citys</title>
+<meta name="description" content="Planeamos, grabamos, escribimos y publicamos tu Instagram y Facebook cada semana, para restaurantes, panaderías y tiendas de Miami.">
+<link rel="canonical" href="https://twincitys.net/es/servicios/redes-sociales/">
+<meta property="og:title" content="Manejo de redes sociales en Miami · Twin Citys">
+<meta property="og:description" content="Planeamos, grabamos, escribimos y publicamos tu Instagram y Facebook cada semana, para restaurantes, panaderías y tiendas de Miami.">
+<meta property="og:locale" content="es_US">
+<meta property="og:url" content="https://twincitys.net/es/servicios/redes-sociales/">
+<meta property="og:image" content="https://twincitys.net/og.jpg">
+<link rel="preload" as="image" href="/media/vsl-social-rest.webp" fetchpriority="high">
+<link rel="alternate" hreflang="en" href="https://twincitys.net/services/social/">
+<link rel="alternate" hreflang="es" href="https://twincitys.net/es/servicios/redes-sociales/">
+<link rel="alternate" hreflang="x-default" href="https://twincitys.net/services/social/">
+<script>try{var p=localStorage.getItem('tc-lang');if(p&&p!==document.documentElement.lang.slice(0,2)){var a=document.querySelector('link[rel="alternate"][hreflang="'+p+'"]');if(a){var u=new URL(a.href);if(u.pathname!==location.pathname)location.replace(u.pathname+location.search+location.hash);}}}catch(e){}</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+:root {
+  color-scheme: dark;
+  --black: #0b0b0b; --charcoal: #161615; --ivory: #e8e3d9; --ivory-deep: #d6cfc2; --stone: #9a958b; --stone-dim: #45423f;
+  --ink: #1a1a19; --ink-soft: #57524a; --line: #2a2927;
+  --font: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --gutter: clamp(16px, 5vw, 72px);
+  --ease: cubic-bezier(.3, .7, .2, 1);
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--black); color: var(--ivory); font-family: var(--font); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, p, ul { margin: 0; }
+a { color: inherit; text-decoration: none; }
+button, a { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+.wrap { width: 100%; max-width: 1200px; margin-inline: auto; padding-inline: var(--gutter); }
+.label { font-size: 12px; font-weight: 500; letter-spacing: .32em; text-transform: uppercase; color: var(--stone); }
+.tcmark { display: block; width: 28px; height: 24px; fill: currentColor; }
+
+.ribbon { background: var(--ivory); color: var(--ink); font-size: 13px; text-align: center; padding: 8px var(--gutter); }
+.ribbon b { font-weight: 600; }
+
+/* Services dropdown (same as the homepage) */
+:root { --font-display: var(--font); --font-mono: var(--font); }
+.sitenav .bar__svc { color: var(--ivory); font-size: 12px; font-weight: 500; letter-spacing: .3em; text-transform: uppercase; }
+.bar__svc { pointer-events: auto; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0; background: none; border: 0; color: inherit; cursor: pointer; font: inherit; letter-spacing: inherit; text-transform: inherit; }
+.bar__svc::after { content: ""; width: 6px; height: 6px; border-right: 1px solid currentColor; border-bottom: 1px solid currentColor; transform: translateY(-2px) rotate(45deg); transition: transform .25s; }
+.bar__svc[aria-expanded="true"]::after { transform: translateY(1px) rotate(-135deg); }
+.svcmenu { position: fixed; z-index: 5; top: calc(env(safe-area-inset-top, 0px) + 72px); left: var(--gutter); right: var(--gutter); display: grid; grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1.15fr); background: rgba(12,12,11,.97); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border: 1px solid #2a2927; box-shadow: 0 30px 80px rgba(0,0,0,.6); animation: svcin .35s var(--ease); max-width: 1180px; margin-inline: auto; }
+.svcmenu[hidden] { display: none; }
+.svcmenu__list { list-style: none; margin: 0; padding: 26px 0 22px; counter-reset: n; }
+.svcmenu__list a { position: relative; display: grid; grid-template-columns: 44px 1fr; align-items: baseline; padding: 9px 34px 9px 30px; color: #6f6b64; transition: color .25s var(--ease); }
+.svcmenu__list a::before { counter-increment: n; content: "0" counter(n); font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em; color: #57534c; transition: color .25s; }
+.svcmenu__list a b { font-family: var(--font-display); font-weight: 300; font-size: clamp(22px, 2.1vw, 30px); letter-spacing: .01em; line-height: 1.2; transition: transform .35s var(--ease); }
+.svcmenu__list a::after { content: ""; position: absolute; right: 30px; top: 50%; width: 0; height: 1px; background: var(--ivory); transition: width .35s var(--ease); }
+.svcmenu__list a.on, .svcmenu__list a:focus-visible { color: var(--ivory); text-decoration: none; }
+.svcmenu__list a.on::before { color: var(--stone); }
+.svcmenu__list a.on b { transform: translateX(6px); }
+.svcmenu__list a.on::after { width: 28px; }
+.svcmenu__all { display: inline-flex; margin: 14px 0 0 74px; font-size: 11px; font-weight: 500; letter-spacing: .3em; text-transform: uppercase; color: var(--stone); }
+.svcmenu__tools { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 22px; margin: 4px 0 20px 74px; padding-top: 14px; border-top: 1px solid rgba(232,227,217,.12); max-width: 420px; }
+.svcmenu__tools p { margin: 0; flex-basis: 100%; font-size: 11px; font-weight: 500; letter-spacing: .3em; text-transform: uppercase; color: #6f6b64; }
+.svcmenu__tools a { color: var(--stone); font-size: 15px; transition: color .2s; }
+.svcmenu__tools a span { display: none; }
+.svcmenu__tools a:hover, .svcmenu__tools a:focus-visible { color: var(--ivory); text-decoration: none; }
+@media (max-width: 820px) { .svcmenu__tools { margin: 22px 24px 0 58px; max-width: none; } .svcmenu__tools a { font-size: 17px; } }
+.svcmenu__all:hover { color: var(--ivory); text-decoration: none; }
+.svcmenu__tools + .svcmenu__all { margin-top: 0; margin-bottom: 26px; }
+.svcmenu__rule { background: linear-gradient(to bottom, transparent, #3a3835 12%, #3a3835 88%, transparent); }
+.svcmenu__view { position: relative; padding: 26px 28px 24px; }
+.svcmenu__slide { display: none; }
+.svcmenu__slide.on { display: block; animation: slidein .45s var(--ease); }
+.svcmenu__art { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: #161615; }
+.svcmenu__art img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.04); animation: settle 1.2s var(--ease) forwards; }
+.svcmenu__art svg { width: 100%; height: 100%; display: block; }
+.svcmenu__art video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.svcmenu__art::after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 0 1px rgba(232,227,217,.08); pointer-events: none; }
+.svcmenu__meta { display: flex; justify-content: space-between; align-items: flex-end; gap: 18px; margin-top: 16px; }
+.svcmenu__meta p { font-family: var(--font-display); font-weight: 300; font-size: 19px; line-height: 1.3; color: var(--ivory); max-width: 26ch; }
+.svcmenu__meta a { flex: none; display: inline-flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 500; letter-spacing: .26em; text-transform: uppercase; color: var(--stone); white-space: nowrap; }
+.svcmenu__meta a::after { content: ""; width: 22px; height: 1px; background: currentColor; }
+.svcmenu__meta a:hover { color: var(--ivory); text-decoration: none; }
+.svcmenu__art--offer img { animation: pushback 1.4s var(--ease) forwards; }
+.svcmenu__offer { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start; gap: 6px; padding: 22px; background: linear-gradient(to top, rgba(11,11,11,.88), rgba(11,11,11,.25) 60%, rgba(11,11,11,0)); opacity: 0; animation: offerin .6s .45s var(--ease) forwards; }
+.svcmenu__offer span { padding: 4px 10px; border-radius: 999px; background: var(--ivory); color: var(--black); font-size: 10px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; }
+.svcmenu__offer b { font-family: var(--font-display); font-weight: 400; font-size: 26px; line-height: 1.1; color: var(--ivory); }
+.svcmenu__offer i { font-style: normal; font-size: 13px; line-height: 1.45; color: #d8d2c7; max-width: 34ch; }
+@keyframes pushback { from { transform: scale(1.18); filter: brightness(1); } to { transform: scale(1); filter: brightness(.72); } }
+@keyframes offerin { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes svcin { from { opacity: 0; transform: translateY(-8px); } }
+@keyframes slidein { from { opacity: 0; } }
+@keyframes settle { to { transform: scale(1); } }
+@media (max-width: 820px) {
+  .svcmenu { top: 62px; left: 0; right: 0; bottom: 0; grid-template-columns: minmax(0, 1fr); border: 0; border-top: 1px solid #2a2927; overflow-y: auto; box-shadow: none; }
+  .svcmenu__rule, .svcmenu__view { display: none; }
+  .svcmenu__list { padding: 18px 0 24px; }
+  .svcmenu__list a { grid-template-columns: 38px 1fr; padding: 16px 20px; color: var(--ivory); border-bottom: 1px solid #1f1e1c; }
+  .svcmenu__list a b { font-size: 30px; }
+  .svcmenu__list a span { grid-column: 2; margin-top: 4px; font-size: 13px; color: var(--stone); }
+  .svcmenu__list a.on b { transform: none; }
+  .svcmenu__list a::after { display: none; }
+  .svcmenu__all { margin: 18px 0 0 58px; }
+  html.has-menu { overflow: hidden; }
+}
+@media (min-width: 821px) { .svcmenu__list a span { display: none; } }
+@media (prefers-reduced-motion: reduce) { .svcmenu, .svcmenu__slide.on, .svcmenu__art img { animation: none; transform: none; } }
+
+.top { position: sticky; top: 0; z-index: 10; background: rgba(11,11,11,.94); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; }
+.brand { display: inline-flex; align-items: center; gap: 12px; font-size: 12px; font-weight: 500; letter-spacing: .32em; text-transform: uppercase; white-space: nowrap; }
+.brand em { font-style: normal; opacity: .7; letter-spacing: .2em; }
+.sitenav { display: flex; align-items: center; gap: 0 28px; font-size: 12px; font-weight: 500; letter-spacing: .3em; text-transform: uppercase; }
+.sitenav a:not(.cta-sm) { display: inline-flex; align-items: center; min-height: 44px; color: var(--stone); }
+.sitenav a.on, .sitenav a:not(.cta-sm):hover { color: var(--ivory); }
+.cta-sm { display: inline-flex; align-items: center; min-height: 38px; padding: 0 16px; border: 1px solid var(--ivory); border-radius: 999px; font-size: 12px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; white-space: nowrap; }
+.cta-sm:hover { background: var(--ivory); color: var(--black); }
+.tabs { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; padding-bottom: 10px; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab { flex: none; display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px; border-radius: 999px; font-size: 14px; font-weight: 500; color: var(--stone); white-space: nowrap; transition: color .2s, background-color .2s; }
+.tab:hover { color: var(--ivory); }
+.tab[aria-current="page"] { background: var(--ivory); color: var(--black); }
+
+.hero { position: relative; overflow: hidden; isolation: isolate; padding-block: clamp(48px, 8vw, 104px) clamp(48px, 7vw, 88px); }
+.hero .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: 40px 64px; align-items: center; }
+.hero__mark { position: absolute; z-index: 0; left: 34%; top: 51%; translate: -50% -50%; height: 84%; width: auto; aspect-ratio: 892 / 756; fill: rgba(232,227,217,.045); stroke: rgba(232,227,217,.3); stroke-width: 2.2; pointer-events: none; }
+@media (max-width: 860px) {
+  .hero .wrap { grid-template-columns: minmax(0, 1fr); }
+  .hero__mark { left: 50%; top: 21%; height: auto; width: 92vw; }
+}
+.vcol { justify-self: end; width: 100%; max-width: 360px; display: grid; gap: 18px; }
+@media (max-width: 860px) { .vcol { justify-self: center; max-width: 320px; } }
+.vsl { position: relative; display: block; width: 100%; aspect-ratio: 480 / 854; padding: 0; border: 1px solid var(--line); border-radius: 18px; overflow: hidden; background: #111; cursor: pointer; font: inherit; color: inherit; }
+.vsl img, .vsl video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.vsl__point { opacity: 0; transform: scale(1.03); transition: opacity .22s var(--ease), transform .5s var(--ease); }
+.vsl:hover .vsl__point, .vsl:focus-visible .vsl__point, .vsl.is-pointing .vsl__point { opacity: 1; transform: scale(1); }
+.vsl__play { position: absolute; left: 50%; top: 50%; translate: -50% -50%; display: grid; place-items: center; width: 72px; height: 72px; border-radius: 50%; background: rgba(11,11,11,.35); border: 1px solid rgba(232,227,217,.7); backdrop-filter: blur(4px); transition: opacity .2s; }
+.vsl__play::before { content: ""; margin-left: 5px; border-left: 18px solid var(--ivory); border-top: 11px solid transparent; border-bottom: 11px solid transparent; }
+.vsl:hover .vsl__play, .vsl.is-pointing .vsl__play { opacity: 0; }
+.vsl__meta { position: absolute; left: 10px; right: 10px; bottom: 10px; display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 12px; letter-spacing: .08em; color: var(--ivory); transition: opacity .2s; }
+.vsl__meta span { padding: 5px 10px; border-radius: 999px; background: rgba(11,11,11,.62); backdrop-filter: blur(6px); }
+.vsl:hover .vsl__meta, .vsl.is-pointing .vsl__meta { opacity: 0; }
+.vsl.is-playing { cursor: default; }
+.vsl.is-playing .vsl__play, .vsl.is-playing .vsl__meta { display: none; }
+.vcol .btn { width: 100%; padding-inline: 18px; letter-spacing: .1em; text-align: center; }
+.demo .steps { max-width: 440px; }
+.demo .stage { width: 100%; }
+.d-web .phone { transform: translateY(-16px); }
+.hero h1 { margin-top: 18px; font-size: clamp(34px, 5vw, 66px); font-weight: 400; line-height: 1.06; letter-spacing: -.01em; text-wrap: balance; }
+.hero .sub { margin-top: 18px; max-width: 44ch; color: #c9c3b8; font-size: clamp(16px, 1.4vw, 20px); line-height: 1.5; }
+.ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; margin-top: 30px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 54px; padding: 0 30px; background: var(--ivory); color: var(--black); border-radius: 999px; font-size: 14px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; }
+.btn:hover { background: #fff; }
+.link { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; font-size: 12px; font-weight: 500; letter-spacing: .3em; text-transform: uppercase; }
+.link::after { content: ""; width: 28px; height: 1px; background: currentColor; transition: width .4s var(--ease); }
+.link:hover::after { width: 44px; }
+
+.video { position: relative; aspect-ratio: 9 / 16; max-height: 640px; width: 100%; max-width: 360px; justify-self: end; border-radius: 18px; overflow: hidden; background: linear-gradient(170deg, #22211f, #0f0f0e); border: 1px solid var(--line); display: flex; flex-direction: column; justify-content: space-between; padding: 22px; }
+.video__who { display: flex; align-items: center; gap: 12px; }
+.video__who i { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--ivory); color: var(--black); font-style: normal; font-weight: 600; font-size: 14px; }
+.video__who b { display: block; font-weight: 500; font-size: 15px; }
+.video__who span { font-size: 12px; color: var(--stone); letter-spacing: .08em; }
+.video__play { align-self: center; display: grid; place-items: center; width: 72px; height: 72px; border-radius: 50%; border: 1px solid rgba(232,227,217,.5); }
+.video__play::before { content: ""; margin-left: 5px; border-left: 18px solid var(--ivory); border-top: 11px solid transparent; border-bottom: 11px solid transparent; }
+.video__script { font-size: 13px; line-height: 1.55; color: #bdb7ac; }
+.video__script b { display: block; margin-bottom: 6px; font-size: 11px; font-weight: 500; letter-spacing: .24em; text-transform: uppercase; color: var(--stone); }
+.video__script ol { margin: 0; padding-left: 1.1em; display: grid; gap: 3px; }
+
+.sheet { background: var(--ivory); color: var(--ink); padding-block: clamp(56px, 8vw, 104px); }
+.sheet .row { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.6fr); gap: 20px 64px; padding-block: 36px; border-top: 1px solid #c7c0b3; }
+.sheet .row:first-child { border-top: 0; padding-top: 0; }
+.sheet h2 { font-size: clamp(22px, 2.2vw, 30px); font-weight: 400; line-height: 1.2; }
+.sheet .label { color: var(--ink-soft); margin-bottom: 10px; }
+.sheet p { color: #3b3936; font-size: 17px; line-height: 1.7; max-width: 60ch; }
+.faq details { border-top: 1px solid #c7c0b3; padding: 16px 0; }
+.faq details:first-child { border-top: 0; padding-top: 0; }
+.faq summary { cursor: pointer; list-style: none; font-size: 18px; font-weight: 500; color: var(--ink); display: flex; justify-content: space-between; gap: 16px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; color: var(--ink-soft); }
+.faq details[open] summary::after { content: "\2212"; }
+.faq details p { margin: 10px 0 0; }
+
+.helps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.helps div { padding-top: 14px; border-top: 2px solid var(--ink); }
+.helps b { display: block; font-weight: 500; font-size: 18px; line-height: 1.3; color: var(--ink); }
+.helps span { display: block; margin-top: 8px; font-size: 15px; color: #4a4741; line-height: 1.6; }
+.gets { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; }
+.gets li { padding: 14px 0; border-top: 1px solid #c7c0b3; font-size: 16px; color: var(--ink); }
+.proof { display: flex; flex-wrap: wrap; gap: 10px; }
+.proof a { display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px; border: 1px solid var(--ink); border-radius: 999px; font-size: 14px; font-weight: 500; }
+.proof a:hover { background: var(--ink); color: var(--ivory); }
+
+.close { padding-block: clamp(56px, 8vw, 96px); text-align: center; }
+.close h2 { font-size: clamp(28px, 3.6vw, 46px); font-weight: 400; line-height: 1.15; text-wrap: balance; max-width: 22ch; margin-inline: auto; }
+.close p { margin-top: 14px; color: #c9c3b8; }
+.close .ctas { justify-content: center; }
+.more { border-top: 1px solid var(--line); padding-block: 48px 64px; }
+.more__grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1px; margin-top: 18px; background: var(--line); border: 1px solid var(--line); }
+.more__grid a { display: flex; flex-direction: column; gap: 6px; min-height: 120px; padding: 18px; background: var(--black); transition: background-color .2s; }
+.more__grid a:hover { background: var(--charcoal); }
+.more__grid b { font-weight: 500; font-size: 16px; }
+.more__grid span { font-size: 13px; color: var(--stone); line-height: 1.5; }
+
+footer { border-top: 1px solid var(--line); padding: 28px 0 40px; font-size: 13px; color: var(--stone); }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 28px; }
+footer a { color: var(--ivory); }
+
+.page { animation: in .45s var(--ease); }
+@keyframes in { from { opacity: 0; transform: translateY(10px); } }
+
+@media (max-width: 860px) {
+  .hero .wrap, .sheet .row { grid-template-columns: minmax(0, 1fr); }
+  .video { justify-self: center; max-width: 300px; }
+  .helps, .gets { grid-template-columns: minmax(0, 1fr); }
+  .more__grid { grid-template-columns: 1fr 1fr; }
+  .ctas .btn { flex: 1 1 100%; }
+  .brand span { display: none; }
+  .sitenav a:not(.cta-sm):not(.on) { display: none; }
+  .sitenav { gap: 0 16px; }
+  .cta-sm { background: var(--ivory); color: var(--black); border-color: var(--ivory); min-height: 40px; padding: 0 18px; letter-spacing: .14em; }
+}
+@media (prefers-reduced-motion: reduce) { .page { animation: none; } }
+
+.demo { padding-block: clamp(48px, 7vw, 96px); border-top: 1px solid var(--line); }
+.demo .wrap { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 40px 64px; align-items: center; }
+.demo h2 { margin-top: 14px; font-size: clamp(26px, 3vw, 40px); font-weight: 400; line-height: 1.15; }
+.steps { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 4px; }
+.steps li { display: grid; grid-template-columns: 34px 1fr; gap: 4px; padding: 14px 0; border-top: 1px solid var(--line); color: #6f6b64; transition: color .4s var(--ease); }
+.steps li i { font-style: normal; font-size: 12px; letter-spacing: .1em; padding-top: 3px; }
+.steps li b { font-weight: 400; font-size: 17px; }
+.steps li.on { color: var(--ivory); }
+.steps li.on i { color: var(--stone); }
+.stage { position: relative; height: 460px; display: grid; place-items: center; background: radial-gradient(ellipse at 50% 40%, #1d1c1a, #0f0f0e 70%); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; }
+.phone { position: relative; width: 236px; height: 420px; border-radius: 34px; background: #050505; border: 1px solid #3a3835; padding: 10px; box-shadow: 0 30px 60px rgba(0,0,0,.5); }
+.phone__screen { position: relative; width: 100%; height: 100%; border-radius: 26px; overflow: hidden; background: #f4f1ea; }
+.panel { position: relative; width: min(100% - 40px, 560px); background: #121211; border: 1px solid #2a2927; border-radius: 12px; padding: 18px 20px; font-size: 13px; }
+.panel .hd { display: flex; justify-content: space-between; color: var(--stone); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; padding-bottom: 12px; border-bottom: 1px solid #2a2927; }
+.tag { display: inline-flex; align-items: center; justify-content: center; min-width: 108px; height: 24px; padding: 0 10px; border-radius: 12px; border: 1px solid #6f6b64; color: var(--stone); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; transition: all .4s var(--ease); }
+.tag.lit { background: var(--ivory); border-color: var(--ivory); color: var(--black); }
+.toast { position: absolute; left: 50%; bottom: 22px; transform: translate(-50%, 20px); opacity: 0; min-width: 250px; padding: 12px 16px; border-radius: 12px; background: var(--ivory); color: var(--black); font-size: 13px; box-shadow: 0 16px 40px rgba(0,0,0,.45); transition: all .5s var(--ease); }
+.toast b { display: block; font-weight: 600; }
+.toast span { font-size: 12px; color: #57524a; }
+.s2 .toast { opacity: 1; transform: translate(-50%, 0); }
+.phone .toast { left: 8px; right: 8px; bottom: 10px; min-width: 0; padding: 10px 12px; font-size: 12px; transform: translateY(20px); }
+.phone .toast span { font-size: 11px; }
+.s2 .phone .toast { transform: none; }
+
+.d-web .phone__screen.site { background: #0b0b0b; }
+.d-web .site iframe { position: absolute; left: 0; top: 0; width: 390px; height: 722px; border: 0; transform: scale(.5538); transform-origin: 0 0; }
+.site__hint { position: absolute; left: 0; right: 0; bottom: 8px; text-align: center; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--stone); }
+.d-web .phone__screen img { position: absolute; left: 0; top: 0; width: 100%; height: auto; transition: transform 1.6s var(--ease), opacity .8s; }
+.d-web .menu { opacity: 0; }
+.d-web.s1 .doors { transform: translateY(-13%); }
+.d-web.s2 .doors { opacity: 0; }
+.d-web.s2 .menu { opacity: 1; }
+.d-web .callbtn { position: absolute; left: 14px; right: 14px; bottom: 14px; height: 38px; border-radius: 19px; background: #8a1d1d; color: #fff; display: grid; place-items: center; font-size: 12px; font-weight: 600; letter-spacing: .1em; opacity: 0; transition: opacity .4s; }
+.d-web.s2 .callbtn { opacity: 1; animation: pulse 1.2s ease-in-out infinite; }
+@keyframes pulse { 50% { transform: scale(1.04); } }
+
+.d-ads .feed { position: absolute; left: 0; right: 0; top: 0; padding: 10px; display: grid; gap: 10px; transition: transform 1.8s var(--ease); }
+.d-ads .post { height: 130px; border-radius: 10px; background: #e2ddd3; }
+.d-ads .post.short { height: 70px; }
+.d-ads .ad { border-radius: 10px; background: #fff; overflow: hidden; box-shadow: 0 0 0 0 rgba(0,0,0,0); transition: box-shadow .4s; }
+.d-ads .ad img { width: 100%; height: 120px; object-fit: cover; display: block; }
+.d-ads .ad div { padding: 8px 10px; font-size: 11px; color: #15171a; display: flex; justify-content: space-between; align-items: center; }
+.d-ads .ad em { font-style: normal; font-size: 9px; color: #6b7280; display: block; }
+.d-ads .ad u { text-decoration: none; padding: 5px 10px; border-radius: 12px; background: #15171a; color: #fff; font-size: 10px; font-weight: 600; }
+.d-ads.s1 .feed, .d-ads.s2 .feed { transform: translateY(-150px); }
+.d-ads.s1 .ad, .d-ads.s2 .ad { box-shadow: 0 0 0 2px #15171a; }
+.d-ads.s1 .ad u { animation: pulse .8s ease-in-out 2; }
+
+.d-content .film { width: min(100% - 40px, 300px); aspect-ratio: 9 / 16; max-height: 360px; border-radius: 14px; overflow: hidden; background: #e8e6e1; }
+.d-content video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.d-content .fmts { position: absolute; left: 0; right: 0; bottom: 16px; display: flex; justify-content: center; gap: 8px; }
+
+.d-crm .row { display: grid; grid-template-columns: 1fr 1fr auto; align-items: center; gap: 10px; padding: 11px 0; border-bottom: 1px solid #1f1e1c; opacity: 0; transform: translateY(6px); transition: all .45s var(--ease); }
+.d-crm .row span { color: var(--stone); font-size: 12px; }
+.d-crm .row.in { opacity: 1; transform: none; }
+.d-crm .bubble { position: absolute; right: 26px; bottom: 26px; max-width: 250px; padding: 10px 14px; border-radius: 14px 14px 4px 14px; background: var(--ivory); color: var(--black); font-size: 12px; line-height: 1.45; opacity: 0; transform: translateY(10px); transition: all .45s var(--ease); }
+.d-crm .bubble i { display: block; font-style: normal; font-size: 10px; color: #57524a; margin-top: 4px; }
+.d-crm.s1 .bubble { opacity: 1; transform: none; }
+
+.d-google .gp { background: #fff; color: #202124; font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+.gp__search { position: absolute; top: 34px; left: 12px; right: 12px; display: flex; align-items: center; gap: 8px; height: 34px; padding: 0 12px; border-radius: 17px; background: #f1f3f4; font-size: 12px; }
+.gp__search::before { content: ""; flex: none; width: 10px; height: 10px; border: 1.5px solid #5f6368; border-radius: 50%; }
+.d-google .caret { display: inline-block; width: 1px; height: 14px; background: #202124; animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.gp__skel { position: absolute; top: 86px; left: 12px; right: 12px; display: grid; gap: 12px; }
+.gp__skel i { display: block; height: 44px; border-radius: 10px; background: #f1f3f4; }
+.gp__shot { position: absolute; left: 0; top: 0; width: 100%; height: auto; transform: translateY(105%); transition: transform .9s var(--ease); box-shadow: 0 -10px 30px rgba(0,0,0,.18); }
+.d-google.s1 .gp__shot, .d-google.s2 .gp__shot { transform: none; }
+.gp__hi { position: absolute; left: 6px; right: 6px; top: 228px; height: 50px; border: 2px solid #1a73e8; border-radius: 12px; opacity: 0; transform: scale(1.06); transition: all .5s var(--ease) .2s; }
+.d-google.s2 .gp__hi { opacity: 1; transform: none; }
+.d-google .phone .toast { bottom: 12px; }
+
+.d-social .phone__screen.ig { background: #0c1014; color: #f5f5f5; font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; }
+.ig__top { display: flex; align-items: center; justify-content: center; gap: 4px; padding: 12px 10px 8px; font-size: 11px; }
+.ig__top span { font-size: 9px; opacity: .8; }
+.ig__head { display: flex; align-items: center; gap: 12px; padding: 4px 12px 6px; }
+.ig__av { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; flex: none; }
+.ig__head > div > b { display: block; font-size: 10px; margin-bottom: 4px; }
+.ig__stats { display: flex; gap: 10px; font-size: 8px; color: #cfd2d6; }
+.ig__stats span b { display: block; font-size: 10px; color: #fff; }
+.ig__bio { padding: 0 12px; font-size: 7.5px; line-height: 1.4; color: #e6e6e6; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.ig__link { padding: 2px 12px 6px; font-size: 7.5px; color: #8ab4ff; }
+.ig__hl { display: flex; gap: 8px; padding: 2px 12px 8px; }
+.ig__hl span { display: flex; flex-direction: column; align-items: center; gap: 3px; width: 38px; font-size: 6.5px; color: #e6e6e6; white-space: nowrap; overflow: hidden; }
+.ig__hl img { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; }
+.d-social .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; }
+.d-social .grid div { aspect-ratio: 4 / 5; background: #1b1f24 center / cover no-repeat; opacity: 0; transform: scale(.92); transition: all .5s var(--ease); }
+.d-social .grid div.r2 { aspect-ratio: auto; height: 34px; background-position: top center; }
+.d-social .grid div.in { opacity: 1; transform: none; }
+.d-social .grid .new { position: relative; outline: 2px solid #8ab4ff; outline-offset: -2px; }
+.d-social .badge { position: absolute; left: 50%; top: 214px; transform: translateX(-50%); padding: 6px 10px; border-radius: 10px; background: #fff; color: #0c1014; font-size: 10px; font-weight: 600; white-space: nowrap; opacity: 0; transition: opacity .4s; z-index: 2; box-shadow: 0 8px 20px rgba(0,0,0,.4); }
+.d-social.s1 .badge { opacity: 1; }
+
+.offer { background: var(--charcoal); border-block: 1px solid var(--line); padding-block: clamp(48px, 7vw, 88px); }
+.offer .wrap { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px 56px; align-items: center; }
+.offer .free { display: inline-flex; padding: 5px 12px; border-radius: 999px; background: var(--ivory); color: var(--black); font-size: 11px; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; }
+.offer h2 { margin-top: 16px; font-size: clamp(28px, 3.4vw, 44px); font-weight: 400; line-height: 1.12; }
+.offer p { margin-top: 12px; max-width: 54ch; color: #c9c3b8; font-size: 17px; }
+.offer small { display: block; margin-top: 10px; color: var(--stone); font-size: 13px; }
+
+.result { display: grid; gap: 18px; }
+.ex { display: inline-flex; align-self: start; width: max-content; padding: 4px 10px; border-radius: 999px; border: 1px dashed var(--ink-soft); color: var(--ink-soft); font-size: 11px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; }
+.nums { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border-top: 2px solid var(--ink); }
+.nums div { padding: 16px 16px 0 0; }
+.nums b { display: block; font-weight: 300; font-size: clamp(34px, 3.6vw, 48px); line-height: 1; letter-spacing: -.02em; }
+.nums span { display: block; margin-top: 8px; font-size: 14px; color: #4a4741; }
+.quote { padding: 18px 20px; background: var(--ivory-deep); font-size: 16px; line-height: 1.6; color: #3b3936; }
+.quote b { display: block; margin-top: 8px; font-size: 13px; font-weight: 500; color: var(--ink); }
+
+@media (max-width: 860px) {
+  .demo .wrap, .offer .wrap { grid-template-columns: minmax(0, 1fr); }
+  .stage { height: 440px; }
+  .nums { grid-template-columns: minmax(0, 1fr); }
+  .nums div { padding: 14px 0; border-bottom: 1px solid #c7c0b3; }
+  .offer .btn { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { .stage * { transition: none !important; animation: none !important; } }
+
+.lang { position: relative; display: inline-grid; grid-template-columns: 1fr 1fr; align-items: center; height: 30px; padding: 2px; border: 1px solid currentColor; border-radius: 999px; font-size: 10px; font-weight: 600; letter-spacing: .14em; line-height: 1; text-decoration: none; text-transform: uppercase; color: var(--ivory); -webkit-tap-highlight-color: transparent; }
+.lang::before { content: ""; position: absolute; top: 2px; bottom: 2px; left: 2px; width: calc(50% - 2px); border-radius: 999px; background: currentColor; transition: transform .32s cubic-bezier(.2,.8,.2,1); }
+.lang[data-on="es"]::before { transform: translateX(100%); }
+.lang span { position: relative; z-index: 1; padding: 0 9px; line-height: 24px; text-align: center; opacity: .75; transition: color .32s, opacity .32s; }
+.lang span.on { color: var(--black); opacity: 1; }
+.lang:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.sitenav a.lang { display: inline-grid; min-height: 0; padding: 2px; color: var(--ivory); letter-spacing: .14em; }
+@media (max-width: 860px) { .sitenav a.lang { display: inline-grid; } .cta-sm .cta-more { display: none; } .sitenav { gap: 0 12px; } .sitenav .bar__svc { letter-spacing: .18em; } }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": "https://twincitys.net/es/servicios/redes-sociales/#service",
+  "name": "Manejo de redes sociales",
+  "serviceType": "Marketing en redes sociales",
+  "description": "Planeación, fotos, textos y publicaciones semanales en Instagram y Facebook para negocios de Miami.",
+  "url": "https://twincitys.net/es/servicios/redes-sociales/",
+  "provider": {
+    "@type": "ProfessionalService",
+    "@id": "https://twincitys.net/#studio",
+    "name": "Twin Citys",
+    "url": "https://twincitys.net/"
+  },
+  "areaServed": [
+    {
+      "@type": "City",
+      "name": "Miami"
+    },
+    {
+      "@type": "City",
+      "name": "Brickell"
+    },
+    {
+      "@type": "City",
+      "name": "Coral Gables"
+    },
+    {
+      "@type": "City",
+      "name": "Doral"
+    },
+    {
+      "@type": "City",
+      "name": "Hialeah"
+    },
+    {
+      "@type": "City",
+      "name": "Kendall"
+    },
+    {
+      "@type": "City",
+      "name": "Miami Beach"
+    },
+    {
+      "@type": "City",
+      "name": "Homestead"
+    },
+    {
+      "@type": "AdministrativeArea",
+      "name": "Miami-Dade County"
+    }
+  ],
+  "availableChannel": {
+    "@type": "ServiceChannel",
+    "serviceUrl": "https://twincitys.net/es/empezar/?service=social"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Qué redes manejan?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Instagram y Facebook para la mayoría de los negocios, y TikTok cuando tiene sentido. Nos enfocamos en donde de verdad están tus clientes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cada cuánto publican?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Normalmente de 8 a 20 posts al mes, según tu plan, en un horario fijo."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Tengo que aprobar los posts?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Tú apruebas el plan del mes. Después nosotros grabamos, escribimos y publicamos, así que no tienes que pensar en eso."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Contestan los comentarios y mensajes?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Contestamos los comentarios y mensajes para que tus clientes reciban respuesta rápido."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="tc" viewBox="0 0 892 756">
+    <polygon points="0,0 70,96 280,97 280,632 407,742 407,1"></polygon>
+    <polygon points="892,0 463,1 463,756 802,581 582,580 582,97 813,96"></polygon>
+  </symbol>
+</svg>
+
+
+<header class="top">
+  <div class="wrap">
+    <div class="bar">
+      <a class="brand" href="/es/"><svg class="tcmark" aria-hidden="true"><use href="#tc"></use></svg><span>Twin Citys <em>· Diseño web, Miami</em></span></a>
+      <nav class="sitenav" aria-label="Sitio"><button type="button" class="bar__svc" id="svc-btn" aria-expanded="false" aria-controls="svc-menu">Servicios</button><a href="/es/#work">Trabajos</a><a href="/es/#contact">Contacto</a><a class="lang" href="/services/social/" data-on="es" hreflang="en" lang="en" aria-label="View in English"><span data-l="en">EN</span><span data-l="es" class="on">ES</span></a><a class="cta-sm" href="/es/empezar/">Empezar<span class="cta-more">&nbsp;un proyecto</span></a></nav>
+    </div>
+    <nav class="tabs" id="tabs" aria-label="Servicios"></nav>
+  </div>
+</header>
+<nav class="svcmenu" id="svc-menu" aria-label="Servicios" hidden>
+  <div><ol class="svcmenu__list"><li><a href="../paginas-web/" data-i="0"><b>Diseño web</b><span>Páginas web para pequeños negocios de Miami.</span></a></li><li><a class="" href="../anuncios/" data-i="1"><b>Anuncios</b><span>Anuncios que traen llamadas, no solo clics.</span></a></li><li><a class="" href="../fotos-y-video/" data-i="2"><b>Fotos y video</b><span>Fotos y videos, hechos para ti.</span></a></li><li><a class="" href="../seguimiento-de-clientes/" data-i="3"><b>Seguimiento de clientes</b><span>Que no se te escape ningún cliente.</span></a></li><li><a class="" href="../seo-local/" data-i="4"><b>SEO local</b><span>Sal primero en Google Maps.</span></a></li><li><a class="" href="../redes-sociales/" data-i="5"><b>Redes sociales</b><span>Instagram y Facebook, manejados cada semana.</span></a></li></ol><div class="svcmenu__tools"><p>Herramientas gratis</p><a href="/es/chequeo/">Chequeo de Google <span>¿Tu negocio se ve bien en Google?</span></a><a href="/es/calculadora/">Calculadora de anuncios <span>¿Cuánto puedes pagar por cliente?</span></a></div><a class="svcmenu__all" href="/areas/">Zonas donde trabajamos</a></div>
+  <div class="svcmenu__rule" aria-hidden="true"></div>
+  <div class="svcmenu__view" aria-hidden="true"><div class="svcmenu__slide on" data-i="0"><div class="svcmenu__art"><img src="/work/tc-landing.webp" alt="La página principal de Twin Citys con el botón para empezar un proyecto" loading="lazy"></div><div class="svcmenu__meta"><p>Páginas web para pequeños negocios de Miami.</p></div></div><div class="svcmenu__slide" data-i="1"><div class="svcmenu__art svcmenu__art--offer"><img src="/work/lucerne-close.webp" alt="El pastelito de guayaba de Lucerne, como anuncio" loading="lazy"><div class="svcmenu__offer"><span>Gratis</span><b>Revisa los números de tus anuncios, gratis</b><i>Mira cuánto puedes pagar por cada cliente antes de perder dinero con tus anuncios.</i></div></div><div class="svcmenu__meta"><p>Anuncios que traen llamadas, no solo clics.</p></div></div><div class="svcmenu__slide" data-i="2"><div class="svcmenu__art"><video class="svcmenu__vid" src="/media/drive-loop.mp4" poster="/media/drive-poster.webp" muted loop playsinline preload="none" aria-label="Llegando a Miami al atardecer"></video></div><div class="svcmenu__meta"><p>Fotos y videos, hechos para ti.</p></div></div><div class="svcmenu__slide" data-i="3"><div class="svcmenu__art"><svg viewBox="0 0 640 360" role="img" aria-label="Una lista de clientes: nombres, de dónde llegó cada uno y los seguimientos enviados"><rect width="640" height="360" fill="#141413"/>
+<g font-family="-apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif" fill="#e8e3d9">
+<text x="40" y="54" font-size="12" letter-spacing="3" fill="#9a958b">CLIENTES · ESTA SEMANA</text><text x="600" y="54" font-size="12" text-anchor="end" fill="#9a958b">14 nuevos</text>
+<line x1="40" y1="72" x2="600" y2="72" stroke="#2a2927"/>
+<g font-size="15"><text x="40" y="110">Maria G.</text><text x="40" y="160">Daniel R.</text><text x="40" y="210">Bistro Cafe</text><text x="40" y="260">Ana P.</text><text x="40" y="310">Carlos M.</text></g>
+<g font-size="12" fill="#9a958b"><text x="230" y="110">Mensaje de Instagram</text><text x="230" y="160">Formulario web</text><text x="230" y="210">Anuncio de Google · llamada</text><text x="230" y="260">Anuncio de Meta</text><text x="230" y="310">Formulario web</text></g>
+<g font-size="11" letter-spacing="1.5"><rect x="430" y="94" width="120" height="24" rx="12" fill="#e8e3d9"/><text x="490" y="110" text-anchor="middle" fill="#0b0b0b">AGENDADO</text>
+<rect x="430" y="144" width="120" height="24" rx="12" fill="none" stroke="#e8e3d9"/><text x="490" y="160" text-anchor="middle">SEGUIMIENTO</text>
+<rect x="430" y="194" width="120" height="24" rx="12" fill="#e8e3d9"/><text x="490" y="210" text-anchor="middle" fill="#0b0b0b">AGENDADO</text>
+<rect x="430" y="244" width="120" height="24" rx="12" fill="none" stroke="#6f6b64"/><text x="490" y="260" text-anchor="middle" fill="#9a958b">RESPONDIÓ · 9s</text>
+<rect x="430" y="294" width="120" height="24" rx="12" fill="none" stroke="#e8e3d9"/><text x="490" y="310" text-anchor="middle">SEGUIMIENTO</text></g>
+<g stroke="#232220"><line x1="40" y1="130" x2="600" y2="130"/><line x1="40" y1="180" x2="600" y2="180"/><line x1="40" y1="230" x2="600" y2="230"/><line x1="40" y1="280" x2="600" y2="280"/></g>
+</g></svg></div><div class="svcmenu__meta"><p>Que no se te escape ningún cliente.</p></div></div><div class="svcmenu__slide" data-i="4"><div class="svcmenu__art"><img src="/work/mp-gbp.webp" alt="Perfil de Google de Marino Plumbing, verificado, 90% completo" loading="lazy"></div><div class="svcmenu__meta"><p>Sal primero en Google Maps.</p></div></div><div class="svcmenu__slide" data-i="5"><div class="svcmenu__art"><img src="/work/mp-ig.webp" alt="Perfil de Instagram de Marino Plumbing" loading="lazy"></div><div class="svcmenu__meta"><p>Instagram y Facebook, manejados cada semana.</p></div></div></div>
+</nav>
+
+<main id="main"></main>
+
+<footer>
+  <div class="wrap">
+    <span>Twin Citys · Miami, FL · <a href="/privacy/">Privacidad</a></span>
+    <span><a href="mailto:eric@twincitys.net">eric@twincitys.net</a> · <a href="mailto:k.butchers@twincitys.net">k.butchers@twincitys.net</a> · <a href="mailto:daniel@twincitys.net">daniel@twincitys.net</a> · <a href="https://instagram.com/twincitys.co">@twincitys.co</a> · <a href="https://maps.google.com/?cid=1861668075067573854" target="_blank" rel="noopener">Twin Citys en Google</a> · <a href="https://clutch.co/profile/twin-citys" target="_blank" rel="noopener">Clutch</a> · <a href="/areas/">Trabajamos en Miami, Brickell, Coral Gables, Doral, Hialeah, Kendall, Miami Beach y Homestead</a></span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var SLUG = {"websites": "paginas-web", "ads": "anuncios", "content": "fotos-y-video", "crm": "seguimiento-de-clientes", "google": "seo-local", "social": "redes-sociales"};
+  var S = [
+    { id: 'websites', tab: 'Diseño web', who: 'Eric',
+      eyebrow: 'Diseño de páginas web',
+      h1: 'Páginas web para pequeños negocios de Miami.',
+      sub: 'Diseñadas, hechas y lanzadas para tu negocio. Nosotros nos encargamos de todo, de principio a fin.',
+      what: 'Diseñamos y hacemos tu página desde cero para tu negocio: tus fotos, tu menú o tus servicios, tus precios si los quieres poner, y una forma de llamar, reservar o pedir en cada pantalla. Después la alojamos y la mantenemos funcionando.',
+      helps: [
+        ['Los clientes te buscan primero en el celular.', 'Antes de llamar o de entrar, te buscan. Una página que se vea tan bien como tu local hace la diferencia.'],
+        ['Contesta las preguntas que te hacen todo el día.', 'Horario, menú, precios, dónde estás, cómo reservar. Menos llamadas preguntando, más llamadas comprando.'],
+        ['Google la puede encontrar.', 'Hecha para que los buscadores la lean: los títulos correctos, una página para lo que haces y tu perfil de Google conectado.']
+      ],
+      gets: ['Diseño y desarrollo, desde cero', 'Hecha primero para el celular', 'Botones para llamar, reservar o pedir', 'Formulario de contacto o reservas a tu celular', 'Alojamiento y actualizaciones incluidos', 'Lista para Google desde el primer día'],
+      proof: [['La Vasca Deli Miami', '/es/#work'], ['Lucerne Bakery', '/es/#work']],
+      script: [],
+      close: 'Mira tu nueva página principal antes de pagar nada.' },
+
+    { id: 'ads', tab: 'Anuncios', who: 'Daniel',
+      eyebrow: 'Anuncios en Google y Facebook',
+      h1: 'Anuncios que traen llamadas, no solo clics.',
+      sub: 'Manejamos tus anuncios en Facebook, Instagram y Google, y te mostramos lo que te trae cada dólar.',
+      what: 'Hacemos tus anuncios y los manejamos en Facebook, Instagram y Google. Tú ves cuáles te traen clientes.',
+      helps: [
+        ['Llega a la gente cerca de ti que está lista.', 'Anuncios que se muestran en los barrios correctos y a la gente que ya está buscando lo que vendes.'],
+        ['Sabe lo que te trae lo que gastas.', 'Cada llamada, formulario y reserva conectada con el anuncio que la trajo.'],
+        ['Mejora cada mes.', 'Probamos los anuncios, nos quedamos con lo que funciona y quitamos lo que no. Tú no tienes que tocar nada.']
+      ],
+      gets: ['Campañas listas en Meta y Google', 'Las fotos, videos y textos de los anuncios', 'Seguimiento: píxel, llamadas y formularios', 'Revisiones y cambios cada semana', 'Un reporte mensual en palabras claras', 'Una persona a quien escribirle con tus preguntas'],
+      proof: [['La Vasca Deli Miami', '/es/#work']],
+      script: [],
+      close: 'Cuéntanos de tu negocio y te mostramos dónde están los clientes.' },
+
+    { id: 'content', tab: 'Fotos y video', who: 'Eric',
+      eyebrow: 'Fotos y video',
+      h1: 'Fotos y videos, hechos para ti.',
+      sub: 'Para negocios que no tienen tiempo, o no saben cómo hacerlos. Tu comida, tus productos, tu trabajo y tu local, listos para tu página, tus anuncios y tus redes.',
+      what: 'Fotografiamos tu negocio como lo ven los clientes en su mejor momento: los platos, los productos, el local, el equipo, el trabajo hecho. Después lo editamos en fotos y videos cortos del tamaño justo para cada lugar donde los publicas.',
+      helps: [
+        ['Las fotos del celular no venden.', 'Las buenas fotos son la primera razón por la que alguien te escoge a ti y no al de al lado.'],
+        ['Una sesión llena meses de posts.', 'Con una sola sesión tienes fotos, reels y videos para anuncios para usar en todas partes.'],
+        ['Tus anuncios salen más baratos.', 'Los anuncios con buenas fotos y videos consiguen más clics por el mismo dinero.']
+      ],
+      gets: ['Una sesión planeada en tu negocio', 'Fotos editadas, listas para publicar', 'Videos cortos para reels y anuncios', 'Todos los tamaños: página, feed, historia, anuncio', 'Tuyas para usar donde quieras', 'Hechas en tu horario'],
+      proof: [['Lucerne Bakery · el video del pastelito de guayaba', '/es/#work'], ['La Vasca · videos de platos', '/es/#work']],
+      script: [],
+      close: 'Hagamos que tu local se vea como se siente.' },
+
+    { id: 'crm', tab: 'Seguimiento de clientes', who: 'Daniel',
+      eyebrow: 'Seguimiento de clientes y CRM',
+      h1: 'Que no se te escape ningún cliente.',
+      sub: 'Las llamadas, los formularios y los mensajes llegan a un solo panel, con seguimientos que se mandan solos.',
+      what: 'Un panel sencillo, en tu celular y en tu computadora, donde llega cada cliente: formularios de la página, clientes de los anuncios y mensajes de Instagram y Facebook. Cada uno muestra de dónde vino y qué pasó después, y los mensajes o emails de seguimiento salen solos.',
+      helps: [
+        ['Ningún cliente perdido en un chat.', 'Todos los que te escriben quedan en una lista, con un recordatorio si nadie contestó.'],
+        ['El seguimiento pasa aunque estés ocupado.', 'Una respuesta automática en segundos, y un recordatorio después si no han reservado.'],
+        ['Mira qué te trae clientes de verdad.', 'De qué anuncio, página o post vino cada cliente, todo en una vista.']
+      ],
+      gets: ['Un panel hecho para tu negocio', 'Tus formularios, anuncios y mensajes conectados', 'Respuestas y seguimientos automáticos', 'De dónde vino cada cliente', 'Funciona en tu celular', 'Te enseñamos a ti y a tu equipo'],
+      proof: [],
+      script: [],
+      close: 'Deja de perder clientes que ya pagaste por conseguir.' },
+
+    { id: 'google', tab: 'SEO local', who: 'Kevin',
+      eyebrow: 'Perfil de Google',
+      h1: 'Sal primero en Google Maps.',
+      sub: 'Tu perfil de Google, tus reseñas y tu página bien configurados para que te encuentren a ti.',
+      what: 'Configuramos y cuidamos tu perfil de Google, te ayudamos a conseguir reseñas con nuestras tarjetas de reseñas de Google, y hacemos tu página para que Google la entienda: una página para cada cosa que haces y cada zona donde trabajas.',
+      helps: [
+        ['Entra en los resultados del mapa.', 'Los tres negocios que salen en el mapa se llevan la mayoría de las llamadas. Un perfil completo y activo es cómo llegas ahí.'],
+        ['Las reseñas venden por ti.', 'Las tarjetas de reseñas en tu mostrador convierten a los clientes contentos en estrellas en Google, en segundos.'],
+        ['Que te encuentren por lo que haces.', 'Una página por servicio y por barrio quiere decir una página esperando cada búsqueda.']
+      ],
+      gets: ['Perfil de Google configurado y manejado', 'Tarjetas de reseñas de Google para tu mostrador', 'Fotos, horario y posts al día', 'Páginas para cada servicio y zona', 'Títulos y descripciones que coinciden con la búsqueda', 'Una revisión mensual de dónde sales'],
+      proof: [],
+      script: [],
+      close: 'Sé el primer nombre que ven.' },
+
+    { id: 'social', tab: 'Redes sociales', who: 'Kevin',
+      eyebrow: 'Manejo de redes sociales',
+      h1: 'Instagram y Facebook, manejados cada semana.',
+      sub: 'Lo planeamos, lo grabamos, lo escribimos y lo publicamos. Tú sigue manejando tu negocio.',
+      what: 'Manejamos tu Instagram y Facebook: un plan mensual, las fotos y los videos, los textos, las publicaciones y las respuestas a comentarios y mensajes. Tú apruebas el plan y nosotros hacemos el resto.',
+      helps: [
+        ['Mantente presente con tus clientes de siempre.', 'La gente se olvida de los lugares que se quedan callados. Publicar seguido te mantiene en su semana.'],
+        ['Se ve como una sola marca.', 'El mismo estilo y la misma voz en cada post, en vez de lo que dio tiempo ese día.'],
+        ['Funciona con tus anuncios.', 'Los buenos posts se vuelven buenos anuncios, y los nuevos seguidores ven una página que vale la pena seguir.']
+      ],
+      gets: ['Un plan mensual que tú apruebas', 'Fotos, reels y textos', 'Publicaciones en un horario fijo', 'Respuestas a comentarios y mensajes', 'Un resumen corto cada mes', 'Conectado con tus anuncios y tu página'],
+      proof: [['La Vasca Deli Miami', '/es/#work']],
+      script: [],
+      close: 'Déjanos las publicaciones. Tú quédate con los clientes.' }
+  ];
+
+
+  var X = {
+    websites: { offer: ['Empezar un proyecto', 'Una página hecha para tu negocio.', 'Cuéntanos de tu negocio. Lo estudiamos, te mostramos algunas opciones y hacemos la que escojas.'], badge: 'Cómo funciona', note: 'Toma unos dos minutos.',
+      steps: ['Empieza con lo que haces', 'Después tu mejor trabajo', 'Y los detalles que los convencen'], demo: 'web',
+      nums: [['+40%', 'llamadas desde la página'], ['2m 10s', 'tiempo promedio en el menú'], ['120', 'pedidos en línea al mes']] },
+    ads: { link: '/es/calculadora/', heroBtn: 'Revisión de anuncios gratis', note: 'Gratis, sin registrarte. Toma unos diez segundos.', offer: ['Revisa los números de tus anuncios', 'Una calculadora gratis para tus anuncios.', 'Mueve tres barras y mira cuánto es lo máximo que puedes pagar por cliente antes de perder dinero con tus anuncios. ¿Ya tienes anuncios? Mira en segundos si se pagan solos.'],
+      steps: ['Tu anuncio llega a la gente cerca', 'Tocan Llamar o Reservar', 'Te llega el cliente, con el anuncio que lo trajo'], demo: 'ads',
+      nums: [['$9', 'costo por cliente'], ['64', 'clientes en 30 días'], ['22', 'citas de esos clientes']] },
+    content: { offer: ['Fotos de muestra gratis', 'Unas fotos gratis de lo que más vendes.', 'Pasamos por tu negocio y fotografiamos gratis el plato o producto que más vendes, para que veas la diferencia antes de reservar una sesión completa.'],
+      steps: ['Lo grabamos en tu local', 'Lo editamos en videos y fotos', 'Sale en tu feed, historias, página y anuncios'], demo: 'content',
+      nums: [['48', 'fotos de una sesión'], ['6', 'reels del mismo día'], ['2.3×', 'más clics que con fotos del celular']] },
+    crm: { offer: ['Revisión de clientes gratis', 'Una revisión gratis de cómo contestas a tus clientes.', 'Le escribimos a tu negocio como lo haría un cliente, y después te mostramos cuánto tardaron en contestar y qué se quedó sin respuesta.'],
+      steps: ['Llega un cliente de cualquier lado', 'Sale una respuesta en segundos', 'Seguimiento hasta que reserve'], demo: 'crm',
+      nums: [['9 seg', 'primera respuesta promedio'], ['100%', 'de los clientes con seguimiento'], ['−30%', 'menos citas perdidas con recordatorios']] },
+    google: { link: '/es/chequeo/', offer: ['Chequeo de Google gratis', 'Un chequeo gratis de tu perfil de Google.', 'Busca tu negocio como lo haría un cliente y marca las siete cosas que debería ver en Google. Es tuyo.'],
+      steps: ['Alguien cerca te busca', 'Tu perfil sale completo, con reseñas', 'Subes a donde están las llamadas'], demo: 'google',
+      nums: [['#1', 'en el mapa para la búsqueda principal'], ['3,400', 'vistas del perfil al mes'], ['+27', 'reseñas nuevas en Google']] },
+    social: { offer: ['Revisión de tu página gratis', 'Una revisión gratis de tu página.', 'Revisamos tu Instagram y Facebook y te mandamos una lista corta de lo primero que hay que arreglar. Es tuya, nos contrates o no.'],
+      steps: ['Un mes de posts, planeado y grabado', 'Publicado a tiempo, sin ti', 'Comentarios y mensajes contestados'], demo: 'social',
+      nums: [['16', 'posts al mes'], ['+60%', 'visitas al perfil'], ['100%', 'de los mensajes contestados']] }
+  };
+  var V = {
+    websites: ['Eric', '0:54'], ads: ['Daniel', '0:50'], content: ['Eric', '0:54'],
+    crm: ['Daniel', '0:47'], google: ['Kevin', '0:57'], social: ['Kevin', '0:56']
+  };
+  function wireVsl(card, id) {
+    var m = '/media/vsl-' + id, pre = new Image(); pre.src = m + '-point.webp';
+    card.addEventListener('click', function () {
+      if (card.classList.contains('is-playing')) return;
+      var vid = document.createElement('video');
+      vid.src = m + '-es.mp4'; vid.controls = true; vid.playsInline = true; vid.setAttribute('playsinline', ''); vid.poster = m + '-rest.webp';
+      card.classList.add('is-playing'); card.removeAttribute('aria-label');
+      card.appendChild(vid); var pp = vid.play(); if (pp && pp.catch) pp.catch(function () {});
+    });
+    if (window.matchMedia('(hover: none)').matches && 'IntersectionObserver' in window) {
+      var timer, io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          clearTimeout(timer);
+          if (e.isIntersecting) timer = setTimeout(function () { card.classList.add('is-pointing'); }, 1400);
+          else card.classList.remove('is-pointing');
+        });
+      }, { threshold: 0.6 });
+      io.observe(card);
+    }
+  }
+  function demoHTML(k) {
+    if (k === 'web') return '<div class="phone"><div class="phone__screen site"><iframe src="/es/?tour=1" title="La página principal de Twin Citys en un celular. Tócala para moverla tú." loading="lazy"></iframe></div></div><p class="site__hint">Toca el celular para moverlo tú</p>';
+    if (k === 'ads') return '<div class="phone"><div class="phone__screen"><div class="feed"><div class="post"></div><div class="post short"></div><div class="ad"><img src="/work/lv-dishes.webp" alt=""><div><span><b>Tu negocio</b><em>Patrocinado</em></span><u>Llamar</u></div></div><div class="post"></div><div class="post"></div></div><div class="toast"><b>Cliente nuevo · llamada</b><span>De tu anuncio de Meta · ahora</span></div></div></div>';
+    if (k === 'content') return '<div class="film"><video src="/media/drive-mobile.mp4" poster="/media/drive-poster.webp" muted loop playsinline preload="metadata"></video></div><div class="fmts"><span class="tag" data-at="0">Feed 4:5</span><span class="tag" data-at="1">Historia 9:16</span><span class="tag" data-at="2">Página 16:9</span></div>';
+    if (k === 'crm') return '<div class="panel"><div class="hd"><span>Clientes · hoy</span><span>3 nuevos</span></div>' +
+      '<div class="row" data-at="0"><b>Maria G.</b><span>Mensaje de Instagram</span><span class="tag" data-lit="2">Seguimiento enviado</span></div>' +
+      '<div class="row" data-at="0"><b>Daniel R.</b><span>Formulario web</span><span class="tag lit">Agendado</span></div>' +
+      '<div class="row" data-at="0"><b>Ana P.</b><span>Anuncio de Google · llamada</span><span class="tag">Respondió · 9s</span></div></div>' +
+      '<div class="bubble">¡Gracias, Maria! Aquí tienes el link para reservar, cualquier día de esta semana está bien.<i>Enviado automáticamente · 9 segundos</i></div>';
+    if (k === 'google') return '<div class="phone"><div class="phone__screen gp">' +
+      '<div class="gp__search"><span class="q"></span><span class="caret"></span></div>' +
+      '<div class="gp__skel"><i></i><i></i><i></i><i></i></div>' +
+      '<img class="gp__shot" src="/work/gbp-screen.webp" alt="El perfil de Google de Marino Plumbing: verificado, 90% completo, 934 vistas, 29 interacciones y 123 búsquedas desde junio">' +
+      '<span class="gp__hi" aria-hidden="true"></span>' +
+      '<div class="toast"><b>934 vistas desde junio</b><span>Marino Plumbing · perfil de Google</span></div></div></div>';
+    if (k === 'social') return '<div class="phone"><div class="phone__screen ig">' +
+      '<div class="ig__top"><b>305marinoplumbing</b><span>⌄</span></div>' +
+      '<div class="ig__head"><img class="ig__av" src="/work/ig-avatar.webp" alt=""><div><b>Marino Plumbing</b><div class="ig__stats"><span><b>7</b>posts</span><span><b>201</b>seguidores</span><span><b>177</b>seguidos</span></div></div></div>' +
+      '<p class="ig__bio">🧑‍🔧 Plumbers | Miami 🌴 | Licensed | Insured | 24/7 | Residential | Commercial | Repairs | Installs | Inspections | Remodels | 786-478-2150</p>' +
+      '<p class="ig__link">marinoplumbing.miami</p>' +
+      '<div class="ig__hl">' + [['ig-hl0', 'Drains'], ['ig-hl1', 'Fixtures'], ['ig-hl2', 'Repipes'], ['ig-hl3', 'Water Heat…']].map(function (h) { return '<span><img src="/work/' + h[0] + '.webp" alt="">' + h[1] + '</span>'; }).join('') + '</div>' +
+      '<div class="grid">' + ['ig-post0', 'ig-post1', 'ig-post2'].map(function (n, i) { return '<div' + (i === 0 ? ' class="new"' : '') + ' style="background-image:url(/work/' + n + '.webp)"></div>'; }).join('') +
+      ['ig-row2-0', 'ig-row2-1', 'ig-row2-2'].map(function (n) { return '<div class="r2" style="background-image:url(/work/' + n + '.webp)"></div>'; }).join('') + '</div>' +
+      '<div class="badge">Programado · mar 11:00 AM</div><div class="toast"><b>12 comentarios contestados</b><span>Y 4 mensajes · esta mañana</span></div></div></div>';
+    return '';
+  }
+  var demoTimer = 0, demoObs = null;
+  function runDemo() {
+    clearTimeout(demoTimer); if (demoObs) demoObs.disconnect();
+    var st = document.querySelector('.stage'), steps = document.querySelectorAll('.steps li');
+    if (!st) return;
+    var k = st.getAttribute('data-k'), step = -1, visible = false, reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var vid = st.querySelector('video');
+    function set(n) {
+      step = n; st.classList.remove('s0', 's1', 's2'); st.classList.add('s' + n);
+      steps.forEach(function (li, i) { li.classList.toggle('on', i === n); });
+      st.querySelectorAll('.tag[data-at]').forEach(function (t) { t.classList.toggle('lit', +t.getAttribute('data-at') === n); });
+      if (k === 'crm') {
+        st.querySelectorAll('.row').forEach(function (r, i) { setTimeout(function () { r.classList.add('in'); }, n === 0 ? i * 350 : 0); });
+        var f = st.querySelector('[data-lit="2"]'); if (f) { f.classList.toggle('lit', n === 2); f.textContent = n === 2 ? 'Agendado' : 'Seguimiento enviado'; }
+      }
+      if (k === 'google') {
+        var q = st.querySelector('.q'), text = 'plomero cerca de mí';
+        if (n === 0) { q.textContent = ''; var c = 0; (function type() { if (step !== 0) return; q.textContent = text.slice(0, ++c); if (c < text.length) setTimeout(type, 90); })(); }
+        else q.textContent = text;
+      }
+      if (k === 'social') { st.querySelectorAll('.grid div').forEach(function (g, i) { if (n === 0) { g.classList.remove('in'); setTimeout(function () { g.classList.add('in'); }, 120 * (8 - i)); } else g.classList.add('in'); }); }
+    }
+    function tick() { if (!visible) return; set((step + 1) % 3); demoTimer = setTimeout(tick, step === 2 ? 3400 : 2600); }
+    if (reduce) { set(2); if (k === 'crm' || k === 'social') st.querySelectorAll('.row, .grid div').forEach(function (e) { e.classList.add('in'); }); return; }
+    demoObs = new IntersectionObserver(function (es) {
+      visible = es[0].isIntersecting;
+      if (visible) { if (vid) { var pp = vid.play(); if (pp && pp.catch) pp.catch(function () {}); } if (step < 0 || !demoTimer) { demoTimer = 1; tick(); } }
+      else { clearTimeout(demoTimer); demoTimer = 0; if (vid) vid.pause(); }
+    }, { threshold: .35 });
+    demoObs.observe(st);
+  }
+  var tabs = document.getElementById('tabs'), main = document.getElementById('main');
+  tabs.innerHTML = S.map(function (s) { return '<a class="tab" href="../' + SLUG[s.id] + '/">' + s.tab + '</a>'; }).join('');
+
+  var FAQ = {"websites": [["¿Cuánto tiempo toma hacer una página web?", "La mayoría de las páginas de pequeños negocios quedan diseñadas, hechas y publicadas en dos a cuatro semanas. Las más grandes, con reservas, menús o pedidos en línea, pueden tomar un poco más, y te decimos el tiempo desde el principio."], ["¿Cuánto cuesta una página web en Miami?", "Depende de cuántas páginas necesites y de lo que tenga que hacer la página, como reservas, menús o pedidos en línea. Te damos un precio claro después de una llamada corta, antes de empezar."], ["¿Usan plantillas?", "No. Cada página se diseña desde cero para tu negocio. Primero te mostramos algunas opciones y hacemos la que escojas."], ["¿Alojan y actualizan la página después de lanzarla?", "Sí. El alojamiento, las actualizaciones y los cambios pequeños los hacemos nosotros cada mes, así que nunca tienes que tocar la página tú."]], "ads": [["¿Yo pago los anuncios?", "Sí. Lo que gastas en anuncios va directo de tu tarjeta a Google o Meta, en tu propia cuenta. Nosotros solo cobramos por nuestro trabajo de hacer y manejar los anuncios."], ["¿Anuncios en Google o en Facebook? ¿Qué es mejor para un negocio local?", "Google atrapa a la gente que ya está buscando lo que haces. Facebook e Instagram llegan a la gente cerca antes de que busque. A la mayoría de los negocios locales les va mejor con uno de cada uno, y te decimos con cuál empezar."], ["¿Qué tan rápido voy a ver resultados?", "Las llamadas y los mensajes casi siempre empiezan en las primeras dos semanas. El primer mes es para probar qué funciona, y desde ahí los resultados mejoran."], ["¿Cómo sé si los anuncios están funcionando?", "Cada llamada, formulario y mensaje queda conectado con el anuncio que lo trajo, y cada mes recibes un reporte en palabras claras."]], "content": [["¿Van a mi negocio a hacer las fotos?", "Sí. Vamos a cualquier lugar de Miami-Dade: tu restaurante, tienda, oficina o donde estés trabajando."], ["¿Qué me llevo de una sesión?", "Fotos editadas y videos cortos del tamaño justo para tu página, tu perfil de Google, Instagram y tus anuncios, listos para publicar."], ["No sé qué publicar. ¿Ustedes lo pueden planear?", "Sí. Planeamos qué grabar antes de ir, para que tengas contenido que va con tu negocio y que de verdad se usa."]], "crm": [["¿Qué es un CRM, en palabras sencillas?", "Un solo lugar que junta cada llamada, formulario y mensaje de tus clientes, para que veas quién te escribió y a quién todavía le falta una respuesta."], ["¿Le da seguimiento a los clientes por mí?", "Sí. Los clientes nuevos reciben una respuesta automática en segundos, y después un mensaje o email de seguimiento si no han reservado."], ["¿Tengo que saber de tecnología?", "No. Nosotros lo dejamos todo listo y te enseñamos a usarlo en unos minutos. Funciona desde tu celular."], ["¿Funciona con mi página y mis anuncios?", "Sí. Los formularios de la página, los clientes de los anuncios y los mensajes de Instagram y Facebook llegan todos al mismo lugar."]], "google": [["¿Cómo salgo más arriba en Google Maps?", "Con un perfil de Google completo y activo, reseñas constantes y una página web con páginas para lo que haces y donde trabajas. Nosotros nos encargamos de las tres cosas."], ["¿Cuánto tiempo toma el SEO local?", "Los arreglos al perfil pueden ayudar en semanas. Subir en las búsquedas con mucha competencia casi siempre toma unos meses."], ["¿Me pueden ayudar a conseguir más reseñas en Google?", "Sí. Te hacemos tarjetas de reseñas para tu mostrador y una forma sencilla de pedírselas a los clientes contentos, y contestamos cada reseña por ti."], ["¿Necesito una página web para el SEO local?", "Ayuda mucho. Google confía en los negocios que tienen una página web real que coincide con su perfil, y te da páginas que pueden salir en más barrios."]], "social": [["¿Qué redes manejan?", "Instagram y Facebook para la mayoría de los negocios, y TikTok cuando tiene sentido. Nos enfocamos en donde de verdad están tus clientes."], ["¿Cada cuánto publican?", "Normalmente de 8 a 20 posts al mes, según tu plan, en un horario fijo."], ["¿Tengo que aprobar los posts?", "Tú apruebas el plan del mes. Después nosotros grabamos, escribimos y publicamos, así que no tienes que pensar en eso."], ["¿Contestan los comentarios y mensajes?", "Sí. Contestamos los comentarios y mensajes para que tus clientes reciban respuesta rápido."]]};
+  function esc(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+  function render(id) {
+    var s = S.filter(function (x) { return x.id === id; })[0] || S[0];
+    [].forEach.call(tabs.children, function (a) { if (a.getAttribute('href') === '../' + SLUG[s.id] + '/') { a.setAttribute('aria-current', 'page'); a.scrollIntoView({ block: 'nearest', inline: 'center' }); } else a.removeAttribute('aria-current'); });
+    document.title = 'Twin Citys · ' + s.eyebrow;
+    var start = '/es/empezar/?service=' + s.id;
+    var others = S.filter(function (x) { return x.id !== s.id; });
+    var x = X[s.id], v = V[s.id], offerUrl = x.link || (start + '&offer=free');
+    main.innerHTML =
+      '<div class="page">' +
+      '<section class="hero"><svg class="hero__mark" viewBox="0 0 892 756" aria-hidden="true"><use href="#tc"></use></svg><div class="wrap">' +
+        '<div><p class="label">' + esc(s.eyebrow) + '</p><h1>' + esc(s.h1) + '</h1><p class="sub">' + esc(s.sub) + '</p>' +
+        '<div class="ctas"><a class="link" href="#watch">Mira a ' + v[0] + ' explicarlo</a></div></div>' +
+        '<div class="vcol">' +
+          '<button class="vsl" id="watch" type="button" aria-label="Ver: ' + v[0] + ' sobre ' + esc(s.tab) + ', ' + v[1] + '">' +
+            '<img class="vsl__rest" src="/media/vsl-' + s.id + '-rest.webp" alt="">' +
+            '<img class="vsl__point" src="/media/vsl-' + s.id + '-point.webp" alt="">' +
+            '<span class="vsl__play" aria-hidden="true"></span>' +
+            '<span class="vsl__meta" aria-hidden="true"><span>' + v[0] + ' · ' + esc(s.tab) + '</span><span>' + v[1] + '</span></span>' +
+          '</button>' +
+          '<a class="btn" href="' + (x.heroBtn ? start + '&offer=free' : offerUrl) + '">' + esc(x.heroBtn || x.offer[0]) + '</a>' +
+        '</div>' +
+      '</div></section>' +
+      '<section class="demo"><div class="wrap">' +
+        '<div><p class="label">Cómo funciona</p><h2>Míralo funcionar.</h2>' +
+        '<ol class="steps">' + x.steps.map(function (t, i) { return '<li><i>0' + (i + 1) + '</i><b>' + esc(t) + '</b></li>'; }).join('') + '</ol></div>' +
+        '<div class="stage d-' + x.demo + '" data-k="' + x.demo + '"' + (x.demo === 'web' ? '' : ' aria-hidden="true"') + '>' + demoHTML(x.demo) + '</div>' +
+      '</div></section>' +
+      '<section class="offer"><div class="wrap"><div><span class="free">' + esc(x.badge || 'Gratis') + '</span><h2>' + esc(x.offer[1]) + '</h2><p>' + esc(x.offer[2]) + '</p><small>' + (x.note ? esc(x.note) : x.link ? 'Gratis. Toma unos dos minutos.' : 'Gratis, sin compromiso. Toma dos minutos pedirlo.') + '</small></div>' +
+        '<a class="btn" href="' + offerUrl + '">' + esc(x.offer[0]) + '</a></div></section>' +
+      '<section class="sheet"><div class="wrap">' +
+        '<div class="row"><div><p class="label">Qué es</p><h2>' + esc(s.eyebrow) + '</h2></div><p>' + esc(s.what) + '</p></div>' +
+        '<div class="row"><div><p class="label">Cómo te ayuda</p><h2>Por qué vale la pena.</h2></div><div class="helps">' + s.helps.map(function (h) { return '<div><b>' + esc(h[0]) + '</b><span>' + esc(h[1]) + '</span></div>'; }).join('') + '</div></div>' +
+        '<div class="row"><div><p class="label">Lo que recibes</p><h2>Incluido.</h2></div><ul class="gets">' + s.gets.map(function (g) { return '<li>' + esc(g) + '</li>'; }).join('') + '</ul></div>' +
+        (FAQ[s.id] ? '<div class="row"><div><p class="label">Preguntas</p><h2>Bueno saber.</h2></div><div class="faq">' + FAQ[s.id].map(function (q) { return '<details><summary>' + esc(q[0]) + '</summary><p>' + esc(q[1]) + '</p></details>'; }).join('') + '</div></div>' : '') +
+      '</div></section>' +
+      '<section class="close"><div class="wrap"><h2>' + esc(s.close) + '</h2><p>¿Listo para todo? No damos precios antes de hablar. Cuéntanos de tu negocio en un formulario corto.</p>' +
+        '<div class="ctas"><a class="btn" href="' + start + '">Empezar un proyecto</a><a class="link" href="https://maps.google.com/?cid=1861668075067573854" target="_blank" rel="noopener">Mira nuestras reseñas en Google</a></div></div></section>' +
+      '<section class="more"><div class="wrap"><p class="label">También en Twin Citys</p><div class="more__grid">' +
+        others.map(function (o) { return '<a href="../' + SLUG[o.id] + '/"><b>' + esc(o.tab) + '</b><span>' + esc(o.h1) + '</span></a>'; }).join('') +
+      '</div></div></section>' +
+      '</div>';
+    wireVsl(document.getElementById('watch'), s.id);
+    setTimeout(runDemo, 50);
+  }
+  render('social');
+  document.title = 'Manejo de redes sociales en Miami · Twin Citys';
+})();
+</script>
+<script>
+(function () {
+  /* the same Services dropdown as the homepage; opens on the page you're on */
+  var b = document.getElementById('svc-btn'), m = document.getElementById('svc-menu'), top = document.querySelector('.top');
+  var links = m.querySelectorAll('.svcmenu__list a'), slides = m.querySelectorAll('.svcmenu__slide');
+  var vid = m.querySelector('.svcmenu__vid');
+  var here = '0'; links.forEach(function (l) { if (location.pathname.indexOf('/es/servicios/' + l.getAttribute('href').replace('../', '')) > -1) { here = l.dataset.i; l.setAttribute('aria-current', 'page'); } });
+  function place() { m.style.top = Math.round(top.getBoundingClientRect().bottom + (window.innerWidth > 820 ? 8 : 0)) + 'px'; }
+  function syncVid() { if (!vid) return; var on = !m.hidden && vid.closest('.svcmenu__slide').classList.contains('on'); if (on) { var pp = vid.play(); if (pp && pp.catch) pp.catch(function () {}); } else vid.pause(); }
+  function show(i) { links.forEach(function (l) { l.classList.toggle('on', l.dataset.i === i); }); slides.forEach(function (sl) { sl.classList.toggle('on', sl.dataset.i === i); }); syncVid(); }
+  function set(on) { if (on) { place(); show(here); } m.hidden = !on; b.setAttribute('aria-expanded', on ? 'true' : 'false'); document.documentElement.classList.toggle('has-menu', on); syncVid(); }
+  links.forEach(function (l) { l.addEventListener('mouseenter', function () { show(l.dataset.i); }); l.addEventListener('focus', function () { show(l.dataset.i); }); });
+  b.addEventListener('click', function (e) { e.stopPropagation(); set(m.hidden); });
+  document.addEventListener('click', function (e) { if (!m.hidden && !m.contains(e.target)) set(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') set(false); });
+  window.addEventListener('resize', function () { if (!m.hidden) place(); });
+  window.addEventListener('scroll', function () { if (!m.hidden && window.innerWidth > 820) set(false); }, { passive: true });
+})();
+</script>
+<script>
+document.querySelectorAll('.lang').forEach(function (t) {
+  t.addEventListener('click', function (e) {
+    if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+    e.preventDefault();
+    var to = t.dataset.on === 'en' ? 'es' : 'en';
+    try { localStorage.setItem('tc-lang', to); } catch (x) {}
+    t.dataset.on = to;
+    t.querySelectorAll('span').forEach(function (s) { s.classList.toggle('on', s.dataset.l === to); });
+    setTimeout(function () { location.href = t.getAttribute('href') + location.search + location.hash; }, 300);
+  });
+});
+</script>
+<script>document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[hreflang]');if(a)try{localStorage.setItem('tc-lang',a.getAttribute('hreflang').slice(0,2))}catch(x){}},true);</script>
+</body>
+</html>

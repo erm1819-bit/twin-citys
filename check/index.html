@@ -6,6 +6,10 @@
 <title>Free Google check for your business · Twin Citys</title>
 <meta name="description" content="Look your business up the way customers do and check seven things on Google: your profile, hours, phone, reviews, photos and website. A free two-minute check from Twin Citys, Miami.">
 <link rel="canonical" href="https://twincitys.net/check/">
+<link rel="alternate" hreflang="en" href="https://twincitys.net/check/">
+<link rel="alternate" hreflang="es" href="https://twincitys.net/es/chequeo/">
+<link rel="alternate" hreflang="x-default" href="https://twincitys.net/check/">
+<script>try{var p=localStorage.getItem('tc-lang');if(p&&p!==document.documentElement.lang.slice(0,2)){var a=document.querySelector('link[rel="alternate"][hreflang="'+p+'"]');if(a){var u=new URL(a.href);if(u.pathname!==location.pathname)location.replace(u.pathname+location.search+location.hash);}}}catch(e){}</script>
 <meta property="og:type" content="website">
 <meta property="og:title" content="Does your business look right on Google? · Twin Citys">
 <meta property="og:description" content="A free two-minute check for Miami businesses: seven things customers should see when they look you up.">
@@ -158,6 +162,14 @@ h1 { position: relative; margin: 18px 0 0; font-size: clamp(44px, 10vw, 92px); f
   #biz { width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+.lang { position: relative; display: inline-grid; grid-template-columns: 1fr 1fr; align-items: center; height: 30px; padding: 2px; border: 1px solid currentColor; border-radius: 999px; font-size: 10px; font-weight: 600; letter-spacing: .14em; line-height: 1; text-decoration: none; text-transform: uppercase; -webkit-tap-highlight-color: transparent; }
+.lang::before { content: ""; position: absolute; top: 2px; bottom: 2px; left: 2px; width: calc(50% - 2px); border-radius: 999px; background: currentColor; transition: transform .32s cubic-bezier(.2,.8,.2,1); }
+.lang[data-on="es"]::before { transform: translateX(100%); }
+.lang span { position: relative; z-index: 1; padding: 0 9px; line-height: 24px; text-align: center; opacity: .75; transition: color .32s, opacity .32s; }
+.lang span.on { color: var(--black); opacity: 1; }
+.lang:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.top__links a.lang { display: inline-grid; justify-content: stretch; min-height: 30px; }
+@media (max-width: 400px) { .top__links { gap: 14px; } .brand span { display: none; } }
 </style>
 </head>
 <body>
@@ -170,6 +182,7 @@ h1 { position: relative; margin: 18px 0 0; font-size: clamp(44px, 10vw, 92px); f
       </a>
       <nav class="top__links" aria-label="Contact">
         <a href="/#contact">Contact</a>
+        <a class="lang" href="/es/chequeo/" data-on="en" hreflang="es" lang="es" aria-label="Ver en español"><span data-l="en" class="on">EN</span><span data-l="es">ES</span></a>
         <a class="top__ig" href="https://instagram.com/twincitys.co" target="_blank" rel="noopener" aria-label="Twin Citys on Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M8 2.5h8A5.5 5.5 0 0 1 21.5 8v8a5.5 5.5 0 0 1-5.5 5.5H8A5.5 5.5 0 0 1 2.5 16V8A5.5 5.5 0 0 1 8 2.5zM12 7.3a4.7 4.7 0 1 0 0 9.4 4.7 4.7 0 0 0 0-9.4zm0 2a2.7 2.7 0 1 1 0 5.4 2.7 2.7 0 0 1 0-5.4zM17.2 5.6a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4z"/></svg></a>
       </nav>
     </header>
@@ -269,6 +282,19 @@ h1 { position: relative; margin: 18px 0 0; font-size: clamp(44px, 10vw, 92px); f
   }
   boxes.forEach(function (b) { b.addEventListener('change', score); });
 })();
+</script>
+<script>
+document.querySelectorAll('.lang').forEach(function (t) {
+  t.addEventListener('click', function (e) {
+    if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+    e.preventDefault();
+    var to = t.dataset.on === 'en' ? 'es' : 'en';
+    try { localStorage.setItem('tc-lang', to); } catch (x) {}
+    t.dataset.on = to;
+    t.querySelectorAll('span').forEach(function (s) { s.classList.toggle('on', s.dataset.l === to); });
+    setTimeout(function () { location.href = t.getAttribute('href') + location.search + location.hash; }, 300);
+  });
+});
 </script>
 </body>
 </html>

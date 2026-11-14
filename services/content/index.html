@@ -11,6 +11,10 @@
 <meta property="og:url" content="https://twincitys.net/services/content/">
 <meta property="og:image" content="https://twincitys.net/og.jpg">
 <link rel="preload" as="image" href="../../media/vsl-content-rest.webp" fetchpriority="high">
+<link rel="alternate" hreflang="en" href="https://twincitys.net/services/content/">
+<link rel="alternate" hreflang="es" href="https://twincitys.net/es/servicios/fotos-y-video/">
+<link rel="alternate" hreflang="x-default" href="https://twincitys.net/services/content/">
+<script>try{var p=localStorage.getItem('tc-lang');if(p&&p!==document.documentElement.lang.slice(0,2)){var a=document.querySelector('link[rel="alternate"][hreflang="'+p+'"]');if(a){var u=new URL(a.href);if(u.pathname!==location.pathname)location.replace(u.pathname+location.search+location.hash);}}}catch(e){}</script>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <style>
 :root {
@@ -331,6 +335,15 @@ footer a { color: var(--ivory); }
   .offer .btn { width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) { .stage * { transition: none !important; animation: none !important; } }
+
+.lang { position: relative; display: inline-grid; grid-template-columns: 1fr 1fr; align-items: center; height: 30px; padding: 2px; border: 1px solid currentColor; border-radius: 999px; font-size: 10px; font-weight: 600; letter-spacing: .14em; line-height: 1; text-decoration: none; text-transform: uppercase; color: var(--ivory); -webkit-tap-highlight-color: transparent; }
+.lang::before { content: ""; position: absolute; top: 2px; bottom: 2px; left: 2px; width: calc(50% - 2px); border-radius: 999px; background: currentColor; transition: transform .32s cubic-bezier(.2,.8,.2,1); }
+.lang[data-on="es"]::before { transform: translateX(100%); }
+.lang span { position: relative; z-index: 1; padding: 0 9px; line-height: 24px; text-align: center; opacity: .75; transition: color .32s, opacity .32s; }
+.lang span.on { color: var(--black); opacity: 1; }
+.lang:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.sitenav a.lang { display: inline-grid; min-height: 0; padding: 2px; color: var(--ivory); letter-spacing: .14em; }
+@media (max-width: 860px) { .sitenav a.lang { display: inline-grid; } .cta-sm .cta-more { display: none; } .sitenav { gap: 0 12px; } .sitenav .bar__svc { letter-spacing: .18em; } }
 </style>
 <script type="application/ld+json">
 {
@@ -438,7 +451,7 @@ footer a { color: var(--ivory); }
   <div class="wrap">
     <div class="bar">
       <a class="brand" href="/"><svg class="tcmark" aria-hidden="true"><use href="#tc"></use></svg><span>Twin Citys <em>· Web design, Miami</em></span></a>
-      <nav class="sitenav" aria-label="Site"><button type="button" class="bar__svc" id="svc-btn" aria-expanded="false" aria-controls="svc-menu">Services</button><a href="/#work">Work</a><a href="/#contact">Contact</a><a class="cta-sm" href="https://twincitys.net/start">Start a project</a></nav>
+      <nav class="sitenav" aria-label="Site"><button type="button" class="bar__svc" id="svc-btn" aria-expanded="false" aria-controls="svc-menu">Services</button><a href="/#work">Work</a><a href="/#contact">Contact</a><a class="lang" href="/es/servicios/fotos-y-video/" data-on="en" hreflang="es" lang="es" aria-label="Ver en español"><span data-l="en" class="on">EN</span><span data-l="es">ES</span></a><a class="cta-sm" href="https://twincitys.net/start">Start<span class="cta-more">&nbsp;a project</span></a></nav>
     </div>
     <nav class="tabs" id="tabs" aria-label="Services"></nav>
   </div>
@@ -738,5 +751,19 @@ footer a { color: var(--ivory); }
   window.addEventListener('scroll', function () { if (!m.hidden && window.innerWidth > 820) set(false); }, { passive: true });
 })();
 </script>
+<script>
+document.querySelectorAll('.lang').forEach(function (t) {
+  t.addEventListener('click', function (e) {
+    if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+    e.preventDefault();
+    var to = t.dataset.on === 'en' ? 'es' : 'en';
+    try { localStorage.setItem('tc-lang', to); } catch (x) {}
+    t.dataset.on = to;
+    t.querySelectorAll('span').forEach(function (s) { s.classList.toggle('on', s.dataset.l === to); });
+    setTimeout(function () { location.href = t.getAttribute('href') + location.search + location.hash; }, 300);
+  });
+});
+</script>
+<script>document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[hreflang]');if(a)try{localStorage.setItem('tc-lang',a.getAttribute('hreflang').slice(0,2))}catch(x){}},true);</script>
 </body>
 </html>

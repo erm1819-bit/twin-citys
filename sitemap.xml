@@ -13,4 +13,14 @@
   <url><loc>https://twincitys.net/break-even/</loc><priority>0.8</priority></url>
   <url><loc>https://twincitys.net/privacy/</loc><priority>0.3</priority></url>
   <url><loc>https://twincitys.net/terms/</loc><priority>0.3</priority></url>
+  <url><loc>https://twincitys.net/es/empezar/</loc><priority>0.8</priority></url>
+  <url><loc>https://twincitys.net/es/chequeo/</loc><priority>0.8</priority></url>
+  <url><loc>https://twincitys.net/es/calculadora/</loc><priority>0.8</priority></url>
+
+  <url><loc>https://twincitys.net/es/servicios/paginas-web/</loc><priority>0.8</priority></url>
+  <url><loc>https://twincitys.net/es/servicios/anuncios/</loc><priority>0.8</priority></url>
+  <url><loc>https://twincitys.net/es/servicios/fotos-y-video/</loc><priority>0.8</priority></url>
+  <url><loc>https://twincitys.net/es/servicios/seguimiento-de-clientes/</loc><priority>0.8</priority></url>
+  <url><loc>https://twincitys.net/es/servicios/seo-local/</loc><priority>0.8</priority></url>
+  <url><loc>https://twincitys.net/es/servicios/redes-sociales/</loc><priority>0.8</priority></url>
 </urlset>
