@@ -148,8 +148,15 @@ h1, h2, h3, p, ul { margin: 0; }
 .bar__ig { justify-content: center; min-width: 44px; margin-inline: -8px; opacity: .85; transition: opacity .2s; }
 .bar__ig:hover { opacity: 1; }
 .bar__ig svg { width: 21px; height: 21px; fill: currentColor; }
+.lang { position: relative; display: inline-grid; grid-template-columns: 1fr 1fr; align-items: center; height: 30px; padding: 2px; border: 1px solid currentColor; border-radius: 999px; font-size: 10px; font-weight: 600; letter-spacing: .14em; line-height: 1; text-decoration: none; text-transform: uppercase; -webkit-tap-highlight-color: transparent; }
+.lang::before { content: ""; position: absolute; top: 2px; bottom: 2px; left: 2px; width: calc(50% - 2px); border-radius: 999px; background: currentColor; transition: transform .32s cubic-bezier(.2,.8,.2,1); }
+.lang[data-on="es"]::before { transform: translateX(100%); }
+.lang span { position: relative; z-index: 1; padding: 0 9px; line-height: 24px; text-align: center; opacity: .75; transition: color .32s, opacity .32s; }
+.lang span.on { color: var(--black); opacity: 1; }
+.lang:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.bar__links .lang { min-height: 0; display: inline-grid; letter-spacing: .14em; }
 @media (max-width: 1100px) and (min-width: 821px) { .bar__what { display: none; } .bar__links { --bar-gap: 20px; } }
-@media (max-width: 960px) and (min-width: 821px) { .bar__links a:not(.bar__cta):not(.bar__ig) { display: none; } }
+@media (max-width: 960px) and (min-width: 821px) { .bar__links a:not(.bar__cta):not(.bar__ig):not(.lang) { display: none; } }
 .bar__svc { pointer-events: auto; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0; background: none; border: 0; color: inherit; cursor: pointer; font: inherit; letter-spacing: inherit; text-transform: inherit; }
 .bar__svc::after { content: ""; width: 6px; height: 6px; border-right: 1px solid currentColor; border-bottom: 1px solid currentColor; transform: translateY(-2px) rotate(45deg); transition: transform .25s; }
 .bar__svc[aria-expanded="true"]::after { transform: translateY(1px) rotate(-135deg); }
@@ -566,10 +573,11 @@ html.has-case .pill.is-ready { opacity: 0; pointer-events: none; }
   .plate { min-height: 0; padding-top: 44px; }
 }
 @media (max-width: 640px) {
-  .bar__links a:not(.bar__cta):not(.bar__ig) { display: none; }
+  .bar__links a:not(.bar__cta):not(.bar__ig):not(.lang) { display: none; }
   .bar .bar__links { --bar-gap: 8px; }
   .bar__ig { min-width: 36px; margin-inline: 0; }
   .bar .bar__cta { padding: 0 14px; font-size: 11px; letter-spacing: .1em; }
+  .bar__cta-more { display: none; }
   .bar__svc { letter-spacing: .18em; }
   .bar__links { gap: 0 16px; }
   .bar__brand span { display: none; }
@@ -580,6 +588,11 @@ html.has-case .pill.is-ready { opacity: 0; pointer-events: none; }
   .tagb--t, .tagb--c, .tagb--gap { left: 16px; right: auto; top: auto; transform: translateY(8px); }
   .tagb--t { bottom: 34%; } .tagb--c { bottom: 28%; } .tagb--gap { bottom: 22%; }
   .tagb--gap.on { transform: none; }
+}
+@media (max-width: 400px) {
+  .bar .bar__links { gap: 0 10px; }
+  .bar .lang span { padding: 0 7px; }
+  .bar .bar__cta { padding: 0 12px; }
 }
 
 .intro {
@@ -643,8 +656,9 @@ html.has-case .pill.is-ready { opacity: 0; pointer-events: none; }
     <a href="#work">Work</a>
     <a href="/check/">Check</a>
     <a href="#contact">Contact</a>
+    <a class="lang" href="/es/" data-on="en" hreflang="es" lang="es" aria-label="Ver en español"><span data-l="en" class="on">EN</span><span data-l="es">ES</span></a>
     <a class="bar__ig" href="https://instagram.com/twincitys.co" target="_blank" rel="noopener" aria-label="Twin Citys on Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M8 2.5h8A5.5 5.5 0 0 1 21.5 8v8a5.5 5.5 0 0 1-5.5 5.5H8A5.5 5.5 0 0 1 2.5 16V8A5.5 5.5 0 0 1 8 2.5zM12 7.3a4.7 4.7 0 1 0 0 9.4 4.7 4.7 0 0 0 0-9.4zm0 2a2.7 2.7 0 1 1 0 5.4 2.7 2.7 0 0 1 0-5.4zM17.2 5.6a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4z"/></svg></a>
-    <a class="bar__cta" href="https://twincitys.net/start">Start a project</a>
+    <a class="bar__cta" href="https://twincitys.net/start" aria-label="Start a project">Start<span class="bar__cta-more"> a project</span></a>
   </nav>
 </header>
 <nav class="svcmenu" id="svc-menu" aria-label="Services" hidden>
@@ -1529,4 +1543,16 @@ html.has-case .pill.is-ready { opacity: 0; pointer-events: none; }
 </body>
 </html>
 
+<script>
+document.querySelectorAll('.lang').forEach(function (t) {
+  t.addEventListener('click', function (e) {
+    if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+    e.preventDefault();
+    var to = t.dataset.on === 'en' ? 'es' : 'en';
+    t.dataset.on = to;
+    t.querySelectorAll('span').forEach(function (s) { s.classList.toggle('on', s.dataset.l === to); });
+    setTimeout(function () { location.href = t.href; }, 300);
+  });
+});
+</script>
 </body></html>

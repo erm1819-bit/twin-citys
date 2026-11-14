@@ -64,6 +64,12 @@ details { border-bottom: 1px solid var(--line); padding: 14px 0; }
 details summary { cursor: pointer; font-size: 16px; color: var(--ivory); }
 details p { margin: 10px 0 0; }
 .contact { margin-top: 18px; color: #cfc9be; }
+.lang { position: relative; display: inline-grid; grid-template-columns: 1fr 1fr; align-items: center; height: 30px; padding: 2px; border: 1px solid currentColor; border-radius: 999px; font-size: 10px; font-weight: 600; letter-spacing: .14em; line-height: 1; text-decoration: none; text-transform: uppercase; -webkit-tap-highlight-color: transparent; }
+.lang::before { content: ""; position: absolute; top: 2px; bottom: 2px; left: 2px; width: calc(50% - 2px); border-radius: 999px; background: currentColor; transition: transform .32s cubic-bezier(.2,.8,.2,1); }
+.lang[data-on="es"]::before { transform: translateX(100%); }
+.lang span { position: relative; z-index: 1; padding: 0 9px; line-height: 24px; text-align: center; opacity: .75; transition: color .32s, opacity .32s; }
+.lang span.on { color: var(--black); opacity: 1; }
+.lang:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
 </style>
 <script type="application/ld+json">
 {
@@ -120,7 +126,7 @@ details p { margin: 10px 0 0; }
 <header class="top">
   <div class="wrap">
     <a class="brand" href="/es/"><svg class="tcmark" aria-hidden="true"><use href="#tc"></use></svg><span>Twin Citys</span></a>
-    <a class="cta-sm" href="/" hreflang="en" lang="en">English</a>
+    <a class="lang" href="/" data-on="es" hreflang="en" lang="en" aria-label="View in English"><span data-l="en">EN</span><span data-l="es" class="on">ES</span></a>
   </div>
 </header>
 
@@ -164,5 +170,17 @@ details p { margin: 10px 0 0; }
     <span><a href="/" hreflang="en">English</a> · <a href="/areas/">Zonas</a> · <a href="/privacy/">Privacidad</a> · <a href="https://instagram.com/twincitys.co">@twincitys.co</a> · <a href="https://clutch.co/profile/twin-citys" target="_blank" rel="noopener">Clutch</a></span>
   </div>
 </footer>
+<script>
+document.querySelectorAll('.lang').forEach(function (t) {
+  t.addEventListener('click', function (e) {
+    if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+    e.preventDefault();
+    var to = t.dataset.on === 'en' ? 'es' : 'en';
+    t.dataset.on = to;
+    t.querySelectorAll('span').forEach(function (s) { s.classList.toggle('on', s.dataset.l === to); });
+    setTimeout(function () { location.href = t.href; }, 300);
+  });
+});
+</script>
 </body>
 </html>
