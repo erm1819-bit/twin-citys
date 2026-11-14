@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Twin Citys Lead Map</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+:root{
+  --ink:#0b0b0b;
+  --panel:#141414;
+  --panel-2:#1c1c1c;
+  --line:#2a2a2a;
+  --ivory:#e8e3d9;
+  --muted:#9a958c;
+  --gold:#e0a82e;
+  --green:#3fae6a;
+  --blue:#5aa9e6;
+  --grey:#5c5953;
+  --coral:#e8704a;
+  --sans:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%;margin:0}
+body{background:var(--ink);color:var(--ivory);font:14px/1.45 var(--sans);overflow:hidden}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--ivory);outline-offset:2px}
+
+#map{position:absolute;inset:0;background:var(--ink)}
+.leaflet-container{background:var(--ink);font-family:var(--sans)}
+.leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) brightness(.85) contrast(.9) saturate(.25)}
+.leaflet-control-attribution{background:rgba(11,11,11,.7)!important;color:var(--muted)!important;font-size:10px}
+.leaflet-control-attribution a{color:var(--muted)!important}
+.leaflet-control-zoom a{background:var(--panel)!important;color:var(--ivory)!important;border-color:var(--line)!important}
+
+.top{position:absolute;z-index:1000;top:0;left:0;right:0;display:flex;gap:10px;align-items:center;
+  padding:calc(12px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 12px max(16px,env(safe-area-inset-left,0px));
+  background:linear-gradient(var(--ink) 55%,transparent);pointer-events:none}
+.top>*{pointer-events:auto}
+.mark{width:34px;height:29px;flex:none}
+.mark polygon{fill:var(--ivory)}
+.search{flex:1;min-width:0;position:relative;max-width:520px}
+.search input{width:100%;height:42px;border-radius:21px;border:1px solid var(--line);background:var(--panel);padding:0 16px;outline:none}
+.search input:focus{border-color:var(--muted)}
+.results{position:absolute;top:48px;left:0;right:0;background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.results button{display:block;width:100%;text-align:left;padding:10px 14px;background:none;border:0;border-bottom:1px solid var(--line)}
+.results button:last-child{border-bottom:0}
+.results button:hover,.results button:focus-visible{background:var(--panel-2)}
+.results small{display:block;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pill{height:42px;padding:0 16px;border-radius:21px;border:1px solid var(--line);background:var(--panel);white-space:nowrap;flex:none}
+.pill b{font-weight:600}
+
+.legend{position:absolute;z-index:1000;left:max(16px,env(safe-area-inset-left,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));
+  display:flex;flex-direction:column;gap:8px;background:rgba(20,20,20,.92);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.legend .row{display:flex;align-items:center;gap:10px;font-variant-numeric:tabular-nums}
+.legend .row span:last-child{margin-left:auto;padding-left:14px;color:var(--muted)}
+.dot{width:12px;height:12px;border-radius:50%;flex:none}
+.dot.none{background:var(--gold)}
+.dot.social{background:var(--gold);box-shadow:0 0 0 2px var(--ink),0 0 0 3.5px var(--ivory)}
+.dot.site{background:var(--green)}
+.dot.dead{background:var(--coral)}
+.legend .src{color:var(--muted);font-size:11px}
+.toggle{flex-wrap:wrap}
+.dot.talking{background:var(--blue)}
+.dot.client{background:var(--ivory)}
+.dot.nogo{background:var(--grey)}
+.legend .mine{display:flex;gap:12px;color:var(--muted);font-size:12px;border-top:1px solid var(--line);padding-top:8px}
+.legend .mine span{display:flex;align-items:center;gap:6px}
+.legend .mine .dot{width:9px;height:9px}
+.toggle{display:flex;gap:4px}
+.toggle button{flex:1;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:none;color:var(--muted);white-space:nowrap}
+.toggle button[aria-pressed="true"]{background:var(--ivory);color:var(--ink);border-color:var(--ivory)}
+.filters{position:absolute;z-index:1150;top:calc(62px + env(safe-area-inset-top,0px));right:max(16px,env(safe-area-inset-right,0px));width:340px;max-width:calc(100% - 32px);
+  background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.filters h3{margin:0;font-size:12px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:none;color:var(--muted)}
+.chips button[aria-pressed="true"]{background:var(--ivory);color:var(--ink);border-color:var(--ivory)}
+.pill.on{border-color:var(--ivory)}
+.statusrow{display:flex;gap:6px;margin-bottom:8px}
+.statusrow button{flex:1;height:38px;border-radius:10px;border:1px solid var(--line);background:none;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:7px}
+.statusrow button[aria-pressed="true"]{color:var(--ivory);border-color:var(--ivory);background:var(--panel-2)}
+.heart{position:absolute;top:12px;right:52px;width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:var(--panel-2);line-height:1;color:var(--muted)}
+.heart[aria-pressed="true"]{color:var(--ink);background:var(--ivory);border-color:var(--ivory)}
+.sheet h2{padding-right:76px}
+.linkbtn{background:none;border:0;padding:0;color:var(--muted);text-decoration:underline;font-size:12px;margin-top:14px}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted);margin-right:4px}
+
+.status{position:absolute;z-index:1000;left:50%;transform:translateX(-50%);top:calc(70px + env(safe-area-inset-top,0px));
+  background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:7px 14px;color:var(--muted);font-size:13px;white-space:nowrap}
+
+.sheet{position:absolute;z-index:1100;right:max(16px,env(safe-area-inset-right,0px));top:calc(70px + env(safe-area-inset-top,0px));
+  width:360px;max-height:calc(100% - 100px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));overflow:auto;
+  background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px}
+.sheet h2{margin:0 0 4px;font-size:20px;line-height:1.2;text-wrap:balance}
+.sheet .cat{color:var(--muted);text-transform:capitalize}
+.badge{display:inline-flex;align-items:center;gap:8px;margin:14px 0 6px;padding:5px 11px;border-radius:999px;background:var(--panel-2);border:1px solid var(--line);font-size:13px}
+.fields{display:grid;grid-template-columns:72px 1fr;gap:8px 12px;margin:14px 0 18px}
+.fields dt{color:var(--muted)}
+.fields dd{margin:0;min-width:0;overflow-wrap:anywhere}
+.fields a{color:var(--ivory)}
+.actions{display:flex;flex-direction:column;gap:8px}
+.primary{height:46px;border-radius:23px;border:0;background:var(--ivory);color:var(--ink);font-weight:600}
+.primary[disabled]{opacity:.5;cursor:default}
+.ghost{height:42px;border-radius:21px;border:1px solid var(--line);background:none;display:flex;align-items:center;justify-content:center;text-decoration:none;color:var(--ivory)}
+.close{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:var(--panel-2);line-height:1}
+.note{color:var(--muted);font-size:12px;margin-top:14px}
+
+.queue{position:absolute;z-index:1200;inset:0 0 0 auto;width:400px;max-width:100%;background:var(--panel);border-left:1px solid var(--line);
+  display:flex;flex-direction:column;padding:calc(18px + env(safe-area-inset-top,0px)) max(18px,env(safe-area-inset-right,0px)) calc(18px + env(safe-area-inset-bottom,0px)) 18px}
+.queue header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.queue h2{margin:0;font-size:18px;flex:1}
+.qlist{flex:1;overflow:auto;display:flex;flex-direction:column;gap:10px}
+.qitem{border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:var(--panel-2)}
+.qitem strong{display:block}
+.qitem small{color:var(--muted);display:block;margin-bottom:10px}
+.qitem .btns{display:flex;gap:6px;flex-wrap:wrap}
+.qitem .btns button{padding:6px 11px;border-radius:8px;border:1px solid var(--line);background:none;font-size:13px}
+.empty{color:var(--muted);padding:24px 4px}
+.qfoot{display:flex;gap:8px;margin-top:14px}
+.qfoot button{flex:1}
+
+.toast{position:absolute;z-index:1300;left:50%;transform:translateX(-50%);bottom:calc(24px + env(safe-area-inset-bottom,0px));
+  background:var(--ivory);color:var(--ink);padding:10px 18px;border-radius:20px;font-weight:500;white-space:nowrap}
+
+@media (max-width:640px){
+  .pill .lbl{display:none}
+  .sheet{left:0;right:0;top:auto;bottom:0;width:auto;border-radius:18px 18px 0 0;max-height:72%;
+    padding:20px max(16px,env(safe-area-inset-right,0px)) calc(20px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+  .legend{bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+  .toast{bottom:auto;top:calc(70px + env(safe-area-inset-top,0px))}
+}
+@media (prefers-reduced-motion:no-preference){
+  .sheet,.queue,.toast{animation:in .18s ease-out}
+  @keyframes in{from{opacity:0;transform:translateY(6px)}}
+  .toast{animation:none}
+}
+</style>
+</head>
+<body>
+<div id="map" role="application" aria-label="Business map"></div>
+
+<div class="top">
+  <svg class="mark" viewBox="0 0 892 756" aria-label="Twin Citys"><polygon points="0,0 70,96 280,97 280,632 407,742 407,1"/><polygon points="892,0 463,1 463,756 802,581 582,580 582,97 813,96"/></svg>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search a business, street, city or country" autocomplete="off" aria-label="Search">
+    <div class="results" id="results" hidden></div>
+  </div>
+  <button class="pill" id="openFilters" aria-expanded="false">Filters</button>
+  <button class="pill" id="openQueue"><span class="lbl">My leads </span><b id="qcount">0</b></button>
+</div>
+
+<div class="status" id="status" hidden></div>
+
+<div class="legend" aria-live="polite">
+  <div class="row"><span class="dot none"></span><span>No website</span><span id="cNone">0</span></div>
+  <div class="row"><span class="dot social"></span><span>Social only</span><span id="cSocial">0</span></div>
+  <div class="row" id="deadRow" hidden><span class="dot dead"></span><span>Website down</span><span id="cDead">0</span></div>
+  <div class="row"><span class="dot site"></span><span>Has website</span><span id="cSite">0</span></div>
+  <div class="mine"><span><i class="dot talking"></i>Talking</span><span><i class="dot client"></i>Client</span><span><i class="dot nogo"></i>No-go</span></div>
+  <div class="src" id="src" hidden></div>
+</div>
+
+<div class="filters" id="filters" hidden>
+  <h3>Website</h3>
+  <div class="toggle" id="siteFilter">
+    <button data-f="all" aria-pressed="true">All</button>
+    <button data-f="none" aria-pressed="false">No website</button>
+    <button data-f="social" aria-pressed="false">Social only</button>
+    <button data-f="dead" aria-pressed="false" id="fDead" hidden>Website down</button>
+  </div>
+  <h3>Chains and franchises</h3>
+  <div class="toggle" id="chainFilter">
+    <button data-c="0" aria-pressed="true">Hidden</button>
+    <button data-c="1" aria-pressed="false">Shown</button>
+  </div>
+  <h3>Type of business</h3>
+  <div class="chips" id="groupFilter"></div>
+</div>
+
+<aside class="sheet" id="sheet" hidden aria-label="Business details"></aside>
+
+<aside class="queue" id="queue" hidden aria-label="My leads">
+  <header><h2>My leads</h2><button class="close" id="closeQueue" aria-label="Close">✕</button></header>
+  <div class="qlist" id="qlist"></div>
+  <div class="qfoot"><button class="ghost" id="exportCsv">Export CSV</button></div>
+</aside>
+
+<div class="toast" id="toast" hidden></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="twin-citys-leads-miami.js"></script>
+<script>
+(function(){
+const OVERPASS = "https://overpass-api.de/api/interpreter";
+const NOMINATIM = "https://nominatim.openstreetmap.org/search";
+const DATA = window.TC_LEADS || null;
+const MIN_ZOOM = DATA ? 14 : 15;
+const START = [25.7656, -80.2195];
+const SOCIAL = /instagram\.com|facebook\.com|fb\.com|linktr\.ee|tiktok\.com|yelp\.com|wa\.me|whatsapp/i;
+const COLORS = {none:"#e0a82e", social:"#e0a82e", site:"#3fae6a", dead:"#e8704a", talking:"#5aa9e6", client:"#e8e3d9", nogo:"#5c5953"};
+const GROUPS = ["Food & drink","Beauty","Health","Auto","Trades","Fitness","Professional","Retail","Services"];
+const STATUS = {talking:"Talking", client:"Client", nogo:"No-go"};
+
+const $ = id => document.getElementById(id);
+const store = {
+  get(k, d){ try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch(e){ return d; } },
+  set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+};
+
+const view = store.get("tc-map-view", {c:START, z:16});
+const map = L.map("map", {preferCanvas:true, zoomControl:false}).setView(view.c, view.z);
+L.control.zoom({position:"bottomright"}).addTo(map);
+L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}", {
+  maxZoom:20, maxNativeZoom:19,
+  attribution:'Map tiles &copy; Esri and its data providers'
+}).addTo(map);
+
+const layer = L.layerGroup().addTo(map);
+const places = new Map();
+const markers = new Map();
+let filter = "all";
+let groups = new Set();
+let showChains = false;
+const GENERIC_HOST = /facebook|instagram|google|goo\.gl|yelp|wixsite|wix\.com|squarespace|godaddysites|weebly|business\.site|linktr|blogspot|wordpress|shopify|square\.site|doordash|ubereats|grubhub|opentable|booksy|vagaro|styleseat|toasttab|clover|yellowpages|mapquest|tripadvisor|bit\.ly|youtube|tiktok|twitter|linkedin|zocdoc|healthgrades|realtor|zillow|remax|kw\.com|coldwellbanker|century21|compass\.com|statefarm|allstate|myshopify|site123|webnode|carrd|canva|mindbodyonline|schedulicity|fresha|setmore|calendly|menufy|chownow|order\.online|slicelife|bbb\.org|manta|nextdoor|thumbtack|angi|homeadvisor/i;
+const BIG_CHAIN = /^(mcdonald|starbucks|pizza hut|domino|burger king|wendy s|taco bell|kfc|popeyes|dunkin|chick fil a|chipotle|papa john|little caesars|walgreens|cvs|walmart|publix|winn dixie|7 eleven|circle k|exxon|racetrac|autozone|advance auto|o reilly|home depot|lowe s|best buy|ross dress|marshalls|tj maxx|dollar tree|dollar general|family dollar|t mobile|at t|verizon|metro by|boost mobile|cricket wireless|bank of america|chase bank|wells fargo|citibank|td bank|truist|regions bank|pnc bank|h r block|the ups store|ups store|u haul|enterprise rent|budget rent|planet fitness|la fitness|orangetheory|crunch fitness|great clips|supercuts|sally beauty|ulta|sephora|five guys|panera|olive garden|chili s|applebee|ihop|denny s|pollo tropical|sedano s|presidente supermarket|la carreta|miami subs|sonic drive|arby s|jimmy john|firehouse subs|jersey mike|panda express|wingstop|cheesecake factory|whole foods|trader joe|costco|sam s club|bj s|office depot|petco|petsmart|western union|moneygram|amscot|state farm|allstate|geico|jiffy lube|tires plus|firestone|pep boys|goodyear|hilton|marriott|holiday inn|hampton inn|la quinta|days inn|motel 6|extra space|public storage|cubesmart|redbox|coinstar|bitcoin depot|coinflip|athena bitcoin|quest diagnostics|labcorp|baptist health|jackson health|leon medical|chenmed|conviva|sanitas|minutekey|auntie anne|cinnabon|sbarro|nathan s|haagen dazs|baskin|carvel|cold stone|smoothie king|tropical smoothie|jamba|einstein bro|krispy kreme|shake shack|chuck e|dave buster|red lobster|longhorn|texas roadhouse|tgi friday|buffalo wild|carrabba|bonefish|p f chang|flanigan|sports clips|massage envy|european wax|hand stone|the joint chiro|aspen dental|america s best|pearle vision|lenscrafters|visionworks|sunglass hut|foot locker|gamestop|victoria s secret|bath body|old navy|h m|zara|forever 21|macy s|jcpenney|kohl s|nordstrom|dillard|sherwin williams|ace hardware|harbor freight|tractor supply|napa auto|carmax|carvana|valvoline|meineke|maaco|aamco|christian brothers|caliber collision|safelite|sunshine gasoline|u gas)\b/;
+const EXACT_CHAIN = /^(eleven|subway|shell|target|bp|mobil|marathon|navarro|checkers|midas|outback|amazon|gap|speedway|valero|citgo|texaco|chevron|hertz|avis|staples|goodwill|burlington|gnc|aldi|hooters|benihana|sunoco|wawa|fedex|usps)( express| gas| gas station| station| store| food mart| pharmacy| restaurant| car rental| office| rent a car)?$/;
+const GEO = /^(miami|north miami|south miami|west miami|miami beach|miami gardens|miami lakes|miami springs|miami shores|miami dade|coral gables|coral way|coconut grove|kendall|west kendall|kendall west|hialeah|doral|homestead|little havana|brickell|wynwood|key biscayne|sunny isles|aventura|cutler bay|palmetto bay|pinecrest|sweetwater|westchester|opa locka|florida|south florida|bird road|dade county|downtown miami|south beach|north beach|the|la|el|los|las)( |$)/;
+function nameKey(n){ return String(n).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").split(/ - | @ | at |\(|#|\|/)[0].replace(/[^a-z0-9]+/g," ").replace(/\b\d+\b/g," ").replace(/\s+/g," ").trim(); }
+function hostOf(u){ try { const h = new URL(/^https?:/i.test(u) ? u : "http://" + u).hostname.toLowerCase().split("."); return h.slice(-2).join("."); } catch(e){ return ""; } }
+function flagChains(list){
+  const dom = new Map();
+  for (const p of list){ p._k = nameKey(p.name); p._h = p.site && !GENERIC_HOST.test(p.site) ? hostOf(p.site) : ""; if (p._h) dom.set(p._h, (dom.get(p._h) || 0) + 1); }
+  const ev = new Map(), names = new Set(), strong = new Set();
+  for (const p of list){ if (p._k.length >= 4 && (p.chain || (p._h && dom.get(p._h) >= 3))) ev.set(p._k, (ev.get(p._k) || 0) + 1); }
+  for (const [k, n] of ev){ if (n >= 2) names.add(k); if (n >= 3 && !GEO.test(k)) strong.add(k); }
+  for (const p of list){
+    const w = p._k.split(" ");
+    p.chain = !!(p.chain || (p._h && dom.get(p._h) >= 3) || names.has(p._k) || BIG_CHAIN.test(p._k) || EXACT_CHAIN.test(p._k)
+      || (w.length > 2 && strong.has(w.slice(0, 2).join(" "))) || (w.length > 3 && strong.has(w.slice(0, 3).join(" "))));
+    delete p._k; delete p._h;
+  }
+}
+let marks = store.get("tc-map-marks", {});
+for (const q of store.get("tc-map-queue", [])){ if (!marks[q.id]) marks[q.id] = {p:q, build:true, added:q.added}; }
+function saveMarks(){ store.set("tc-map-marks", marks); }
+function mark(p){ return marks[p.id] || {}; }
+function setMark(p, patch){
+  const m = {...(marks[p.id] || {added:new Date().toISOString()}), ...patch, p};
+  if (!m.status && !m.fav && !m.build && !m.hasSite) delete marks[p.id]; else marks[p.id] = m;
+  saveMarks(); updateQueueCount(); refreshMarker(p);
+}
+function kindOf(p){ return mark(p).hasSite ? "site" : p.kind; }
+function leadList(){ return Object.values(marks).filter(m => m.status || m.fav || m.build).sort((a,b) => (b.added||"").localeCompare(a.added||"")); }
+let inflight = null;
+let timer = null;
+let selected = null;
+
+function classify(t){
+  const urls = [t.website, t["contact:website"], t.url, t["brand:website"]].filter(Boolean);
+  const real = urls.filter(u => !SOCIAL.test(u));
+  if (real.length || t["brand:wikidata"]) return "site";
+  if (urls.length || t["contact:instagram"] || t["contact:facebook"] || t["contact:tiktok"]) return "social";
+  return "none";
+}
+
+function groupOf(t){
+  const a = t.amenity, s = t.shop;
+  if (/^(restaurant|cafe|fast_food|bar|pub|ice_cream|nightclub)$/.test(a) || /^(bakery|supermarket|convenience|butcher|deli|alcohol|greengrocer|confectionery|coffee|seafood|pastry|beverages)$/.test(s)) return "Food & drink";
+  if (/^(hairdresser|beauty|cosmetics|massage|tattoo|perfumery)$/.test(s)) return "Beauty";
+  if (t.healthcare || /^(dentist|doctors|clinic|pharmacy|veterinary)$/.test(a) || /^(optician|medical_supply|chemist)$/.test(s)) return "Health";
+  if (/^(car|car_repair|tyres|car_parts|motorcycle)$/.test(s) || /^(car_wash|car_rental|driving_school)$/.test(a)) return "Auto";
+  if (t.craft) return "Trades";
+  if (t.leisure) return "Fitness";
+  if (t.office) return "Professional";
+  if (s) return /^(laundry|dry_cleaning|tailor|locksmith|funeral_directors|travel_agency|copyshop|pet_grooming)$/.test(s) ? "Services" : "Retail";
+  return "Services";
+}
+
+function category(t){
+  const k = ["shop","amenity","craft","office","healthcare","leisure","tourism"].find(k => t[k]);
+  if (!k) return "Business";
+  const v = t[k] === "yes" ? k : t[k];
+  return v.replace(/_/g, " ");
+}
+
+function address(t){
+  const line1 = [t["addr:housenumber"], t["addr:street"]].filter(Boolean).join(" ");
+  const line2 = [t["addr:city"], t["addr:state"], t["addr:postcode"]].filter(Boolean).join(", ");
+  return [line1, line2].filter(Boolean).join(", ");
+}
+
+function toPlace(el){
+  const t = el.tags || {};
+  const lat = el.lat ?? el.center?.lat, lon = el.lon ?? el.center?.lon;
+  if (lat == null || !t.name) return null;
+  const urls = [t.website, t["contact:website"], t.url].filter(Boolean);
+  return {
+    id: el.type + "/" + el.id,
+    name: t.name,
+    lat, lon,
+    kind: classify(t),
+    cat: category(t),
+    group: groupOf(t),
+    addr: address(t),
+    phone: t.phone || t["contact:phone"] || "",
+    hours: t.opening_hours || "",
+    site: urls.find(u => !SOCIAL.test(u)) || "",
+    social: t["contact:instagram"] || urls.find(u => SOCIAL.test(u)) || t["contact:facebook"] || "",
+    chain: !!(t.brand || t["brand:wikidata"])
+  };
+}
+
+function query(b){
+  const bb = [b.getSouth(), b.getWest(), b.getNorth(), b.getEast()].map(n => n.toFixed(5)).join(",");
+  return `[out:json][timeout:25];(
+nwr["shop"]["name"](${bb});
+nwr["amenity"~"^(restaurant|cafe|fast_food|bar|pub|ice_cream|dentist|doctors|clinic|pharmacy|veterinary|car_wash|car_rental|driving_school|childcare|nightclub|bakery|beauty|marketplace)$"]["name"](${bb});
+nwr["craft"]["name"](${bb});
+nwr["office"]["name"](${bb});
+nwr["healthcare"]["name"](${bb});
+nwr["leisure"~"^(fitness_centre|sports_centre|dance)$"]["name"](${bb});
+);out center tags 1500;`;
+}
+
+function setStatus(msg){ const s = $("status"); s.textContent = msg || ""; s.hidden = !msg; }
+
+async function load(){
+  if (map.getZoom() < MIN_ZOOM){ setStatus(DATA ? "Zoom in to see the dots" : "Zoom in to load businesses"); render(); return; }
+  if (DATA){ setStatus(""); render(); return; }
+  if (inflight) inflight.abort();
+  inflight = new AbortController();
+  setStatus("Loading businesses…");
+  try {
+    const res = await fetch(OVERPASS, {method:"POST", body:"data=" + encodeURIComponent(query(map.getBounds())), headers:{"Content-Type":"application/x-www-form-urlencoded"}, signal:inflight.signal});
+    if (res.status === 429 || res.status === 504) throw new Error("busy");
+    if (!res.ok) throw new Error("http");
+    const data = await res.json();
+    if (places.size > 6000){ places.clear(); markers.clear(); layer.clearLayers(); }
+    for (const el of data.elements || []){ const p = toPlace(el); if (p && !places.has(p.id)) places.set(p.id, p); }
+    flagChains([...places.values()]);
+    setStatus("");
+    render();
+  } catch(e){
+    if (e.name === "AbortError") return;
+    setStatus(e.message === "busy" ? "Map data is busy. Move the map to try again." : "Couldn't load businesses. Check your connection and move the map to retry.");
+  }
+}
+
+function markerFor(p){
+  const mk = mark(p), kind = kindOf(p), st = mk.status;
+  const ring = !st && (kind === "social" || mk.fav || mk.build);
+  const m = L.circleMarker([p.lat, p.lon], {
+    bubblingMouseEvents: false,
+    radius: st === "nogo" ? 4 : (st ? 8 : (kind === "site" ? 4 : 7)),
+    color: st === "client" ? "#3fae6a" : (ring ? "#e8e3d9" : "#0b0b0b"),
+    weight: ring || st === "client" ? 2 : 1.5,
+    fillColor: COLORS[st || kind],
+    fillOpacity: st === "nogo" ? .6 : (!st && kind === "site" ? .75 : 1)
+  });
+  m.on("click", () => open(p));
+  m.bindTooltip(p.name, {direction:"top", offset:[0,-6]});
+  return m;
+}
+
+function render(){
+  const vb = map.getBounds(), b = vb.pad(0.15);
+  const S = b.getSouth(), N = b.getNorth(), W = b.getWest(), E = b.getEast();
+  const zoomOk = map.getZoom() >= MIN_ZOOM;
+  const counts = {none:0, social:0, dead:0, site:0};
+  const keep = new Set();
+  for (const p of places.values()){
+    if (p.lat < S || p.lat > N || p.lon < W || p.lon > E) continue;
+    const mk = marks[p.id] || {}, kind = mk.hasSite ? "site" : p.kind;
+    if (p.chain && !showChains && !(mk.status || mk.fav || mk.build)) continue;
+    const inGroup = !groups.size || groups.has(p.group);
+    if (inGroup && vb.contains([p.lat, p.lon])) counts[kind]++;
+    const mine = mk.status === "talking" || mk.status === "client" || mk.fav || mk.build;
+    const show = inGroup && (mine || (zoomOk && (filter === "all" || (kind === filter && mk.status !== "nogo"))));
+    if (!show) continue;
+    keep.add(p.id);
+    if (!markers.has(p.id)){ const m = markerFor(p); markers.set(p.id, m); layer.addLayer(m); }
+  }
+  for (const [id, m] of markers){ if (!keep.has(id)){ layer.removeLayer(m); markers.delete(id); } }
+  $("cNone").textContent = counts.none.toLocaleString();
+  $("cSocial").textContent = counts.social.toLocaleString();
+  $("cDead").textContent = counts.dead.toLocaleString();
+  $("cSite").textContent = counts.site.toLocaleString();
+}
+
+function refreshMarker(p){
+  const m = markers.get(p.id);
+  if (m){ layer.removeLayer(m); markers.delete(p.id); }
+  render();
+}
+
+function esc(s){ return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function href(u){ return /^https?:\/\//i.test(u) ? u : "https://" + u.replace(/^@/, "instagram.com/"); }
+
+function open(p){
+  selected = p;
+  const mk = mark(p), kind = kindOf(p);
+  const label = {none:"No website", social:"Social only", dead:"Website is down", site:"Has website"}[kind];
+  const queued = !!mk.build;
+  const gq = encodeURIComponent(p.name + " " + (p.addr || ""));
+  const rows = [
+    p.addr && ["Address", esc(p.addr)],
+    p.phone && ["Phone", esc(p.phone)],
+    p.hours && ["Hours", esc(p.hours)],
+    p.site && ["Website", `<a href="${esc(href(p.site))}" target="_blank" rel="noopener">${esc(p.site.replace(/^https?:\/\//,""))}</a>`],
+    p.social && ["Social", `<a href="${esc(href(p.social))}" target="_blank" rel="noopener">${esc(p.social.replace(/^https?:\/\/(www\.)?/,""))}</a>`],
+    p.fb && ["Facebook", `<a href="${esc(href(p.fb))}" target="_blank" rel="noopener">Open page</a>`]
+  ].filter(Boolean);
+  $("sheet").innerHTML = `
+    <button class="heart" id="fav" aria-pressed="${!!mk.fav}" aria-label="Save to favorites">♥</button>
+    <button class="close" id="closeSheet" aria-label="Close">✕</button>
+    <h2>${esc(p.name)}</h2>
+    <div class="cat">${esc(p.cat)}${p.chain ? " · chain" : ""}</div>
+    <div class="badge"><span class="dot ${kind}"></span>${label}${mk.hasSite ? " (you reported)" : ""}</div>
+    <dl class="fields">${rows.map(r => `<dt>${r[0]}</dt><dd>${r[1]}</dd>`).join("") || "<dt>Details</dt><dd>Not listed</dd>"}</dl>
+    <div class="statusrow" role="group" aria-label="Lead status">
+      ${Object.keys(STATUS).map(k => `<button data-s="${k}" aria-pressed="${mk.status === k}"><i class="dot ${k}"></i>${STATUS[k]}</button>`).join("")}
+    </div>
+    <div class="actions">
+      <button class="primary" id="make" ${queued ? "disabled" : ""}>${queued ? "Queued for a build" : "Make website"}</button>
+      <a class="ghost" href="https://www.google.com/search?q=${gq}" target="_blank" rel="noopener">Check on Google</a>
+    </div>
+    ${p.kind !== "site" ? `<p class="note">${p.kind === "dead" ? "Their listed website didn't load when we last checked. Open it to confirm before pitching." : "Map data can miss a website. Check Google before pitching."}</p>
+      <button class="linkbtn" id="wrong">${mk.hasSite ? "Undo: it has no website after all" : "Wrong? This business has a website"}</button>` : ""}`;
+  $("sheet").hidden = false;
+  $("closeSheet").onclick = closeSheet;
+  $("fav").onclick = () => { setMark(p, {fav: !mk.fav}); open(p); toast(mk.fav ? "Removed from favorites." : "Saved to favorites."); };
+  $("sheet").querySelectorAll(".statusrow button").forEach(b => b.onclick = () => {
+    const s = b.dataset.s; setMark(p, {status: mk.status === s ? null : s}); open(p);
+  });
+  const w = $("wrong"); if (w) w.onclick = () => { setMark(p, {hasSite: !mk.hasSite}); open(p); };
+  if (!queued) $("make").onclick = () => addToQueue(p);
+}
+function closeSheet(){ $("sheet").hidden = true; selected = null; }
+
+function brief(p){
+  return [
+    "Build a Twin Citys site",
+    "Business: " + p.name,
+    "Category: " + p.cat,
+    "Location: " + (p.addr || `${p.lat.toFixed(5)}, ${p.lon.toFixed(5)}`),
+    p.phone && "Phone: " + p.phone,
+    p.site && "Website: " + p.site,
+    p.social && "Social: " + p.social,
+    p.fb && "Facebook: " + p.fb,
+    kindOf(p) === "dead" && "Note: their listed website is down",
+    "Map: https://www.google.com/maps/search/?api=1&query=" + p.lat + "," + p.lon
+  ].filter(Boolean).join("\n");
+}
+
+async function copy(text){
+  try { await navigator.clipboard.writeText(text); return true; } catch(e){ return false; }
+}
+
+async function addToQueue(p){
+  if (mark(p).build) return;
+  setMark(p, {build:true});
+  open(p);
+  const ok = await copy(brief(p));
+  toast(ok ? "Queued for a build. Brief copied." : "Queued for a build.");
+}
+
+function updateQueueCount(){ $("qcount").textContent = leadList().length; }
+
+function renderQueue(){
+  const list = $("qlist");
+  const leads = leadList();
+  if (!leads.length){ list.innerHTML = `<p class="empty">No leads yet. Tap a dot, then save it, set a status or press Make website.</p>`; return; }
+  list.innerHTML = leads.map((m, i) => { const q = m.p; return `
+    <div class="qitem">
+      <strong>${esc(q.name)}</strong>
+      <small>${esc(q.cat)}${q.addr ? " · " + esc(q.addr) : ""}</small>
+      <div>${m.status ? `<span class="tag">${STATUS[m.status]}</span>` : ""}${m.build ? `<span class="tag">Build queued</span>` : ""}${m.fav ? `<span class="tag">Favorite</span>` : ""}</div>
+      <div class="btns" style="margin-top:10px">
+        <button data-a="copy" data-i="${i}">Copy brief</button>
+        <button data-a="show" data-i="${i}">Show on map</button>
+        <button data-a="remove" data-i="${i}">Remove</button>
+      </div>
+    </div>`; }).join("");
+}
+
+$("qlist").addEventListener("click", async e => {
+  const b = e.target.closest("button"); if (!b) return;
+  const m = leadList()[+b.dataset.i]; if (!m) return; const q = m.p;
+  if (b.dataset.a === "copy"){ toast(await copy(brief(q)) ? "Brief copied." : "Copy didn't work in this browser."); }
+  if (b.dataset.a === "show"){ $("queue").hidden = true; map.setView([q.lat, q.lon], 18); places.set(q.id, places.get(q.id) || q); open(places.get(q.id)); }
+  if (b.dataset.a === "remove"){
+    setMark(q, {status:null, fav:false, build:false}); renderQueue();
+    if (selected && selected.id === q.id) open(q);
+  }
+});
+
+$("openQueue").onclick = () => { renderQueue(); $("queue").hidden = false; };
+$("closeQueue").onclick = () => { $("queue").hidden = true; };
+
+$("exportCsv").onclick = () => {
+  const leads = leadList();
+  if (!leads.length){ toast("No leads to export yet."); return; }
+  const cols = ["name","cat","group","addr","phone","site","social","lat","lon","id"];
+  const head = ["Name","Category","Type","Address","Phone","Website","Social","Lat","Lon","Map ID","Website status","Lead status","Build queued","Favorite","Added"];
+  const cell = v => `"${String(v ?? "").replace(/"/g,'""')}"`;
+  const csv = [head.map(cell).join(","), ...leads.map(m => [...cols.map(c => m.p[c]), kindOf(m.p), STATUS[m.status] || "", m.build ? "yes" : "", m.fav ? "yes" : "", m.added].map(cell).join(","))].join("\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([csv], {type:"text/csv"}));
+  a.download = "twin-citys-leads-" + new Date().toISOString().slice(0,10) + ".csv";
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+};
+
+function filtersChanged(){
+  $("siteFilter").querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b.dataset.f === filter));
+  $("groupFilter").querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", groups.has(b.dataset.g)));
+  $("chainFilter").querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", (b.dataset.c === "1") === showChains));
+  $("openFilters").classList.toggle("on", filter !== "all" || groups.size > 0 || showChains);
+  render();
+}
+$("groupFilter").innerHTML = GROUPS.map(g => `<button data-g="${g}" aria-pressed="false">${g.replace("&","&amp;")}</button>`).join("");
+$("siteFilter").onclick = e => { const b = e.target.closest("button"); if (b){ filter = b.dataset.f; filtersChanged(); } };
+$("groupFilter").onclick = e => { const b = e.target.closest("button"); if (b){ groups.has(b.dataset.g) ? groups.delete(b.dataset.g) : groups.add(b.dataset.g); filtersChanged(); } };
+$("chainFilter").onclick = e => { const b = e.target.closest("button"); if (b){ showChains = b.dataset.c === "1"; filtersChanged(); } };
+$("openFilters").onclick = () => { const f = $("filters"); f.hidden = !f.hidden; $("openFilters").setAttribute("aria-expanded", !f.hidden); };
+
+let tt;
+function toast(msg){ const t = $("toast"); t.textContent = msg; t.hidden = false; clearTimeout(tt); tt = setTimeout(() => t.hidden = true, 2600); }
+
+let st, sc;
+$("q").addEventListener("input", () => {
+  clearTimeout(st);
+  const v = $("q").value.trim();
+  if (v.length < 3){ $("results").hidden = true; return; }
+  st = setTimeout(() => search(v), 450);
+});
+$("q").addEventListener("keydown", e => {
+  if (e.key === "Enter"){ const first = $("results").querySelector("button"); if (first) first.click(); else search($("q").value.trim()); }
+  if (e.key === "Escape"){ $("results").hidden = true; }
+});
+async function search(v){
+  if (!v) return;
+  if (sc) sc.abort();
+  sc = new AbortController();
+  try {
+    const c = map.getCenter();
+    const vb = [c.lng - .5, c.lat + .5, c.lng + .5, c.lat - .5].join(",");
+    const res = await fetch(`${NOMINATIM}?format=jsonv2&limit=6&viewbox=${vb}&q=${encodeURIComponent(v)}`, {signal:sc.signal, headers:{"Accept-Language":"en"}});
+    const list = await res.json();
+    const box = $("results");
+    if (!list.length){ box.innerHTML = `<button disabled>No matches<small>Try a street, city or the business's exact name</small></button>`; box.hidden = false; return; }
+    box.innerHTML = list.map((r, i) => {
+      const parts = r.display_name.split(", ");
+      return `<button data-i="${i}">${esc(r.name || parts[0])}<small>${esc(parts.slice(r.name ? 1 : 1).join(", "))}</small></button>`;
+    }).join("");
+    box.hidden = false;
+    box.querySelectorAll("button").forEach(btn => btn.onclick = () => {
+      const r = list[+btn.dataset.i];
+      box.hidden = true;
+      $("q").blur();
+      const bb = r.boundingbox.map(Number);
+      const isPlace = ["shop","amenity","craft","office","healthcare","leisure"].includes(r.category);
+      if (isPlace) map.setView([+r.lat, +r.lon], 18);
+      else map.fitBounds([[bb[0], bb[2]], [bb[1], bb[3]]], {maxZoom:17});
+    });
+  } catch(e){ if (e.name !== "AbortError") toast("Search didn't work. Try again."); }
+}
+document.addEventListener("click", e => {
+  if (!e.target.closest(".search")) $("results").hidden = true;
+  if (!e.target.closest(".filters") && !e.target.closest("#openFilters")) { $("filters").hidden = true; $("openFilters").setAttribute("aria-expanded", "false"); }
+});
+
+map.on("moveend", () => {
+  store.set("tc-map-view", {c:[map.getCenter().lat, map.getCenter().lng], z:map.getZoom()});
+  render();
+  clearTimeout(timer);
+  timer = setTimeout(load, 500);
+});
+map.on("click", () => { if (!$("sheet").hidden) closeSheet(); });
+
+if (DATA){
+  const f = DATA.fields;
+  for (const r of DATA.rows){ const p = {}; for (let i = 0; i < f.length; i++) p[f[i]] = r[i]; places.set(p.id, p); }
+  flagChains([...places.values()]);
+  const more = document.createElement("script");
+  more.src = "twin-citys-sites-miami.js";
+  more.onload = () => {
+    const d = window.TC_SITES; if (!d) return;
+    for (const r of d.rows){ const p = {}; for (let i = 0; i < d.fields.length; i++) p[d.fields[i]] = r[i]; if (!places.has(p.id)) places.set(p.id, p); }
+    window.TC_SITES = null;
+    render();
+  };
+  setTimeout(() => document.body.appendChild(more), 800);
+  $("deadRow").hidden = false; $("fDead").hidden = false;
+  $("src").textContent = DATA.area + " data, updated " + DATA.built; $("src").hidden = false;
+}
+for (const m of Object.values(marks)){ if (m.p && !places.has(m.p.id)) places.set(m.p.id, m.p); }
+updateQueueCount();
+load();
+})();
+</script>
+</body>
+</html>
