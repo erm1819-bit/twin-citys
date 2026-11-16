@@ -283,12 +283,33 @@ footer a { color: var(--ivory); }
 .gp__search::before { content: ""; flex: none; width: 10px; height: 10px; border: 1.5px solid #5f6368; border-radius: 50%; }
 .d-google .caret { display: inline-block; width: 1px; height: 14px; background: #202124; animation: blink 1s steps(1) infinite; }
 @keyframes blink { 50% { opacity: 0; } }
-.gp__skel { position: absolute; top: 86px; left: 12px; right: 12px; display: grid; gap: 12px; }
+.gp__skel { position: absolute; top: 86px; left: 12px; right: 12px; display: grid; gap: 12px; transition: opacity .4s; }
 .gp__skel i { display: block; height: 44px; border-radius: 10px; background: #f1f3f4; }
-.gp__shot { position: absolute; left: 0; top: 0; width: 100%; height: auto; transform: translateY(105%); transition: transform .9s var(--ease); box-shadow: 0 -10px 30px rgba(0,0,0,.18); }
-.d-google.s1 .gp__shot, .d-google.s2 .gp__shot { transform: none; }
-.gp__hi { position: absolute; left: 6px; right: 6px; top: 228px; height: 50px; border: 2px solid #1a73e8; border-radius: 12px; opacity: 0; transform: scale(1.06); transition: all .5s var(--ease) .2s; }
-.d-google.s2 .gp__hi { opacity: 1; transform: none; }
+.d-google.s1 .gp__skel, .d-google.s2 .gp__skel { opacity: 0; }
+.gp__res { position: absolute; top: 78px; left: 0; right: 0; padding: 0 9px; opacity: 0; transform: translateY(10px); transition: opacity .5s, transform .6s var(--ease); }
+.d-google.s1 .gp__res, .d-google.s2 .gp__res { opacity: 1; transform: none; }
+.gp__map { position: relative; height: 62px; border-radius: 10px; overflow: hidden; background: linear-gradient(90deg, transparent 47%, #fff 47% 51%, transparent 51%), linear-gradient(0deg, transparent 38%, #fff 38% 44%, transparent 44%), linear-gradient(160deg, transparent 62%, #cfe3f5 62%), #e6eee1; }
+.gp__pin { position: absolute; width: 10px; height: 10px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: #ea4335; }
+.gp__pin.you { width: 14px; height: 14px; background: #1a73e8; box-shadow: 0 0 0 3px rgba(26,115,232,.25); }
+.gp__list { position: relative; height: 128px; margin-top: 6px; }
+.gp__row { position: absolute; left: 0; right: 0; height: 40px; padding: 4px 8px; border-radius: 8px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px; align-items: center; font-size: 10px; line-height: 1.3; transition: top .9s var(--ease), background .4s; }
+.gp__row b { display: block; font-size: 11px; font-weight: 600; color: #202124; }
+.gp__row b.ph { width: 72%; height: 9px; margin: 2px 0 4px; border-radius: 4px; background: #e3e5e8; }
+.gp__row small { display: block; color: #70757a; font-size: 9.5px; white-space: nowrap; }
+.gp__row .st { color: #e7a500; letter-spacing: -.5px; }
+.gp__row u { text-decoration: none; font-size: 9.5px; font-weight: 600; color: #1a73e8; border: 1px solid #dadce0; border-radius: 12px; padding: 3px 9px; transition: all .3s; }
+.gp__row.c1 { top: 0; } .gp__row.c2 { top: 43px; } .gp__row.you { top: 86px; }
+.d-google.s1 .gp__row.you, .d-google.s2 .gp__row.you { top: 0; background: #e8f0fe; }
+.d-google.s1 .gp__row.c1, .d-google.s2 .gp__row.c1 { top: 43px; }
+.d-google.s1 .gp__row.c2, .d-google.s2 .gp__row.c2 { top: 86px; }
+.d-google.s2 .gp__row.you u { background: #1a73e8; border-color: #1a73e8; color: #fff; animation: pulse .9s ease-in-out infinite; }
+.gp__org { position: relative; margin-top: 4px; padding: 8px 4px 0; border-top: 1px solid #ecedef; font-size: 9.5px; line-height: 1.35; color: #4d5156; }
+.gp__org .url { display: flex; align-items: center; gap: 6px; color: #202124; }
+.gp__org .url i { flex: none; width: 14px; height: 14px; border-radius: 50%; background: #0b0b0b; }
+.gp__org b { display: block; margin: 3px 0 2px; color: #1a0dab; font-size: 11.5px; font-weight: 500; }
+.gp__chip { position: absolute; right: 6px; top: 6px; z-index: 2; padding: 3px 7px; border-radius: 9px; background: #0b0b0b; color: #e8e3d9; font-size: 8px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; opacity: 0; transform: translateX(8px); transition: opacity .45s, transform .45s var(--ease); pointer-events: none; }
+.gp__chip.inl { position: static; display: inline-block; margin-left: 5px; vertical-align: 1px; }
+.d-google.s1 .gp__chip, .d-google.s2 .gp__chip { opacity: 1; transform: none; }
 .d-google .phone .toast { bottom: 12px; }
 
 .d-social .phone__screen.ig { background: #0c1014; color: #f5f5f5; font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; }
@@ -666,10 +687,17 @@ footer a { color: var(--ivory); }
       '<div class="bubble">¡Gracias, Maria! Aquí tienes el link para reservar, cualquier día de esta semana está bien.<i>Enviado automáticamente · 9 segundos</i></div>';
     if (k === 'google') return '<div class="phone"><div class="phone__screen gp">' +
       '<div class="gp__search"><span class="q"></span><span class="caret"></span></div>' +
-      '<div class="gp__skel"><i></i><i></i><i></i><i></i></div>' +
-      '<img class="gp__shot" src="/work/gbp-screen.webp" alt="El perfil de Google de Marino Plumbing: verificado, 90% completo, 934 vistas, 29 interacciones y 123 búsquedas desde junio">' +
-      '<span class="gp__hi" aria-hidden="true"></span>' +
-      '<div class="toast"><b>934 vistas desde junio</b><span>Marino Plumbing · perfil de Google</span></div></div></div>';
+      '<div class="gp__skel" aria-hidden="true"><i></i><i></i><i></i><i></i></div>' +
+      '<div class="gp__res">' +
+        '<div class="gp__map" aria-hidden="true"><i class="gp__pin" style="left:20%;top:30%"></i><i class="gp__pin" style="left:68%;top:22%"></i><i class="gp__pin you" style="left:43%;top:46%"></i><span class="gp__chip" style="transition-delay:.15s">Perfil de Google</span></div>' +
+        '<div class="gp__list">' +
+          '<div class="gp__row you"><span><b>Tu negocio</b><small><span class="st">★★★★★</span> 5.0<span class="gp__chip inl" style="transition-delay:.45s">Reseñas</span></small></span><u>Llamar</u></div>' +
+          '<div class="gp__row c1" aria-hidden="true"><span><b class="ph"></b><small><span class="st">★★★★</span> 4.1 (12)</small></span><u>Llamar</u></div>' +
+          '<div class="gp__row c2" aria-hidden="true"><span><b class="ph"></b><small><span class="st">★★★</span> 3.6 (7)</small></span><u>Llamar</u></div>' +
+        '</div>' +
+        '<div class="gp__org"><span class="url"><i></i>tunegocio.com</span><b>Plomero en Miami · Arreglos el mismo día</b><span>Con licencia y seguro. Destapes, calentadores y tuberías en todo Miami-Dade.</span><span class="gp__chip" style="transition-delay:.75s">Tu página web</span></div>' +
+      '</div>' +
+      '<div class="toast"><b>Llamada nueva · Google</b><span>Te encontraron en el mapa</span></div></div></div>';
     if (k === 'social') return '<div class="phone"><div class="phone__screen ig">' +
       '<div class="ig__top"><b>305marinoplumbing</b><span>⌄</span></div>' +
       '<div class="ig__head"><img class="ig__av" src="/work/ig-avatar.webp" alt=""><div><b>Marino Plumbing</b><div class="ig__stats"><span><b>7</b>posts</span><span><b>201</b>seguidores</span><span><b>177</b>seguidos</span></div></div></div>' +
