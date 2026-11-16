@@ -976,7 +976,7 @@ html.has-case .pill.is-ready { opacity: 0; pointer-events: none; }
         </button>
         <figcaption>Lucerne Bakery. Into the glaze.</figcaption>
       </figure>
-      <figure class="panel" data-case-panel="marino" data-client="Marino Plumbing" data-chapter="Teardown: a trades site that gets the call" data-desc="A Miami plumber's site that gets it right, taken apart so you can see how it's built and why the phone rings — the standard we build trades sites to." data-tags="2026 · Teardown · Trades" data-open="Open the teardown">
+      <figure class="panel" data-case-panel="marino" data-client="Marino Plumbing" data-chapter="Teardown: a trades site that gets the call" data-desc="A Miami plumber's site that gets it right: everything a customer needs, on the first screen." data-tags="2026 · Teardown · Trades" data-open="Open the teardown">
         <button type="button" class="panel__btn" style="--bg: url(work/mp-hero.webp)" data-case="marino" aria-haspopup="dialog" aria-controls="casev" aria-label="Open the teardown: Marino Plumbing">
           <img src="work/mp-hero.webp" alt="" width="2560" height="1440">
           <span class="panel__shade" aria-hidden="true"></span>
@@ -1207,15 +1207,13 @@ html.has-case .pill.is-ready { opacity: 0; pointer-events: none; }
       <button type="button" class="casev__close" data-close-case>Close</button>
       <div>
         <h2 class="casev__client">Marino Plumbing</h2>
-        <p class="casev__sub">A same-day plumber in Miami whose site gets it right — taken apart, so you can see how it works.</p>
+        <p class="casev__sub">A same-day plumber in Miami whose site gets it right.</p>
         <p class="casev__tags">2026 · Teardown · Trades</p>
       </div>
       <nav class="casev__nav" aria-label="Chapters">
-        <a href="#mp-read" aria-current="true">The three-second read</a>
-        <a href="#mp-built">How it's built</a>
-        <a href="#mp-order">The order of the page</a>
-        <a href="#mp-local">Why Google finds it</a>
-        <a href="#mp-borrow">What we'd build the same way</a>
+        <a href="#mp-read" aria-current="true">The first screen</a>
+        <a href="#mp-order">What's on the page</a>
+        <a href="#mp-local">How the site supports local search</a>
       </nav>
     </aside>
     <div class="casev__main">
@@ -1224,28 +1222,22 @@ html.has-case .pill.is-ready { opacity: 0; pointer-events: none; }
       </figure>
       <div class="casev__rest">
         <section class="casev__sec" id="mp-read">
-          <h3>The three-second read</h3>
-          <p>Before you scroll: what they do (same-day plumber), where (Miami), a price ($49 flush), a phone number, a second way in (free estimate), and 5.0 on Google. Six things, one screen, white type on a real photo of the plumber. Nothing to figure out. That's the whole lesson of a trades site and most of them miss it.</p>
+          <h3>The first screen</h3>
+          <p>Before you scroll, you can see what they do, where they work, a $49 flush special, the phone number, a free estimate option and their 5.0 Google rating. The essentials are right there on one screen, over a real photo of the plumber at work. Nothing to figure out.</p>
         </section>
         <figure class="casev__fig">
           <img src="work/mp-heaters.webp" alt="What do you need fixed? Six photo strips of real jobs, water heaters open" width="1280" height="720">
-          <figcaption>Six jobs as photo strips, every one a real job of theirs. The one you hover opens.</figcaption>
+          <figcaption>Six real jobs of theirs. Hover or tap one to open it.</figcaption>
         </figure>
-        <section class="casev__sec" id="mp-built">
-          <h3>How it's built</h3>
-          <p>No WordPress, no page builder, no framework. Hand-written static HTML — one 78 KB page with its styles (22 KB) and its scripts (34 KB) written straight into it, so there's nothing to load before it paints. Two Google fonts, Barlow and Barlow Condensed. Served through Cloudflare. The only outside code is a Google Ads conversion tag, a call-tracking script, and Cloudflare's analytics. The interactive bits — the hover strips, the FAQ, the floating emergency card, the area checker — are a few hundred lines of plain JavaScript. It's the same way we build: the page is the product, not the platform.</p>
-        </section>
         <section class="casev__sec" id="mp-order">
-          <h3>The order of the page</h3>
+          <h3>What's on the page</h3>
           <ul>
-            <li>Hero: the promise, the price, the phone.</li>
-            <li>Three priced specials — the cheap first visit.</li>
-            <li>What do you need fixed? — six jobs, each a page.</li>
-            <li>Five reasons to call, in one line each.</li>
-            <li>HOAs and property managers — the bigger customer gets its own door.</li>
-            <li>Four Google reviews, then four steps.</li>
-            <li>Eighteen neighborhoods and a "check my area" form.</li>
-            <li>FAQ, then the lead form. The phone number appears on every screen.</li>
+            <li>Three introductory specials.</li>
+            <li>A page for each service they offer.</li>
+            <li>A dedicated section for HOAs and property managers.</li>
+            <li>Real Google reviews.</li>
+            <li>The neighborhoods they cover.</li>
+            <li>A free estimate form, and the phone number on every screen.</li>
           </ul>
         </section>
         <div class="casev__pair">
@@ -1259,18 +1251,8 @@ html.has-case .pill.is-ready { opacity: 0; pointer-events: none; }
           </figure>
         </div>
         <section class="casev__sec" id="mp-local">
-          <h3>Why Google finds it</h3>
-          <p>Behind the homepage are 18 neighborhood pages (plumber-brickell, plumber-kendall, plumber-hialeah…), six service pages, three special pages and a guides section — each its own address. The page carries a Plumber schema block with the name, phone, email and address, and the title and description say exactly what the business does. When someone in Pinecrest searches "plumber near me", there's a page waiting with Pinecrest in it. That isn't design; it's just doing the work.</p>
-        </section>
-        <section class="casev__sec" id="mp-borrow">
-          <h3>What we'd build the same way</h3>
-          <ul>
-            <li>A price on the first screen — a small, specific one.</li>
-            <li>The phone number in reach on every screen, and a bottom bar on phones.</li>
-            <li>A page per service and per neighborhood, from day one.</li>
-            <li>Real reviews with names, real photos of the owner at work.</li>
-            <li>Plain, fast, hand-built pages. No platform in the way.</li>
-          </ul>
+          <h3>How the site supports local search</h3>
+          <p>Each service and each neighborhood they cover has its own page, and the Google profile and Instagram match the site. Together they help Google understand what the business does and where.</p>
         </section>
         <div class="casev__foot">
           <button type="button" class="casev__close" data-close-case>Close</button>
