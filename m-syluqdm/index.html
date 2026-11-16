@@ -173,6 +173,12 @@ button{cursor:pointer}
     <button data-f="social" aria-pressed="false">Social only</button>
     <button data-f="dead" aria-pressed="false" id="fDead" hidden>Website down</button>
   </div>
+  <h3 id="accTitle" hidden>Accuracy</h3>
+  <div class="toggle" id="accFilter" hidden>
+    <button data-a="2" aria-pressed="true">Verified</button>
+    <button data-a="1" aria-pressed="false">+ Likely</button>
+    <button data-a="0" aria-pressed="false">Everything</button>
+  </div>
   <h3>Chains and franchises</h3>
   <div class="toggle" id="chainFilter">
     <button data-c="0" aria-pressed="true">Hidden</button>
@@ -226,6 +232,9 @@ const markers = new Map();
 let filter = "all";
 let groups = new Set();
 let showChains = false;
+const HAS_VER = !!(DATA && DATA.fields.includes("ver"));
+let acc = HAS_VER ? 2 : 0;
+const VER_TEXT = ["No county business license found here. It may be closed, moved or home-based.", "Some evidence it's real: a county business license at this address or under this name, but not confirmed as a storefront.", "Verified: active county business license at a commercial location"];
 const GENERIC_HOST = /facebook|instagram|google|goo\.gl|yelp|wixsite|wix\.com|squarespace|godaddysites|weebly|business\.site|linktr|blogspot|wordpress|shopify|square\.site|doordash|ubereats|grubhub|opentable|booksy|vagaro|styleseat|toasttab|clover|yellowpages|mapquest|tripadvisor|bit\.ly|youtube|tiktok|twitter|linkedin|zocdoc|healthgrades|realtor|zillow|remax|kw\.com|coldwellbanker|century21|compass\.com|statefarm|allstate|myshopify|site123|webnode|carrd|canva|mindbodyonline|schedulicity|fresha|setmore|calendly|menufy|chownow|order\.online|slicelife|bbb\.org|manta|nextdoor|thumbtack|angi|homeadvisor/i;
 const BIG_CHAIN = /^(mcdonald|starbucks|pizza hut|domino|burger king|wendy s|taco bell|kfc|popeyes|dunkin|chick fil a|chipotle|papa john|little caesars|walgreens|cvs|walmart|publix|winn dixie|7 eleven|circle k|exxon|racetrac|autozone|advance auto|o reilly|home depot|lowe s|best buy|ross dress|marshalls|tj maxx|dollar tree|dollar general|family dollar|t mobile|at t|verizon|metro by|boost mobile|cricket wireless|bank of america|chase bank|wells fargo|citibank|td bank|truist|regions bank|pnc bank|h r block|the ups store|ups store|u haul|enterprise rent|budget rent|planet fitness|la fitness|orangetheory|crunch fitness|great clips|supercuts|sally beauty|ulta|sephora|five guys|panera|olive garden|chili s|applebee|ihop|denny s|pollo tropical|sedano s|presidente supermarket|la carreta|miami subs|sonic drive|arby s|jimmy john|firehouse subs|jersey mike|panda express|wingstop|cheesecake factory|whole foods|trader joe|costco|sam s club|bj s|office depot|petco|petsmart|western union|moneygram|amscot|state farm|allstate|geico|jiffy lube|tires plus|firestone|pep boys|goodyear|hilton|marriott|holiday inn|hampton inn|la quinta|days inn|motel 6|extra space|public storage|cubesmart|redbox|coinstar|bitcoin depot|coinflip|athena bitcoin|quest diagnostics|labcorp|baptist health|jackson health|leon medical|chenmed|conviva|sanitas|minutekey|auntie anne|cinnabon|sbarro|nathan s|haagen dazs|baskin|carvel|cold stone|smoothie king|tropical smoothie|jamba|einstein bro|krispy kreme|shake shack|chuck e|dave buster|red lobster|longhorn|texas roadhouse|tgi friday|buffalo wild|carrabba|bonefish|p f chang|flanigan|sports clips|massage envy|european wax|hand stone|the joint chiro|aspen dental|america s best|pearle vision|lenscrafters|visionworks|sunglass hut|foot locker|gamestop|victoria s secret|bath body|old navy|h m|zara|forever 21|macy s|jcpenney|kohl s|nordstrom|dillard|sherwin williams|ace hardware|harbor freight|tractor supply|napa auto|carmax|carvana|valvoline|meineke|maaco|aamco|christian brothers|caliber collision|safelite|sunshine gasoline|u gas)\b/;
 const EXACT_CHAIN = /^(eleven|subway|shell|target|bp|mobil|marathon|navarro|checkers|midas|outback|amazon|gap|speedway|valero|citgo|texaco|chevron|hertz|avis|staples|goodwill|burlington|gnc|aldi|hooters|benihana|sunoco|wawa|fedex|usps)( express| gas| gas station| station| store| food mart| pharmacy| restaurant| car rental| office| rent a car)?$/;
@@ -377,6 +386,7 @@ function render(){
     if (p.lat < S || p.lat > N || p.lon < W || p.lon > E) continue;
     const mk = marks[p.id] || {}, kind = mk.hasSite ? "site" : p.kind;
     if (p.chain && !showChains && !(mk.status || mk.fav || mk.build)) continue;
+    if ((p.ver || 0) < acc && !(mk.status || mk.fav || mk.build)) continue;
     const inGroup = !groups.size || groups.has(p.group);
     if (inGroup && vb.contains([p.lat, p.lon])) counts[kind]++;
     const mine = mk.status === "talking" || mk.status === "client" || mk.fav || mk.build;
@@ -422,6 +432,7 @@ function open(p){
     <div class="cat">${esc(p.cat)}${p.chain ? " · chain" : ""}</div>
     <div class="badge"><span class="dot ${kind}"></span>${label}${mk.hasSite ? " (you reported)" : ""}</div>
     <dl class="fields">${rows.map(r => `<dt>${r[0]}</dt><dd>${r[1]}</dd>`).join("") || "<dt>Details</dt><dd>Not listed</dd>"}</dl>
+    ${HAS_VER ? `<p class="note" style="margin:0 0 14px">${VER_TEXT[p.ver || 0]}${p.since ? " since " + p.since : ""}.</p>`.replace("..", ".") : ""}
     <div class="statusrow" role="group" aria-label="Lead status">
       ${Object.keys(STATUS).map(k => `<button data-s="${k}" aria-pressed="${mk.status === k}"><i class="dot ${k}"></i>${STATUS[k]}</button>`).join("")}
     </div>
@@ -453,6 +464,7 @@ function brief(p){
     p.social && "Social: " + p.social,
     p.fb && "Facebook: " + p.fb,
     kindOf(p) === "dead" && "Note: their listed website is down",
+    p.ver === 2 && "County business license: active" + (p.since ? " since " + p.since : ""),
     "Map: https://www.google.com/maps/search/?api=1&query=" + p.lat + "," + p.lon
   ].filter(Boolean).join("\n");
 }
@@ -520,12 +532,14 @@ function filtersChanged(){
   $("siteFilter").querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b.dataset.f === filter));
   $("groupFilter").querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", groups.has(b.dataset.g)));
   $("chainFilter").querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", (b.dataset.c === "1") === showChains));
-  $("openFilters").classList.toggle("on", filter !== "all" || groups.size > 0 || showChains);
+  $("accFilter").querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", +b.dataset.a === acc));
+  $("openFilters").classList.toggle("on", filter !== "all" || groups.size > 0 || showChains || (HAS_VER && acc !== 2));
   render();
 }
 $("groupFilter").innerHTML = GROUPS.map(g => `<button data-g="${g}" aria-pressed="false">${g.replace("&","&amp;")}</button>`).join("");
 $("siteFilter").onclick = e => { const b = e.target.closest("button"); if (b){ filter = b.dataset.f; filtersChanged(); } };
 $("groupFilter").onclick = e => { const b = e.target.closest("button"); if (b){ groups.has(b.dataset.g) ? groups.delete(b.dataset.g) : groups.add(b.dataset.g); filtersChanged(); } };
+$("accFilter").onclick = e => { const b = e.target.closest("button"); if (b){ acc = +b.dataset.a; filtersChanged(); } };
 $("chainFilter").onclick = e => { const b = e.target.closest("button"); if (b){ showChains = b.dataset.c === "1"; filtersChanged(); } };
 $("openFilters").onclick = () => { const f = $("filters"); f.hidden = !f.hidden; $("openFilters").setAttribute("aria-expanded", !f.hidden); };
 
@@ -597,6 +611,7 @@ if (DATA){
   };
   setTimeout(() => document.body.appendChild(more), 800);
   $("deadRow").hidden = false; $("fDead").hidden = false;
+  if (HAS_VER){ $("accTitle").hidden = false; $("accFilter").hidden = false; }
   $("src").textContent = DATA.area + " data, updated " + DATA.built; $("src").hidden = false;
 }
 for (const m of Object.values(marks)){ if (m.p && !places.has(m.p.id)) places.set(m.p.id, m.p); }
