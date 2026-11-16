@@ -649,6 +649,10 @@ html.has-case { overflow: hidden; }
 .reviews__all { margin-bottom: 14px; }
 @media (max-width: 640px) { .reviews__card { width: 78vw; min-height: 0; padding: 24px 22px 20px; } .reviews__card p { font-size: 15.5px; } }
 @keyframes reviews-roll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.reviews__track.is-live { cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+.reviews__track.is-live .reviews__belt { animation: none; will-change: transform; }
+.reviews__track.is-grabbing { cursor: grabbing; }
+.reviews__track.is-grabbing .reviews__card { transform: none; transition: border-color .3s; }
 @media (prefers-reduced-motion: reduce) {
   .reviews__belt { animation: none; width: auto; }
   .reviews__track { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
@@ -1004,6 +1008,58 @@ html.has-case .pill.is-ready { opacity: 0; pointer-events: none; }
         </div>
       </div>
     </section>
+<script>
+(function () {
+  /* reviews strip: rolls on its own; grab it, drag it, or flick it and it glides, then eases back to the slow roll */
+  var track = document.querySelector('.reviews__track'), belt = track && track.querySelector('.reviews__belt');
+  if (!belt || !window.requestAnimationFrame || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  track.classList.add('is-live');
+  var x = 0, v = 0, half = 1, cruise = 0, hover = false, drag = null, seen = true, last = 0;
+  function measure() { half = belt.scrollWidth / 2 || 1; cruise = -half / 70000; }
+  function wrap() { while (x <= -half) x += half; while (x > 0) x -= half; }
+  function frame(t) {
+    var dt = Math.min(48, t - (last || t)); last = t;
+    if (!drag && seen) {
+      var target = hover ? 0 : cruise;
+      v += (target - v) * Math.min(1, dt * (Math.abs(v) > Math.abs(cruise) * 2 ? 0.0022 : 0.004));
+      x += v * dt; wrap();
+      belt.style.transform = 'translate3d(' + x + 'px,0,0)';
+    }
+    requestAnimationFrame(frame);
+  }
+  measure(); window.addEventListener('resize', measure);
+  if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { seen = e[0].isIntersecting; }).observe(track);
+  track.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') hover = true; });
+  track.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') hover = false; });
+  track.addEventListener('pointerdown', function (e) {
+    if (e.button > 0) return;
+    drag = { id: e.pointerId, sx: e.clientX, sy: e.clientY, px: e.clientX, pt: e.timeStamp, vel: 0, on: e.pointerType === 'mouse' };
+    if (drag.on) { track.setPointerCapture(e.pointerId); track.classList.add('is-grabbing'); }
+  });
+  track.addEventListener('pointermove', function (e) {
+    if (!drag || e.pointerId !== drag.id) return;
+    if (!drag.on) {
+      if (Math.abs(e.clientX - drag.sx) < 8 || Math.abs(e.clientX - drag.sx) < Math.abs(e.clientY - drag.sy)) return;
+      drag.on = true; track.setPointerCapture(e.pointerId); track.classList.add('is-grabbing');
+    }
+    var dx = e.clientX - drag.px, dt = Math.max(1, e.timeStamp - drag.pt);
+    drag.vel = drag.vel * 0.6 + (dx / dt) * 0.4; drag.px = e.clientX; drag.pt = e.timeStamp;
+    x += dx; wrap(); belt.style.transform = 'translate3d(' + x + 'px,0,0)';
+  });
+  function release(e) {
+    if (!drag || e.pointerId !== drag.id) return;
+    if (drag.on) v = Math.max(-4, Math.min(4, e.timeStamp - drag.pt > 90 ? 0 : drag.vel));
+    drag = null; track.classList.remove('is-grabbing');
+  }
+  track.addEventListener('pointerup', release); track.addEventListener('pointercancel', release);
+  track.addEventListener('wheel', function (e) {
+    if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+    e.preventDefault(); x -= e.deltaX; wrap(); v = -e.deltaX / 16;
+  }, { passive: false });
+  track.addEventListener('dragstart', function (e) { e.preventDefault(); });
+  requestAnimationFrame(frame);
+})();
+</script>
 
     <section class="start band" id="start">
       <div class="split">
