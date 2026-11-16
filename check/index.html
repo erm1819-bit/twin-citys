@@ -42,6 +42,8 @@
       ],
       "sameAs": [
         "https://www.instagram.com/twincitys.co/",
+        "https://www.facebook.com/twincitys.co",
+        "https://www.youtube.com/@twincitysmiami",
         "https://maps.google.com/?cid=1861668075067573854", "https://clutch.co/profile/twin-citys"
       ]
     },
@@ -93,6 +95,7 @@ a { color: inherit; }
 .top__ig { min-width: 44px; margin-right: -10px; opacity: .85; transition: opacity .2s; }
 .top__ig:hover { opacity: 1; }
 .top__ig svg { width: 21px; height: 21px; fill: currentColor; }
+.top__ig + .top__ig { margin-left: -28px; }
 
 .label { position: relative; color: var(--stone); font-size: var(--t-label); letter-spacing: .34em; text-transform: uppercase; margin: 0; }
 .node::before { content: ""; position: absolute; left: calc(-1 * var(--spine) - 4px); top: 50%; width: 9px; height: 9px; margin-top: -5px; background: var(--black); border: 1px solid var(--ivory); transform: rotate(45deg); }
@@ -169,7 +172,7 @@ h1 { position: relative; margin: 18px 0 0; font-size: clamp(44px, 10vw, 92px); f
 .lang span.on { color: var(--black); opacity: 1; }
 .lang:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
 .top__links a.lang { display: inline-grid; justify-content: stretch; min-height: 30px; }
-@media (max-width: 400px) { .top__links { gap: 14px; } .brand span { display: none; } }
+@media (max-width: 400px) { .top__links { gap: 14px; } .brand span { display: none; } .top__ig { min-width: 36px; } .top__ig + .top__ig { margin-left: -14px; } }
 </style>
 </head>
 <body>
@@ -184,6 +187,8 @@ h1 { position: relative; margin: 18px 0 0; font-size: clamp(44px, 10vw, 92px); f
         <a href="/#contact">Contact</a>
         <a class="lang" href="/es/chequeo/" data-on="en" hreflang="es" lang="es" aria-label="Ver en español"><span data-l="en" class="on">EN</span><span data-l="es">ES</span></a>
         <a class="top__ig" href="https://instagram.com/twincitys.co" target="_blank" rel="noopener" aria-label="Twin Citys on Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M8 2.5h8A5.5 5.5 0 0 1 21.5 8v8a5.5 5.5 0 0 1-5.5 5.5H8A5.5 5.5 0 0 1 2.5 16V8A5.5 5.5 0 0 1 8 2.5zM12 7.3a4.7 4.7 0 1 0 0 9.4 4.7 4.7 0 0 0 0-9.4zm0 2a2.7 2.7 0 1 1 0 5.4 2.7 2.7 0 0 1 0-5.4zM17.2 5.6a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4z"/></svg></a>
+        <a class="top__ig" href="https://www.facebook.com/twincitys.co" target="_blank" rel="noopener" aria-label="Twin Citys on Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5a9.5 9.5 0 0 0-1.6 18.87v-6.62H8.1V12h2.3V9.9c0-2.4 1.43-3.72 3.6-3.72 1.05 0 2.14.19 2.14.19v2.35h-1.2c-1.19 0-1.56.74-1.56 1.5V12h2.65l-.42 2.75h-2.23v6.62A9.5 9.5 0 0 0 12 2.5z"/></svg></a>
+        <a class="top__ig" href="https://www.youtube.com/@twincitysmiami" target="_blank" rel="noopener" aria-label="Twin Citys on YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M21.6 7.2a2.5 2.5 0 0 0-1.77-1.77C18.27 5 12 5 12 5s-6.27 0-7.83.43A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.77 1.77C5.73 19 12 19 12 19s6.27 0 7.83-.43a2.5 2.5 0 0 0 1.77-1.77A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8zM10 15.1V8.9l5.3 3.1-5.3 3.1z"/></svg></a>
       </nav>
     </header>
 
@@ -236,7 +241,7 @@ h1 { position: relative; margin: 18px 0 0; font-size: clamp(44px, 10vw, 92px); f
   </svg>
   <footer class="foot">
     <span>Twin Citys · Miami</span>
-    <span class="foot__links"><a href="/start/">Start a project</a><a href="https://www.instagram.com/twincitys.co/" rel="noopener">Instagram</a><a href="mailto:eric@twincitys.net">eric@twincitys.net</a><a href="https://clutch.co/profile/twin-citys" rel="noopener">Clutch</a><a href="/areas/">Areas we serve</a><a href="/privacy/">Privacy</a></span>
+    <span class="foot__links"><a href="/start/">Start a project</a><a href="https://www.instagram.com/twincitys.co/" rel="noopener">Instagram</a><a href="https://www.facebook.com/twincitys.co" rel="noopener">Facebook</a><a href="https://www.youtube.com/@twincitysmiami" rel="noopener">YouTube</a><a href="mailto:eric@twincitys.net">eric@twincitys.net</a><a href="https://clutch.co/profile/twin-citys" rel="noopener">Clutch</a><a href="/areas/">Areas we serve</a><a href="/privacy/">Privacy</a></span>
   </footer>
 </div>
 
