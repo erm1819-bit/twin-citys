@@ -4,3 +4,5 @@ Disallow: /demo/
 Disallow: /card/
 
 Sitemap: https://twincitys.net/sitemap.xml
+
+# Plain-text summary for AI assistants: https://twincitys.net/llms.txt
