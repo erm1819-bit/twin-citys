@@ -619,7 +619,13 @@ html.has-case .bar { opacity: 0; pointer-events: none; }
 .casev__sec ul { padding-left: 1.1em; display: flex; flex-direction: column; gap: 8px; }
 .casev__fig { margin: 0; min-width: 0; }
 .casev__fig img { display: block; width: 100%; height: auto; background: var(--charcoal); }
-.casev__fig figcaption { padding-top: 10px; color: var(--stone); font-size: 14px; line-height: 1.6; }
+.casev__row { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(24px, 3vw, 48px); align-items: center; }
+.casev__row--flip { grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); }
+.casev__row--flip > .casev__sec { order: -1; }
+.casev__row .casev__sec { display: block; }
+.casev__row .casev__sec h3 { margin-bottom: 14px; }
+.casev__row .casev__pair { grid-template-columns: minmax(0, 1fr); }
+.casev__fig figcaption { padding-top: 12px; color: #c9c3b8; font-size: 16px; line-height: 1.5; }
 .casev__pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; }
 .casev__phones { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; padding: 20px; background: var(--ivory-deep); }
 .casev__foot { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 40px; padding-top: 20px; border-top: 1px solid #2a2927; }
@@ -771,6 +777,8 @@ html.has-case .pill.is-ready { opacity: 0; pointer-events: none; }
   .casev__nav { display: none; }
   .casev__main { border-left: 0; padding: 8px 0 0; }
   .casev__sec, .casev__pair { grid-template-columns: minmax(0, 1fr); }
+  .casev__row, .casev__row--flip { grid-template-columns: minmax(0, 1fr); }
+  .casev__row--flip > .casev__sec { order: 0; }
   .plate { min-height: 0; padding-top: 44px; }
 }
 @media (max-width: 640px) {
@@ -1147,44 +1155,52 @@ html.has-case .pill.is-ready { opacity: 0; pointer-events: none; }
           <h3>The entrance</h3>
           <p>Walking into La Vasca is the whole pitch, so the site starts at the door. Scroll and the red doors open, the camera pushes through, and the first thing you meet inside is the signature dish.</p>
         </section>
-        <figure class="casev__fig">
-          <img src="work/lv-pulpo.webp" alt="Pulpo a la Gallega suspended in pieces above a plate" width="2560" height="1440">
-          <figcaption>Pulpo a la Gallega, held above the plate.</figcaption>
-        </figure>
-        <section class="casev__sec" id="cv-dish">
-          <h3>The signature dish</h3>
-          <p>The film is tied to the scroll: down advances it, up rewinds it. It never plays on its own, so the visitor sets the pace.</p>
-        </section>
-        <div class="casev__pair">
+        <div class="casev__row">
           <figure class="casev__fig">
-            <img src="work/lv-dishes.webp" alt="Featured dishes section showing lamb chops and roast suckling pig" width="1280" height="720">
-            <figcaption>Featured dishes, each with a film of its own.</figcaption>
+            <img src="work/lv-pulpo.webp" alt="Pulpo a la Gallega suspended in pieces above a plate" width="2560" height="1440">
+            <figcaption>Pulpo a la Gallega, held above the plate.</figcaption>
           </figure>
-          <figure class="casev__fig">
-            <img src="work/lv-menu.webp" alt="The full menu with section navigation, Spanish names, English translations and prices" width="1280" height="720">
-            <figcaption>The full menu, 79 dishes.</figcaption>
-          </figure>
+          <section class="casev__sec" id="cv-dish">
+            <h3>The signature dish</h3>
+            <p>The film is tied to the scroll: down advances it, up rewinds it. It never plays on its own, so the visitor sets the pace.</p>
+          </section>
         </div>
-        <section class="casev__sec" id="cv-menu">
-          <h3>The menu</h3>
-          <p>All 79 dishes in Spanish and English with prices, in the restaurant's own sections. A section menu follows as you read, and the featured dishes, lamb chops and roast suckling pig, each have a film of their own.</p>
-        </section>
-        <figure class="casev__fig">
-          <img src="work/lv-chef.webp" alt="The chef's portrait beside a quote about his years in restaurants in Spain and Miami" width="1280" height="720">
-          <figcaption>The chef, and the call and visit block beneath him.</figcaption>
-        </figure>
-        <section class="casev__sec" id="cv-chef">
-          <h3>The chef</h3>
-          <p>His portrait and his own words, exactly as he gave them. Call, directions and the store stay one tap away on every screen.</p>
-        </section>
-        <figure class="casev__fig casev__phones">
-          <img src="work/lv-phone-doors.webp" alt="The entrance on a phone" width="600" height="1298">
-          <img src="work/lv-phone-menu.webp" alt="The menu on a phone" width="600" height="1298">
-        </figure>
-        <section class="casev__sec" id="cv-phone">
-          <h3>On a phone</h3>
-          <p>Where most of their customers will see it: the door, the dish and the menu, one thumb away.</p>
-        </section>
+        <div class="casev__row casev__row--flip">
+          <div class="casev__pair">
+            <figure class="casev__fig">
+              <img src="work/lv-dishes.webp" alt="Featured dishes section showing lamb chops and roast suckling pig" width="1280" height="720">
+              <figcaption>Featured dishes, each with a film of its own.</figcaption>
+            </figure>
+            <figure class="casev__fig">
+              <img src="work/lv-menu.webp" alt="The full menu with section navigation, Spanish names, English translations and prices" width="1280" height="720">
+              <figcaption>The full menu, 79 dishes.</figcaption>
+            </figure>
+          </div>
+          <section class="casev__sec" id="cv-menu">
+            <h3>The menu</h3>
+            <p>All 79 dishes in Spanish and English with prices, in the restaurant's own sections. A section menu follows as you read, and the featured dishes, lamb chops and roast suckling pig, each have a film of their own.</p>
+          </section>
+        </div>
+        <div class="casev__row">
+          <figure class="casev__fig">
+            <img src="work/lv-chef.webp" alt="The chef's portrait beside a quote about his years in restaurants in Spain and Miami" width="1280" height="720">
+            <figcaption>The chef, and the call and visit block beneath him.</figcaption>
+          </figure>
+          <section class="casev__sec" id="cv-chef">
+            <h3>The chef</h3>
+            <p>His portrait and his own words, exactly as he gave them. Call, directions and the store stay one tap away on every screen.</p>
+          </section>
+        </div>
+        <div class="casev__row casev__row--flip">
+          <figure class="casev__fig casev__phones">
+            <img src="work/lv-phone-doors.webp" alt="The entrance on a phone" width="600" height="1298">
+            <img src="work/lv-phone-menu.webp" alt="The menu on a phone" width="600" height="1298">
+          </figure>
+          <section class="casev__sec" id="cv-phone">
+            <h3>On a phone</h3>
+            <p>Where most of their customers will see it: the door, the dish and the menu, one thumb away.</p>
+          </section>
+        </div>
         <section class="casev__sec" id="cv-made">
           <h3>What we made</h3>
           <ul>
@@ -1225,35 +1241,39 @@ html.has-case .pill.is-ready { opacity: 0; pointer-events: none; }
           <h3>The first screen</h3>
           <p>Before you scroll, you can see what they do, where they work, a $49 flush special, the phone number, a free estimate option and their 5.0 Google rating. The essentials are right there on one screen, over a real photo of the plumber at work. Nothing to figure out.</p>
         </section>
-        <figure class="casev__fig">
-          <img src="work/mp-heaters.webp" alt="What do you need fixed? Six photo strips of real jobs, water heaters open" width="1280" height="720">
-          <figcaption>Six real jobs of theirs. Hover or tap one to open it.</figcaption>
-        </figure>
-        <section class="casev__sec" id="mp-order">
-          <h3>What's on the page</h3>
-          <ul>
-            <li>Three introductory specials.</li>
-            <li>A page for each service they offer.</li>
-            <li>A dedicated section for HOAs and property managers.</li>
-            <li>Real Google reviews.</li>
-            <li>The neighborhoods they cover.</li>
-            <li>A free estimate form, and the phone number on every screen.</li>
-          </ul>
-        </section>
-        <div class="casev__pair">
+        <div class="casev__row">
           <figure class="casev__fig">
-            <img src="work/mp-gbp.webp" alt="Marino Plumbing’s verified Google Business Profile at 90% strength" width="1280" height="720">
-            <figcaption>The Google profile behind the 5.0: verified, 90% complete, 934 views since June.</figcaption>
+            <img src="work/mp-heaters.webp" alt="What do you need fixed? Six photo strips of real jobs, water heaters open" width="1280" height="720">
+            <figcaption>Six real jobs of theirs. Hover or tap one to open it.</figcaption>
           </figure>
-          <figure class="casev__fig">
-            <img src="work/mp-ig.webp" alt="Marino Plumbing’s Instagram, @305marinoplumbing" width="1280" height="720">
-            <figcaption>Same van, same blue, same M on Instagram.</figcaption>
-          </figure>
+          <section class="casev__sec" id="mp-order">
+            <h3>What's on the page</h3>
+            <ul>
+              <li>Three introductory specials.</li>
+              <li>A page for each service they offer.</li>
+              <li>A dedicated section for HOAs and property managers.</li>
+              <li>Real Google reviews.</li>
+              <li>The neighborhoods they cover.</li>
+              <li>A free estimate form, and the phone number on every screen.</li>
+            </ul>
+          </section>
         </div>
-        <section class="casev__sec" id="mp-local">
-          <h3>How the site supports local search</h3>
-          <p>Each service and each neighborhood they cover has its own page, and the Google profile and Instagram match the site. Together they help Google understand what the business does and where.</p>
-        </section>
+        <div class="casev__row casev__row--flip">
+          <div class="casev__pair">
+            <figure class="casev__fig">
+              <img src="work/mp-gbp.webp" alt="Marino Plumbing’s verified Google Business Profile at 90% strength" width="1280" height="720">
+              <figcaption>The Google profile behind the 5.0: verified, 90% complete, 934 views since June.</figcaption>
+            </figure>
+            <figure class="casev__fig">
+              <img src="work/mp-ig.webp" alt="Marino Plumbing’s Instagram, @305marinoplumbing" width="1280" height="720">
+              <figcaption>Same van, same blue, same M on Instagram.</figcaption>
+            </figure>
+          </div>
+          <section class="casev__sec" id="mp-local">
+            <h3>How the site supports local search</h3>
+            <p>Each service and each neighborhood they cover has its own page, and the Google profile and Instagram match the site. Together they help Google understand what the business does and where.</p>
+          </section>
+        </div>
         <div class="casev__foot">
           <button type="button" class="casev__close" data-close-case>Close</button>
         </div>

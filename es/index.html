@@ -620,7 +620,13 @@ html.has-case .bar { opacity: 0; pointer-events: none; }
 .casev__sec ul { padding-left: 1.1em; display: flex; flex-direction: column; gap: 8px; }
 .casev__fig { margin: 0; min-width: 0; }
 .casev__fig img { display: block; width: 100%; height: auto; background: var(--charcoal); }
-.casev__fig figcaption { padding-top: 10px; color: var(--stone); font-size: 14px; line-height: 1.6; }
+.casev__row { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(24px, 3vw, 48px); align-items: center; }
+.casev__row--flip { grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); }
+.casev__row--flip > .casev__sec { order: -1; }
+.casev__row .casev__sec { display: block; }
+.casev__row .casev__sec h3 { margin-bottom: 14px; }
+.casev__row .casev__pair { grid-template-columns: minmax(0, 1fr); }
+.casev__fig figcaption { padding-top: 12px; color: #c9c3b8; font-size: 16px; line-height: 1.5; }
 .casev__pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; }
 .casev__phones { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; padding: 20px; background: var(--ivory-deep); }
 .casev__foot { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 40px; padding-top: 20px; border-top: 1px solid #2a2927; }
@@ -772,6 +778,8 @@ html.has-case .pill.is-ready { opacity: 0; pointer-events: none; }
   .casev__nav { display: none; }
   .casev__main { border-left: 0; padding: 8px 0 0; }
   .casev__sec, .casev__pair { grid-template-columns: minmax(0, 1fr); }
+  .casev__row, .casev__row--flip { grid-template-columns: minmax(0, 1fr); }
+  .casev__row--flip > .casev__sec { order: 0; }
   .plate { min-height: 0; padding-top: 44px; }
 }
 @media (max-width: 640px) {
@@ -1148,44 +1156,52 @@ html.has-case .pill.is-ready { opacity: 0; pointer-events: none; }
           <h3>La entrada</h3>
           <p>Entrar a La Vasca ya lo dice todo, así que la página empieza en la puerta. Bajas, se abren las puertas rojas, la cámara entra, y lo primero que ves adentro es el plato estrella.</p>
         </section>
-        <figure class="casev__fig">
-          <img src="/work/lv-pulpo.webp" alt="Pulpo a la gallega en pedazos, flotando sobre el plato" width="2560" height="1440">
-          <figcaption>Pulpo a la gallega, flotando sobre el plato.</figcaption>
-        </figure>
-        <section class="casev__sec" id="cv-dish">
-          <h3>El plato estrella</h3>
-          <p>El video va con el scroll: si bajas, avanza; si subes, retrocede. Nunca se reproduce solo, así que el visitante va a su ritmo.</p>
-        </section>
-        <div class="casev__pair">
+        <div class="casev__row">
           <figure class="casev__fig">
-            <img src="/work/lv-dishes.webp" alt="Sección de platos destacados con chuletas de cordero y cochinillo asado" width="1280" height="720">
-            <figcaption>Platos destacados, cada uno con su propio video.</figcaption>
+            <img src="/work/lv-pulpo.webp" alt="Pulpo a la gallega en pedazos, flotando sobre el plato" width="2560" height="1440">
+            <figcaption>Pulpo a la gallega, flotando sobre el plato.</figcaption>
           </figure>
-          <figure class="casev__fig">
-            <img src="/work/lv-menu.webp" alt="El menú completo con secciones, nombres en español, traducción al inglés y precios" width="1280" height="720">
-            <figcaption>El menú completo, 79 platos.</figcaption>
-          </figure>
+          <section class="casev__sec" id="cv-dish">
+            <h3>El plato estrella</h3>
+            <p>El video va con el scroll: si bajas, avanza; si subes, retrocede. Nunca se reproduce solo, así que el visitante va a su ritmo.</p>
+          </section>
         </div>
-        <section class="casev__sec" id="cv-menu">
-          <h3>El menú</h3>
-          <p>Los 79 platos en español y en inglés con precios, en las mismas secciones del restaurante. Un menú de secciones te sigue mientras lees, y los platos destacados, las chuletas de cordero y el cochinillo asado, tienen cada uno su propio video.</p>
-        </section>
-        <figure class="casev__fig">
-          <img src="/work/lv-chef.webp" alt="El retrato del chef junto a sus palabras sobre sus años en restaurantes de España y Miami" width="1280" height="720">
-          <figcaption>El chef, y debajo los botones para llamar y visitar.</figcaption>
-        </figure>
-        <section class="casev__sec" id="cv-chef">
-          <h3>El chef</h3>
-          <p>Su retrato y sus propias palabras, tal como nos las dio. Llamar, cómo llegar y la tienda están a un toque en cada pantalla.</p>
-        </section>
-        <figure class="casev__fig casev__phones">
-          <img src="/work/lv-phone-doors.webp" alt="La entrada en el celular" width="600" height="1298">
-          <img src="/work/lv-phone-menu.webp" alt="El menú en el celular" width="600" height="1298">
-        </figure>
-        <section class="casev__sec" id="cv-phone">
-          <h3>En el celular</h3>
-          <p>Donde la mayoría de sus clientes la va a ver: la puerta, el plato y el menú, a un dedo de distancia.</p>
-        </section>
+        <div class="casev__row casev__row--flip">
+          <div class="casev__pair">
+            <figure class="casev__fig">
+              <img src="/work/lv-dishes.webp" alt="Sección de platos destacados con chuletas de cordero y cochinillo asado" width="1280" height="720">
+              <figcaption>Platos destacados, cada uno con su propio video.</figcaption>
+            </figure>
+            <figure class="casev__fig">
+              <img src="/work/lv-menu.webp" alt="El menú completo con secciones, nombres en español, traducción al inglés y precios" width="1280" height="720">
+              <figcaption>El menú completo, 79 platos.</figcaption>
+            </figure>
+          </div>
+          <section class="casev__sec" id="cv-menu">
+            <h3>El menú</h3>
+            <p>Los 79 platos en español y en inglés con precios, en las mismas secciones del restaurante. Un menú de secciones te sigue mientras lees, y los platos destacados, las chuletas de cordero y el cochinillo asado, tienen cada uno su propio video.</p>
+          </section>
+        </div>
+        <div class="casev__row">
+          <figure class="casev__fig">
+            <img src="/work/lv-chef.webp" alt="El retrato del chef junto a sus palabras sobre sus años en restaurantes de España y Miami" width="1280" height="720">
+            <figcaption>El chef, y debajo los botones para llamar y visitar.</figcaption>
+          </figure>
+          <section class="casev__sec" id="cv-chef">
+            <h3>El chef</h3>
+            <p>Su retrato y sus propias palabras, tal como nos las dio. Llamar, cómo llegar y la tienda están a un toque en cada pantalla.</p>
+          </section>
+        </div>
+        <div class="casev__row casev__row--flip">
+          <figure class="casev__fig casev__phones">
+            <img src="/work/lv-phone-doors.webp" alt="La entrada en el celular" width="600" height="1298">
+            <img src="/work/lv-phone-menu.webp" alt="El menú en el celular" width="600" height="1298">
+          </figure>
+          <section class="casev__sec" id="cv-phone">
+            <h3>En el celular</h3>
+            <p>Donde la mayoría de sus clientes la va a ver: la puerta, el plato y el menú, a un dedo de distancia.</p>
+          </section>
+        </div>
         <section class="casev__sec" id="cv-made">
           <h3>Lo que hicimos</h3>
           <ul>
@@ -1226,35 +1242,39 @@ html.has-case .pill.is-ready { opacity: 0; pointer-events: none; }
           <h3>La primera pantalla</h3>
           <p>Antes de bajar ya ves qué hacen, dónde trabajan, un especial de $49 para limpiar el calentador, el teléfono, la opción de pedir un estimado gratis y su 5.0 en Google. Lo importante está en una sola pantalla, sobre una foto real del plomero trabajando. No hay nada que adivinar.</p>
         </section>
-        <figure class="casev__fig">
-          <img src="/work/mp-heaters.webp" alt="¿Qué necesitas arreglar? Seis fotos de trabajos reales, con calentadores abiertos" width="1280" height="720">
-          <figcaption>Seis trabajos reales de ellos. Pasa el mouse o toca uno para abrirlo.</figcaption>
-        </figure>
-        <section class="casev__sec" id="mp-order">
-          <h3>Qué hay en la página</h3>
-          <ul>
-            <li>Tres especiales de introducción.</li>
-            <li>Una página para cada servicio que ofrecen.</li>
-            <li>Una sección para HOAs y administradores de propiedades.</li>
-            <li>Reseñas reales de Google.</li>
-            <li>Los barrios donde trabajan.</li>
-            <li>Un formulario para pedir un estimado gratis, y el teléfono en cada pantalla.</li>
-          </ul>
-        </section>
-        <div class="casev__pair">
+        <div class="casev__row">
           <figure class="casev__fig">
-            <img src="/work/mp-gbp.webp" alt="El perfil de Google verificado de Marino Plumbing, al 90%" width="1280" height="720">
-            <figcaption>El perfil de Google detrás del 5.0: verificado, 90% completo, 934 vistas desde junio.</figcaption>
+            <img src="/work/mp-heaters.webp" alt="¿Qué necesitas arreglar? Seis fotos de trabajos reales, con calentadores abiertos" width="1280" height="720">
+            <figcaption>Seis trabajos reales de ellos. Pasa el mouse o toca uno para abrirlo.</figcaption>
           </figure>
-          <figure class="casev__fig">
-            <img src="/work/mp-ig.webp" alt="El Instagram de Marino Plumbing, @305marinoplumbing" width="1280" height="720">
-            <figcaption>La misma camioneta, el mismo azul y la misma M en Instagram.</figcaption>
-          </figure>
+          <section class="casev__sec" id="mp-order">
+            <h3>Qué hay en la página</h3>
+            <ul>
+              <li>Tres especiales de introducción.</li>
+              <li>Una página para cada servicio que ofrecen.</li>
+              <li>Una sección para HOAs y administradores de propiedades.</li>
+              <li>Reseñas reales de Google.</li>
+              <li>Los barrios donde trabajan.</li>
+              <li>Un formulario para pedir un estimado gratis, y el teléfono en cada pantalla.</li>
+            </ul>
+          </section>
         </div>
-        <section class="casev__sec" id="mp-local">
-          <h3>Cómo ayuda a salir en Google</h3>
-          <p>Cada servicio y cada barrio donde trabajan tiene su propia página, y el perfil de Google y el Instagram van de acuerdo con la página. Todo eso le ayuda a Google a entender qué hace el negocio y dónde.</p>
-        </section>
+        <div class="casev__row casev__row--flip">
+          <div class="casev__pair">
+            <figure class="casev__fig">
+              <img src="/work/mp-gbp.webp" alt="El perfil de Google verificado de Marino Plumbing, al 90%" width="1280" height="720">
+              <figcaption>El perfil de Google detrás del 5.0: verificado, 90% completo, 934 vistas desde junio.</figcaption>
+            </figure>
+            <figure class="casev__fig">
+              <img src="/work/mp-ig.webp" alt="El Instagram de Marino Plumbing, @305marinoplumbing" width="1280" height="720">
+              <figcaption>La misma camioneta, el mismo azul y la misma M en Instagram.</figcaption>
+            </figure>
+          </div>
+          <section class="casev__sec" id="mp-local">
+            <h3>Cómo ayuda a salir en Google</h3>
+            <p>Cada servicio y cada barrio donde trabajan tiene su propia página, y el perfil de Google y el Instagram van de acuerdo con la página. Todo eso le ayuda a Google a entender qué hace el negocio y dónde.</p>
+          </section>
+        </div>
         <div class="casev__foot">
           <button type="button" class="casev__close" data-close-case>Cerrar</button>
         </div>
