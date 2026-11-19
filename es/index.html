@@ -566,7 +566,6 @@ html.has-case .bar { opacity: 0; pointer-events: none; }
 .panel__btn { position: absolute; inset: 0; display: block; width: 100%; padding: 0; border: 0; background: var(--black); color: var(--ivory); cursor: pointer; overflow: hidden; text-align: left; font: inherit; }
 .panel__btn img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(calc(.3 + var(--in) * .62)); transform: scale(calc(1.06 - var(--in) * .06)); transition: filter .3s linear; }
 .panel__shade { position: absolute; inset: 0; background: linear-gradient(to top, rgba(11,11,11,.85), rgba(11,11,11,0) 55%); }
-.panel--clean .panel__shade, .panel--clean .panel__cap { display: none; }
 .panel__cap { position: absolute; left: var(--gutter); right: var(--gutter); bottom: clamp(28px, 6vh, 64px); display: flex; flex-direction: column; gap: 10px; }
 .panel__n { position: fixed; display: none; }
 .panel__client { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: clamp(18px, 2.2vw, 30px); letter-spacing: -.01em; }
@@ -974,7 +973,7 @@ html.has-case .pill.is-ready { opacity: 0; pointer-events: none; }
         </button>
         <figcaption>La Vasca Deli Miami. Se abren las puertas.</figcaption>
       </figure>
-      <figure class="panel panel--clean" data-case-panel="lucerne" data-client="Lucerne Bakery" data-chapter="Página web de panadería y video" data-desc="Una panadería cubana en Coral Way desde 1985. Ordenar, el horario de hoy, las reseñas y cómo llegar en la primera pantalla, en inglés y en español." data-tags="2026 · Página web · Video de plato" data-open="Ver el caso">
+      <figure class="panel" data-case-panel="lucerne" data-client="Lucerne Bakery" data-chapter="Página web de panadería y video" data-desc="Una panadería cubana en Coral Way desde 1985. Ordenar, el horario de hoy, las reseñas y cómo llegar en la primera pantalla, en inglés y en español." data-tags="2026 · Página web · Video de plato" data-open="Ver el caso">
         <button type="button" class="panel__btn" style="--bg: url(/work/lucerne-card.webp)" data-case="lucerne" aria-haspopup="dialog" aria-controls="casev" aria-label="Ver el caso: Lucerne Bakery">
           <img src="/work/lucerne-card.webp" alt="" width="2560" height="1440">
           <span class="panel__shade" aria-hidden="true"></span>
