@@ -611,6 +611,7 @@ html.has-case .bar { opacity: 0; pointer-events: none; }
 .casev__hero img, .casev__hero video { position: relative; z-index: 2; display: block; width: 100%; height: auto; background: var(--charcoal); }
 .casev__film { display: flex; justify-content: center; background: #f1efea; }
 .casev__film video { width: auto; max-width: 100%; height: min(82vh, 1100px); object-fit: contain; background: #f1efea; }
+.casev__row .casev__film video { width: 100%; height: auto; max-height: 72vh; }
 .casev__note { color: #a6a198; line-height: 1.7; max-width: 32ch; font-size: 15px; }
 .casev__rest { display: flex; flex-direction: column; gap: clamp(40px, 5vw, 72px); opacity: 0; transition: opacity .25s var(--ease); }
 .casev.is-open .casev__rest { opacity: 1; transition: opacity .6s var(--ease) .3s; }
@@ -972,18 +973,18 @@ html.has-case .pill.is-ready { opacity: 0; pointer-events: none; }
         </button>
         <figcaption>La Vasca Deli Miami. Se abren las puertas.</figcaption>
       </figure>
-      <figure class="panel" data-case-panel="lucerne" data-client="Lucerne Bakery" data-chapter="Video de plato: el pastelito de guayaba" data-desc="Un pastelito de guayaba flotando en un cuarto blanco. La cámara entra en el glaseado y la guayaba, y vuelve a salir. Nueve segundos, sin palabras, nada más en la imagen." data-tags="2026 · Video de plato" data-open="Ver el video">
-        <button type="button" class="panel__btn" style="--bg: url(/work/lucerne-panel.webp)" data-case="lucerne" aria-haspopup="dialog" aria-controls="casev" aria-label="Ver el video: Lucerne Bakery">
-          <img src="/work/lucerne-panel.webp" alt="" width="2560" height="1440">
+      <figure class="panel" data-case-panel="lucerne" data-client="Lucerne Bakery" data-chapter="Página web de panadería y video" data-desc="Una panadería cubana en Coral Way desde 1985. Ordenar, el horario de hoy, las reseñas y cómo llegar en la primera pantalla, en inglés y en español." data-tags="2026 · Página web · Video de plato" data-open="Ver el caso">
+        <button type="button" class="panel__btn" style="--bg: url(/work/lucerne-card.webp)" data-case="lucerne" aria-haspopup="dialog" aria-controls="casev" aria-label="Ver el caso: Lucerne Bakery">
+          <img src="/work/lucerne-card.webp" alt="" width="2560" height="1440">
           <span class="panel__shade" aria-hidden="true"></span>
           <span class="panel__cap">
             <span class="panel__n">02 / 03</span>
             <span class="panel__client">Lucerne Bakery</span>
-            <span class="panel__title">Dentro del glaseado</span>
-            <span class="panel__foot"><span class="panel__open">Ver el video</span><span class="panel__tags">2026 · Video de plato</span></span>
+            <span class="panel__title">Coral Way, en línea</span>
+            <span class="panel__foot"><span class="panel__open">Ver el caso</span><span class="panel__tags">2026 · Página web · Video de plato</span></span>
           </span>
         </button>
-        <figcaption>Lucerne Bakery. Dentro del glaseado.</figcaption>
+        <figcaption>Lucerne Bakery. Coral Way, en línea.</figcaption>
       </figure>
       <figure class="panel" data-case-panel="marino" data-client="Marino Plumbing" data-chapter="Análisis: una página de servicios que consigue la llamada" data-desc="La página de un plomero de Miami que lo hace bien: todo lo que el cliente necesita, en la primera pantalla." data-tags="2026 · Análisis · Servicios" data-open="Ver el análisis">
         <button type="button" class="panel__btn" style="--bg: url(/work/mp-hero.webp)" data-case="marino" aria-haspopup="dialog" aria-controls="casev" aria-label="Ver el análisis: Marino Plumbing">
@@ -1281,22 +1282,51 @@ html.has-case .pill.is-ready { opacity: 0; pointer-events: none; }
       </div>
     </div>
   </article>
-  <article class="casev__case casev__case--film" id="casev-lucerne" hidden>
+  <article class="casev__case" id="casev-lucerne" hidden>
     <aside class="casev__side">
       <button type="button" class="casev__close" data-close-case>Cerrar</button>
       <div>
         <h2 class="casev__client">Lucerne Bakery</h2>
-        <p class="casev__sub">Video de plato: el pastelito de guayaba.</p>
-        <p class="casev__tags">2026 · Video de plato</p>
+        <p class="casev__sub">Una panadería cubana en Coral Way, horneando desde 1985.</p>
+        <p class="casev__tags">2026 · Página web · Video de plato</p>
       </div>
-      <p class="casev__note">Un pastelito de guayaba de Lucerne, filmado solo en un cuarto blanco: la cámara entra en el glaseado y la guayaba, y vuelve a salir. Nueve segundos, sin palabras. Una toma que una vitrina no te puede dar, hecha para la página y los anuncios de la panadería.</p>
+      <nav class="casev__nav" aria-label="Capítulos">
+        <a href="#lb-home" aria-current="true">La página principal</a>
+        <a href="#lb-phone">En el celular</a>
+        <a href="#lb-film">El video del pastelito</a>
+      </nav>
     </aside>
     <div class="casev__main">
-      <figure class="casev__hero casev__film">
-        <video id="film-lucerne" src="/work/lucerne-guava.mp4" poster="/work/lucerne-poster.webp" width="720" height="1280" muted loop playsinline preload="metadata" aria-label="El video del pastelito de guayaba de Lucerne Bakery"></video>
+      <figure class="casev__hero">
+        <img src="/work/lucerne-home.webp" alt="La página principal de Lucerne Bakery: pastelitos, cafecito y pan cubano, con botones para ordenar para recoger o a domicilio" width="2560" height="1440">
       </figure>
-      <div class="casev__rest casev__foot">
-        <button type="button" class="casev__close" data-close-case>Cerrar</button>
+      <div class="casev__rest">
+        <section class="casev__sec" id="lb-home">
+          <h3>La página principal</h3>
+          <p>Pastelitos, cafecito y pan cubano en la primera pantalla, con recogida y entrega a un toque. Justo debajo están el horario de hoy, su calificación en Google y la dirección, así nadie tiene que buscar. En inglés y en español.</p>
+        </section>
+        <div class="casev__row">
+          <figure class="casev__fig casev__phones">
+            <img src="/work/lucerne-phone-home.webp" alt="La página principal de Lucerne en el celular" width="600" height="1298">
+            <img src="/work/lucerne-phone-menu.webp" alt="El menú de Lucerne en el celular" width="600" height="1298">
+          </figure>
+          <section class="casev__sec" id="lb-phone">
+            <h3>En el celular</h3>
+            <p>La mayoría de sus clientes ordenan desde el celular de camino, así que ordenar, el menú, el horario y cómo llegar están a un dedo de distancia.</p>
+          </section>
+        </div>
+        <div class="casev__row casev__row--flip">
+          <figure class="casev__fig casev__film">
+            <video id="film-lucerne" src="/work/lucerne-guava.mp4" poster="/work/lucerne-poster.webp" width="720" height="1280" muted loop playsinline preload="metadata" aria-label="El video del pastelito de guayaba de Lucerne Bakery"></video>
+          </figure>
+          <section class="casev__sec" id="lb-film">
+            <h3>El video del pastelito</h3>
+            <p>Un pastelito de guayaba filmado solo en un cuarto blanco. Nueve segundos, sin palabras. Hecho para la página y los anuncios de la panadería.</p>
+          </section>
+        </div>
+        <div class="casev__foot">
+          <button type="button" class="casev__close" data-close-case>Cerrar</button>
+        </div>
       </div>
     </div>
   </article>
