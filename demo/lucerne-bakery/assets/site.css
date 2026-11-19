@@ -267,3 +267,7 @@ a.cell:hover b{color:var(--blue)}
   .stats{gap:28px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+.tc-credit{display:inline-flex;align-items:center;gap:8px}
+.site-foot .tc-credit img{height:16px;width:auto;opacity:.9}
+.tc-credit:hover img{opacity:1}
