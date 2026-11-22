@@ -1,0 +1,812 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow"><title>Twin Citys HQ</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Michroma&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+html{-webkit-text-size-adjust:100%}body{margin:0}[hidden]{display:none!important}img{max-width:100%}
+/* Layout: one working surface. Sticky brand bar and tab strip, square-cornered ledger panels, mono figures. */
+:root{
+  --bg:#efebe3;--surface:#f6f3ec;--surface-2:#e8e3d8;--line:#d3cdbf;--line-2:#bdb6a8;
+  --fg:#0b0b0b;--muted:#5d584e;--faint:#8b8578;--accent:#8a6a2f;--on-fg:#efebe3;
+  --ok:#2f7a43;--warn:#96660c;--bad:#b23a2a;--info:#3d5f8f;
+  --f-display:"Michroma","Eurostile","Arial Black",sans-serif;
+  --f-body:"Instrument Sans","Helvetica Neue",Arial,sans-serif;
+  --f-num:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0b0b0b;--surface:#131312;--surface-2:#1b1a18;--line:#2b2a26;--line-2:#3a3833;
+  --fg:#e8e3d9;--muted:#a29d92;--faint:#6f6b62;--accent:#c9a46a;--on-fg:#0b0b0b;
+  --ok:#86bf91;--warn:#dcaa4c;--bad:#e3705e;--info:#93abcb;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0b0b0b;--surface:#131312;--surface-2:#1b1a18;--line:#2b2a26;--line-2:#3a3833;
+  --fg:#e8e3d9;--muted:#a29d92;--faint:#6f6b62;--accent:#c9a46a;--on-fg:#0b0b0b;
+  --ok:#86bf91;--warn:#dcaa4c;--bad:#e3705e;--info:#93abcb;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.45}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding-block:12px 8px}
+.brand .name{font-family:var(--f-display);font-size:17px;letter-spacing:.14em;line-height:1.1}
+.brand .name small{display:block;font-family:var(--f-num);font-size:9.5px;letter-spacing:.28em;color:var(--muted);margin-top:3px}
+.brand .sp{flex:1}
+.brand label{font-family:var(--f-num);font-size:10px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+.dot{font-family:var(--f-num);font-size:11px;color:var(--muted);white-space:nowrap}
+.dot i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--faint);margin-right:6px}
+.dot.live i{background:var(--ok)}.dot.bad i{background:var(--bad)}
+.tabs{overflow-x:auto;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}
+.tabs div{display:flex;gap:4px;min-width:max-content}
+.tabs a{font-family:var(--f-num);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:9px 10px;border-bottom:2px solid transparent;white-space:nowrap}
+.tabs a:hover{color:var(--fg)}.tabs a.on{color:var(--fg);border-color:var(--fg)}
+.tabs a b{color:var(--bad);font-weight:500;margin-left:4px}
+main{padding-block:26px 80px}
+.head{display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.head>div:first-child{flex:1;min-width:240px}
+h1{font-family:var(--f-display);font-weight:400;font-size:24px;letter-spacing:.06em;margin:0 0 6px;text-wrap:balance}
+.head p{margin:0;color:var(--muted);font-size:13.5px;max-width:62ch}
+.acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+button,.btn{font:500 13.5px var(--f-body);background:var(--fg);color:var(--on-fg);border:1px solid var(--fg);padding:8px 14px;cursor:pointer;border-radius:0}
+button.g{background:var(--surface);color:var(--fg);border-color:var(--line-2)}
+button.g:hover{border-color:var(--fg)}
+button.s{padding:4px 9px;font-size:12px}
+button.t{background:none;border:0;color:var(--muted);padding:4px 6px}button.t:hover{color:var(--fg)}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button[disabled]{opacity:.45;cursor:default}
+button[data-armed]{background:var(--bad);border-color:var(--bad);color:var(--on-fg)}
+input,select,textarea{font:400 14px var(--f-body);color:var(--fg);background:var(--surface-2);border:1px solid var(--line-2);padding:8px 10px;border-radius:0;max-width:100%}
+textarea{width:100%;min-height:90px;resize:vertical;line-height:1.45}
+.seg{display:inline-flex;border:1px solid var(--line-2);flex-wrap:wrap}
+.seg button{background:var(--surface);color:var(--muted);border:0;padding:6px 11px;font-size:12.5px}
+.seg button.on{background:var(--fg);color:var(--on-fg)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));border:1px solid var(--line);background:var(--surface);margin-bottom:18px}
+.tile{padding:14px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);margin:0 -1px -1px 0;min-width:0}
+.lab{font-family:var(--f-num);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.tile .v{font-family:var(--f-num);font-size:23px;margin:6px 0 3px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.tile .n{font-size:12px;color:var(--muted)}
+.panel{border:1px solid var(--line);background:var(--surface);margin-bottom:18px;min-width:0}
+.panel>.ph{display:flex;align-items:center;gap:10px;padding:11px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.panel>.ph .lab{flex:1;color:var(--fg)}
+.panel>.pb{padding:14px 16px}
+.cols{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:820px){.cols{grid-template-columns:minmax(0,1fr)}}
+@media (min-width:821px){.cols.cal2{grid-template-columns:minmax(0,1.7fr) minmax(0,1fr)}}
+.row{display:flex;gap:10px;align-items:flex-start;padding:11px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.row:last-child{border-bottom:0}
+.row .m{flex:1;min-width:160px}
+.row .ti{font-weight:600}.row .su{font-size:12.5px;color:var(--muted)}
+.row .su .od{color:var(--bad)}
+.row .ra{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.empty{padding:14px 16px;color:var(--muted);font-size:13.5px}
+.num{font-family:var(--f-num);font-variant-numeric:tabular-nums}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th{font-family:var(--f-num);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:400;text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td.r,th.r{text-align:right}td.num{white-space:nowrap}
+tr.click{cursor:pointer}tr.click:hover td{background:var(--surface-2)}
+td small{display:block;color:var(--muted);font-size:12px;max-width:52ch}
+.chip{display:inline-block;font-size:11.5px;border:1px solid var(--line-2);padding:1px 7px;margin:0 4px 4px 0;background:var(--surface-2)}
+.st{font-family:var(--f-num);font-size:11px;white-space:nowrap}
+.st.ok{color:var(--ok)}.st.warn{color:var(--warn)}.st.bad{color:var(--bad)}.st.info{color:var(--info)}
+.board{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;align-items:flex-start}
+.col{flex:0 0 232px;border:1px solid var(--line);background:var(--surface);min-width:0}
+.col>.ph{display:flex;padding:10px 12px;border-bottom:1px solid var(--line)}
+.col>.ph .lab{flex:1;color:var(--fg)}.col>.ph span:last-child{font-family:var(--f-num);font-size:11px;color:var(--muted)}
+.card{margin:8px;padding:10px;border:1px solid var(--line);background:var(--bg)}
+.card .ti{font-weight:600;cursor:pointer;margin-bottom:6px;overflow-wrap:anywhere}
+.card .ti:hover{text-decoration:underline}
+.card .su{font-size:12px;color:var(--muted);margin-bottom:6px;overflow-wrap:anywhere}
+.card .ra{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.card select{padding:3px 5px;font-size:12px}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border-left:1px solid var(--line);border-top:1px solid var(--line)}
+.cal .dw{font-family:var(--f-num);font-size:10px;letter-spacing:.14em;color:var(--muted);padding:6px 8px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.cal .d{min-height:86px;padding:5px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--surface);cursor:pointer;min-width:0}
+.cal .d.out{background:var(--surface-2)}.cal .d.sel{outline:2px solid var(--fg);outline-offset:-2px}
+.cal .d .dn{font-family:var(--f-num);font-size:11.5px;color:var(--muted)}
+.cal .d.today .dn{background:var(--fg);color:var(--on-fg);padding:1px 5px}
+.ev{font-size:10.5px;line-height:1.25;padding:2px 4px;margin-top:3px;border-left:3px solid var(--faint);background:var(--surface-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ev.k-Meeting{border-color:var(--info)}.ev.k-Task{border-color:var(--fg)}.ev.k-Deadline{border-color:var(--bad)}
+.ev.k-Follow-up{border-color:var(--accent)}.ev.k-Project{border-color:var(--ok)}.ev.k-Invoice{border-color:var(--warn)}
+.ev.done{opacity:.45;text-decoration:line-through}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:10px}
+.legend i{display:inline-block;width:9px;height:9px;margin-right:5px}
+.gbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:11px 16px;font-size:13.5px}
+.gbar .m{flex:1;min-width:200px}
+.bars{display:flex;gap:14px;align-items:flex-end;height:120px;padding:0 4px}
+.bars .b{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0;height:100%;justify-content:flex-end}
+.bars .pair{display:flex;gap:3px;align-items:flex-end;height:92px;width:100%;justify-content:center}
+.bars .pair i{display:block;width:38%;max-width:22px;min-height:1px;background:var(--fg)}
+.bars .pair i+i{background:var(--accent)}
+.bars span{font-family:var(--f-num);font-size:10px;color:var(--muted)}
+.split .bar{height:6px;background:var(--surface-2);margin-top:5px}.split .bar i{display:block;height:100%;background:var(--fg)}
+.script{white-space:pre-wrap;font-size:13.5px;line-height:1.55;max-width:80ch}
+.eq{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-family:var(--f-num);font-size:12.5px;padding:10px 16px;border-bottom:1px solid var(--line)}
+.eq span{border:1px solid var(--line);padding:5px 9px;background:var(--bg)}.eq em{font-style:normal;color:var(--muted)}
+td input.pi{width:76px;text-align:right;font-family:var(--f-num);padding:5px 6px;font-size:13px}
+.bund{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.kv{display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px dotted var(--line);font-size:13.5px}
+.kv:last-child{border:0}.kv span:last-child{font-family:var(--f-num);text-align:right}
+ol.rules{margin:0;padding:14px 16px 14px 36px}ol.rules li{margin-bottom:7px;max-width:80ch}
+#sheet{position:fixed;inset:0;z-index:20;background:color-mix(in srgb,var(--bg) 70%,transparent);display:flex;justify-content:flex-end}
+#sheet .in{width:min(520px,100%);height:100%;overflow-y:auto;background:var(--surface);border-left:1px solid var(--line-2);padding:calc(18px + env(safe-area-inset-top,0px)) max(18px,env(safe-area-inset-right,0px)) calc(28px + env(safe-area-inset-bottom,0px)) 18px}
+#sheet h2{font-family:var(--f-display);font-weight:400;font-size:17px;letter-spacing:.05em;margin:0;flex:1}
+#sheet .sh{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+#sheet .sub{color:var(--muted);font-size:12.5px;margin-bottom:14px}
+.fg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:14px}
+.fg .f{display:flex;flex-direction:column;gap:5px;min-width:0}.fg .f.w{grid-column:1/-1}
+.fg .f input,.fg .f select{width:100%}
+.checks{display:flex;flex-wrap:wrap;gap:6px}
+.checks label{font:400 13.5px var(--f-body);letter-spacing:0;text-transform:none;color:var(--fg);border:1px solid var(--line-2);padding:6px 10px;background:var(--surface-2);cursor:pointer}
+.checks input{margin-right:6px}
+.msg{border:1px solid var(--line);background:var(--bg);padding:10px 12px;margin-bottom:10px}
+.msg .mt{display:flex;align-items:center;gap:8px;margin-bottom:6px}.msg .mt .lab{flex:1}
+.msg p{margin:0;font-size:13.5px;white-space:pre-wrap;user-select:all}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:30;background:var(--fg);color:var(--on-fg);padding:10px 16px;font-size:13.5px;max-width:min(92vw,520px)}
+.note{font-size:12.5px;color:var(--muted);margin:10px 0 0}
+.banner{border:1px solid var(--warn);color:var(--warn);padding:9px 14px;margin-bottom:16px;font-size:13.5px;background:var(--surface)}
+@media (max-width:600px){h1{font-size:19px}.fg{grid-template-columns:minmax(0,1fr)}.cal .d{min-height:62px}.ev{font-size:9.5px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+#login{position:fixed;inset:0;z-index:40;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:20px}
+#login form{width:min(360px,100%);border:1px solid var(--line);background:var(--surface);padding:26px 22px;display:flex;flex-direction:column;gap:12px}
+#login .name{font-family:var(--f-display);font-size:19px;letter-spacing:.14em}
+#login .name small{display:block;font-family:var(--f-num);font-size:9.5px;letter-spacing:.28em;color:var(--muted);margin-top:4px}
+#login input{width:100%}#login .err{color:var(--bad);font-size:13px;min-height:18px}
+</style></head><body>
+
+<div id="login" hidden><form id="loginForm"><div class="name">TWIN CITYS<small>OPERATIONS · MIAMI</small></div>
+<label class="lab" for="lemail">Email</label><input id="lemail" type="email" autocomplete="username" required>
+<label class="lab" for="lpass">Password</label><input id="lpass" type="password" autocomplete="current-password" required>
+<div class="err" id="lerr" role="alert"></div><button type="submit" id="lbtn">Sign in</button></form></div>
+<header class="top"><div class="wrap">
+  <div class="brand">
+    <div class="name">TWIN CITYS<small>OPERATIONS · MIAMI</small></div>
+    <div class="sp"></div>
+    <label for="me">You</label>
+    <select id="me" data-c="me"><option>Eric</option><option>Kevin</option><option>Daniel</option></select>
+    <button class="g s" data-a="biz">Business info &amp; templates</button>
+    <button class="t s" data-a="signout">Sign out</button>
+    <span class="dot" id="dot"><i></i>Connecting</span>
+  </div>
+  <nav class="tabs" aria-label="Sections"><div id="tabs"></div></nav>
+</div></header>
+<main class="wrap" id="main"></main>
+<div id="sheet" hidden><div class="in" id="sheetIn" role="dialog" aria-modal="true"></div></div>
+<div id="toast" hidden role="status"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+/*PRICING*/
+let P_ASM={},P_SVC=[],P_BUN=[],P_SCN=[[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]];
+const P_ASM_LABELS={fee:'Card processing fee (%)',credit:'Higgsfield cost per credit ($)',creditsPerVideo:'Credits per AI video',travel:'Travel per shoot trip ($)',card:'Cost per Google review card ($)',fixed:'Fixed monthly costs ($)',floor:'Floor rate ($/hr)',target:'Target rate ($/hr)',hK:'Kevin hours per day',hE:'Eric hours per day',hD:'Daniel hours per day',days:'Work days per week',weeks:'Weeks per month',nonBill:'Non-billable time (%)',mixS:'Client mix: Starter (%)',mixG:'Client mix: Growth (%)',mixP:'Client mix: Pro (%)',fourMo:'New clients signing 4 months (%)',paychecks:'Paychecks per year'};
+const P_SCN_LABELS=['Active bundle clients','New clients signed this month','One-time website builds (medium)','Google review cards sold','Paid CRM builds (medium)'];
+function pAsm(o){return Object.assign({},P_ASM,(o&&o.asm)||{})}
+function pRow(base,ov,a){
+  const r=Object.assign({},base,ov||{});
+  const other=r.other==='card'?a.card:r.other;
+  r.direct=r.vids*a.credit*a.creditsPerVideo+r.trips*a.travel+other;
+  r.fee=r.price*a.fee/100;r.net=r.price-r.direct-r.fee;
+  r.rate=r.hours>0?r.net/r.hours:0;
+  const k=1-a.fee/100;
+  r.floorPrice=(r.hours*a.floor+r.direct)/k;r.targetPrice=(r.hours*a.target+r.direct)/k;
+  r.check=r.rate>=a.target?'Target hit':r.rate>=a.floor?'Above floor':'BELOW FLOOR';
+  return r;
+}
+function pServices(o){const a=pAsm(o);return P_SVC.map(s=>pRow(s,o&&o.svc&&o.svc[s.id],a))}
+function pBundles(o){const a=pAsm(o);return P_BUN.map(b=>{const r=pRow(b,o&&o.bun&&o.bun[b.id],a);
+  r.rate2=r.net*2/(r.hours*2+r.setup);r.rate4=r.net*4/(r.hours*4+r.setup+r.crmHrs);r.sees=r.price+r.ad;return r})}
+function pBillable(a){return (a.hK+a.hE+a.hD)*a.days*a.weeks*(1-a.nonBill/100)}
+function pScenario(o,i,method,taxPct,fundPct){
+  const a=pAsm(o),B=pBundles(o),v=(o&&o.scn&&o.scn[i])||P_SCN[i];
+  const [clients,fresh,builds,cards,crms]=v.map(Number);
+  const mix=[a.mixS/100,a.mixG/100,a.mixP/100],n=mix.map(m=>clients*m);
+  const revenue=n.reduce((s,x,j)=>s+x*B[j].price,0)+builds*a.buildPrice+cards*a.cardPrice+crms*a.crmPrice;
+  const direct=n.reduce((s,x,j)=>s+x*B[j].direct,0)+cards*a.card;
+  const expenses=revenue*a.fee/100+direct+a.fixed;
+  const profit=revenue-expenses;
+  let tax,reserve,split;
+  if(method==='app'){tax=revenue*taxPct/100;reserve=revenue*fundPct/100;split=revenue-tax-Math.max(reserve,expenses)}
+  else{tax=profit*0.25;reserve=profit*0.10;split=profit-tax-reserve}
+  const hours=n.reduce((s,x,j)=>s+x*B[j].hours,0)+builds*a.buildHrs+cards*a.cardHrs+crms*a.crmHrs
+    +fresh*mix.reduce((s,m,j)=>s+m*B[j].setup,0)+fresh*(a.fourMo/100)*mix.reduce((s,m,j)=>s+m*B[j].crmHrs,0);
+  const cap=hours/pBillable(a);
+  return {v,n,revenue,expenses,profit,tax,reserve,split,hours,cap,
+    status:cap>1?'OVER CAPACITY: hire help':cap>0.85?'Near full':'OK',
+    per:TEAM.map(n=>split*SPLIT[n]),check:TEAM.map(n=>split*SPLIT[n]*12/a.paychecks),
+    reorder:cards>0?100/cards:null};
+}
+/*END*/
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=(n,dec)=>{n=+n||0;const neg=n<0;n=Math.abs(n);const s=(dec||n%1)?n.toFixed(2):n.toFixed(0);return (neg?'−':'')+'$'+s.replace(/\B(?=(\d{3})+(?!\d))/g,',')};
+const pad=n=>String(n).padStart(2,'0');
+const iso=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const parse=s=>{const a=String(s).split('-').map(Number);return new Date(a[0],a[1]-1,a[2])};
+const today=()=>iso(new Date());
+const addDays=(s,n)=>{const d=parse(s);d.setDate(d.getDate()+n);return iso(d)};
+const fmt=(s,o)=>s?parse(s).toLocaleDateString('en-US',o||{month:'short',day:'numeric'}):'';
+const fmtLong=s=>fmt(s,{weekday:'short',month:'short',day:'numeric'});
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const TEAM=['Eric','Kevin','Daniel'];let SPLIT={Eric:0,Kevin:0,Daniel:0},P_RULES=[],P_MARKET='',P_NOTE='';
+function applyBase(){const b=S.config&&S.config.pricebase;if(!b||applyBase.v===b)return;applyBase.v=b;P_ASM=b.asm;P_SVC=b.svc;P_BUN=b.bun;P_SCN=b.scn;SPLIT=b.split;P_RULES=b.rules||[];P_MARKET=b.market||'';P_NOTE=b.note||''}
+const STAGES=['New','Contacted','Meeting set','Proposal sent','Won','Lost'];
+const INTERESTS=['Web development','Ads','GBP','SEO','Social managing','Photography','CRM'];
+const SOURCES=['Walk-in','Cold outreach','Referral','Instagram','Website','Our Meta ads','Our Google ads','Other'];
+const PSTAT=['Currently Live','In Progress','Case File','Not Started'];
+const ECATS=['AI credits','Subscriptions','Google review cards','Equipment','Contractor','Printing','Travel','Fees','Other'];
+const SCATS=['Services','Walk-in','Cold call','Voicemail','Instagram DM','Booking texts','Show-back','Objections','Follow-up','After launch'];
+const TABS=[['overview','Overview'],['clients','Clients'],['leads','Leads'],['scripts','Scripts'],['ads','Our Ads'],['money','Money'],['taxes','Taxes'],['expenses','Expenses'],['pricing','Pricing'],['invoices','Invoices'],['schedule','Calendar'],['projects','Projects']];
+const TEAM_CAL='';
+const DEF_CFG={email:'',phone:'',website:'twincitys.co',reviewLink:'',taxPct:30,fundPct:10,howPay:'',gcalId:TEAM_CAL,autoSync:false,templates:{}};
+
+const COLS=['leads','clients','items','ledger','campaigns','invoices','projects','scripts','config'];
+const S={};COLS.forEach(c=>S[c]={});
+const loaded={};let db=null,mcp=null,dbState='connecting',syncing=false,syncNote='';
+const V={tab:'overview',leadQ:'',period:'month',calView:'cal',calMonth:today().slice(0,7),calDay:today(),scriptCat:'All',scriptLead:'',ledgerF:'All',invF:'All',priceTab:'list',taxYear:new Date().getFullYear(),expCat:'All',method:'sheet',projQ:''};
+let ME='Eric';try{ME=localStorage.getItem('tc_me')||'Eric'}catch(e){}
+const L=c=>Object.values(S[c]);
+const cfg=()=>Object.assign({},DEF_CFG,S.config.settings||{});
+const pov=()=>S.config.pricing||{};
+
+/* ---------- storage ---------- */
+function toast(t){const el=$('#toast');el.textContent=t;el.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>el.hidden=true,3800)}
+function saveFail(e){toast(e&&e.code==='invalid_argument'?'You can view this page but not change it. Ask the owner for Contributor access.':e&&e.code==='quota_exceeded'?'Storage is full. Delete some old entries first.':'That didn’t save. Check your connection and try again.')}
+async function save(col,id,data){
+  if(!db){toast('Not connected, so nothing was saved.');return null}
+  try{const ref=db.collection(col).doc(id||uid());
+    if(id&&S[col][id])await ref.update(data);else await ref.set(data);
+    return ref.id}catch(e){saveFail(e);return null}
+}
+async function del(col,id){if(!db)return;try{await db.collection(col).doc(id).delete()}catch(e){saveFail(e)}}
+const SB_URL='https://ojmozwkzqsgyeubhmwfs.supabase.co',SB_KEY='sb_publishable_cwWWdGxII8VghyI5lXECaQ_jdia4anL';
+let sb=null;
+const strip=o=>{const c=Object.assign({},o||{});delete c.id;return c};
+function mkdb(){
+  const fail=e=>({code:e.code==='42501'?'invalid_argument':'unavailable',message:e.message});
+  const up=async(col,id,data)=>{const r=await sb.from('hq_docs').upsert({col,id,data,updated_by:ME,updated_at:new Date().toISOString()});if(r.error)throw fail(r.error);S[col][id]=Object.assign({id},data);schedule()};
+  const ref=(col,id)=>({id,set:d=>up(col,id,strip(d)),update:d=>up(col,id,Object.assign(strip(S[col][id]),d)),
+    delete:async()=>{const r=await sb.from('hq_docs').delete().eq('col',col).eq('id',id);if(r.error)throw fail(r.error);delete S[col][id];schedule()}});
+  return {collection:col=>({doc:id=>ref(col,id||uid())}),doc:p=>{const a=p.split('/');return ref(a[0],a[1])}};
+}
+async function loadAll(){
+  const r=await sb.from('hq_docs').select('col,id,data');
+  if(r.error){dbState='error';schedule();return}
+  COLS.forEach(c=>S[c]={});r.data.forEach(x=>{if(S[x.col])S[x.col][x.id]=Object.assign({id:x.id},x.data)});
+  COLS.forEach(c=>loaded[c]=true);dbState='live';schedule();
+}
+async function start(session){
+  $('#login').hidden=true;
+  const who=await sb.from('hq_members').select('name').eq('email',String(session.user.email).toLowerCase()).maybeSingle();
+  if(who.error){dbState='error';render();return}
+  if(!who.data){dbState='denied';render();return}
+  let stored=null;try{stored=localStorage.getItem('tc_me')}catch(e){}
+  if(!stored&&TEAM.includes(who.data.name))ME=who.data.name;
+  db=mkdb();await loadAll();
+  sb.channel('hq').on('postgres_changes',{event:'*',schema:'public',table:'hq_docs'},p=>{
+    if(p.eventType==='DELETE'){const o=p.old;if(o&&S[o.col])delete S[o.col][o.id]}
+    else{const x=p.new;if(x&&S[x.col])S[x.col][x.id]=Object.assign({id:x.id},x.data)}
+    schedule()}).subscribe();
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden&&db)loadAll()});
+}
+async function connect(){
+  if(!window.supabase||SB_URL.indexOf('__')===0){dbState='off';render();return}
+  sb=window.supabase.createClient(SB_URL,SB_KEY);
+  $('#loginForm').addEventListener('submit',async e=>{e.preventDefault();const b=$('#lbtn');b.disabled=true;$('#lerr').textContent='';
+    const r=await sb.auth.signInWithPassword({email:$('#lemail').value.trim(),password:$('#lpass').value});b.disabled=false;
+    if(r.error){$('#lerr').textContent=/invalid/i.test(r.error.message)?'That email and password don’t match.':'Couldn’t sign in. Check your connection and try again.';return}
+    start(r.data.session)});
+  const s=await sb.auth.getSession();
+  if(s.data&&s.data.session)start(s.data.session);else{$('#login').hidden=false;$('#lemail').focus()}
+}
+let pend=false;
+function schedule(){
+  const a=document.activeElement;
+  if(a&&$('#main').contains(a)&&/INPUT|TEXTAREA/.test(a.tagName)){pend=true;return}
+  clearTimeout(schedule.t);schedule.t=setTimeout(render,30);
+}
+document.addEventListener('focusout',()=>{if(pend){pend=false;setTimeout(schedule,60)}});
+
+/* ---------- derived ---------- */
+function inPeriod(d,p){
+  if(!d)return false;if(p==='all')return true;const t=today();
+  if(p==='month')return d.slice(0,7)===t.slice(0,7);
+  if(p==='last'){const x=parse(t.slice(0,7)+'-01');x.setMonth(x.getMonth()-1);return d.slice(0,7)===iso(x).slice(0,7)}
+  if(p==='ytd')return d.slice(0,4)===t.slice(0,4);
+  return d.slice(0,7)===p;
+}
+const PERIOD_LABEL={month:'This month',last:'Last month',ytd:'Year to date',all:'All time'};
+function fin(p){
+  const c=cfg(),led=L('ledger');
+  const sum=(type,f)=>led.filter(x=>x.type===type&&inPeriod(x.date,p)&&(!f||f(x))).reduce((s,x)=>s+(+x.amount||0),0);
+  const revenue=sum('Income');
+  const adSpend=L('campaigns').filter(x=>inPeriod(x.start,p)).reduce((s,x)=>s+(+x.spent||0),0);
+  const expenses=sum('Expense')+adSpend;
+  const taxes=revenue*c.taxPct/100,fund=revenue*c.fundPct/100;
+  const profit=revenue-taxes-Math.max(fund,expenses);
+  const bonuses=sum('Bonus'),pool=profit-bonuses;
+  const per={};TEAM.forEach(n=>{
+    const bonus=sum('Bonus',x=>x.partner===n),share=pool*SPLIT[n];
+    per[n]={bonus,share,earned:bonus+share,paid:sum('Payout',x=>x.partner===n)}});
+  return {revenue,adSpend,expenses,taxes,fund,profit,bonuses,pool,per,payouts:sum('Payout')};
+}
+function entries(){
+  const out=[];
+  L('items').forEach(x=>out.push({src:'items',id:x.id,title:x.title,date:x.date,time:x.time||'',kind:x.type||'Task',owner:x.owner||'',done:!!x.done,gcalId:x.gcalId,gcalStamp:x.gcalStamp,sub:''}));
+  L('leads').forEach(x=>{if(x.nextFollowUp&&!x.paused&&x.stage!=='Won'&&x.stage!=='Lost')
+    out.push({src:'leads',id:x.id,title:'Follow up: '+x.business,date:x.nextFollowUp,time:x.followUpTime||'',kind:'Follow-up',owner:x.owner||'',done:false,gcalId:x.gcalId,gcalStamp:x.gcalStamp,sub:[x.stage,(x.interests||[]).join(', ')].filter(Boolean).join(' · ')})});
+  L('invoices').forEach(x=>{if(x.due&&x.status==='Sent')out.push({src:'invoices',id:x.id,title:'Invoice '+x.number+' due: '+(x.client||''),date:x.due,time:'',kind:'Invoice due',owner:'',done:false,gcalId:x.gcalId,gcalStamp:x.gcalStamp,sub:money(x.amount)})});
+  L('projects').forEach(x=>{if(x.due&&(x.status==='In Progress'||x.status==='Not Started'))out.push({src:'projects',id:x.id,title:'Project due: '+x.name,date:x.due,time:'',kind:'Project due',owner:x.owner||'',done:false,gcalId:x.gcalId,gcalStamp:x.gcalStamp,sub:x.client||''})});
+  return out.filter(e=>e.date).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
+}
+const stamp=e=>e.date+'|'+e.time+'|'+e.title+'|'+e.owner;
+const overdue=()=>entries().filter(e=>!e.done&&e.date<today());
+const unsynced=()=>entries().filter(e=>!e.done&&(!e.gcalId||e.gcalStamp!==stamp(e)));
+const reviewAsks=()=>L('clients').filter(c=>c.status==='Currently Live'&&!c.reviewAsked);
+const openLeads=()=>L('leads').filter(l=>l.stage!=='Won'&&l.stage!=='Lost'&&!l.paused);
+const firstName=s=>{s=String(s||'').trim();if(!s||/^n\/?a$/i.test(s))return 'there';return s.split(/[\s(]/)[0]};
+function fill(t,x){x=x||{};const c=cfg();
+  const m={first:firstName(x.contact),business:x.business||'your business',sender:ME,services:(x.services||[]).join(', ').toLowerCase()||'your project',
+    amount:x.amount!=null?money(x.amount):'',invoice:x.invoice||'',due:x.due?fmt(x.due,{month:'long',day:'numeric'}):'',for:x.for||'',
+    date:x.date?fmt(x.date,{weekday:'long',month:'long',day:'numeric'}):'',time:x.time||'',where:x.where?' at '+x.where:'',type:x.type||'meeting',
+    payment:c.howPay||'',review:c.reviewLink||''};
+  return String(t).replace(/\{(\w+)\}/g,(a,k)=>k in m?m[k]:a).replace(/ {2,}/g,' ').trim();
+}
+const TPL_ORDER=['New lead: instant reply','Lead follow-up','Follow-up day 1','Follow-up day 3','Follow-up day 5','Follow-up day 7','Follow-up day 10','Follow-up day 14 (last)','Meeting confirmation','Meeting reminder','Meeting reminder (lead)','Sending invoice','Payment due soon','Payment overdue','Ask for a Google review'];
+const tpls=()=>cfg().templates||{};
+
+/* ---------- Google Calendar ---------- */
+const GCAL='Google Calendar';
+function gErr(e){const c=e&&e.code;
+  if(c==='needs_reauth')return 'Reconnect Google Calendar, then try again.';
+  if(c==='server_not_connected'||c==='selection_required')return 'Connect Google Calendar, then try again.';
+  if(c==='not_in_manifest'||c==='approval_required'||c==='not_granted'||c==='consent_required')return 'Google Calendar isn’t allowed for this page yet. Allow it when asked, then try again.';
+  if(c==='blocked_by_policy')return 'Your organization blocks Google Calendar for this page.';
+  if(c==='tool_error')return 'Google Calendar refused that event: '+String(e.message||'').slice(0,140);
+  return 'Google Calendar didn’t answer. The event may or may not have been created, so check the calendar before trying again.';}
+function evInput(e){
+  const allDay=!e.time,calendarId=cfg().gcalId||TEAM_CAL;let startTime,endTime;
+  if(allDay){startTime=e.date+'T00:00:00';endTime=addDays(e.date,1)+'T00:00:00'}
+  else{startTime=e.date+'T'+e.time+':00';const d=new Date(parse(e.date).getTime());const hm=e.time.split(':').map(Number);d.setHours(hm[0]+1,hm[1]);endTime=iso(d)+'T'+pad(d.getHours())+':'+pad(d.getMinutes())+':00'}
+  const o={calendarId,summary:(e.owner?e.owner+': ':'')+e.title,startTime,endTime,description:[e.kind,e.sub,'From Twin Citys HQ'].filter(Boolean).join(' · ')};
+  if(allDay)o.allDay=true;return o;
+}
+async function syncOne(e){
+  const inp=evInput(e);let id=e.gcalId;
+  if(id){inp.eventId=id;await mcp.callTool(GCAL,'update_event',inp,{cache:false})}
+  else{const r=await mcp.callTool(GCAL,'create_event',inp,{cache:false});id=r&&r.payload&&r.payload.id;if(!id)throw {code:'upstream_error'}}
+  await save(e.src,e.id,{gcalId:id,gcalStamp:stamp(e)});
+}
+async function syncAll(list){
+  if(!mcp||syncing)return;syncing=true;syncNote='Sending to Google Calendar…';render();let n=0;
+  try{for(const e of list){await syncOne(e);n++}syncNote=n+' item'+(n===1?'':'s')+' sent to Google Calendar.'}
+  catch(err){syncNote=(n?n+' sent, then stopped. ':'')+gErr(err)}
+  syncing=false;schedule();
+}
+function autoSync(src,id){
+  if(!mcp||!cfg().autoSync)return;
+  setTimeout(()=>{const e=entries().find(x=>x.src===src&&x.id===id);
+    if(e&&!e.done&&(!e.gcalId||e.gcalStamp!==stamp(e)))syncOne(e).catch(err=>toast(gErr(err)))},700);
+}
+async function unsync(src,id,clear){
+  const d=S[src][id];if(!d||!d.gcalId||!mcp)return;
+  try{await mcp.callTool(GCAL,'delete_event',{calendarId:cfg().gcalId||TEAM_CAL,eventId:d.gcalId},{cache:false})}catch(e){}
+  if(clear)await save(src,id,{gcalId:null,gcalStamp:null});
+}
+
+/* ---------- small builders ---------- */
+const tile=(l,v,n)=>'<div class="tile"><div class="lab">'+esc(l)+'</div><div class="v">'+v+'</div><div class="n">'+(n||'&nbsp;')+'</div></div>';
+const seg=(key,opts,cur)=>'<div class="seg">'+opts.map(o=>{const v=Array.isArray(o)?o[0]:o,t=Array.isArray(o)?o[1]:o;return '<button data-a="set" data-k="'+key+'" data-v="'+esc(v)+'" class="'+(String(cur)===String(v)?'on':'')+'">'+esc(t)+'</button>'}).join('')+'</div>';
+const periodSeg=()=>seg('period',[['month','This month'],['last','Last month'],['ytd','Year to date'],['all','All time']],V.period);
+const head=(t,p,acts)=>'<div class="head"><div><h1>'+esc(t)+'</h1><p>'+p+'</p></div><div class="acts">'+(acts||'')+'</div></div>';
+const loading=()=>dbState==='connecting'&&!COLS.every(k=>loaded[k]);
+const emptyOr=(arr,html,msg)=>arr.length?html:'<div class="empty">'+(loading()?'Loading…':msg)+'</div>';
+function entryRow(e,ctx){
+  const od=!e.done&&e.date<today();
+  const g=mcp?(e.gcalId&&e.gcalStamp===stamp(e)?'<span class="st ok">On Google</span>':'<button class="g s" data-a="gone" data-src="'+e.src+'" data-id="'+e.id+'">+ Google</button>'):'';
+  return '<div class="row">'+(e.src==='items'||e.src==='leads'?'<input type="checkbox" aria-label="Mark done" data-c="tick" data-src="'+e.src+'" data-id="'+e.id+'"'+(e.done?' checked':'')+' style="margin-top:4px">':'')
+   +'<div class="m"><div class="ti">'+esc(e.title)+'</div><div class="su">'+(ctx!=='day'?esc(fmtLong(e.date))+' · ':'')+(e.time?esc(e.time)+' · ':'')+esc(e.kind)+(e.sub?' · '+esc(e.sub):'')+(e.owner?' · '+esc(e.owner):'')+(od?' · <span class="od">overdue</span>':'')+'</div></div>'
+   +'<div class="ra">'+(e.src==='leads'?'<button class="g s" data-a="msg" data-src="leads" data-id="'+e.id+'">Message</button>':'')
+   +(e.src==='items'||e.src==='leads'?'<button class="g s" data-a="plus3" data-src="'+e.src+'" data-id="'+e.id+'">+3 days</button>':'')+g
+   +(e.src==='items'?'<button class="t" title="Delete" aria-label="Delete" data-a="delitem" data-id="'+e.id+'" data-confirm="1">✕</button>':'')+'</div></div>';
+}
+
+/* ---------- views ---------- */
+const View={};
+View.overview=()=>{
+  const f=fin('month'),od=overdue(),asks=reviewAsks(),ol=openLeads(),t=today();
+  const up=entries().filter(e=>!e.done&&e.date>=t).slice(0,6);
+  const openInv=L('invoices').filter(i=>i.status==='Sent');
+  const est=ol.reduce((s,l)=>s+(+l.estRev||0),0);
+  const cl=L('clients'),ret=cl.reduce((s,c)=>s+(+c.retainer||0),0);
+  const mon=parse(t).toLocaleDateString('en-US',{month:'long'});
+  const need=asks.length+od.length;
+  const board=TEAM.map(n=>({n,closes:cl.filter(c=>c.closedBy===n&&inPeriod(c.closedOn,'month')).length,
+    rev:L('ledger').filter(x=>x.type==='Income'&&inPeriod(x.date,'month')&&cl.some(c=>c.business===x.client&&c.closedBy===n)).reduce((s,x)=>s+(+x.amount||0),0)}))
+    .sort((a,b)=>b.rev-a.rev||b.closes-a.closes);
+  const months=[];for(let i=5;i>=0;i--){const d=parse(t.slice(0,7)+'-01');d.setMonth(d.getMonth()-i);const k=iso(d).slice(0,7),x=fin(k);months.push({l:d.toLocaleDateString('en-US',{month:'short'}),r:x.revenue,e:x.expenses})}
+  const mx=Math.max(1,...months.map(m=>Math.max(m.r,m.e)));
+  const pc=s=>L('projects').filter(p=>p.status===s).length;
+  return head(parse(t).toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'}),need?need+' item'+(need===1?'':'s')+' need attention.':'Nothing needs attention right now.','<button data-a="additem" data-type="Task">Add to schedule</button>')
+  +'<div class="tiles">'+tile('Revenue · '+mon,money(f.revenue),L('invoices').filter(i=>i.status==='Paid'&&inPeriod(i.paidDate,'month')).length+' paid invoices')
+   +tile('Profit · '+mon,money(f.profit),'After '+money(f.taxes)+' taxes + '+money(Math.max(f.fund,f.expenses))+' business')
+   +tile('Outstanding',money(openInv.reduce((s,i)=>s+(+i.amount||0),0)),openInv.length+' open invoices')
+   +tile('Est. rev (leads)',money(est),ol.length+' open leads')
+   +tile('Active clients',cl.length,money(ret)+'/mo retainers')+'</div>'
+  +'<div class="cols"><div>'
+   +'<div class="panel"><div class="ph"><span class="lab">Needs attention</span><span class="num">'+need+'</span></div>'
+    +emptyOr(asks.concat(od),asks.map(c=>'<div class="row"><div class="m"><div class="ti">Ask '+esc(c.business)+' for a Google review</div><div class="su">Their project is live: first win, best time to ask (and for a referral). Offer a review card too.</div></div><div class="ra"><button class="g s" data-a="msg" data-src="clients" data-id="'+c.id+'">Message</button><button class="g s" data-a="asked" data-id="'+c.id+'">Asked</button></div></div>').join('')+od.map(e=>entryRow(e)).join(''),'Overdue invoices, missed follow-ups, late projects and missed tasks show up here.')+'</div>'
+   +'<div class="panel"><div class="ph"><span class="lab">Coming up</span><a href="#schedule" style="color:var(--muted);font-size:12.5px">Calendar</a></div>'+emptyOr(up,up.map(e=>entryRow(e)).join(''),'No meetings or deadlines ahead.')+'</div>'
+  +'</div><div>'
+   +'<div class="panel"><div class="ph"><span class="lab">Leaderboard · '+mon+'</span></div>'+board.map((b,i)=>'<div class="row"><span class="num" style="color:var(--muted)">'+(i+1)+'</span><div class="m"><div class="ti">'+b.n+'</div><div class="su">'+b.closes+' close'+(b.closes===1?'':'s')+'</div></div><span class="num">'+money(b.rev)+'</span></div>').join('')+'</div>'
+   +'<div class="panel split"><div class="ph"><span class="lab">Profit split · '+mon+'</span></div><div class="pb">'+TEAM.map(n=>'<div style="margin-bottom:10px"><div class="kv" style="border:0;padding:0"><span><b>'+n+'</b></span><span>'+money(f.per[n].share)+' <span style="color:var(--muted)">'+Math.round(SPLIT[n]*100)+'%</span></span></div><div class="bar"><i style="width:'+Math.round(SPLIT[n]*100)+'%"></i></div></div>').join('')+'</div></div>'
+   +'<div class="panel"><div class="ph"><span class="lab">Last 6 months</span></div><div class="pb"><div class="bars">'+months.map(m=>'<div class="b"><div class="pair"><i style="height:'+Math.round(m.r/mx*100)+'%" title="Revenue '+money(m.r)+'"></i><i style="height:'+Math.round(m.e/mx*100)+'%" title="Expenses '+money(m.e)+'"></i></div><span>'+m.l+'</span></div>').join('')+'</div><div class="legend"><span><i style="background:var(--fg)"></i>Revenue</span><span><i style="background:var(--accent)"></i>Expenses (incl. our ads)</span><span class="num">Peak '+money(mx===1?0:mx)+'</span></div></div></div>'
+   +'<div class="panel"><div class="ph"><span class="lab">Projects</span><a href="#projects" style="color:var(--muted);font-size:12.5px">Board</a></div>'+PSTAT.map(s=>'<div class="row"><div class="m">'+s+'</div><span class="num">'+pc(s)+'</span></div>').join('')+'</div>'
+  +'</div></div>';
+};
+View.clients=()=>{
+  const cl=L('clients').sort((a,b)=>a.business.localeCompare(b.business)),led=L('ledger');
+  const paid=c=>led.filter(x=>x.type==='Income'&&x.client===c.business).reduce((s,x)=>s+(+x.amount||0),0);
+  const open=c=>L('invoices').filter(i=>i.client===c.business&&i.status==='Sent').reduce((s,i)=>s+(+i.amount||0),0);
+  const cpls=cl.filter(c=>+c.cpl>0);
+  return head('Clients','Every client, how to reach them, what they have paid us, and how their ads are doing.','<button data-a="editclient">Add client</button>')
+  +'<div class="tiles">'+tile('Lifetime paid us',money(cl.reduce((s,c)=>s+paid(c),0)))+tile('Start-up fees',money(cl.reduce((s,c)=>s+(+c.startup||0),0)),'Collected upfront')
+   +tile('Managed ad spend / mo',money(cl.reduce((s,c)=>s+(+c.adSpend||0),0)))+tile('Avg cost per lead',cpls.length?money(cpls.reduce((s,c)=>s+ +c.cpl,0)/cpls.length,1):'—',cpls.length?'':'Add CPL on a client')+'</div>'
+  +'<div class="panel">'+emptyOr(cl,'<div class="tw"><table><tr><th>Client</th><th>Status</th><th>Phone</th><th class="r">Paid us</th><th class="r">Start-up</th><th class="r">Open</th><th class="r">Retainer</th><th class="r">Ad spend/mo</th><th class="r">CPL</th></tr>'
+   +cl.map(c=>'<tr class="click" data-a="client" data-id="'+c.id+'"><td><b>'+esc(c.business)+'</b><small>'+esc((c.services||[]).join(', '))+'</small></td><td><span class="st '+(c.status==='Currently Live'?'ok':'info')+'">'+esc(c.status||'')+'</span></td><td class="num">'+esc(c.phone||'')+'</td><td class="r num">'+money(paid(c))+'</td><td class="r num">'+(c.startup?money(c.startup):'—')+'</td><td class="r num">'+money(open(c))+'</td><td class="r num">'+(c.retainer?money(c.retainer):'—')+'</td><td class="r num">'+(c.adSpend?money(c.adSpend):'—')+'</td><td class="r num">'+(c.cpl?money(c.cpl,1):'—')+'</td></tr>').join('')+'</table></div>','No clients yet. Win a lead and tap Make client, or add one here.')+'</div>';
+};
+View.leads=()=>{
+  const all=L('leads'),ol=openLeads(),q=V.leadQ.toLowerCase(),t=today();
+  const show=all.filter(l=>!q||(l.business+' '+(l.contact||'')+' '+(l.notes||'')).toLowerCase().includes(q));
+  const won=all.filter(l=>l.stage==='Won');
+  const cnt={};ol.forEach(l=>(l.interests||[]).forEach(i=>cnt[i]=(cnt[i]||0)+1));
+  const top=Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a])[0];
+  const due=ol.filter(l=>l.nextFollowUp&&l.nextFollowUp<=t).length;
+  const card=l=>{
+    let fu='';if(l.nextFollowUp){fu='Follow up '+fmt(l.nextFollowUp);if(l.lastContacted&&l.stage!=='New'){const n=Math.round((parse(l.nextFollowUp)-parse(l.lastContacted))/864e5);if(n>0&&n<=14)fu+=' · day '+n+' of 14'}}
+    return '<div class="card"><div class="ti" data-a="editlead" data-id="'+l.id+'">'+esc(l.business)+'</div><div>'+(l.interests||[]).map(i=>'<span class="chip">'+esc(i)+'</span>').join('')+'</div>'
+    +'<div class="su">'+[l.contact,l.source,l.owner].filter(Boolean).map(esc).join(' · ')+'</div>'
+    +(fu?'<div class="su"'+(l.nextFollowUp<t&&!l.paused?' style="color:var(--bad)"':'')+'>'+esc(fu)+'</div>':'')
+    +(l.paused?'<div class="su">Paused</div>':'')
+    +(+l.estRev?'<div class="su num">'+money(l.estRev)+' est.</div>':'')
+    +'<div class="ra"><button class="g s" data-a="plus3" data-src="leads" data-id="'+l.id+'">Follow up +3d</button><button class="t s" data-a="pause" data-id="'+l.id+'">'+(l.paused?'Resume':'Pause')+'</button></div>'
+    +'<div class="ra" style="margin-top:6px"><button class="g s" data-a="msg" data-src="leads" data-id="'+l.id+'">Message</button><select aria-label="Stage" data-c="stage" data-id="'+l.id+'">'+STAGES.map(s=>'<option'+(s===l.stage?' selected':'')+'>'+s+'</option>').join('')+'</select>'
+    +(l.stage==='Won'&&!l.clientId?'<button class="s" data-a="makeclient" data-id="'+l.id+'">Make client</button>':'')+'</div></div>'};
+  return head('Leads','Potential clients. They stay off the client list until you win them and tap Make client. Moving a lead to Contacted starts the 14-day follow-up sequence.','<input id="leadq" type="search" placeholder="Search leads" value="'+esc(V.leadQ)+'" data-i="leadQ"><button data-a="editlead">Add lead</button>')
+  +'<div class="tiles">'+tile('Open leads',ol.length)+tile('Est. rev',money(ol.reduce((s,l)=>s+(+l.estRev||0),0)),'From open leads')+tile('Won',won.length,won.length?money(won.reduce((s,l)=>s+(+l.estRev||0),0))+' est.':'No closed leads yet')+tile('Most wanted',esc(top||'—'),top?cnt[top]+' open leads':'')+tile('Follow-ups due',due,due?'Today or overdue':'All caught up')+'</div>'
+  +(all.length?'<div class="board">'+STAGES.map(s=>{const ls=show.filter(l=>l.stage===s).sort((a,b)=>(a.nextFollowUp||'9').localeCompare(b.nextFollowUp||'9'));const v=ls.reduce((x,l)=>x+(+l.estRev||0),0);
+    return '<div class="col"><div class="ph"><span class="lab">'+s+'</span><span>'+ls.length+(v?' · '+money(v):'')+'</span></div>'+(ls.map(card).join('')||'<div class="empty">—</div>')+'</div>'}).join('')+'</div>'
+   :'<div class="panel"><div class="empty">'+(loading()?'Loading…':'No leads yet. Add the first one with Add lead.')+'</div></div>');
+};
+View.scripts=()=>{
+  const all=L('scripts').sort((a,b)=>(a.order||0)-(b.order||0));
+  const list=all.filter(s=>V.scriptCat==='All'||s.category===V.scriptCat);
+  const who=L('leads').map(l=>({k:'leads/'+l.id,business:l.business,contact:l.contact})).concat(L('clients').map(c=>({k:'clients/'+c.id,business:c.business,contact:c.contact}))).sort((a,b)=>a.business.localeCompare(b.business));
+  const sel=who.find(w=>w.k===V.scriptLead);
+  const body=s=>sel?String(s.body).replace(/\[name\]/g,firstName(sel.contact)==='there'?'[name]':firstName(sel.contact)).replace(/\[business\]/g,sel.business):s.body;
+  return head('Scripts','What to say on every touch: walk-ins, calls, DMs, texts and the close. Pick a lead to fill in their name and business, then copy.','<button data-a="editscript">Add script</button>')
+  +'<div class="acts" style="margin-bottom:14px"><label class="lab" for="fillfor">Fill in for</label><select id="fillfor" data-c="scriptLead"><option value="">Nobody (keep brackets)</option>'+who.map(w=>'<option value="'+w.k+'"'+(w.k===V.scriptLead?' selected':'')+'>'+esc(w.business)+' · '+esc(w.contact||'n/a')+'</option>').join('')+'</select></div>'
+  +'<div style="margin-bottom:16px">'+seg('scriptCat',['All'].concat(SCATS),V.scriptCat)+'</div>'
+  +emptyOr(list,list.map(s=>'<div class="panel"><div class="ph"><span class="lab">'+esc(s.title)+'</span><span class="chip" style="margin:0">'+esc(s.category)+'</span><button class="g s" data-a="copyscript" data-id="'+s.id+'">Copy</button><button class="g s" data-a="editscript" data-id="'+s.id+'">Edit</button></div><div class="pb"><div class="script" id="sc_'+s.id+'">'+esc(body(s))+'</div></div></div>').join(''),'<div class="panel"><div class="empty">No scripts in this category yet.</div></div>');
+};
+View.ads=()=>{
+  const cs=L('campaigns').filter(c=>inPeriod(c.start,V.period)).sort((a,b)=>b.start.localeCompare(a.start));
+  const spent=cs.reduce((s,c)=>s+(+c.spent||0),0),leads=cs.reduce((s,c)=>s+(+c.leads||0),0);
+  const wonAds=L('leads').filter(l=>/^Our /.test(l.source||'')&&l.stage==='Won');
+  const tagged=L('leads').filter(l=>/^Our /.test(l.source||'')).length;
+  const rev=L('ledger').filter(x=>x.type==='Income'&&wonAds.some(l=>l.business===x.client)).reduce((s,x)=>s+(+x.amount||0),0);
+  return head('Our Ads','Twin Citys’ own ads to find clients. Spend here counts as an expense in Money automatically.',periodSeg()+'<button data-a="editcamp">Add campaign</button>')
+  +'<div class="tiles">'+tile('Spent',money(spent),PERIOD_LABEL[V.period])+tile('Leads',leads)+tile('Cost per lead',leads?money(spent/leads,1):'—')+tile('Clients won from ads',wonAds.length,tagged+' leads tagged “Our … ads”')+tile('Revenue from those',money(rev),'All time')+'</div>'
+  +'<div class="panel">'+emptyOr(cs,'<div class="tw"><table><tr><th>Campaign</th><th>Platform</th><th>Started</th><th class="r">Spent</th><th class="r">Leads</th><th class="r">CPL</th></tr>'+cs.map(c=>'<tr class="click" data-a="editcamp" data-id="'+c.id+'"><td><b>'+esc(c.name)+'</b></td><td>'+esc(c.platform||'')+'</td><td class="num">'+fmt(c.start)+'</td><td class="r num">'+money(c.spent)+'</td><td class="r num">'+(+c.leads||0)+'</td><td class="r num">'+(+c.leads?money(c.spent/c.leads,1):'—')+'</td></tr>').join('')+'</table></div>','No campaigns in this period. Add campaign with what you spent and how many leads it brought. Tag those leads’ source as “Our Meta ads” or “Our Google ads” to track which became clients.')+'</div>';
+};
+View.money=()=>{
+  const c=cfg(),f=fin(V.period),all=fin('all');
+  let led=L('ledger').filter(x=>inPeriod(x.date,V.period));
+  if(V.ledgerF==='Income')led=led.filter(x=>x.type==='Income');
+  if(V.ledgerF==='Expenses')led=led.filter(x=>x.type==='Expense');
+  if(V.ledgerF==='Payouts & bonuses')led=led.filter(x=>x.type==='Payout'||x.type==='Bonus');
+  led.sort((a,b)=>b.date.localeCompare(a.date));
+  const byClient={};L('ledger').filter(x=>x.type==='Income'&&inPeriod(x.date,V.period)&&x.client).forEach(x=>byClient[x.client]=(byClient[x.client]||0)+(+x.amount||0));
+  const tot=k=>TEAM.reduce((s,n)=>s+f.per[n][k],0);
+  return head('Money','Every dollar of revenue sends '+c.taxPct+'% to taxes and '+c.fundPct+'% to the business fund first. Expenses come out of the business fund, and anything above it comes out of profit. What’s left is split '+TEAM.map(n=>n+' '+Math.round(SPLIT[n]*100)+'%').join(', ')+'.','<button class="g" data-a="editledger" data-type="Expense">Add expense</button><button data-a="editledger" data-type="Income">Add income</button><button class="g" data-a="editledger" data-type="Bonus">Add bonus</button><button class="g" data-a="editledger" data-type="Payout">Record payout</button>')
+  +'<div style="margin-bottom:16px">'+periodSeg()+'</div>'
+  +'<div class="tiles">'+tile('Revenue',money(f.revenue),PERIOD_LABEL[V.period])+tile('Taxes · '+c.taxPct+'%',money(f.taxes),'Set aside')+tile('Business fund · '+c.fundPct+'%',money(f.fund),money(f.expenses)+' spent')+tile('Profit to split',money(f.profit),f.revenue?Math.round(f.profit/f.revenue*100)+'% of revenue':'')+tile('Paid out to partners',money(f.payouts))+'</div>'
+  +'<div class="panel"><div class="ph"><span class="lab">Profit split · '+PERIOD_LABEL[V.period]+'</span></div>'
+   +'<div class="eq"><span>Revenue '+money(f.revenue)+'</span><em>−</em><span>Taxes '+money(f.taxes)+'</span><em>−</em><span>Business '+money(Math.max(f.fund,f.expenses))+'</span><em>=</em><span>Profit '+money(f.profit)+'</span><em>−</em><span>Bonuses '+money(f.bonuses)+'</span><em>=</em><span>Split pool '+money(f.pool)+'</span></div>'
+   +'<div class="tw"><table><tr><th>Partner</th><th class="r">Bonus</th><th class="r">Split</th><th class="r">Earned</th><th class="r">Paid out</th><th class="r">Owed (all time)</th></tr>'
+   +TEAM.map(n=>'<tr><td><b>'+n+'</b> <span style="color:var(--muted)">'+Math.round(SPLIT[n]*100)+'%</span></td><td class="r num">'+money(f.per[n].bonus)+'</td><td class="r num">'+money(f.per[n].share)+'</td><td class="r num">'+money(f.per[n].earned)+'</td><td class="r num">'+money(f.per[n].paid)+'</td><td class="r num">'+money(all.per[n].earned-all.per[n].paid)+'</td></tr>').join('')
+   +'<tr><td><b>Total</b></td><td class="r num">'+money(tot('bonus'))+'</td><td class="r num">'+money(tot('share'))+'</td><td class="r num">'+money(tot('earned'))+'</td><td class="r num">'+money(tot('paid'))+'</td><td class="r num">'+money(TEAM.reduce((s,n)=>s+all.per[n].earned-all.per[n].paid,0))+'</td></tr></table></div></div>'
+  +'<div class="panel"><div class="ph"><span class="lab">Revenue by client</span></div>'+(Object.keys(byClient).length?Object.keys(byClient).sort((a,b)=>byClient[b]-byClient[a]).map(k=>'<div class="row"><div class="m">'+esc(k)+'</div><span class="num">'+money(byClient[k])+'</span></div>').join(''):'<div class="empty">No client revenue in this period.</div>')+'</div>'
+  +'<div class="panel"><div class="ph"><span class="lab">Ledger</span>'+seg('ledgerF',['All','Income','Expenses','Payouts & bonuses'],V.ledgerF)+'</div>'
+   +emptyOr(led,'<div class="tw"><table><tr><th>Date</th><th>Type</th><th>Description</th><th>Client / detail</th><th class="r">Amount</th></tr>'+led.map(x=>'<tr class="click" data-a="editledger" data-id="'+x.id+'"><td class="num">'+fmt(x.date)+'</td><td>'+esc(x.type)+'</td><td>'+esc(x.description||'')+'</td><td>'+esc(x.client||x.partner||x.category||'')+'</td><td class="r num">'+money(x.amount)+'</td></tr>').join('')+'</table></div>','Nothing logged in this period.')+'</div>';
+};
+View.taxes=()=>{
+  const c=cfg(),y=V.taxYear,led=L('ledger').filter(x=>x.date&&+x.date.slice(0,4)===y);
+  const inc=led.filter(x=>x.type==='Income'),rev=inc.reduce((s,x)=>s+(+x.amount||0),0);
+  const moved=led.filter(x=>x.type==='Tax transfer').reduce((s,x)=>s+(+x.amount||0),0);
+  const irs=led.filter(x=>x.type==='IRS payment').reduce((s,x)=>s+(+x.amount||0),0);
+  const spent=led.filter(x=>x.type==='Expense').reduce((s,x)=>s+(+x.amount||0),0)+L('campaigns').filter(x=>x.start&&+x.start.slice(0,4)===y).reduce((s,x)=>s+(+x.spent||0),0);
+  const Q=[['Q1','Jan–Mar',[1,3],y+'-04-15'],['Q2','Apr–May',[4,5],y+'-06-15'],['Q3','Jun–Aug',[6,8],y+'-09-15'],['Q4','Sep–Dec',[9,12],(y+1)+'-01-15']];
+  const t=today(),tr=led.filter(x=>x.type==='Tax transfer'||x.type==='IRS payment').sort((a,b)=>b.date.localeCompare(a.date));
+  const yn=new Date().getFullYear(),next=Q.map(q=>({q,r:inc.filter(x=>{const m=+x.date.slice(5,7);return m>=q[2][0]&&m<=q[2][1]}).reduce((s,x)=>s+(+x.amount||0),0)})).find(o=>o.q[3]>=t);
+  return head('Taxes',c.taxPct+'% of every dollar of revenue is set aside for taxes and '+c.fundPct+'% goes to the business fund, before the profit split. Change the percentages in Business info.','<button class="g" data-a="editledger" data-type="Tax transfer">Record transfer to tax account</button><button data-a="editledger" data-type="IRS payment">Record IRS payment</button>')
+  +'<div style="margin-bottom:16px">'+seg('taxYear',[yn,yn-1],y)+'</div>'
+  +(next&&y===yn?'<p class="note" style="margin:0 0 14px">Next estimated payment: '+fmt(next.q[3],{month:'long',day:'numeric',year:'numeric'})+' for '+next.q[0]+' ('+next.q[1]+'). Set aside so far for that quarter: '+money(next.r*c.taxPct/100)+'.</p>':'')
+  +'<div class="tiles">'+tile('Revenue · '+y,money(rev))+tile('Taxes set aside · '+c.taxPct+'%',money(rev*c.taxPct/100))+tile('Moved to tax account',money(moved),money(Math.max(0,rev*c.taxPct/100-moved))+' still to move')+tile('Paid to IRS',money(irs))+tile('Business fund · '+c.fundPct+'%',money(rev*c.fundPct/100),money(spent)+' spent · '+money(rev*c.fundPct/100-spent)+' left')+'</div>'
+  +'<div class="panel"><div class="ph"><span class="lab">Estimated tax by quarter · '+y+'</span></div><div class="tw"><table><tr><th>Quarter</th><th>Months</th><th class="r">Revenue</th><th class="r">Set aside</th><th>Due</th><th>Status</th></tr>'
+   +Q.map(q=>{const r=inc.filter(x=>{const m=+x.date.slice(5,7);return m>=q[2][0]&&m<=q[2][1]}).reduce((s,x)=>s+(+x.amount||0),0);const days=Math.round((parse(q[3])-parse(t))/864e5);
+     return '<tr><td><b>'+q[0]+'</b></td><td>'+q[1]+'</td><td class="r num">'+money(r)+'</td><td class="r num">'+money(r*c.taxPct/100)+'</td><td class="num">'+fmt(q[3],{month:'short',day:'numeric',year:'numeric'})+'</td><td>'+(r?(days>=0?'<span class="st warn">Due in '+days+' days</span>':'<span class="st">Past due date</span>'):'—')+'</td></tr>'}).join('')
+   +'<tr><td><b>Year</b></td><td></td><td class="r num">'+money(rev)+'</td><td class="r num">'+money(rev*c.taxPct/100)+'</td><td></td><td></td></tr></table></div>'
+   +'<div class="pb"><p class="note" style="margin:0">'+c.taxPct+'% is a set-aside, not your exact tax bill. Each partner’s real tax depends on their own return, so confirm amounts and due dates with your accountant.</p></div></div>'
+  +'<div class="panel"><div class="ph"><span class="lab">Transfers and payments · '+y+'</span></div>'+emptyOr(tr,tr.map(x=>'<div class="row" style="cursor:pointer" data-a="editledger" data-id="'+x.id+'"><div class="m"><div class="ti">'+esc(x.type)+'</div><div class="su">'+fmtLong(x.date)+(x.description?' · '+esc(x.description):'')+'</div></div><span class="num">'+money(x.amount)+'</span></div>').join(''),'Nothing logged for '+y+' yet. When you move the tax share into your tax savings account, tap Record transfer to tax account. When you pay the IRS, tap Record IRS payment.')+'</div>';
+};
+View.expenses=()=>{
+  const ex=L('ledger').filter(x=>x.type==='Expense'),inP=ex.filter(x=>inPeriod(x.date,V.period));
+  const sum=(a,f)=>a.filter(f||(()=>1)).reduce((s,x)=>s+(+x.amount||0),0);
+  const list=inP.filter(x=>V.expCat==='All'||x.category===V.expCat).sort((a,b)=>b.date.localeCompare(a.date));
+  const byP={};ex.filter(x=>x.project).forEach(x=>byP[x.project]=(byP[x.project]||0)+(+x.amount||0));
+  return head('Expenses','Costs per project: AI credits, subscriptions, Google review cards and the rest. Our own ad spend lives in Our Ads.',periodSeg()+'<button data-a="editledger" data-type="Expense">Add expense</button>')
+  +'<div class="tiles">'+tile('Total expenses',money(sum(inP)),PERIOD_LABEL[V.period])+tile('AI credits',money(sum(inP,x=>x.category==='AI credits')))+tile('Subscriptions',money(sum(inP,x=>x.category==='Subscriptions')))+tile('Google review cards',money(sum(inP,x=>x.category==='Google review cards')))+tile('Not tied to a project',money(sum(inP,x=>!x.project)))+'</div>'
+  +'<div class="panel"><div class="ph"><span class="lab">By project · all time</span></div>'+(Object.keys(byP).length?Object.keys(byP).map(k=>'<div class="row"><div class="m">'+esc(k)+'</div><span class="num">'+money(byP[k])+'</span></div>').join(''):'<div class="empty">Pick a project when you log an expense and its costs add up here.</div>')+'</div>'
+  +'<div style="margin-bottom:14px">'+seg('expCat',['All'].concat(ECATS),V.expCat)+'</div>'
+  +'<div class="panel">'+emptyOr(list,'<div class="tw"><table><tr><th>Date</th><th>Category</th><th>Description</th><th>Project</th><th class="r">Amount</th></tr>'+list.map(x=>'<tr class="click" data-a="editledger" data-id="'+x.id+'"><td class="num">'+fmt(x.date)+'</td><td>'+esc(x.category||'Other')+'</td><td>'+esc(x.description||'')+'</td><td>'+esc(x.project||'—')+'</td><td class="r num">'+money(x.amount)+'</td></tr>').join('')+'</table></div>','No expenses for this period. Add expense and pick the project it belongs to.')+'</div>';
+};
+View.pricing=()=>{
+  if(!P_SVC.length)return head('Pricing','Our price list, bundles and profit model.','')+'<div class="panel"><div class="empty">Loading…</div></div>';
+  const o=pov(),a=pAsm(o),sv=pServices(o),bn=pBundles(o),c=cfg();
+  const chk=r=>'<span class="st '+(r.check==='Target hit'?'ok':r.check==='Above floor'?'warn':'bad')+'">'+r.check+'</span>';
+  const pin=(path,v)=>'<input class="pi" inputmode="decimal" aria-label="'+esc(path)+'" data-p="'+path+'" value="'+v+'">';
+  let body='';
+  if(V.priceTab==='list'){
+    const cats=[...new Set(sv.map(s=>s.cat))];
+    body='<div class="tiles">'+tile('Services',sv.length)+tile('Floor / target rate','$'+a.floor+' / $'+a.target,'per hour, after costs')+tile('Below floor',sv.filter(s=>s.check==='BELOW FLOOR').length,sv.some(s=>s.check==='BELOW FLOOR')?'reprice these':'every price clears the floor')+tile('Billable hours / mo',Math.round(pBillable(a)),'team, after '+a.nonBill+'% non-billable')+'</div>'
+    +cats.map(cat=>'<div class="panel"><div class="ph"><span class="lab">'+cat+'</span></div><div class="tw"><table><tr><th>Service</th><th>Billing</th><th class="r">Price</th><th class="r">Hours</th><th class="r">Direct cost</th><th class="r">Net</th><th class="r">$/hr</th><th class="r">Floor price</th><th class="r">Target price</th><th>Check</th></tr>'
+      +sv.filter(s=>s.cat===cat).map(s=>'<tr><td><b>'+esc(s.name)+'</b><small>'+esc(s.desc)+(s.setup?' · +'+s.setup+' setup hrs month 1':'')+'</small></td><td>'+s.billing+'</td><td class="r">'+pin('svc.'+s.id+'.price',s.price)+'</td><td class="r">'+pin('svc.'+s.id+'.hours',s.hours)+'</td><td class="r num">'+money(s.direct)+'</td><td class="r num">'+money(s.net,1)+'</td><td class="r num"><b>'+money(Math.round(s.rate))+'</b></td><td class="r num" style="color:var(--muted)">'+money(s.floorPrice,1)+'</td><td class="r num" style="color:var(--muted)">'+money(s.targetPrice,1)+'</td><td>'+chk(s)+'</td></tr>').join('')+'</table></div></div>').join('')
+    +'<p class="note">Hours are per month for monthly services and per job for one-time work (meetings and 2 revision rounds included). Net = price − direct costs − '+a.fee+'% card fee. Edit a price or hours box and it saves for the whole team.</p>';
+  }else if(V.priceTab==='bundles'){
+    body='<p class="note" style="margin:0 0 14px">Monthly price only, no setup fee, 2-month minimum, website build included. CRM free on a 4-month contract; full CRM price on a 2-month contract. Client pays ad spend on their own card.</p><div class="bund">'
+    +bn.map(b=>'<div class="panel" style="margin:0"><div class="ph"><span class="lab">'+b.name+' · '+b.tag+'</span>'+chk(b)+'</div><div class="pb"><div class="kv"><span>Price / mo</span><span>'+pin('bun.'+b.id+'.price',b.price)+'</span></div><div class="kv"><span>Hours / mo</span><span>'+pin('bun.'+b.id+'.hours',b.hours)+'</span></div>'
+      +[['Client sees (with ad spend)',money(b.sees)],['Direct cost',money(b.direct,1)],['Net',money(b.net,1)],['$/hr',money(Math.round(b.rate))],['2-month $/hr',money(Math.round(b.rate2))],['4-month $/hr',money(Math.round(b.rate4))],['Month-1 setup hrs',b.setup],['AI videos / shoot trips',b.vids+' / '+b.trips],['Client ad spend min',money(b.ad)],['Free CRM (4-mo)',b.crm+' ('+money(b.crmPrice)+', '+b.crmHrs+' hrs)'],['Floor / target price',money(b.floorPrice,1)+' / '+money(b.targetPrice,1)]].map(k=>'<div class="kv"><span>'+k[0]+'</span><span>'+k[1]+'</span></div>').join('')
+      +'<p class="note">'+esc(b.inc)+'</p></div></div>').join('')+'</div>';
+  }else if(V.priceTab==='model'){
+    const sc=[0,1,2].map(i=>pScenario(o,i,V.method,c.taxPct,c.fundPct));
+    const rowv=(l,f)=>'<tr><td>'+l+'</td>'+sc.map(s=>'<td class="r num">'+f(s)+'</td>').join('')+'</tr>';
+    body='<div style="margin-bottom:14px">'+seg('method',[['sheet','Sheet method (25% tax + 10% reserve of profit)'],['app','HQ method ('+c.taxPct+'% + '+c.fundPct+'% of revenue)']],V.method)+'</div>'
+    +'<div class="panel"><div class="tw"><table><tr><th>Input</th><th class="r">Scenario 1</th><th class="r">Scenario 2</th><th class="r">Scenario 3</th></tr>'
+    +P_SCN_LABELS.map((l,j)=>'<tr><td>'+l+'</td>'+sc.map((s,i)=>'<td class="r">'+pin('scn.'+i+'.'+j,s.v[j])+'</td>').join('')+'</tr>').join('')
+    +'<tr><th colspan="4">Result</th></tr>'
+    +rowv('Starter / Growth / Pro clients',s=>s.n.map(x=>+x.toFixed(2)).join(' / '))+rowv('Revenue',s=>money(s.revenue))+rowv('Expenses',s=>money(s.expenses,1))+rowv('Profit before tax',s=>money(s.profit,1))+rowv('Tax set-aside',s=>money(s.tax,1))+rowv(V.method==='app'?'Business fund':'Reserve',s=>money(s.reserve,1))+rowv('<b>Profit to split</b>',s=>'<b>'+money(s.split,1)+'</b>')
+    +rowv('Kevin / Eric per month',s=>money(s.per[0],1))+rowv('Daniel per month',s=>money(s.per[2],1))+rowv('Kevin / Eric per paycheck',s=>money(s.check[0],1))+rowv('Daniel per paycheck',s=>money(s.check[2],1))
+    +rowv('Hours needed',s=>Math.round(s.hours))+rowv('Capacity used',s=>Math.round(s.cap*100)+'%')+rowv('Status',s=>'<span class="st '+(s.cap>1?'bad':s.cap>.85?'warn':'ok')+'">'+s.status+'</span>')+rowv('Months until card reorder',s=>s.reorder?s.reorder.toFixed(1):'—')
+    +'</table></div></div>';
+  }else if(V.priceTab==='rules'){
+    body='<div class="panel"><ol class="rules">'+P_RULES.map(r=>'<li>'+esc(r)+'</li>').join('')+'</ol></div>'
+    +'<div class="panel"><div class="ph"><span class="lab">Market check (2026)</span></div><div class="pb">'+esc(P_MARKET)+'</div></div>';
+  }else{
+    body='<div class="panel"><div class="tw"><table><tr><th>Assumption</th><th class="r">Value</th></tr>'+Object.keys(P_ASM_LABELS).map(k=>'<tr><td>'+P_ASM_LABELS[k]+'</td><td class="r">'+pin('asm.'+k,a[k])+'</td></tr>').join('')
+    +'<tr><td>Cost per AI video</td><td class="r num">'+money(a.credit*a.creditsPerVideo,1)+'</td></tr><tr><td>Billable hours per month</td><td class="r num">'+Math.round(pBillable(a))+'</td></tr></table></div></div>'
+    +'<p class="note">'+esc(P_NOTE)+'</p>';
+  }
+  return head('Pricing','Our price list, bundles and profit model, from the Twin Citys Finances sheet. Every price shows what we really earn per hour after costs.',seg('priceTab',[['list','Price list'],['bundles','Bundles'],['model','Profit model'],['rules','Rules'],['asm','Assumptions']],V.priceTab)+'<button class="g" data-a="resetprice" data-confirm="1">Reset to original numbers</button>')+body;
+};
+View.invoices=()=>{
+  const t=today(),all=L('invoices').map(i=>Object.assign({},i,{eff:i.status==='Sent'&&i.due<t?'Overdue':i.status})).sort((a,b)=>String(b.number).localeCompare(String(a.number)));
+  const list=all.filter(i=>V.invF==='All'||i.eff===V.invF),sum=a=>a.reduce((s,i)=>s+(+i.amount||0),0);
+  return head('Invoices','Tap Send to get a ready-to-send message. Mark paid and it counts toward revenue and the split.','<button data-a="editinv">New invoice</button>')
+  +'<div class="tiles">'+tile('Awaiting payment',money(sum(all.filter(i=>i.status==='Sent'))))+tile('Overdue',money(sum(all.filter(i=>i.eff==='Overdue'))))+tile('Collected this month',money(sum(all.filter(i=>i.status==='Paid'&&inPeriod(i.paidDate,'month')))))+tile('Drafts',all.filter(i=>i.status==='Draft').length)+'</div>'
+  +'<div style="margin-bottom:14px">'+seg('invF',['All','Draft','Sent','Overdue','Paid'],V.invF)+'</div>'
+  +'<div class="panel">'+emptyOr(list,list.map(i=>'<div class="row"><div class="m" style="cursor:pointer" data-a="editinv" data-id="'+i.id+'"><div class="ti">'+esc(i.number)+' · '+esc(i.client||'')+'</div><div class="su">'+esc(i.for||'')+' · due '+fmt(i.due)+'</div></div><span class="st '+(i.eff==='Paid'?'ok':i.eff==='Overdue'?'bad':i.eff==='Sent'?'warn':'')+'">'+i.eff+'</span><span class="num" style="min-width:80px;text-align:right">'+money(i.amount)+'</span><div class="ra">'+(i.status!=='Paid'?'<button class="g s" data-a="sendinv" data-id="'+i.id+'">Send</button><button class="s" data-a="payinv" data-id="'+i.id+'">Mark paid</button>':'')+'</div></div>').join(''),'No invoices yet. New invoice numbers them automatically (TC-1001, TC-1002…).')+'</div>';
+};
+View.schedule=()=>{
+  const es=entries(),t=today(),od=es.filter(e=>!e.done&&e.date<t),un=unsynced();
+  const g='<div class="panel"><div class="gbar"><div class="m">'+(mcp?(syncing?esc(syncNote):(un.length?'<b>'+un.length+' open item'+(un.length===1?' is':'s are')+' not on the Team Google Calendar yet.</b>':'<b>Everything open is on the Team Google Calendar.</b>')+(syncNote?' '+esc(syncNote):'')):'New and changed items are added to the Team Google Calendar every morning at 8:35.')+'</div>'
+   +(mcp?(un.length&&!syncing?'<button data-a="syncall" data-confirm="1">Send '+un.length+' to Google</button>':'')+'<label style="font-size:13px;display:flex;gap:6px;align-items:center"><input type="checkbox" data-c="autosync"'+(cfg().autoSync?' checked':'')+'>Send new and changed items automatically</label>':'')+'</div></div>';
+  let body;
+  if(V.calView==='cal'){
+    const first=parse(V.calMonth+'-01'),start=new Date(first);start.setDate(1-first.getDay());
+    let cells='';for(let i=0;i<42;i++){const d=new Date(start);d.setDate(start.getDate()+i);const k=iso(d),de=es.filter(e=>e.date===k);
+      if(i>=35&&d.getMonth()!==first.getMonth()&&i%7===0)break;
+      cells+='<div class="d'+(d.getMonth()!==first.getMonth()?' out':'')+(k===t?' today':'')+(k===V.calDay?' sel':'')+'" data-a="day" data-d="'+k+'"><span class="dn">'+d.getDate()+'</span>'+de.slice(0,3).map(e=>'<div class="ev k-'+e.kind.split(' ')[0]+(e.done?' done':'')+'" title="'+esc(e.title)+'">'+esc(e.title)+'</div>').join('')+(de.length>3?'<div class="ev" style="border:0;background:none;color:var(--muted)">+'+(de.length-3)+' more</div>':'')+'</div>'}
+    const day=es.filter(e=>e.date===V.calDay);
+    body='<div class="cols cal2"><div><div class="acts" style="margin-bottom:10px"><h1 style="font-size:17px;margin:0;flex:1">'+first.toLocaleDateString('en-US',{month:'long',year:'numeric'})+'</h1><button class="g s" data-a="mon" data-n="-1" aria-label="Previous month">‹</button><button class="g s" data-a="mon" data-n="0">Today</button><button class="g s" data-a="mon" data-n="1" aria-label="Next month">›</button></div>'
+     +'<div class="cal">'+['SUN','MON','TUE','WED','THU','FRI','SAT'].map(d=>'<div class="dw">'+d+'</div>').join('')+cells+'</div>'
+     +'<div class="legend">'+[['Meeting','info'],['Task','fg'],['Deadline','bad'],['Follow-up','accent'],['Project due','ok'],['Invoice due','warn']].map(l=>'<span><i style="background:var(--'+l[1]+')"></i>'+l[0]+'</span>').join('')+'</div></div>'
+     +'<div><div class="panel"><div class="ph"><span class="lab">'+(V.calDay===t?'Today · ':'')+fmtLong(V.calDay)+'</span><span class="num">'+day.length+'</span></div>'
+      +'<div class="row"><input id="newtask" placeholder="New task for '+fmt(V.calDay)+'" style="flex:1;min-width:120px"><select id="newowner" aria-label="Owner"><option value="">Everyone</option>'+TEAM.map(n=>'<option'+(n===ME?' selected':'')+'>'+n+'</option>').join('')+'</select><button data-a="quicktask">Add</button></div>'
+      +(day.map(e=>entryRow(e,'day')).join('')||'<div class="empty">Nothing on this day. Type a task above to add one.</div>')+'</div>'
+     +(od.length?'<div class="panel"><div class="ph"><span class="lab">Overdue</span><span class="num">'+od.length+'</span></div>'+od.map(e=>entryRow(e)).join('')+'</div>':'')+'</div></div>';
+  }else{
+    const later=es.filter(e=>!e.done&&e.date>=t),done=es.filter(e=>e.done).reverse().slice(0,30);
+    body='<div class="panel"><div class="ph"><span class="lab">Needs attention</span><span class="num">'+od.length+'</span></div>'+(od.map(e=>entryRow(e)).join('')||'<div class="empty">Nothing overdue.</div>')+'</div>'
+     +'<div class="panel"><div class="ph"><span class="lab">Today and later</span><span class="num">'+later.length+'</span></div>'+(later.map(e=>entryRow(e)).join('')||'<div class="empty">Nothing scheduled.</div>')+'</div>'
+     +'<div class="panel"><div class="ph"><span class="lab">Done</span><span class="num">'+done.length+'</span></div>'+(done.map(e=>entryRow(e)).join('')||'<div class="empty">Nothing ticked off yet.</div>')+'</div>';
+  }
+  return head('Calendar','Every meeting, task, follow-up, project deadline and invoice due date. Tap a day to see its tasks, tick them off, or add one.',seg('calView',[['cal','Calendar'],['list','List']],V.calView)+'<button class="g" data-a="additem" data-type="Task">Add task</button><button data-a="additem" data-type="Meeting">Add meeting</button><button class="g" data-a="additem" data-type="Deadline">Add deadline</button>')+g+body;
+};
+View.projects=()=>{
+  const q=V.projQ.toLowerCase(),ps=L('projects').filter(p=>!q||(p.name+' '+(p.client||'')).toLowerCase().includes(q));
+  return head('Projects','Currently Live, In Progress, Case File and Not Started.','<input type="search" placeholder="Search projects" value="'+esc(V.projQ)+'" data-i="projQ"><button data-a="editproj">Add project</button>')
+  +'<div class="board">'+PSTAT.map(s=>{const l=ps.filter(p=>p.status===s);return '<div class="col" style="flex:1 0 232px"><div class="ph"><span class="lab">'+s+'</span><span>'+l.length+'</span></div>'+(l.map(p=>'<div class="card"><div class="ti" data-a="editproj" data-id="'+p.id+'">'+esc(p.name)+'</div><div class="su">'+[p.client,p.owner,p.due?'due '+fmt(p.due):''].filter(Boolean).map(esc).join(' · ')+'</div><div class="ra"><select aria-label="Status" data-c="pstatus" data-id="'+p.id+'">'+PSTAT.map(x=>'<option'+(x===p.status?' selected':'')+'>'+x+'</option>').join('')+'</select></div></div>').join('')||'<div class="empty">'+(loading()?'Loading…':'—')+'</div>')+'</div>'}).join('')+'</div>';
+};
+
+/* ---------- render ---------- */
+function render(){
+  applyBase();
+  const od=overdue().length+reviewAsks().length,badge={overview:od||'',clients:L('clients').length||'',leads:openLeads().length||''};
+  $('#tabs').innerHTML=TABS.map(t=>'<a href="#'+t[0]+'" class="'+(V.tab===t[0]?'on':'')+'">'+t[1]+(badge[t[0]]?'<b>'+badge[t[0]]+'</b>':'')+'</a>').join('');
+  const dot=$('#dot');dot.className='dot'+(dbState==='live'?' live':dbState==='off'||dbState==='error'?' bad':'');
+  dot.innerHTML='<i></i>'+({live:'Live',connecting:'Connecting',slow:'Still connecting',off:'Not connected',error:'Connection lost',denied:'No access'}[dbState]);
+  $('#me').value=ME;
+  const ban=dbState==='off'?'<div class="banner">The database isn’t connected, so nothing can be loaded or saved.</div>':dbState==='denied'?'<div class="banner">This account isn’t on the Twin Citys team list. Sign out and use your team login.</div>':dbState==='slow'?'<div class="banner">The saved data can’t be reached yet. What you see may be out of date.</div>':dbState==='error'?'<div class="banner">The connection to the saved data was lost. Reload the page to reconnect.</div>':'';
+  const y=window.scrollY;$('#main').innerHTML=ban+(View[V.tab]||View.overview)();window.scrollTo(0,y);
+}
+
+/* ---------- sheet + forms ---------- */
+let FORM=null;
+function closeSheet(){$('#sheet').hidden=true;$('#sheetIn').innerHTML='';FORM=null}
+function sheet(title,sub,html){$('#sheetIn').innerHTML='<div class="sh"><h2>'+esc(title)+'</h2><button class="t" data-a="close">Close</button></div><div class="sub">'+(sub||'')+'</div>'+html;$('#sheet').hidden=false;$('#sheetIn').scrollTop=0}
+function field(f,v){
+  const id='f_'+f.k;v=v==null?(f.def==null?'':f.def):v;let c;
+  if(f.t==='select')c='<select id="'+id+'">'+f.o.map(o=>'<option'+(String(o)===String(v)?' selected':'')+'>'+esc(o)+'</option>').join('')+'</select>';
+  else if(f.t==='area')c='<textarea id="'+id+'"'+(f.rows?' style="min-height:'+f.rows*22+'px"':'')+'>'+esc(v)+'</textarea>';
+  else if(f.t==='checks')c='<div class="checks">'+f.o.map((o,i)=>'<label><input type="checkbox" id="'+id+'_'+i+'" data-ck="'+f.k+'" value="'+esc(o)+'"'+((v||[]).includes(o)?' checked':'')+'>'+esc(o)+'</label>').join('')+'</div>';
+  else if(f.t==='check')c='<div class="checks"><label><input type="checkbox" id="'+id+'"'+(v?' checked':'')+'>'+esc(f.cl)+'</label></div>';
+  else c='<input id="'+id+'" type="'+(f.t||'text')+'"'+(f.t==='number'?' step="any" inputmode="decimal"':'')+(f.list?' list="'+id+'_l"':'')+' value="'+esc(v)+'">'+(f.list?'<datalist id="'+id+'_l">'+f.list.map(o=>'<option value="'+esc(o)+'">').join('')+'</datalist>':'');
+  return '<div class="f'+(f.w||f.t==='area'||f.t==='checks'?' w':'')+'"><label class="lab" for="'+id+'">'+esc(f.l)+'</label>'+c+'</div>';
+}
+function form(def){
+  FORM=def;const v=def.values||{};
+  sheet(def.title,def.sub,(def.pre||'')+'<div class="fg">'+def.fields.map(f=>field(f,v[f.k])).join('')+'</div><div class="acts"><button data-a="formsave">'+(def.saveLabel||'Save')+'</button><button class="g" data-a="close">Cancel</button>'+(def.extra||'')+(def.del?'<span style="flex:1"></span><button class="g" data-a="formdel" data-confirm="1">Delete</button>':'')+'</div>');
+}
+function formVals(){const o={};FORM.fields.forEach(f=>{
+  if(f.t==='checks')o[f.k]=[...document.querySelectorAll('[data-ck="'+f.k+'"]:checked')].map(x=>x.value);
+  else{const el=document.getElementById('f_'+f.k);o[f.k]=f.t==='check'?el.checked:f.t==='number'?(el.value===''?null:+el.value):el.value.trim()}});return o}
+const names=()=>[...new Set(L('clients').map(c=>c.business).concat(L('leads').map(l=>l.business)))].sort();
+
+const Forms={
+  lead(id){const l=id?S.leads[id]:{stage:'New',owner:ME,source:'Walk-in',interests:[]};
+    form({title:id?'Edit lead':'Add lead',sub:id&&l.editedBy?'Last edited by '+esc(l.editedBy)+' · '+fmt(l.editedOn):'',values:l,del:id?()=>unsync('leads',id).then(()=>del('leads',id)):null,
+      fields:[{k:'business',l:'Business *',w:1},{k:'contact',l:'Contact person'},{k:'phone',l:'Phone'},{k:'email',l:'Email'},{k:'website',l:'Website / social'},{k:'interests',l:'Interested in',t:'checks',o:INTERESTS},{k:'source',l:'Source',t:'select',o:SOURCES},{k:'stage',l:'Stage',t:'select',o:STAGES},{k:'estRev',l:'Est. rev',t:'number'},{k:'owner',l:'Owner',t:'select',o:TEAM},{k:'nextFollowUp',l:'Next follow-up',t:'date'},{k:'followUpTime',l:'Follow-up time',t:'time'},{k:'lastContacted',l:'Last contacted',t:'date',w:1},{k:'paused',l:'Paused',t:'check',cl:'Paused: gone quiet, hide from all numbers'},{k:'notes',l:'Notes',t:'area'}],
+      async save(v){if(!v.business)return 'Add the business name.';v.editedBy=ME;v.editedOn=today();if(!id)v.createdOn=today();
+        if(v.stage==='Contacted'&&(!id||l.stage==='New')){if(!v.lastContacted)v.lastContacted=today();if(!v.nextFollowUp)v.nextFollowUp=addDays(today(),1)}
+        const nid=await save('leads',id,v);if(nid)autoSync('leads',nid)}})},
+  client(id,pre){const c=id?S.clients[id]:Object.assign({status:'Not Started',services:[],leadOwner:ME,closedBy:ME,closedOn:today()},pre||{});
+    form({title:id?'Edit client':'Add client',values:c,del:id?()=>del('clients',id):null,
+      fields:[{k:'business',l:'Business *',w:1},{k:'contact',l:'Contact'},{k:'phone',l:'Phone'},{k:'email',l:'Email'},{k:'address',l:'Address'},{k:'website',l:'Website'},{k:'socials',l:'Socials'},{k:'services',l:'Services',t:'checks',o:INTERESTS},{k:'status',l:'Status',t:'select',o:PSTAT},{k:'leadOwner',l:'Lead',t:'select',o:TEAM},{k:'closedBy',l:'Closed by',t:'select',o:TEAM},{k:'closedOn',l:'Closed on',t:'date'},{k:'startup',l:'Start-up fee',t:'number'},{k:'retainer',l:'Retainer / mo',t:'number'},{k:'adSpend',l:'Ad spend / mo',t:'number'},{k:'cpl',l:'Cost per lead',t:'number'},{k:'notes',l:'Notes',t:'area'}],
+      async save(v){if(!v.business)return 'Add the business name.';if(pre&&pre.leadId)v.leadId=pre.leadId;const nid=await save('clients',id,v);if(nid&&pre&&pre.leadId)await save('leads',pre.leadId,{clientId:nid})}})},
+  item(id,pre){const x=id?S.items[id]:Object.assign({type:'Task',date:V.tab==='schedule'?V.calDay:today(),owner:ME},pre||{});
+    form({title:id?'Edit '+String(x.type).toLowerCase():'Add '+String(x.type).toLowerCase(),values:x,del:id?()=>unsync('items',id).then(()=>del('items',id)):null,
+      fields:[{k:'title',l:'What *',w:1},{k:'type',l:'Type',t:'select',o:['Task','Meeting','Deadline']},{k:'owner',l:'Owner',t:'select',o:[''].concat(TEAM)},{k:'date',l:'Date *',t:'date'},{k:'time',l:'Time',t:'time'},{k:'withWho',l:'Client or lead',list:names(),w:1},{k:'where',l:'Where',w:1},{k:'notes',l:'Notes',t:'area'}],
+      async save(v){if(!v.title||!v.date)return 'Add what it is and the date.';if(!id)v.done=false;const nid=await save('items',id,v);if(nid)autoSync('items',nid)}})},
+  ledger(id,type){const x=id?S.ledger[id]:{type,date:today()};const ty=x.type;
+    const f=[{k:'date',l:'Date *',t:'date'},{k:'amount',l:'Amount *',t:'number'},{k:'description',l:'Description',w:1}];
+    if(ty==='Income')f.push({k:'client',l:'Client',list:L('clients').map(c=>c.business),w:1});
+    if(ty==='Expense')f.push({k:'category',l:'Category',t:'select',o:ECATS},{k:'project',l:'Project',list:L('projects').map(p=>p.name)});
+    if(ty==='Bonus'||ty==='Payout')f.push({k:'partner',l:'Partner',t:'select',o:TEAM,w:1});
+    form({title:(id?'Edit ':'')+({Income:'Income',Expense:'Expense',Bonus:'Bonus',Payout:'Payout','Tax transfer':'Transfer to tax account','IRS payment':'IRS payment'}[ty]),values:x,del:id?()=>del('ledger',id):null,fields:f,
+      async save(v){if(!v.date||!(v.amount>0))return 'Add the date and an amount above zero.';v.type=ty;if(!id)v.by=ME;await save('ledger',id,v)}})},
+  camp(id){const x=id?S.campaigns[id]:{platform:'Meta',start:today()};
+    form({title:id?'Edit campaign':'Add campaign',values:x,del:id?()=>del('campaigns',id):null,fields:[{k:'name',l:'Campaign *',w:1},{k:'platform',l:'Platform',t:'select',o:['Meta','Google','TikTok','Other']},{k:'start',l:'Started *',t:'date'},{k:'spent',l:'Spent',t:'number'},{k:'leads',l:'Leads',t:'number'},{k:'notes',l:'Notes',t:'area'}],
+      async save(v){if(!v.name||!v.start)return 'Add the campaign name and start date.';await save('campaigns',id,v)}})},
+  inv(id,pre){const nums=L('invoices').map(i=>+String(i.number).replace(/\D/g,'')||0);
+    const x=id?S.invoices[id]:Object.assign({number:'TC-'+Math.max(1000,...nums)+1,status:'Draft',issued:today(),due:addDays(today(),7)},pre||{});
+    if(!id)x.number='TC-'+(Math.max(1000,...nums)+1);
+    form({title:id?'Edit invoice '+x.number:'New invoice '+x.number,sub:'Due in 7 days by default. $25/day late fee after that.',values:x,del:id?()=>unsync('invoices',id).then(()=>del('invoices',id)):null,
+      fields:[{k:'client',l:'Client *',list:L('clients').map(c=>c.business),w:1},{k:'for',l:'What it’s for',w:1},{k:'amount',l:'Amount *',t:'number'},{k:'status',l:'Status',t:'select',o:['Draft','Sent','Paid']},{k:'issued',l:'Issued',t:'date'},{k:'due',l:'Due',t:'date'}],
+      async save(v){if(!v.client||!(v.amount>0))return 'Add the client and an amount above zero.';v.number=x.number;
+        const was=id?S.invoices[id].status:'';if(v.status==='Paid'&&was!=='Paid'){v.paidDate=today();await save('ledger',null,{type:'Income',date:today(),amount:v.amount,description:'Invoice '+x.number+(v.for?' · '+v.for:''),client:v.client,by:ME})}
+        const nid=await save('invoices',id,v);if(nid)autoSync('invoices',nid)}})},
+  proj(id,pre){const x=id?S.projects[id]:Object.assign({status:'Not Started',owner:ME},pre||{});
+    form({title:id?'Edit project':'Add project',values:x,del:id?()=>unsync('projects',id).then(()=>del('projects',id)):null,fields:[{k:'name',l:'Project *',w:1},{k:'client',l:'Client',list:L('clients').map(c=>c.business)},{k:'status',l:'Status',t:'select',o:PSTAT},{k:'owner',l:'Owner',t:'select',o:TEAM},{k:'due',l:'Due',t:'date'},{k:'link',l:'Link',w:1},{k:'notes',l:'Notes',t:'area'}],
+      async save(v){if(!v.name)return 'Add the project name.';const nid=await save('projects',id,v);if(nid)autoSync('projects',nid)}})},
+  script(id){const x=id?S.scripts[id]:{category:'Services',order:Math.max(0,...L('scripts').map(s=>s.order||0))+1};
+    form({title:id?'Edit script':'Add script',values:x,del:id?()=>del('scripts',id):null,fields:[{k:'title',l:'Title *',w:1},{k:'category',l:'Category',t:'select',o:SCATS},{k:'order',l:'Order',t:'number'},{k:'body',l:'Script',t:'area',rows:16}],
+      async save(v){if(!v.title)return 'Add a title.';await save('scripts',id,v)}})},
+  biz(){const c=cfg(),t=c.templates||{};const keys=TPL_ORDER.filter(k=>k in t).concat(Object.keys(t).filter(k=>!TPL_ORDER.includes(k)));
+    const vals=Object.assign({},c);keys.forEach((k,i)=>vals['t'+i]=t[k]);
+    form({title:'Business info & templates',sub:'Filled into messages. Shared by everyone who opens the dashboard.',values:vals,
+      fields:[{k:'email',l:'Business email'},{k:'phone',l:'Business phone'},{k:'website',l:'Website'},{k:'reviewLink',l:'Google review link'},{k:'taxPct',l:'Set aside for taxes (% of revenue)',t:'number'},{k:'fundPct',l:'Business fund (% of revenue)',t:'number'},{k:'howPay',l:'How clients pay you (e.g. Zelle to pay@twincitys.co)',t:'area',rows:2},{k:'gcalId',l:'Google Calendar to sync to (calendar ID)',w:1}]
+        .concat(keys.map((k,i)=>({k:'t'+i,l:k,t:'area',rows:4}))),
+      pre:'<p class="note" style="margin:0 0 12px">Placeholders: {first} {business} {sender} {amount} {invoice} {due} {for} {date} {time} {where} {type} {services} {payment} {review}</p>',
+      async save(v){const tp={};keys.forEach((k,i)=>{tp[k]=v['t'+i];delete v['t'+i]});v.templates=tp;v.taxPct=v.taxPct==null?30:v.taxPct;v.fundPct=v.fundPct==null?10:v.fundPct;v.autoSync=c.autoSync;
+        if(!db){toast('Storage isn’t available in this view.');return}
+        try{await db.doc('config/settings').set(v)}catch(e){saveFail(e)}}})}
+};
+function clientSheet(id){const c=S.clients[id];if(!c)return;
+  const led=L('ledger').filter(x=>x.type==='Income'&&x.client===c.business).reduce((s,x)=>s+(+x.amount||0),0);
+  const inv=L('invoices').filter(i=>i.client===c.business),pr=L('projects').filter(p=>p.client===c.business);
+  const kv=(k,v)=>v?'<div class="kv"><span class="lab">'+k+'</span><span style="font-family:var(--f-body);user-select:all;overflow-wrap:anywhere">'+v+'</span></div>':'';
+  sheet(c.business,'<span class="chip">'+esc(c.status||'')+'</span>'+(c.services||[]).map(s=>'<span class="chip">'+esc(s)+'</span>').join(''),
+   kv('Contact',esc(c.contact))+kv('Phone',esc(c.phone))+kv('Email',esc(c.email))+kv('Address',esc(c.address))+kv('Website',c.website?'<a href="'+esc(/^https?:/.test(c.website)?c.website:'https://'+c.website)+'" target="_blank" rel="noopener" style="color:inherit">'+esc(c.website)+'</a>':'')+kv('Socials',esc(c.socials))+kv('Lead',esc(c.leadOwner))+kv('Closed by',esc(c.closedBy)+(c.closedOn?' · '+fmt(c.closedOn):''))
+   +'<div class="tiles" style="margin:14px 0">'+tile('Paid us',money(led))+tile('Start-up fee',c.startup?money(c.startup):'—')+tile('Open invoices',money(inv.filter(i=>i.status==='Sent').reduce((s,i)=>s+(+i.amount||0),0)))+tile('Retainer',c.retainer?money(c.retainer):'—')+'</div>'
+   +'<div class="lab" style="margin-bottom:4px">Invoices</div><div class="su" style="color:var(--muted);margin-bottom:10px">'+(inv.map(i=>esc(i.number)+' · '+money(i.amount)+' · '+esc(i.status)).join('<br>')||'None yet.')+'</div>'
+   +'<div class="lab" style="margin-bottom:4px">Projects</div><div class="su" style="color:var(--muted);margin-bottom:14px">'+(pr.map(p=>esc(p.name)+' · '+esc(p.status)).join('<br>')||'None yet.')+'</div>'
+   +(c.notes?'<div class="lab" style="margin-bottom:4px">Notes</div><div style="white-space:pre-wrap;margin-bottom:14px">'+esc(c.notes)+'</div>':'')
+   +'<div class="acts"><button data-a="editclient" data-id="'+id+'">Edit client</button><button class="g" data-a="msg" data-src="clients" data-id="'+id+'">Message</button><button class="g" data-a="editinv" data-client="'+esc(c.business)+'">New invoice</button><button class="g" data-a="editproj" data-client="'+esc(c.business)+'">New project</button><button class="g" data-a="additem" data-type="Meeting" data-with="'+esc(c.business)+'">Schedule</button></div>');
+}
+function msgSheet(src,id,only,extra){
+  const d=S[src][id];if(!d)return;const t=tpls();
+  const ctx=Object.assign({contact:d.contact,business:d.business||d.client,services:d.interests||d.services},extra||{});
+  let keys=only||(src==='leads'?TPL_ORDER.filter(k=>/lead|Follow-up|Meeting/.test(k)):TPL_ORDER.filter(k=>/review|Meeting c|Meeting reminder$|Payment|invoice/i.test(k)));
+  keys=keys.filter(k=>t[k]);
+  const ph=d.phone&&!/^n\/?a$/i.test(d.phone)?d.phone:'';
+  sheet('Message '+(ctx.business||''),(ctx.contact?esc(ctx.contact)+' · ':'')+(ph?'<span style="user-select:all" class="num">'+esc(ph)+'</span> <button class="g s" data-a="copytext" data-text="'+esc(ph)+'">Copy number</button>':'No phone number saved'),
+   (keys.length?keys.map((k,i)=>'<div class="msg"><div class="mt"><span class="lab">'+esc(k)+'</span><button class="g s" data-a="copymsg" data-i="'+i+'">Copy</button></div><p id="m_'+i+'">'+esc(fill(t[k],ctx))+'</p></div>').join(''):'<div class="empty">No message templates saved yet. Add them in Business info &amp; templates.</div>')
+   +'<p class="note">Copy a message and paste it into your texts. Sent as '+esc(ME)+'.</p>');
+}
+async function copy(text){try{await navigator.clipboard.writeText(text);toast('Copied')}catch(e){toast('Couldn’t copy automatically. Select the text and copy it.')}}
+
+/* ---------- actions ---------- */
+const A={
+  close:closeSheet,
+  set(d){V[d.k]=d.k==='taxYear'?+d.v:d.v;render()},
+  biz:()=>Forms.biz(),
+  async signout(){if(sb){await sb.auth.signOut()}location.reload()},
+  editlead:d=>Forms.lead(d.id),editclient:d=>Forms.client(d.id),client:d=>clientSheet(d.id),
+  editledger:d=>Forms.ledger(d.id,d.type),editcamp:d=>Forms.camp(d.id),editscript:d=>Forms.script(d.id),
+  editinv:d=>Forms.inv(d.id,d.client?{client:d.client}:null),editproj:d=>Forms.proj(d.id,d.client?{client:d.client}:null),
+  additem:d=>Forms.item(null,{type:d.type,withWho:d.with||''}),
+  async formsave(){const r=await FORM.save(formVals());if(typeof r==='string'){toast(r);return}closeSheet()},
+  async formdel(){const f=FORM;closeSheet();await f.del()},
+  msg:d=>msgSheet(d.src,d.id),
+  copymsg:d=>copy($('#m_'+d.i).textContent),copytext:d=>copy(d.text),
+  copyscript:d=>copy($('#sc_'+d.id).textContent),
+  async asked(d){await save('clients',d.id,{reviewAsked:today()})},
+  async pause(d){const l=S.leads[d.id];await save('leads',d.id,{paused:!l.paused})},
+  makeclient(d){const l=S.leads[d.id];Forms.client(null,{business:l.business,contact:l.contact,phone:l.phone,email:l.email,website:l.website,services:l.interests||[],leadOwner:l.owner||ME,leadId:l.id,notes:l.notes||''})},
+  async plus3(d){const t=today();
+    if(d.src==='leads'){const l=S.leads[d.id],b=l.nextFollowUp&&l.nextFollowUp>t?l.nextFollowUp:t;await save('leads',d.id,{nextFollowUp:addDays(b,3)})}
+    else{const x=S.items[d.id],b=x.date>t?x.date:t;await save('items',d.id,{date:addDays(b,3)})}
+    autoSync(d.src,d.id)},
+  async delitem(d){await unsync('items',d.id);await del('items',d.id)},
+  day(d){V.calDay=d.d;if(d.d.slice(0,7)!==V.calMonth)V.calMonth=d.d.slice(0,7);render()},
+  mon(d){if(+d.n===0){V.calMonth=today().slice(0,7);V.calDay=today()}else{const x=parse(V.calMonth+'-01');x.setMonth(x.getMonth()+ +d.n);V.calMonth=iso(x).slice(0,7)}render()},
+  async quicktask(){const el=$('#newtask'),t=el.value.trim();if(!t){el.focus();return}const o=$('#newowner').value;el.value='';
+    const id=await save('items',null,{title:t,type:'Task',date:V.calDay,owner:o,done:false});if(id)autoSync('items',id)},
+  syncall(){syncAll(unsynced())},
+  async gone(d){if(!mcp)return;const e=entries().find(x=>x.src===d.src&&x.id===d.id);if(!e)return;try{await syncOne(e);toast('On the Team Google Calendar')}catch(err){toast(gErr(err))}},
+  async sendinv(d){const i=S.invoices[d.id];if(i.status==='Draft'){await save('invoices',d.id,{status:'Sent'});autoSync('invoices',d.id)}
+    const c=L('clients').find(x=>x.business===i.client)||{};S._tmp={x:Object.assign({business:i.client},c)};
+    const t=tpls(),ctx={contact:c.contact,business:i.client,invoice:i.number,amount:i.amount,due:i.due,for:i.for||'our work'};
+    const keys=['Sending invoice','Payment due soon','Payment overdue'].filter(k=>t[k]);
+    sheet('Send invoice '+i.number,esc(i.client)+' · '+money(i.amount)+' · due '+fmt(i.due),(keys.map((k,n)=>'<div class="msg"><div class="mt"><span class="lab">'+esc(k)+'</span><button class="g s" data-a="copymsg" data-i="'+n+'">Copy</button></div><p id="m_'+n+'">'+esc(fill(t[k],ctx))+'</p></div>').join('')||'<div class="empty">No invoice templates saved yet.</div>')+'<p class="note">Marked as sent. Copy the message and paste it into your texts or email.</p>')},
+  async payinv(d){const i=S.invoices[d.id];if(i.status==='Paid')return;
+    await save('ledger',null,{type:'Income',date:today(),amount:+i.amount,description:'Invoice '+i.number+(i.for?' · '+i.for:''),client:i.client,by:ME});
+    await unsync('invoices',d.id,true);await save('invoices',d.id,{status:'Paid',paidDate:today()});toast('Marked paid and added to revenue')},
+  async resetprice(){if(!db)return;try{await db.doc('config/pricing').set({reset:today()});toast('Pricing is back to the original numbers')}catch(e){saveFail(e)}}
+};
+document.addEventListener('click',e=>{
+  if(e.target.id==='sheet'){closeSheet();return}
+  const el=e.target.closest('[data-a]');if(!el)return;
+  if(el.tagName==='A')return;
+  if(el.dataset.confirm&&!el.dataset.armed){el.dataset.armed='1';el.dataset.t=el.textContent;el.textContent=el.textContent==='✕'?'Delete?':'Tap again to confirm';setTimeout(()=>{if(el.isConnected){delete el.dataset.armed;el.textContent=el.dataset.t}},3500);return}
+  const fn=A[el.dataset.a];if(fn){e.preventDefault();fn(el.dataset,el)}
+});
+document.addEventListener('change',async e=>{
+  const el=e.target,c=el.dataset.c;
+  if(el.dataset.p){const v=parseFloat(el.value);if(!isFinite(v)||v<0){toast('Enter a number.');render();return}
+    const o=JSON.parse(JSON.stringify(pov())),p=el.dataset.p.split('.');delete o.id;
+    if(p[0]==='scn'){o.scn=o.scn||P_SCN.map(r=>r.slice());o.scn[+p[1]]=(o.scn[+p[1]]||P_SCN[+p[1]]).slice();o.scn[+p[1]][+p[2]]=v}
+    else if(p[0]==='asm'){o.asm=o.asm||{};o.asm[p[1]]=v}
+    else{o[p[0]]=o[p[0]]||{};o[p[0]][p[1]]=o[p[0]][p[1]]||{};o[p[0]][p[1]][p[2]]=v}
+    if(!db){toast('Storage isn’t available in this view.');return}
+    try{await db.doc('config/pricing').set(o)}catch(err){saveFail(err)}return}
+  if(!c)return;
+  if(c==='me'){ME=el.value;try{localStorage.setItem('tc_me',ME)}catch(x){}render()}
+  else if(c==='scriptLead'){V.scriptLead=el.value;render()}
+  else if(c==='stage'){const l=S.leads[el.dataset.id],u={stage:el.value,editedBy:ME,editedOn:today()};
+    if(el.value==='Contacted'&&l.stage==='New'){u.lastContacted=today();if(!l.nextFollowUp)u.nextFollowUp=addDays(today(),1)}
+    if(el.value==='Won'||el.value==='Lost')await unsync('leads',l.id,true);
+    await save('leads',l.id,u);autoSync('leads',l.id)}
+  else if(c==='pstatus'){await save('projects',el.dataset.id,{status:el.value})}
+  else if(c==='tick'){const d=el.dataset;
+    if(d.src==='items')await save('items',d.id,{done:el.checked,doneBy:el.checked?ME:null,doneOn:el.checked?today():null});
+    else{await unsync('leads',d.id,true);await save('leads',d.id,{lastContacted:today(),nextFollowUp:null});toast('Follow-up done. Set the next date on the lead.')}}
+  else if(c==='autosync'){const s=Object.assign({},cfg(),{autoSync:el.checked});if(db)try{await db.doc('config/settings').set(s)}catch(err){saveFail(err)}}
+});
+document.addEventListener('input',e=>{const k=e.target.dataset.i;if(!k)return;V[k]=e.target.value;clearTimeout(A._q);A._q=setTimeout(()=>{const id=e.target.id,pos=e.target.selectionStart;render();const n=document.querySelector('[data-i="'+k+'"]');if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(x){}}},250)});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#sheet').hidden)closeSheet();if(e.key==='Enter'&&e.target.id==='newtask')A.quicktask()});
+function route(){const h=location.hash.slice(1);V.tab=TABS.some(t=>t[0]===h)?h:'overview';render();window.scrollTo(0,0)}
+window.addEventListener('hashchange',route);
+route();connect();
+</script>
+</body></html>
