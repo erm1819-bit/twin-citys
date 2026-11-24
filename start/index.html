@@ -412,8 +412,10 @@ src="https://www.facebook.com/tr?id=932343113177420&ev=PageView&noscript=1"
     $('.card').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
+  var leadSent = false;
   function trackLead() {
-    try { if (sessionStorage.getItem('tc-lead-sent')) return; sessionStorage.setItem('tc-lead-sent', '1'); } catch (x) {}
+    if (leadSent) return;
+    leadSent = true;
     if (window.fbq) fbq('track', 'Lead');
   }
 
@@ -463,7 +465,10 @@ src="https://www.facebook.com/tr?id=932343113177420&ev=PageView&noscript=1"
   function optCheck() { optNote.hidden = !(optBox.checked && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(contact.value.trim())); }
   optBox.addEventListener('change', optCheck); contact.addEventListener('input', optCheck);
 
-  if (location.hash === '#sent') { trackLead(); finish(); }
+  if (location.hash === '#sent') {
+    trackLead(); finish();
+    try { history.replaceState(null, '', location.pathname + location.search); } catch (x) {}
+  }
 })();
 </script>
 <script>
