@@ -42,6 +42,23 @@ footer { border-top: 1px solid var(--line); padding: 28px 0 40px; font-size: 13p
 footer .wrap { max-width: 1200px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 28px; }
 @media (max-width: 520px) { .brand span { display: none; } }
 </style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '932343113177420');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=932343113177420&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -63,15 +80,15 @@ footer .wrap { max-width: 1200px; display: flex; flex-wrap: wrap; justify-conten
     <p class="label">Privacy policy</p>
     <h1>What we collect, and what we do with it.</h1>
     <p class="lede">Plain words, like everything else here. If something isn’t clear, email us and we’ll explain it.</p>
-    <p class="date">Last updated November 21, 2026</p>
+    <p class="date">Last updated November 24, 2026</p>
 
     <div class="short">
       <p class="label">The short version</p>
       <ul>
         <li>We only collect what you type into our project form, or send us by email.</li>
         <li>We use it to answer you and to work with you. That’s it.</li>
-        <li>No ad tracking and no cookies. We count visits with a tool that stores nothing about you.</li>
-        <li>We never sell your information or share it for advertising.</li>
+        <li>We use the Meta Pixel to measure our own Facebook and Instagram ads. It sets a cookie and tells Meta which pages you visit here.</li>
+        <li>We never sell your information. We never pass the details you type into our form to Meta.</li>
         <li>Ask us to delete it any time, and we will.</li>
       </ul>
     </div>
@@ -96,9 +113,9 @@ footer .wrap { max-width: 1200px; display: flex; flex-wrap: wrap; justify-conten
     <p>We only add you to our monthly email if you tick the box on our project form and then confirm by email. Every email has an unsubscribe link at the bottom, or just reply and ask us to take you off.</p>
 
     <h2>Cookies and tracking</h2>
-    <p>This site sets no cookies and runs no advertising pixels. We count page visits with GoatCounter, a privacy-first counter that keeps no cookies and no record of who you are, only that a page was viewed. The homepage remembers one thing, whether you’ve already seen the opening animation, in your browser’s session storage. It never leaves your device and clears itself when you close the tab.</p>
-    <p>If we ever add analytics or ad measurement, we’ll update this page first and ask for your permission where the law requires it.</p>
-    <p><b>Do Not Track.</b> Because we don’t track visitors across sites, there’s nothing for a “Do Not Track” signal to switch off. We treat every visit the same way.</p>
+    <p><b>Meta Pixel.</b> We advertise on Facebook and Instagram, and our site runs the Meta Pixel so we can see whether those ads lead to visits and project requests. When you visit, your browser sends Meta details such as the pages you view, your IP address and browser, and a cookie ID. If you send our project form, it also tells Meta that a request was sent. It never sends what you typed: your name, contact details and message stay with us. Meta may connect this to your Facebook or Instagram account and use it under its own <a href="https://www.facebook.com/privacy/policy/">privacy policy</a>. You can block it with an ad or tracker blocker, or limit it in your Meta account under Ad preferences.</p>
+    <p><b>Visit counts.</b> We also count page visits with GoatCounter, a privacy-first counter that keeps no cookies and no record of who you are, only that a page was viewed. The homepage also remembers in your browser whether you’ve seen the opening animation, and which language you picked. That stays on your device.</p>
+    <p><b>Do Not Track.</b> Our site doesn’t respond to browser “Do Not Track” signals. Blocking the Meta Pixel with a blocker works, and the site works normally without it.</p>
 
     <h2>Who helps us handle it</h2>
     <p>We use a few trusted services to run the site and our email. They only get what they need to do their part:</p>
@@ -108,9 +125,10 @@ footer .wrap { max-width: 1200px; display: flex; flex-wrap: wrap; justify-conten
       <li><b>Zoho Mail</b> runs our @twincitys.net email.</li>
       <li><b>Kit</b> sends our monthly email to people who signed up for it.</li>
       <li><b>GoatCounter</b> counts page visits, without cookies or personal data.</li>
+      <li><b>Meta</b> measures our Facebook and Instagram ads through the Meta Pixel (see Cookies and tracking above).</li>
       <li><b>Our payment processor</b> handles payments when you pay an invoice.</li>
     </ul>
-    <p>We never sell your information, rent it, or share it with anyone for their own advertising. We would only share it beyond these services if the law required us to.</p>
+    <p>We never sell your information or rent it. Apart from the Meta Pixel described above, we don’t share it with anyone for advertising. We would only share it beyond these services if the law required us to.</p>
 
     <h2>How long we keep it</h2>
     <p>We keep project messages and email for as long as we’re talking or working together, and afterwards for our records and taxes. If you ask us to delete it, we will, unless the law says we have to keep something (like an invoice).</p>
