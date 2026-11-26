@@ -144,6 +144,19 @@ h1 { position: relative; margin: 18px 0 0; font-size: clamp(44px, 10vw, 92px); f
 .item:has(input:checked) .tick { border-color: var(--black); background: var(--black); }
 .item:has(input:checked) .tick svg { opacity: 1; stroke: var(--ivory); }
 
+.kinds { margin: 22px 0 0; padding: 0; border: 0; }
+.kinds legend { padding: 0; color: var(--stone); font-size: 15px; margin-bottom: 12px; }
+.kinds__row { display: flex; flex-wrap: wrap; gap: 8px; }
+.kinds input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.kinds span { display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px; border: 1px solid var(--stone-dim); border-radius: 999px; font-size: 14px; cursor: pointer; transition: background .25s, color .25s, border-color .25s; }
+.kinds label:hover span { border-color: var(--ivory); }
+.kinds input:checked + span { background: var(--ivory); color: var(--black); border-color: var(--ivory); }
+.kinds input:focus-visible + span { outline: 1px solid var(--ivory); outline-offset: 3px; }
+.cost { margin-top: clamp(28px, 5vw, 44px); padding-top: clamp(24px, 4vw, 36px); border-top: 1px solid var(--stone-dim); }
+.cost__big { margin: 0; font-size: clamp(36px, 8vw, 64px); font-weight: 500; line-height: 1.05; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.cost__per { margin: 10px 0 0; font-size: 17px; }
+.cost__more { margin: 12px 0 0; color: var(--stone); font-size: 15px; }
+.cost__how { margin: 18px 0 0; max-width: 60ch; }
 .score { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px clamp(20px, 4vw, 40px); align-items: center; margin-top: clamp(40px, 7vw, 64px); }
 .num { font-size: clamp(96px, 22vw, 180px); font-weight: 600; line-height: .82; letter-spacing: -.04em; font-variant-numeric: tabular-nums; color: transparent; -webkit-text-stroke: 1px var(--stone); transition: color .5s var(--ease), -webkit-text-stroke-color .5s; }
 .num.full { color: var(--ivory); -webkit-text-stroke-color: var(--ivory); }
@@ -240,6 +253,7 @@ src="https://www.facebook.com/tr?id=932343113177420&ev=PageView&noscript=1"
     <section class="step" aria-labelledby="s1">
       <p class="label node">01 · Buscar</p>
       <h2 id="s1">Búscate como lo haría un cliente.</h2>
+      <fieldset class="kinds"><legend>¿Qué tipo de negocio tienes?</legend><div class="kinds__row"><label><input type="radio" name="kind" value="restaurant"><span>Restaurante</span></label><label><input type="radio" name="kind" value="bakery"><span>Panadería o café</span></label><label><input type="radio" name="kind" value="trades"><span>Oficios</span></label><label><input type="radio" name="kind" value="beauty"><span>Salón o barbería</span></label><label><input type="radio" name="kind" value="shop"><span>Tienda</span></label><label><input type="radio" name="kind" value="service"><span>Servicios</span></label></div></fieldset>
       <p class="sentence">Busca <input id="biz" type="text" autocomplete="organization" placeholder="tu negocio" aria-label="Nombre del negocio"> en <input id="city" type="text" value="Miami" aria-label="Ciudad"></p>
       <div class="go-row">
         <a class="btn" id="go" href="https://www.google.com/" target="_blank" rel="noopener" aria-disabled="true">Buscar en Google <span aria-hidden="true">→</span></a>
@@ -270,6 +284,12 @@ src="https://www.facebook.com/tr?id=932343113177420&ev=PageView&noscript=1"
             <a class="btn btn--line" href="/es/#work">Ver nuestro trabajo</a>
           </div>
         </div>
+      </div>
+      <div class="cost" id="cost-box" aria-live="polite" hidden>
+        <p class="cost__big" id="cost" hidden></p>
+        <p class="cost__per" id="cost-per"></p>
+        <p class="cost__more" id="cost-more" hidden></p>
+        <p class="hint cost__how">Estimado con números típicos de negocios como el tuyo en Miami: más o menos 4 de cada 10 clientes encuentran un negocio local en Google, y cada falla hace que algunos se vayan. No es una promesa.</p>
       </div>
     </section>
   </div>
@@ -324,6 +344,32 @@ src="https://www.facebook.com/tr?id=932343113177420&ev=PageView&noscript=1"
     }
   }
   boxes.forEach(function (b) { b.addEventListener('change', score); });
+
+  var KINDS = {"restaurant": [900, 28], "bakery": [1500, 12], "trades": [60, 350], "beauty": [250, 55], "shop": [500, 40], "service": [80, 200]};
+  var W = [0.25, 0.05, 0.08, 0.08, 0.05, 0.06, 0.03];
+  var GAPS = ["tu perfil de Google no aparece", "el horario puede estar mal", "el teléfono puede no funcionar", "pocas reseñas recientes", "fotos que no te ayudan", "tu propia página no sale en la primera página", "el botón del sitio web lleva a otro lado"];
+  var costBox = document.getElementById('cost-box'), costEl = document.getElementById('cost'), costPer = document.getElementById('cost-per'), costMore = document.getElementById('cost-more');
+  var kinds = [].slice.call(document.querySelectorAll('input[name="kind"]'));
+  function money(v) { return '$' + Math.round(v).toLocaleString('en-US'); }
+  function cost() {
+    var pick = kinds.filter(function (r) { return r.checked; })[0], k = pick && KINDS[pick.value];
+    if (!k) { costBox.hidden = true; return; }
+    costBox.hidden = false;
+    var ticked = boxes.some(function (b) { return b.checked; });
+    if (!ticked) { costEl.hidden = true; costMore.hidden = true; costPer.textContent = "Marca lo que está bien y te mostramos lo que te pueden estar costando las fallas."; return; }
+    var share = 0, top = -1;
+    boxes.forEach(function (b, i) { if (!b.checked) { share += W[i]; if (top < 0 || W[i] > W[top]) top = i; } });
+    var mid = k[0] * 0.4 * share * k[1];
+    if (mid < 1) { costEl.hidden = true; costMore.hidden = true; costPer.textContent = "No hay nada obvio que te esté costando clientes."; return; }
+    var r = function (v) { return Math.max(50, Math.round(v / 50) * 50); };
+    costEl.textContent = money(r(mid * 0.7)) + '–' + money(r(mid * 1.3));
+    costEl.hidden = false;
+    costPer.textContent = "al mes en clientes que quizás se van a otro lado";
+    costMore.textContent = "Eso es más o menos {y} al año. Lo que más pesa: {g}.".replace('{y}', money(Math.round(mid * 12 / 100) * 100)).replace('{g}', GAPS[top]);
+    costMore.hidden = false;
+  }
+  kinds.forEach(function (r) { r.addEventListener('change', cost); });
+  boxes.forEach(function (b) { b.addEventListener('change', cost); });
 })();
 </script>
 <script>
