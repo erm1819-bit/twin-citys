@@ -143,6 +143,21 @@ h1 { position: relative; margin: 18px 0 0; font-size: clamp(44px, 10vw, 92px); f
 .item:has(input:checked) .tick { border-color: var(--black); background: var(--black); }
 .item:has(input:checked) .tick svg { opacity: 1; stroke: var(--ivory); }
 
+.sentence select { font: inherit; color: var(--ivory); background: transparent; border: 0; border-bottom: 1px solid var(--stone-dim); padding: 0 2px; border-radius: 0; max-width: 100%; cursor: pointer; }
+.sentence select:focus { outline: 0; border-bottom-color: var(--ivory); }
+.sentence select option { color: #0b0b0b; }
+.cost { margin-top: clamp(28px, 5vw, 44px); }
+.cost__big { margin: 0; font-size: clamp(40px, 9vw, 76px); font-weight: 500; line-height: 1.05; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.cost__per { margin: 10px 0 0; font-size: 17px; }
+.cost__more { margin: 14px 0 0; color: var(--stone); font-size: 15px; }
+.cost__mine { margin-top: 26px; }
+.cost__mine summary { cursor: pointer; color: var(--stone); font-size: 14px; letter-spacing: .08em; }
+.cost__mine summary:hover { color: var(--ivory); }
+.cost__fields { display: flex; flex-wrap: wrap; gap: 14px 22px; margin-top: 16px; }
+.cost__fields label { display: grid; gap: 6px; color: var(--stone); font-size: 13px; }
+.cost__fields input { width: 10ch; font: inherit; font-size: 20px; color: var(--ivory); background: transparent; border: 0; border-bottom: 1px solid var(--stone-dim); padding: 2px; border-radius: 0; }
+.cost__fields input:focus { outline: 0; border-bottom-color: var(--ivory); }
+.cost__how { margin: 26px 0 0; max-width: 60ch; }
 .score { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px clamp(20px, 4vw, 40px); align-items: center; margin-top: clamp(40px, 7vw, 64px); }
 .num { font-size: clamp(96px, 22vw, 180px); font-weight: 600; line-height: .82; letter-spacing: -.04em; font-variant-numeric: tabular-nums; color: transparent; -webkit-text-stroke: 1px var(--stone); transition: color .5s var(--ease), -webkit-text-stroke-color .5s; }
 .num.full { color: var(--ivory); -webkit-text-stroke-color: var(--ivory); }
@@ -271,6 +286,25 @@ src="https://www.facebook.com/tr?id=932343113177420&ev=PageView&noscript=1"
         </div>
       </div>
     </section>
+    <section class="step" aria-labelledby="s3">
+      <p class="label node">03 · Cost</p>
+      <h2 id="s3">What it’s costing you.</h2>
+      <p class="lede">Pick your kind of business. We’ll turn what’s missing into a rough dollar figure.</p>
+      <p class="sentence"><label for="kind">I run a</label> <select id="kind"><option value="">pick one</option><option value="restaurant">restaurant</option><option value="bakery">bakery or café</option><option value="trades">trades business</option><option value="beauty">salon, barbershop or spa</option><option value="shop">shop or store</option><option value="service">service business</option></select></p>
+      <div class="cost" aria-live="polite">
+        <p class="cost__big" id="cost" hidden></p>
+        <p class="cost__per" id="cost-per">Pick your kind of business above to see this in dollars.</p>
+        <p class="cost__more" id="cost-more" hidden></p>
+        <details class="cost__mine">
+          <summary>Use my own numbers</summary>
+          <div class="cost__fields">
+            <label>Customers a month<input id="my-cust" type="number" inputmode="numeric" min="0" step="1"></label>
+            <label>Average sale ($)<input id="my-sale" type="number" inputmode="decimal" min="0" step="1"></label>
+          </div>
+        </details>
+        <p class="hint cost__how">How we estimate: about 4 in 10 customers find a local business like yours on Google, and each gap above turns some of them away. We use typical numbers for Miami businesses like yours unless you enter your own. It’s an estimate, not a promise.</p>
+      </div>
+    </section>
   </div>
 
   <svg class="city" viewBox="0 0 760 90" preserveAspectRatio="none" aria-hidden="true">
@@ -323,6 +357,34 @@ src="https://www.facebook.com/tr?id=932343113177420&ev=PageView&noscript=1"
     }
   }
   boxes.forEach(function (b) { b.addEventListener('change', score); });
+
+  var KINDS = {"restaurant": [900, 28], "bakery": [1500, 12], "trades": [60, 350], "beauty": [250, 55], "shop": [500, 40], "service": [80, 200]};
+  var W = [0.25, 0.05, 0.08, 0.08, 0.05, 0.06, 0.03];
+  var GAPS = ["your Google profile not showing up", "hours that may be wrong", "a phone number that may not work", "few recent reviews", "photos that don’t sell you", "your own site missing from page one", "a website button that goes to the wrong place"];
+  var kind = document.getElementById('kind'), costEl = document.getElementById('cost'), costPer = document.getElementById('cost-per'), costMore = document.getElementById('cost-more');
+  var myCust = document.getElementById('my-cust'), mySale = document.getElementById('my-sale');
+  function money(v) { return '$' + Math.round(v).toLocaleString('en-US'); }
+  function cost() {
+    var k = KINDS[kind.value];
+    var c = parseFloat(myCust.value), p = parseFloat(mySale.value);
+    if (k) { myCust.placeholder = k[0]; mySale.placeholder = k[1]; }
+    if (!(c > 0)) c = k ? k[0] : 0;
+    if (!(p > 0)) p = k ? k[1] : 0;
+    if (!c || !p) { costEl.hidden = true; costMore.hidden = true; costPer.textContent = "Pick your kind of business above to see this in dollars."; return; }
+    var share = 0, top = -1;
+    boxes.forEach(function (b, i) { if (!b.checked) { share += W[i]; if (top < 0 || W[i] > W[top]) top = i; } });
+    var mid = c * 0.4 * share * p;
+    if (mid < 1) { costEl.hidden = true; costMore.hidden = true; costPer.textContent = "Nothing obvious is costing you. Keep it that way."; return; }
+    var r = function (v) { return Math.max(50, Math.round(v / 50) * 50); };
+    var lo = r(mid * 0.7), hi = r(mid * 1.3);
+    costEl.textContent = money(lo) + '–' + money(hi);
+    costEl.hidden = false;
+    costPer.textContent = "a month in customers who may be going elsewhere";
+    costMore.textContent = "That’s roughly {y} a year.".replace('{y}', money(Math.round(mid * 12 / 100) * 100)) + ' ' + "Biggest gap: {g}.".replace('{g}', GAPS[top]);
+    costMore.hidden = false;
+  }
+  kind.addEventListener('change', cost); myCust.addEventListener('input', cost); mySale.addEventListener('input', cost);
+  boxes.forEach(function (b) { b.addEventListener('change', cost); });
 })();
 </script>
 <script>
