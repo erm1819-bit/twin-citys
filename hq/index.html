@@ -162,7 +162,7 @@ ol.rules{margin:0;padding:14px 16px 14px 36px}ol.rules li{margin-bottom:7px;max-
     <div class="name">TWIN CITYS<small>OPERATIONS · MIAMI</small></div>
     <div class="sp"></div>
     <label for="me">You</label>
-    <select id="me" data-c="me"><option>Eric</option><option>Kevin</option><option>Daniel</option></select>
+    <select id="me" data-c="me"><option>Eric</option><option>Kevin</option></select>
     <button class="g s" data-a="biz">Business info &amp; templates</button>
     <button class="t s" data-a="signout">Sign out</button>
     <span class="dot" id="dot"><i></i>Connecting</span>
@@ -177,7 +177,7 @@ ol.rules{margin:0;padding:14px 16px 14px 36px}ol.rules li{margin-bottom:7px;max-
 <script>
 /*PRICING*/
 let P_ASM={},P_SVC=[],P_BUN=[],P_SCN=[[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]];
-const P_ASM_LABELS={fee:'Card processing fee (%)',credit:'Higgsfield cost per credit ($)',creditsPerVideo:'Credits per AI video',travel:'Travel per shoot trip ($)',card:'Cost per Google review card ($)',fixed:'Fixed monthly costs ($)',floor:'Floor rate ($/hr)',target:'Target rate ($/hr)',hK:'Kevin hours per day',hE:'Eric hours per day',hD:'Daniel hours per day',days:'Work days per week',weeks:'Weeks per month',nonBill:'Non-billable time (%)',mixS:'Client mix: Starter (%)',mixG:'Client mix: Growth (%)',mixP:'Client mix: Pro (%)',fourMo:'New clients signing 4 months (%)',paychecks:'Paychecks per year'};
+const P_ASM_LABELS={fee:'Card processing fee (%)',credit:'Higgsfield cost per credit ($)',creditsPerVideo:'Credits per AI video',travel:'Travel per shoot trip ($)',card:'Cost per Google review card ($)',fixed:'Fixed monthly costs ($)',floor:'Floor rate ($/hr)',target:'Target rate ($/hr)',hK:'Kevin hours per day',hE:'Eric hours per day',days:'Work days per week',weeks:'Weeks per month',nonBill:'Non-billable time (%)',mixS:'Client mix: Starter (%)',mixG:'Client mix: Growth (%)',mixP:'Client mix: Pro (%)',fourMo:'New clients signing 4 months (%)',paychecks:'Paychecks per year'};
 const P_SCN_LABELS=['Active bundle clients','New clients signed this month','One-time website builds (medium)','Google review cards sold','Paid CRM builds (medium)'];
 function pAsm(o){return Object.assign({},P_ASM,(o&&o.asm)||{})}
 function pRow(base,ov,a){
@@ -194,7 +194,7 @@ function pRow(base,ov,a){
 function pServices(o){const a=pAsm(o);return P_SVC.map(s=>pRow(s,o&&o.svc&&o.svc[s.id],a))}
 function pBundles(o){const a=pAsm(o);return P_BUN.map(b=>{const r=pRow(b,o&&o.bun&&o.bun[b.id],a);
   r.rate2=r.net*2/(r.hours*2+r.setup);r.rate4=r.net*4/(r.hours*4+r.setup+r.crmHrs);r.sees=r.price+r.ad;return r})}
-function pBillable(a){return (a.hK+a.hE+a.hD)*a.days*a.weeks*(1-a.nonBill/100)}
+function pBillable(a){return (a.hK+a.hE+(a.hD||0))*a.days*a.weeks*(1-a.nonBill/100)}
 function pScenario(o,i,method,taxPct,fundPct){
   const a=pAsm(o),B=pBundles(o),v=(o&&o.scn&&o.scn[i])||P_SCN[i];
   const [clients,fresh,builds,cards,crms]=v.map(Number);
@@ -227,7 +227,7 @@ const addDays=(s,n)=>{const d=parse(s);d.setDate(d.getDate()+n);return iso(d)};
 const fmt=(s,o)=>s?parse(s).toLocaleDateString('en-US',o||{month:'short',day:'numeric'}):'';
 const fmtLong=s=>fmt(s,{weekday:'short',month:'short',day:'numeric'});
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
-const TEAM=['Eric','Kevin','Daniel'];let SPLIT={Eric:0,Kevin:0,Daniel:0},P_RULES=[],P_MARKET='',P_NOTE='';
+const TEAM=['Eric','Kevin'];let SPLIT={Eric:0,Kevin:0},P_RULES=[],P_MARKET='',P_NOTE='';
 function applyBase(){const b=S.config&&S.config.pricebase;if(!b||applyBase.v===b)return;applyBase.v=b;P_ASM=b.asm;P_SVC=b.svc;P_BUN=b.bun;P_SCN=b.scn;SPLIT=b.split;P_RULES=b.rules||[];P_MARKET=b.market||'';P_NOTE=b.note||''}
 const STAGES=['New','Contacted','Meeting set','Proposal sent','Won','Lost'];
 const INTERESTS=['Web development','Ads','GBP','SEO','Social managing','Photography','CRM'];
@@ -575,7 +575,7 @@ View.pricing=()=>{
     +P_SCN_LABELS.map((l,j)=>'<tr><td>'+l+'</td>'+sc.map((s,i)=>'<td class="r">'+pin('scn.'+i+'.'+j,s.v[j])+'</td>').join('')+'</tr>').join('')
     +'<tr><th colspan="4">Result</th></tr>'
     +rowv('Starter / Growth / Pro clients',s=>s.n.map(x=>+x.toFixed(2)).join(' / '))+rowv('Revenue',s=>money(s.revenue))+rowv('Expenses',s=>money(s.expenses,1))+rowv('Profit before tax',s=>money(s.profit,1))+rowv('Tax set-aside',s=>money(s.tax,1))+rowv(V.method==='app'?'Business fund':'Reserve',s=>money(s.reserve,1))+rowv('<b>Profit to split</b>',s=>'<b>'+money(s.split,1)+'</b>')
-    +rowv('Kevin / Eric per month',s=>money(s.per[0],1))+rowv('Daniel per month',s=>money(s.per[2],1))+rowv('Kevin / Eric per paycheck',s=>money(s.check[0],1))+rowv('Daniel per paycheck',s=>money(s.check[2],1))
+    +rowv('Kevin / Eric per month',s=>money(s.per[0],1))+rowv('Kevin / Eric per paycheck',s=>money(s.check[0],1))
     +rowv('Hours needed',s=>Math.round(s.hours))+rowv('Capacity used',s=>Math.round(s.cap*100)+'%')+rowv('Status',s=>'<span class="st '+(s.cap>1?'bad':s.cap>.85?'warn':'ok')+'">'+s.status+'</span>')+rowv('Months until card reorder',s=>s.reorder?s.reorder.toFixed(1):'—')
     +'</table></div></div>';
   }else if(V.priceTab==='rules'){
